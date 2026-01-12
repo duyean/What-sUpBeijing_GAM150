@@ -1,5 +1,5 @@
 #include "AEEngine.h"
-#include "Globals.hpp"
+#include "../Globals/Globals.hpp"
 #include <vector>
 
 class Character

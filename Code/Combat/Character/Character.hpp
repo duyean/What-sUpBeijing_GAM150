@@ -39,5 +39,6 @@ public:
 	virtual void DealDamage(Character* target, float coefficient);
 	virtual void UpdateAttributes(void);
 	virtual void StartTurn(void);
+	virtual void ProcessModifiers(void);
 	virtual void EndTurn(void);
 };

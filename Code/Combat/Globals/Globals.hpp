@@ -27,20 +27,24 @@ namespace Game
 
 	class Modifier
 	{
+	public:
 		const char* name;
 		int duration;
 		EFFECT_TYPE effectType;
 		AEGfxTexture icon;
+		virtual ~Modifier() {};
 	};
 
 	class AttributeModifier : public Modifier
 	{
+	public:
 		float value;
 		ATTRIBUTE_TYPE attributeType;
 	};
 
 	class StatusEffect : public Modifier
 	{
+	public:
 		float damage;
 	};
 }

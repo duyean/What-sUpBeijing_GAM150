@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +22,7 @@
     <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
   </ItemGroup>

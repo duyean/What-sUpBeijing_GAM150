@@ -21,3 +21,39 @@ void Character::UpdateAttributes(void)
 	atk = baseATK * (1 + atkBonus);
 	def = baseDEF * (1 + defBonus);
 }
+
+void Character::ProcessModifiers(void)
+{
+	for (Game::Modifier& modifier : effectList)
+	{
+		switch (modifier.effectType)
+		{
+			case (Game::EFFECT_TYPE::BURN):
+			case (Game::EFFECT_TYPE::POISON):
+			case (Game::EFFECT_TYPE::STUN):
+			{
+				if (Game::StatusEffect* effect = dynamic_cast<Game::StatusEffect*>(&modifier))
+				{
+					TakeDamage(effect->damage);
+				}
+				break;
+			}
+		}
+		modifier.duration--;
+	}
+
+	effectList.erase(std::remove_if(effectList.begin(), effectList.end(), [](const Game::Modifier& m) { return m.duration <= 0;}), effectList.end());
+
+}
+
+void Character::StartTurn(void)
+{
+	UpdateAttributes();
+	ProcessModifiers();
+	turnFinished = false;
+}
+
+void Character::EndTurn(void)
+{
+	turnFinished = true;
+}

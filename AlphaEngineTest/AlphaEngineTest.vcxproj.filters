@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Global Inherit Files">
       <UniqueIdentifier>{86a8c647-cf36-4fe5-baf1-42191ff1a2cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Map Systems">
+      <UniqueIdentifier>{debc7b26-6cff-45d2-ac97-96384b611699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map Systems">
+      <UniqueIdentifier>{98f6d40e-880d-4114-937b-1af9f8caa82e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
@@ -38,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
       <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\Map.cpp">
+      <Filter>Source Files\Map Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +67,18 @@
     </ClInclude>
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapClass.hpp">
+      <Filter>Header Files\Map Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapNodeClass.hpp">
+      <Filter>Header Files\Map Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
+      <Filter>Header Files\Map Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\Map.hpp">
+      <Filter>Header Files\Map Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

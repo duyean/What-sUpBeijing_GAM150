@@ -14,6 +14,7 @@
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+    <ClCompile Include="..\Code\Map\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
@@ -22,6 +23,10 @@
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
+    <ClInclude Include="..\Code\Map\Map.hpp" />
+    <ClInclude Include="..\Code\Map\MapClass.hpp" />
+    <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
+    <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -3,7 +3,9 @@
 
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
-#include "Mesh.hpp"
+
+//base inherit files
+#include "../../BaseSystems_WZBJ_Pak.hpp"
 
 
 AEGfxVertexList* DrawFilledCircleMesh(int sides)

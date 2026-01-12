@@ -10,6 +10,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
+    <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -95,15 +108,6 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_Engine.dll" "$(OutDir)" /s /r 
 xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmod.dll" "$(OutDir)" /s /r /y /q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Character.hpp" />
-    <ClInclude Include="Mesh.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

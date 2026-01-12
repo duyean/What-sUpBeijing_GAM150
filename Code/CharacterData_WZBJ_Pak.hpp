@@ -16,3 +16,4 @@
 */
 
 #include "Combat/Character/character.hpp"
+#include "Combat/Globals/Globals.hpp"

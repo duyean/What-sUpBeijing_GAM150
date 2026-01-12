@@ -1,6 +1,8 @@
 #pragma once
 #include "AEEngine.h"
 
+//global combat enums and classes
+
 namespace Game
 {
 	static int DEF_CONSTANT = 500; //The Damage Reduction from DEF will be 0.5 at this DEF value

@@ -28,24 +28,10 @@ This function sets game window size and intializes all other managers.
 *//*______________________________________________________________*/
 void GameManager::Init()
 {
-	//CP_System_SetWindowSize(1600, 900);
-	/*CP_System_SetWindowSize(
-		CP_System_GetDisplayWidth() - 100, 
-		CP_System_GetDisplayHeight() - 100);*/
-	/*CP_System_SetWindowSize(
-		1600,
-		900);*/
-
 	//Set the starting game scene
 	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
-	//Initialize our singleton classes
-	/*audioManager->Init();
-	meshManager->Init();
-	settingsManager->Init();
-	dialogManager->Init();
-	objectiveManager->Init();
-	emitterManager->Init();*/
+	//Initialize our singleton classes here...
 }
 
 /*!
@@ -72,6 +58,8 @@ This functions clears background for new frame and renders frame
 void GameManager::Render() 
 {
 	//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
+	stateManager->Render();
 }
 
 /*!

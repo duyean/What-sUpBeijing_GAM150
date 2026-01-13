@@ -1,54 +1,50 @@
 /*!
-@file GameManager.hpp
+@file MainMenu.hpp
 @author Tai Qian Yi (t.qianyi)
 @course CSD11451
 @section B
 @Final Project
-@date 12/1/26
+@date 13/1/26
 @brief
-This file contains the declarations of functions to manage the game
+This file contains the declarations of functions for the main menu
 *//*______________________________________________________________________*/
 #pragma once
-#include "AEEngine.h"
+#include "Mesh.hpp"
+#include "Sprite.hpp"
+#include "GameState.hpp"
 #include "GameStateManager.hpp"
 
-class GameManager : public SingletonPattern<GameManager>
+class MainMenu : public GameState
 {
-	friend SingletonPattern<GameManager>;
 private:
-	GameStateManager* stateManager;
-	bool ShowDebug;
+
 
 public:
-	GameManager();
-	~GameManager();
+	MainMenu();
+	~MainMenu();
 
 	/*!
-	@brief Initialize game variables and settings
+	@brief Initialize Splash Screen variables
 	@param void
 	@return void
 	*//*______________________________________________________________*/
-	void Init();
-
+	void Init() override;
 	/*!
-	@brief Updates game frame
+	@brief Updates splash screen frame
 	@param float
 	@return void
 	*//*______________________________________________________________*/
-	void Update(float _dt);
-
+	void Update(float _dt) override;
 	/*!
-	@brief Render game frame
+	@brief Render splash screen
 	@param void
 	@return void
 	*//*______________________________________________________________*/
-	void Render();
-
+	void Render() override;
 	/*!
-	@brief Clears game manager variables
+	@brief Clears splash screen variables
 	@param void
 	@return void
 	*//*______________________________________________________________*/
-	void Exit();
+	void Exit() override;
 };
-

@@ -9,6 +9,8 @@
 This file contains the definitions for the collection of functions in GameStateManager.h
 *//*______________________________________________________________________*/
 #include "GameStateManager.hpp"
+#include "SplashScreen.hpp"
+#include "MainMenu.hpp"
 
 GameStateManager::GameStateManager() :
 	curGameState(nullptr),
@@ -95,43 +97,22 @@ void GameStateManager::NextScene(SCENES _scene)
 {
 	if (_scene == SCENES::NUM_SCENES) {
 		//DEBUG
-		//printf("Tried Loading Invalid Scene");
+		printf("Tried Loading Invalid Scene\n");
 		return;
 	}
 
 	switch(_scene){
 	case SPLASHSCREEN:
 		nextGameState = new SplashScreen;
-		break;
-	case INTRO_CUTSCENE:
-		nextGameState = new IntroScreen;
-		break;
+		break;	
 	case MAIN_MENU:
 		nextGameState = new MainMenu;
 		break;
-	case CREDITS_SCREEN:
-		nextGameState = new CreditsScreen;
-		break;
-	case TUTORIAL:
-		nextGameState = new GameScreen("Tutorial");
-		currentLevel = TUTORIAL;
-		break;
-	case LEVEL_1:
-		nextGameState = new GameScreen("Level1");
-		currentLevel = LEVEL_1;
-		break;
-	/*case LEVEL_2:
-		nextGameState = new GameScreen("Level2");
-		currentLevel = LEVEL_2;
-		break;*/
-		
 	default:
 		//DEBUG
-		//printf("No Scene available for given State");
+		printf("No Scene available for given State\n");
 		break;
 	}
-
-	//AudioManager::GetInstance()->StopAll();
 }
 
 bool GameStateManager::IsLastLevel(void)

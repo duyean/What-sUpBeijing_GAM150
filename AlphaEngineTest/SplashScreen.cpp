@@ -1,23 +1,41 @@
 /*!
 @file SplashScreen.cpp
-@author Toby Chua (t.chua)
-@course CSD1401
-@section A
+@author Tai Qian Yi (t.qianyi)
+@course CSD11451
+@section B
 @Final Project
-@date 16 September 2025
+@date 13/1/26
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
 #include "SplashScreen.hpp"
+#include "Math.hpp"
 
-//SplashScreen::SplashScreen():
-//	//logo(NULL)
-//{
-//	curSplashTimer = maxSplashTimer;
-//}
+SplashScreen::SplashScreen()
+{
+	curSplashTimer = maxSplashTimer;
+}
 
 SplashScreen::~SplashScreen()
 {
+}
+
+AEGfxVertexList* Rectangle()
+{
+	AEGfxMeshStart();
+
+	AEGfxTriAdd(
+		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
+		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
+		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+
+	AEGfxTriAdd(
+		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
+		0.5f, 0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
+		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+
+	return AEGfxMeshEnd();
+
 }
 
 /*!
@@ -31,7 +49,13 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Init()
 {
-	//logo = CP_Image_Load("Assets/DigiPen_Singapore_WEB_RED.png");
+	logo.SetMesh(Rectangle());
+	logo.SetTexture(AEGfxTextureLoad("Assets/Images/DigiPen_Singapore_WEB_RED.png"));
+	logo.SetScale(1525, 445);
+	logo.SetPosition(0, 0);
+	logo.SetColor(Color4(1, 1, 1, 1));
+	logo.opacity = 0;
+	logo.SetRenderMode(AE_GFX_RM_TEXTURE);
 }
 
 /*!
@@ -46,20 +70,20 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void SplashScreen::Update(float _dt)
 {
-	/*if (curSplashTimer < 0 || CP_Input_KeyDown(KEY_SPACE)) {
+	if (curSplashTimer < 0 || AEInputCheckCurr(VK_SPACE)){
 		GameStateManager::GetInstance()->NextScene(GameStateManager::MAIN_MENU);
 		return;
-	}*/
+	}
 
 	curSplashTimer -= _dt;
 
 	
-	/*if (curSplashTimer > maxSplashTimer/2) {
-		splashOpacity = CP_Math_LerpInt(0, 255, (maxSplashTimer - curSplashTimer) / (maxSplashTimer / 2));
+	if (curSplashTimer > maxSplashTimer/2) {
+		logo.opacity = Lerp(0.f, 1.f, (maxSplashTimer - curSplashTimer) / (maxSplashTimer / 2));
 	}
 	else {
-		splashOpacity = CP_Math_LerpInt(255, 0, (maxSplashTimer / 2 - curSplashTimer) / (maxSplashTimer / 2));
-	}*/
+		logo.opacity = Lerp(1.f, 0.f, (maxSplashTimer / 2 - curSplashTimer) / (maxSplashTimer / 2));
+	}
 }
 
 /*!
@@ -73,12 +97,7 @@ This function renders splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Render()
 {
-	/*CP_Image_Draw(logo, 
-		(float)(CP_System_GetWindowWidth() / 2.f), 
-		(float)(CP_System_GetWindowHeight() / 2.f), 
-		(float)CP_Image_GetWidth(logo), 
-		(float)CP_Image_GetHeight(logo),
-		splashOpacity);*/
+	logo.Draw();
 }
 
 /*!
@@ -92,5 +111,5 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void SplashScreen::Exit()
 {
-	/*CP_Image_Free(logo);*/
+	logo.FreeTexture();
 }

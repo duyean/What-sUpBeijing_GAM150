@@ -7,6 +7,12 @@ namespace Game
 {
 	static int DEF_CONSTANT = 500; //The Damage Reduction from DEF will be 0.5 at this DEF value
 
+	enum FACTION
+	{
+		PLAYER,
+		ENEMY
+	};
+
 	enum EFFECT_TYPE
 	{
 		ATTRIBUTE_BUFF,
@@ -22,7 +28,9 @@ namespace Game
 		DEF,
 		HP,
 		CRIT_RATE,
-		CRIT_DAMAGE
+		CRIT_DAMAGE,
+		DMG_BONUS,
+		DMG_REDUCTION
 	};
 
 	class Modifier

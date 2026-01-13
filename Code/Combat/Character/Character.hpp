@@ -1,6 +1,7 @@
 #include "AEEngine.h"
 #include "../Globals/Globals.hpp"
 #include <vector>
+#include <functional>
 
 class Character
 {
@@ -34,11 +35,25 @@ private:
 
 	//Used by combat manager to determine this unit has finished acting
 	bool turnFinished;
+
+	//Whether this unit is an enemy or the player's party
+	Game::FACTION faction;
 public:
+	using DeathCallback = std::function<void(Character*)>;
+
 	virtual void TakeDamage(float incomingDamage);
 	virtual void DealDamage(Character* target, float coefficient);
 	virtual void UpdateAttributes(void);
 	virtual void StartTurn(void);
 	virtual void ProcessModifiers(void);
 	virtual void EndTurn(void);
+	virtual void Death(void);
+	
+	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
+	Game::FACTION GetFaction() const { return faction; }
+	int GetInitiative(void) const { return initiative; }
+	bool TurnFinished(void) const { return turnFinished; }
+
+private:
+	DeathCallback onDeath;
 };

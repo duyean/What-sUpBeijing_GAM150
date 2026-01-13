@@ -13,6 +13,10 @@ void Character::TakeDamage(float incomingDamage)
 	float finalDamageTaken = incomingDamage * (1 - defDMGReduction) * (1 - dmgReduction);
 	hp -= finalDamageTaken;
 	//Check death here or something
+	if (hp <= 0)
+	{
+		Death();
+	}
 }
 
 void Character::UpdateAttributes(void)
@@ -56,4 +60,12 @@ void Character::StartTurn(void)
 void Character::EndTurn(void)
 {
 	turnFinished = true;
+}
+
+void Character::Death(void)
+{
+	if (onDeath)
+	{
+		onDeath(this);
+	}
 }

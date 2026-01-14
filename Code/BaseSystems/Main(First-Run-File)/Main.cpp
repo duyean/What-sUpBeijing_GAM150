@@ -4,8 +4,12 @@
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
 
+#include <iostream>
+
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
+#include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
+#include "../../JSONSerializer_WZBJ_Pak.hpp"
 
 
 AEGfxVertexList* DrawFilledCircleMesh(int sides)
@@ -44,6 +48,19 @@ AEGfxVertexList* DrawSquare()
 	return AEGfxMeshEnd();
 }
 
+void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::FileWriteStream>& writer)
+{
+	writer.StartObject();
+	writer.Key("test");
+	writer.String("yay!");
+	writer.EndObject();
+}
+
+void ReadFromJSON(rapidjson::Document& doc)
+{
+	std::cout << doc["test"].GetString();
+}
+
 // ---------------------------------------------------------------------------
 // main
 
@@ -71,6 +88,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AESysReset();
 
 	printf("Hello World\n");
+
+	JSONSerializer* jsonSerializer = new JSONSerializer();
+	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
 
 	Mesh heal, damage, playerSprite;
 
@@ -152,6 +172,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			playerPos.x += 200 * _dt;
 		}
 
+		// JSON Serializer test
+		if (AEInputCheckTriggered(AEVK_SPACE))
+			jsonSerializer->ReadFromFile("Assets/test.json", ReadFromJSON);
+
 		// Your own update logic goes here
 		playerSprite.SetPosition(playerPos.x, playerPos.y);
 
@@ -191,6 +215,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	// free the system
+	delete jsonSerializer;
 	AEGfxMeshFree(square);
 	AESysExit();
 }

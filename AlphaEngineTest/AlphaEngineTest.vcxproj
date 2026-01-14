@@ -11,20 +11,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+    <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
+    <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
+    <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
+    <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
+    <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
-    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
+    <ClInclude Include="..\Code\Scenes\SceneHandler\GameManager.hpp" />
+    <ClInclude Include="..\Code\Scenes\SceneHandler\GameState.hpp" />
+    <ClInclude Include="..\Code\Scenes\SceneHandler\GameStateManager.hpp" />
+    <ClInclude Include="..\Code\Scenes\SplashScreen.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -60,13 +73,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\AlphaEngine\lib</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\AlphaEngine\lib</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>

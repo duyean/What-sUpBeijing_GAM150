@@ -3,7 +3,7 @@
 
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
-#include "GameManager.hpp"
+#include "../../../AlphaEngineTest/GameManager.hpp"
 
 GameManager* gameManager = nullptr;
 

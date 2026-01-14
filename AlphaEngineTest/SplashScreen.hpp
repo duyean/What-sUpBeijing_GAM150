@@ -9,7 +9,7 @@
 This file contains the declarations of functions for splash screen
 *//*______________________________________________________________________*/
 #pragma once
-#include "Mesh.hpp"
+#include "../Code/BaseSystems_WZBJ_Pak.hpp"
 #include "Sprite.hpp"
 #include "GameState.hpp"
 #include "GameStateManager.hpp"

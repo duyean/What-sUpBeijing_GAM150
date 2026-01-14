@@ -1,6 +1,6 @@
 #pragma once
 #include "AEEngine.h"
-#include "Mesh.hpp"
+#include "../Code/BaseSystems_WZBJ_Pak.hpp"
 class Sprite : public Mesh
 {
 private:

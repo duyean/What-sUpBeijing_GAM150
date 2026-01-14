@@ -8,8 +8,8 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "SplashScreen.hpp"
-#include "Math.hpp"
+#include "../BaseSystems_WZBJ_Pak.hpp"
+#include "../SceneHandler_WZBJ_Pak.hpp"
 
 SplashScreen::SplashScreen()
 {

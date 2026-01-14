@@ -9,10 +9,8 @@
 This file contains the declarations of functions for splash screen
 *//*______________________________________________________________________*/
 #pragma once
-#include "../Code/BaseSystems_WZBJ_Pak.hpp"
-#include "Sprite.hpp"
-#include "GameState.hpp"
-#include "GameStateManager.hpp"
+#include "../BaseSystems_WZBJ_Pak.hpp"
+#include "../SceneHandler_WZBJ_Pak.hpp"
 
 class SplashScreen : public GameState
 {

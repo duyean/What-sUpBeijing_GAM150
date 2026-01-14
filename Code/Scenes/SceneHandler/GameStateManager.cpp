@@ -8,9 +8,8 @@
 @brief
 This file contains the definitions for the collection of functions in GameStateManager.h
 *//*______________________________________________________________________*/
-#include "GameStateManager.hpp"
-#include "SplashScreen.hpp"
-#include "MainMenu.hpp"
+#include "../../SceneHandler_WZBJ_Pak.hpp"
+
 
 GameStateManager::GameStateManager() :
 	curGameState(nullptr),

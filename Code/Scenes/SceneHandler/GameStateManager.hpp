@@ -9,7 +9,7 @@
 This file contains the declarations of functions to manage Game States
 *//*______________________________________________________________________*/
 #pragma once
-#include "SingletonPattern.hpp"
+#include "../../BaseSystems_WZBJ_Pak.hpp"
 #include "GameState.hpp"
 
 class GameStateManager : public SingletonPattern<GameStateManager>

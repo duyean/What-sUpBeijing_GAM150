@@ -9,10 +9,8 @@
 This file contains the declarations of functions for the main menu
 *//*______________________________________________________________________*/
 #pragma once
-#include "../Code/BaseSystems_WZBJ_Pak.hpp"
-#include "Sprite.hpp"
-#include "GameState.hpp"
-#include "GameStateManager.hpp"
+#include "../BaseSystems_WZBJ_Pak.hpp"
+#include "../SceneHandler_WZBJ_Pak.hpp"
 
 class MainMenu : public GameState
 {

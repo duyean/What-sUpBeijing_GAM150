@@ -1,13 +1,5 @@
 #pragma once
-
-class MapNode
-{
-public:
-	bool contentCleared;
-	NodeType type;
-};
-
-enum NodeType
+enum class NodeType
 {
 	Debug = 0,
 	Empty = 1,
@@ -15,3 +7,11 @@ enum NodeType
 	RandomEvent = 3,
 	FixedEvent = 4
 };
+
+class MapNode
+{
+public:
+	bool navigable;
+	NodeType type;
+};
+

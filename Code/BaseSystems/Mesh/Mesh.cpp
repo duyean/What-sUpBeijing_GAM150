@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.hpp"
+#include "MeshClass.hpp"
 
 AEGfxVertexList* Mesh::FilledCircle(int sides)
 {

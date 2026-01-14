@@ -5,12 +5,10 @@
 #include "AEEngine.h"
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 
-#include <iostream>
-
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
-#include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
-#include "../../JSONSerializer_WZBJ_Pak.hpp"
+
+GameManager* gameManager = nullptr;
 
 void game_init(void)
 {
@@ -28,19 +26,6 @@ void game_exit(void)
 {
 	gameManager->Exit();
 	GameManager::DestroyInstance();
-}
-
-void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::FileWriteStream>& writer)
-{
-	writer.StartObject();
-	writer.Key("test");
-	writer.String("yay!");
-	writer.EndObject();
-}
-
-void ReadFromJSON(rapidjson::Document& doc)
-{
-	std::cout << doc["test"].GetString();
 }
 
 // ---------------------------------------------------------------------------
@@ -70,9 +55,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// reset the system modules
 	AESysReset();
-	
-	JSONSerializer* jsonSerializer = new JSONSerializer();
-	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
 
 	// Game Loop
 	while (gGameRunning)
@@ -87,16 +69,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// Game Update and rendering
 		game_update();
 
-		// JSON Serializer test
-		if (AEInputCheckTriggered(AEVK_SPACE))
-			jsonSerializer->ReadFromFile("Assets/test.json", ReadFromJSON);
-
 		// Informing the system about the loop's end
 		AESysFrameEnd();
 	}
 
 	// free the system
-	delete jsonSerializer;
 	game_exit();
 	AESysExit();
 }

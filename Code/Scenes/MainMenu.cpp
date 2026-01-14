@@ -10,6 +10,27 @@ This file contains the definitions for the collection of functions in MainMenu.h
 *//*______________________________________________________________________*/
 #include "MainMenu.hpp"
 
+#include <iostream>
+
+#include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
+#include "../JSONSerializer_WZBJ_Pak.hpp"
+
+// This is all temporary btw
+void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::FileWriteStream>& writer)
+{
+	writer.StartObject();
+	writer.Key("test");
+	writer.String("yay!");
+	writer.EndObject();
+}
+
+void ReadFromJSON(rapidjson::Document& doc)
+{
+	std::cout << doc["test"].GetString();
+}
+
+JSONSerializer* jsonSerializer = nullptr;
+
 MainMenu::MainMenu()
 {
 	
@@ -30,7 +51,8 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Init()
 {
-	
+	jsonSerializer = new JSONSerializer();
+	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
 }
 
 /*!
@@ -45,7 +67,9 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void MainMenu::Update(float _dt)
 {
-
+	// JSON Serializer test
+	if (AEInputCheckTriggered(AEVK_SPACE))
+		jsonSerializer->ReadFromFile("Assets/test.json", ReadFromJSON);
 }
 
 /*!
@@ -73,5 +97,5 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void MainMenu::Exit()
 {
-
+	delete jsonSerializer;
 }

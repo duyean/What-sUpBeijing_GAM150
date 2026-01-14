@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include "MeshClass.hpp"
 
 void Mesh::Draw()
 {

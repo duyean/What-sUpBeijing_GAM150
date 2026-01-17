@@ -2,8 +2,8 @@
 
 enum MapType
 {
-	Debug = 0,
-	CityStreets = 1,
-	OuterPalace = 2,
-	InnerPalace = 3
+	Debug,
+	CityStreets,
+	OuterPalace,
+	InnerPalace
 };

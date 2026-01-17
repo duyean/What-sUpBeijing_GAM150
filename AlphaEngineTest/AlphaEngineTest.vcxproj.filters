@@ -80,5 +80,8 @@
     <ClInclude Include="..\Code\Map\Map.hpp">
       <Filter>Header Files\Map Systems</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

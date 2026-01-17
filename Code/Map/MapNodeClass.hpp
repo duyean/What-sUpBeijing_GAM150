@@ -1,17 +1,17 @@
 #pragma once
 enum class NodeType
 {
-	Debug = 0,
-	Empty = 1,
-	EnemyEncounter = 2,
-	RandomEvent = 3,
-	FixedEvent = 4
+	Debug , //can also represent ungenerated node
+	Empty,
+	EnemyEncounter,
+	RandomEvent,
+	FixedEvent
 };
 
 class MapNode
 {
 public:
-	bool navigable;
+	bool n, s, e, w; //connections
 	NodeType type;
 };
 

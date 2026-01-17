@@ -11,9 +11,8 @@ public:
 	MapType mapType;
 
 	//NOTE: xLen and yLen are unique grid value, NOT PIXEL POSITION!
-	void GenerateMap(MapType type, int xLen, int yLen);
-	void DebugPrint(MapNode node);
-	void Debugprint(MapNode node, bool showCleared);
+	static Map GenerateMap(MapType type, int xLen, int yLen);
+	static void DebugPrint(Map map);
 
 	Map();
 	~Map();

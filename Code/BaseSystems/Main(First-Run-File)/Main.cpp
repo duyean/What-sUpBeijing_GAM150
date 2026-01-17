@@ -6,6 +6,7 @@
 
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
+#include "../../Maps_WZBJ_Pak.hpp"
 
 
 AEGfxVertexList* DrawFilledCircleMesh(int sides)
@@ -121,6 +122,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	hpBarSegment.SetPosition(-300, 300);
 
 	float health = 100;
+
+	//test map generation
+	Map testMap = Map::GenerateMap(MapType::CityStreets, 5, 5);
+	Map::DebugPrint(testMap);
+
 	// Game Loop
 	while (gGameRunning)
 	{

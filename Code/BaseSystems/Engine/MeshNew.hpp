@@ -8,10 +8,10 @@
 #include <map>
 #include <memory>
 #include "AEEngine.h"
-#include "../Engine/ECS.hpp"
-#include "../Engine/Colors.hpp"
-#include "../Engine/OOP.hpp"
-#include "../Engine/Transform2D.hpp"
+#include "ECS.hpp"
+#include "Colors.hpp"
+#include "OOP.hpp"
+#include "Transform2D.hpp"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ enum MeshType{
 };
 
 
-class Mesh : public SoloBehavior
+class MeshNew : public SoloBehavior
 {
 public:
 
@@ -53,11 +53,11 @@ public:
 	void setMesh(char const* fileName);
 	void setTexture(char const* fileName);
 
-	Mesh() {
+	MeshNew() {
 
 	}
 
-	Mesh(AEGfxVertexList* t, AEGfxTexture* p, Color col, int depth, MeshType ty) {
+	MeshNew(AEGfxVertexList* t, AEGfxTexture* p, Color col, int depth, MeshType ty) {
 		targetMesh = t;
 		pTex = p;
 		drawOrder = depth;
@@ -65,7 +65,7 @@ public:
 		color = col;
 	}
 	//Init with this please
-	Mesh(const char* filenameM, const char* filenameT, Color col, int depth, MeshType t) {
+	MeshNew(const char* filenameM, const char* filenameT, Color col, int depth, MeshType t) {
 		setMesh(filenameM);
 		setTexture(filenameT);
 		drawOrder = depth;
@@ -74,14 +74,14 @@ public:
 	}
 
 	//Only for BOX and CIRCLE no TEX
-	Mesh(const char* filenameM, Color col, int depth, MeshType t) {
+	MeshNew(const char* filenameM, Color col, int depth, MeshType t) {
 		setMesh(filenameM);
 		drawOrder = depth;
 		type = t;
 		color = col;
 	}
 
-	~Mesh()
+	~MeshNew()
 	{
 
 	}
@@ -89,7 +89,7 @@ public:
 
 
 
-class SpriteSheetMesh : Mesh
+class SpriteSheetMesh : MeshNew
 {
 	int row = 0;
 	int column = 0;

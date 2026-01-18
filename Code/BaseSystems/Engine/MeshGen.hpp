@@ -8,10 +8,10 @@
 #include <map>
 #include <memory>
 #include "AEEngine.h"
-#include "../Engine/ECS.hpp"
-#include "../Mesh/Mesh.hpp"
-#include "../Engine/Entity.hpp"
-#include "../Engine/Colors.hpp"
+#include "ECS.hpp"
+#include "MeshNew.hpp"
+#include "Entity.hpp"
+#include "Colors.hpp"
 
 using namespace std;
 

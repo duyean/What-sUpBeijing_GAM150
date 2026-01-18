@@ -1,9 +1,9 @@
-#include "Mesh.hpp"
+#include "MeshNew.hpp"
 #include "MeshGen.hpp"
 
 MeshGen* meshSystem = MeshGen::getInstance();
 
-void Mesh::Draw()
+void MeshNew::Draw()
 {
 	switch (type)
 	{
@@ -37,39 +37,39 @@ void Mesh::Draw()
 
 }
 
-void Mesh::setMesh(char const* fileName)
+void MeshNew::setMesh(char const* fileName)
 {
 	targetMesh = meshSystem->getMesh(fileName);
 }
-void Mesh::setTexture(char const* fileName)
+void MeshNew::setTexture(char const* fileName)
 {
 	pTex = meshSystem->getTexture(fileName);
 }
 
 
-void Mesh::awake()
+void MeshNew::awake()
 {
 
 }
 
 
-void Mesh::init()
+void MeshNew::init()
 {
 
 }
 
-void Mesh::update()
+void MeshNew::update()
 {
 	Draw();
 
 }
 
-void Mesh::fixedUpdate()
+void MeshNew::fixedUpdate()
 {
 
 }
 
-void Mesh::destroy()
+void MeshNew::destroy()
 {
 
 }

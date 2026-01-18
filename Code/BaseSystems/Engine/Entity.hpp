@@ -9,7 +9,7 @@
 #include <memory>
 #include "AEEngine.h"
 #include "ECS.hpp"
-#include "../Mesh/Mesh.hpp"
+#include "MeshNew.hpp"
 #include "OOP.hpp"
 #include "Transform2D.hpp"
 #include "Colors.hpp"
@@ -30,7 +30,7 @@ protected:
 public:
 	string name;
 	Transform2D* transform = nullptr;
-	Mesh* mesh = nullptr;
+	MeshNew* mesh = nullptr;
 
 	template<typename T, typename... Args>
 	T* addComponent(Args&&... args) {
@@ -45,7 +45,7 @@ public:
 				return transform;
 			}
 		}
-		else if constexpr (std::is_same_v<T, Mesh>) {
+		else if constexpr (std::is_same_v<T, MeshNew>) {
 			if (mesh) {
 				return mesh;
 			}
@@ -59,7 +59,7 @@ public:
 		if constexpr (std::is_same_v<T, Transform2D>) {
 			transform = ptr;
 		}
-		else if constexpr (std::is_same_v<T, Mesh>) {
+		else if constexpr (std::is_same_v<T, MeshNew>) {
 			mesh = ptr;
 		}
 

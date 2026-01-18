@@ -78,9 +78,6 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
       <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Mesh\MeshGen.cpp">
-      <Filter>Source Files\Base Systems</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
@@ -104,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp">
       <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\MeshNew.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
+      <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,12 +155,6 @@
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshGen.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\SpriteSheet.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp">
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
@@ -184,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp">
       <Filter>Header Files\Base Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\MeshGen.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\MeshNew.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

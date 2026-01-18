@@ -11,10 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Entity.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\EntityManager.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\OOP.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\PhysicSystem.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Mesh\MeshGen.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
@@ -23,11 +32,22 @@
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\ECS.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Entity.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\EntityManager.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\OOP.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\PhysicSystem.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshGen.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Mesh\SpriteSheet.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />

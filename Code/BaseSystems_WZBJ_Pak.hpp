@@ -16,6 +16,7 @@
 */
 
 #include "BaseSystems/Mesh/mesh.hpp"
+#include "BaseSystems/Mesh/meshGen.hpp"
 #include "BaseSystems/Prefabs/SingletonPattern.hpp"
 #include "BaseSystems/EaseFunctions/Math.hpp"
 #include "BaseSystems/EaseFunctions/Sprite.hpp"

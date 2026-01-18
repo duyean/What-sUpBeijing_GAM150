@@ -39,6 +39,9 @@
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
       <Filter>Source Files\Combat Systems</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -60,6 +63,12 @@
       <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Move.hpp">
       <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
   </ItemGroup>

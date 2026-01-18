@@ -191,5 +191,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// free the system
 	AEGfxMeshFree(square);
+	AEGfxMeshFree(circle);
 	AESysExit();
 }

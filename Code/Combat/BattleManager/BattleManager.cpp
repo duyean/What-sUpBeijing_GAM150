@@ -26,10 +26,19 @@ void BattleManager::StartBattle()
 	currentActiveUnit = 0;
 	inBattle = true;
 
-	while (inBattle) //Probably put this in an Update loop
+}
+
+void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
+{
+	if (inBattle)
 	{
-		battleUnits[currentActiveUnit]->StartTurn();
-		if (battleUnits[currentActiveUnit]->TurnFinished())
+		Character* activeUnit = battleUnits[currentActiveUnit];
+		if (!activeUnit->TurnFinished())
+		{
+			activeUnit->StartTurn();
+		}
+
+		if (activeUnit->TurnFinished())
 		{
 			currentActiveUnit++;
 			if (currentActiveUnit > (battleUnits.size() - 1))

@@ -7,6 +7,15 @@ namespace Game
 {
 	static int DEF_CONSTANT = 500; //The Damage Reduction from DEF will be 0.5 at this DEF value
 
+	enum WUXING_ELEMENT
+	{
+		FIRE,
+		EARTH,
+		WOOD,
+		WATER,
+		METAL
+	};
+
 	enum FACTION
 	{
 		PLAYER,
@@ -15,8 +24,7 @@ namespace Game
 
 	enum EFFECT_TYPE
 	{
-		ATTRIBUTE_BUFF,
-		ATTRIBUTE_DEBUFF,
+		ATTRIBUTE_MODIFIER,
 		STUN,
 		BURN,
 		POISON,
@@ -33,6 +41,17 @@ namespace Game
 		DMG_REDUCTION
 	};
 
+	//This enum will be used for handling same buff situations
+	enum MODIFIER_ID
+	{
+		NONE,
+		GENERIC_DOT_BURN,
+		GENERIC_DOT_POISON,
+		GENERIC_STUN,
+		GENERIC_MODIFIER,
+		//Custom Modifiers
+	};
+
 	class Modifier
 	{
 	public:
@@ -40,7 +59,8 @@ namespace Game
 		int duration;
 		EFFECT_TYPE effectType;
 		AEGfxTexture icon;
-		virtual ~Modifier() {};
+		MODIFIER_ID ID;
+		virtual ~Modifier() = default;
 	};
 
 	class AttributeModifier : public Modifier

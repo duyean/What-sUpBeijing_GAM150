@@ -23,4 +23,5 @@ public:
 	void LoadBattleUnit(Character* unit);
 	void StartBattle();
 	void ProcessDeadUnit(Character* deadUnit);
+	void Update(float _dt);
 };

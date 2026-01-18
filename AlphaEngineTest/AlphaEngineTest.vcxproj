@@ -25,6 +25,7 @@
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
+    <ClInclude Include="..\Code\Combat\Move.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

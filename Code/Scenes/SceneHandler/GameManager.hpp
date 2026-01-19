@@ -11,12 +11,14 @@ This file contains the declarations of functions to manage the game
 #pragma once
 #include "AEEngine.h"
 #include "GameStateManager.hpp"
+#include "../../BaseSystems/Text.hpp"
 
 class GameManager : public SingletonPattern<GameManager>
 {
 	friend SingletonPattern<GameManager>;
 private:
 	GameStateManager* stateManager;
+	Text* textManager;
 	bool ShowDebug;
 
 public:

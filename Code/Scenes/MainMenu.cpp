@@ -59,7 +59,9 @@ This function renders splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Render()
 {
-
+	AEVec2 vec = AEVec2();
+	AEVec2Set(&vec, 0, 0);
+	Text::GetInstance()->Draw(Text::CINZEL, "Hello World!", vec, 50, Color4(1, 1, 1, 1));
 }
 
 /*!

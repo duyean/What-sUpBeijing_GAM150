@@ -12,6 +12,7 @@ This file contains the definition of functions for GameManager.h
 GameManager::GameManager()
 {
 	stateManager = GameStateManager::GetInstance();
+	textManager = Text::GetInstance();
 }
 
 GameManager::~GameManager()
@@ -31,7 +32,9 @@ void GameManager::Init()
 	//Set the starting game scene
 	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
-	//Initialize our singleton classes here...
+	//Initialize our managers (singletons) here...
+	textManager->Init();
+	
 }
 
 /*!
@@ -73,5 +76,6 @@ This functions clears variables for all managers and destroys instances.
 void GameManager::Exit()
 {
 	stateManager->Exit();
+	textManager->Exit();
 	GameStateManager::DestroyInstance();
 }

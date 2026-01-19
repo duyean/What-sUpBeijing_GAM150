@@ -15,6 +15,7 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Text.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
@@ -29,6 +30,7 @@
     <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Text.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
@@ -38,6 +40,7 @@
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameState.hpp" />
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameStateManager.hpp" />
     <ClInclude Include="..\Code\Scenes\SplashScreen.hpp" />
+    <ClInclude Include="something.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

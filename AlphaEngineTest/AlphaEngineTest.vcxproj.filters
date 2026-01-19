@@ -72,6 +72,9 @@
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Text.cpp">
+      <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -116,8 +119,14 @@
     <ClInclude Include="..\Code\Scenes\SplashScreen.hpp">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="something.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Text.hpp">
+      <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

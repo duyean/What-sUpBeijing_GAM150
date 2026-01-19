@@ -22,7 +22,7 @@ GameStateManager::~GameStateManager()
 }
 
 /*!
-@brief Initialize splash screen variables
+@brief Initialize game variables
 
 @param void
 @return void

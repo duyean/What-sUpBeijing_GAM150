@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{1bcbcca0-4c69-4663-87a0-ab358f43f290}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ENGINE">
+      <UniqueIdentifier>{65ebf617-fb8e-4f4e-a3e8-edd808182534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ENGINE">
+      <UniqueIdentifier>{45113a31-0a35-4f45-9ef8-3902c36f7fbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
@@ -63,14 +69,44 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp">
       <Filter>Source Files\Base Systems\Scene Handler</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp">
-      <Filter>Source Files\Base Systems\Scene Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
-      <Filter>Source Files\Base Systems\Scene Handler</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp">
+      <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
+      <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\PhysicSystem.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\OOP.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\EntityManager.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Entity.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp">
+      <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\MeshNew.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
+      <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +154,42 @@
     </ClInclude>
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\ECS.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Entity.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\EntityManager.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\OOP.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\PhysicSystem.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp">
+      <Filter>Header Files\Base Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\MeshGen.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\MeshNew.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

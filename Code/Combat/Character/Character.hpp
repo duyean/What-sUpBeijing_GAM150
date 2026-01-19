@@ -1,36 +1,92 @@
 #include "AEEngine.h"
+#include "../Globals/Globals.hpp"
+#include "../Move.hpp"
 #include <vector>
+#include <functional>
+#include <unordered_map>
 
 class Character
 {
 private:
+	//Name of the unit
+	const char* name;
+
+	//Element of the character
+	Game::WUXING_ELEMENT element;
+
 	//How much health the unit has
 	float hp;
 
 	//How much maximum health the unit has
-	float maxHP;
+	float baseMaxHP, maxHPBonus, maxHP;
 
 	//The offensive power of the unit
-	float atk;
+	float baseATK, atkBonus, atk;
 
 	//The defensive power of the unit
-	float def;
+	float baseDEF, defBonus, def;
 
 	//Determines the probability of critical hits and bonus damage dealt
 	float critRate, critDMG;
 	
 	//Separate multiplier for outgoing damage
 	float dmgBonus;
-	//Storing the status effects of the unit
-	//std::vector<StatusEffect> effectList;
+
+	//Storing the modifiers of the unit
+	std::vector<Game::Modifier> effectList;
 
 	//A separate multipler for reducing damage
 	float dmgReduction;
 
 	//Determines turn order when combat begins
-	int initiatve;
+	int initiative;
+
+	//Used by combat manager to determine this unit has finished acting
+	bool turnFinished;
+
+	//Whether this unit is an enemy or the player's party
+	Game::FACTION faction;
+
+	std::unordered_map<MOVE_SLOT, Move> moveList;
 
 public:
+	using DeathCallback = std::function<void(Character*)>;
+
+	//Load character data from JSON
+	virtual void LoadCharacter(void); 
+
+	//Use the character's move, specified by the enum MOVE_SLOT
+	virtual void UseMove(MOVE_SLOT slot, Character* target);
+
+	//Handles incoming damage, reduced by DEF and other factors
 	virtual void TakeDamage(float incomingDamage);
+
+	//Deals damage to the target, followed by the coefficient of the move
 	virtual void DealDamage(Character* target, float coefficient);
+
+	//Update any attribute modifiers
+	virtual void UpdateAttributes(void);
+
+	//Start this unit's turn
+	virtual void StartTurn(void);
+
+	//Add a Modifier to this unit. Automatically calls UpdateAttribute() 
+	virtual void AddModifier(Game::Modifier modifier);
+
+	//Process any modifiers, usually used for damage over time effects
+	virtual void ProcessModifiers(void);
+
+	//End this unit's turn. If extra turns are implemented, edit here
+	virtual void EndTurn(void);
+
+	//Process this unit's death
+	virtual void Death(void);
+	
+	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
+	Game::FACTION GetFaction() const { return faction; }
+	int GetInitiative(void) const { return initiative; }
+	bool TurnFinished(void) const { return turnFinished; }
+
+private:
+	DeathCallback onDeath;
 };

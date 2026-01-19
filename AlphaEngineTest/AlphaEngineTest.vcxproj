@@ -16,7 +16,9 @@
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+    <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
@@ -33,7 +35,9 @@
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
+    <ClInclude Include="..\Code\Combat\Move.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />

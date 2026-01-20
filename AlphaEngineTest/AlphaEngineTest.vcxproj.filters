@@ -33,6 +33,7 @@
     </Filter>
     <Filter Include="Source Files\Map Systems">
       <UniqueIdentifier>{98f6d40e-880d-4114-937b-1af9f8caa82e}</UniqueIdentifier>
+	</Filter>
     <Filter Include="Source Files\Base Systems\Scene Handler">
       <UniqueIdentifier>{45eeaac4-8227-4d88-a66a-8b395fdd22ee}</UniqueIdentifier>
     </Filter>

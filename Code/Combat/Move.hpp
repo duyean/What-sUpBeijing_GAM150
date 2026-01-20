@@ -11,8 +11,6 @@ enum MOVE_SLOT
 	MOVE_SLOT_4
 };
 
-
-
 class Move
 {
 public:
@@ -22,6 +20,9 @@ public:
 	//How much damage to deal, set to 0.0 for non-damaging moves. Affects healing moves as well.
 	float coefficient;
 
+	//The coefficient for damage over time effects
+	float dot_coefficient;
+
 	//A short description of the move. (Shown in tooltip?)
 	std::string brief;
 
@@ -29,7 +30,7 @@ public:
 	std::string description;
 
 	//Extra effects to the move
-	std::vector<Game::Modifier> moveModifiers;
+	std::vector<MODIFIER_ID> moveModifiers;
 
 	//Which group the move targets
 	Game::FACTION targetGroup;

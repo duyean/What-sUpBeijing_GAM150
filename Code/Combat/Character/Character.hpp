@@ -1,9 +1,9 @@
 #include "AEEngine.h"
 #include "../Globals/Globals.hpp"
+#include "../Modifier/Modifier.hpp"
 #include "../Move.hpp"
 #include <vector>
 #include <functional>
-#include <unordered_map>
 
 class Character
 {
@@ -33,7 +33,7 @@ private:
 	float dmgBonus;
 
 	//Storing the modifiers of the unit
-	std::vector<Game::Modifier> effectList;
+	std::vector<std::unique_ptr<Modifier>> effectList;
 
 	//A separate multipler for reducing damage
 	float dmgReduction;
@@ -71,7 +71,7 @@ public:
 	virtual void StartTurn(void);
 
 	//Add a Modifier to this unit. Automatically calls UpdateAttribute() 
-	virtual void AddModifier(Game::Modifier modifier);
+	virtual void AddModifier(std::unique_ptr<Modifier> modifier);
 
 	//Process any modifiers, usually used for damage over time effects
 	virtual void ProcessModifiers(void);
@@ -82,6 +82,8 @@ public:
 	//Process this unit's death
 	virtual void Death(void);
 	
+	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
+
 	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
 	Game::FACTION GetFaction() const { return faction; }
 	int GetInitiative(void) const { return initiative; }

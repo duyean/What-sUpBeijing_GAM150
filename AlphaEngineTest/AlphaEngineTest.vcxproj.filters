@@ -46,6 +46,18 @@
     <Filter Include="Source Files\ENGINE">
       <UniqueIdentifier>{45113a31-0a35-4f45-9ef8-3902c36f7fbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ImGui">
+      <UniqueIdentifier>{ef401f6d-1ed1-423e-ba34-5d3c67d49e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGui">
+      <UniqueIdentifier>{bf2a75bd-679a-4a56-b63c-1790d31848bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImGui\backends">
+      <UniqueIdentifier>{a230fac2-9a3d-4e1d-a9e9-f5aa881d09fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGui\ImGui">
+      <UniqueIdentifier>{54de5c79-3d4a-449f-8924-9d7f7a00dc37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
@@ -107,6 +119,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
       <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\Move.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_demo.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>Source Files\ImGui\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +232,45 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
       <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Move.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imconfig.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imgui.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imgui_internal.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_rectpack.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_textedit.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_truetype.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3.h">
+      <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_win32.h">
+      <Filter>Header Files\ImGui\backends</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,8 +12,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../SceneHandler_WZBJ_Pak.hpp"
 
 SplashScreen::SplashScreen()
-{
-	
+{	
 }
 
 SplashScreen::~SplashScreen()
@@ -30,39 +29,11 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Init()
+void SplashScreen::Load()
 {
 	
 }
 
-/*!
-@brief Updates splash screen frame
-
-Overwrites virtual GameState::Update(). 
-This function updates variables in splash screen per frame to
-makes image fade in and out before loading main menu.
-
-@param float
-@return void
-*//*______________________________________________________________*/
-void SplashScreen::Update(float _dt)
-{
-	
-}
-
-/*!
-@brief Render splash screen
-
-Overwrites virtual GameState::Render().
-This function renders splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
-void SplashScreen::Render()
-{
-	
-}
 
 /*!
 @brief Clears splash screen variables
@@ -73,7 +44,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Exit()
+void SplashScreen::Unload()
 {
 	
 }

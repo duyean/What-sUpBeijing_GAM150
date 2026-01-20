@@ -30,24 +30,14 @@ public:
 	@param void
 	@return void
 	*//*______________________________________________________________*/
-	void Init() override;
+	void Load() override;
 	/*!
-	@brief Updates splash screen frame
-	@param float
-	@return void
-	*//*______________________________________________________________*/
-	void Update(float _dt) override;
-	/*!
-	@brief Render splash screen
-	@param void
-	@return void
-	*//*______________________________________________________________*/
-	void Render() override;
+	* 
 	/*!
 	@brief Clears splash screen variables
 	@param void
 	@return void
 	*//*______________________________________________________________*/
-	void Exit() override;
+	void Unload() override;
 };
 

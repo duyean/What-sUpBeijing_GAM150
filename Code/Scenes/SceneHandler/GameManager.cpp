@@ -88,9 +88,7 @@ This functions clears background for new frame and renders frame
 *//*______________________________________________________________*/
 void GameManager::Render() 
 {
-	//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
-	stateManager->Render();
 }
 
 /*!

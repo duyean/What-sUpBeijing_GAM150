@@ -5,9 +5,9 @@
 #include <vector>
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
-#include "OOP.hpp"
-#include "Colors.hpp"
-#include "BoxCollider2D.hpp"
+#include "../BaseSystems/Engine/OOP.hpp"
+#include "../BaseSystems/Engine/Colors.hpp"
+#include "../BaseSystems/Engine/BoxCollider2D.hpp"
 
 using namespace std;
 

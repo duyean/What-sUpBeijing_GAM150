@@ -1,5 +1,5 @@
 #include "HEALTHBAR1.hpp"
-#include "EntityManager.hpp"
+#include "../BaseSystems/Engine/EntityManager.hpp"
 #include "Player.hpp"
 
 float newRange(double oldV, double oldMin, double oldMax, double newMin, double newMax)

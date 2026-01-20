@@ -13,30 +13,13 @@ This file contains the definitions for the collection of functions in SplashScre
 
 SplashScreen::SplashScreen()
 {
-	curSplashTimer = maxSplashTimer;
+	
 }
 
 SplashScreen::~SplashScreen()
 {
 }
 
-AEGfxVertexList* Rectangle()
-{
-	AEGfxMeshStart();
-
-	AEGfxTriAdd(
-		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	AEGfxTriAdd(
-		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		0.5f, 0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	return AEGfxMeshEnd();
-
-}
 
 /*!
 @brief Initialize splash screen variables
@@ -49,13 +32,7 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Init()
 {
-	logo.SetMesh(Rectangle());
-	logo.SetTexture(AEGfxTextureLoad("Assets/Images/DigiPen_Singapore_WEB_RED.png"));
-	logo.SetScale(1525, 445);
-	logo.SetPosition(0, 0);
-	logo.SetColor(Color4(1, 1, 1, 1));
-	logo.opacity = 0;
-	logo.SetRenderMode(AE_GFX_RM_TEXTURE);
+	
 }
 
 /*!
@@ -70,20 +47,7 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void SplashScreen::Update(float _dt)
 {
-	if (curSplashTimer < 0 || AEInputCheckCurr(VK_SPACE)){
-		GameStateManager::GetInstance()->NextScene(GameStateManager::MAIN_MENU);
-		return;
-	}
-
-	curSplashTimer -= _dt;
-
 	
-	if (curSplashTimer > maxSplashTimer/2) {
-		logo.opacity = Lerp(0.f, 1.f, (maxSplashTimer - curSplashTimer) / (maxSplashTimer / 2));
-	}
-	else {
-		logo.opacity = Lerp(1.f, 0.f, (maxSplashTimer / 2 - curSplashTimer) / (maxSplashTimer / 2));
-	}
 }
 
 /*!
@@ -97,7 +61,7 @@ This function renders splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Render()
 {
-	logo.Draw();
+	
 }
 
 /*!
@@ -111,5 +75,5 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void SplashScreen::Exit()
 {
-	logo.FreeTexture();
+	
 }

@@ -124,7 +124,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	float health = 100;
 
 	//test map generation
-	Map testMap = Map::GenerateMap(MapType::CityStreets, 5, 5);
+	Map testMap = Map::GenerateMap(MapType::Debug, 5, 5);
 	Map::DebugPrint(testMap);
 
 	// Game Loop

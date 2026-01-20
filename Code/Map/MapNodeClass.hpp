@@ -1,11 +1,13 @@
 #pragma once
 enum class NodeType
 {
-	Debug , //can also represent ungenerated node
-	Empty,
-	EnemyEncounter,
-	RandomEvent,
-	FixedEvent
+	Debug =				 0, //can also represent ungenerated node
+	Empty =				 1,
+	EnemyEncounter =	 2,
+	RandomEvent =		 4,
+	FixedEvent =		 5,
+	Entry =				-1,
+	Exit =				-2  //also represents boss node!!!
 };
 
 class MapNode

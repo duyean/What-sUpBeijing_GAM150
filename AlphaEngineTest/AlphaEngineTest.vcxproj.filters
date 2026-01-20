@@ -58,6 +58,24 @@
     <Filter Include="Source Files\ImGui\ImGui">
       <UniqueIdentifier>{54de5c79-3d4a-449f-8924-9d7f7a00dc37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{e7eea770-97a1-45b5-90a1-dd303157710f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{e28fa98b-5b10-4dc8-ad24-754c1e7e2d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\GameObjects">
+      <UniqueIdentifier>{d4a13c5c-2629-435f-a82f-63ddcd4304b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\UIObjects">
+      <UniqueIdentifier>{3f4cfbb5-297d-4311-ac41-6df4eea7b258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\GameObject">
+      <UniqueIdentifier>{1b5d0971-4e40-4d5f-b84c-c06aeda56a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\UIObjects">
+      <UniqueIdentifier>{4e9be823-af89-407a-914a-f99ae5a32ad4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
@@ -149,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp">
       <Filter>Source Files\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Player.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +295,12 @@
     </ClInclude>
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_win32.h">
       <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Player.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

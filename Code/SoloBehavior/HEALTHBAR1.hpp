@@ -5,8 +5,8 @@
 #include <vector>
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
-#include "OOP.hpp"
-#include "Colors.hpp"
+#include "../BaseSystems/Engine/OOP.hpp"
+#include "../BaseSystems/Engine/Colors.hpp"
 
 
 using namespace std;

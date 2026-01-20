@@ -2,48 +2,54 @@
 // includes
 
 #include <crtdbg.h> // To check for memory leaks
+#include <chrono>
 #include "AEEngine.h"
+#include "../Engine/MeshGen.hpp"
+#include "../Engine/Entity.hpp"
+#include "../Engine/EntityManager.hpp"
+#include "../Engine/PhysicSystem.hpp"
+
+
+#include "../../SceneHandler_WZBJ_Pak.hpp"
 
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
 #include "../../Maps_WZBJ_Pak.hpp"
 
+GameManager* gameManager = nullptr;
 
-AEGfxVertexList* DrawFilledCircleMesh(int sides)
+
+#define CAPSPEED 60.0
+MeshGen* MeshGen::instance = nullptr;
+mutex MeshGen::mtx;
+
+EntityManager* EntityManager::instance = nullptr;
+mutex EntityManager::mtx;
+
+PhysicSystem* PhysicSystem::instance = nullptr;
+mutex PhysicSystem::mtx;
+
+
+
+void game_init(void)
 {
-	AEGfxMeshStart();
-
-	for (int i = 0; i <= sides; i++)
-	{
-		float angle1 = i * 2 * PI / sides;
-		float angle2 = (i + 1) * 2 * PI / sides;
-		AEGfxTriAdd(
-			0.0f, 0.0f, 0xFFFFFFFF, 0.0f, 0.0f,
-			cosf(angle1), sinf(angle1), 0xFFFFFFFF, 0.0f, 0.0f,
-			cosf(angle2), sinf(angle2), 0xFFFFFFFF, 0.0f, 0.0f
-		);
-	}
-
-	return AEGfxMeshEnd();
+	gameManager = GameManager::GetInstance();
+	gameManager->Init();
 }
 
-AEGfxVertexList* DrawSquare()
+void game_update(void)
 {
-	AEGfxMeshStart();
-
-	AEGfxTriAdd(
-		0, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-		1, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		0, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	AEGfxTriAdd(
-		1, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		1, 0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-		0, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	return AEGfxMeshEnd();
+	gameManager->Update(AEFrameRateControllerGetFrameTime());
+	gameManager->Render();
 }
 
+void game_exit(void)
+{
+	gameManager->Exit();
+	GameManager::DestroyInstance();
+}
+
+constexpr double FIXED_DT = 1.0 / CAPSPEED;
 // ---------------------------------------------------------------------------
 // main
 
@@ -57,145 +63,104 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
+
 	int gGameRunning = 1;
 
-	// Initialization of your own variables go here
+	//Game Initialization
+	game_init();
 
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
 
-	// Changing the window title
-	AESysSetWindowTitle("Solo Project 1");
+	// Window Title
+	AESysSetWindowTitle("Gam150");
 
 	// reset the system modules
 	AESysReset();
 
-	printf("Hello World\n");
 
-	Mesh heal, damage, playerSprite;
+	//FixedUpdate
+	auto currentTime = std::chrono::high_resolution_clock::now();
+	double accumulator = 0.0;
 
-	Mesh healthBar, barBG, hpBarSegment;
+	//SetUp Meshes
+	MeshGen* meshSystem = MeshGen::getInstance();
 
-	AEVec2 playerPos;
-	AEVec2Zero(&playerPos);
+	//Setup EntityManager System
+	EntityManager* enSystem = EntityManager::getInstance();
 
-	//AEGfxTriAdd(
-	//	-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-	//	0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-	//	-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+	//Setup Physics System
+	PhysicSystem* phSystem = PhysicSystem::getInstance();
 
-	//AEGfxTriAdd(
-	//	0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-	//	0.5f, 0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-	//	-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
+	meshSystem->initialize();
 
-	AEGfxVertexList* square = DrawSquare();
-	AEGfxVertexList* circle = DrawFilledCircleMesh(30);
+	//Move all of these into a GameSceneManager/GameStateManager
+   //Root
+	auto r = std::make_unique<Entity>("ROOT");
+	enSystem->rootEntity = r.get();
+	AEVec2 pos = { 0.f,0.f };
+	AEVec2 scale = { 1.f,1.f };
+	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+	enSystem->entities.push_back(std::move(r));
 
-	heal.SetMesh(circle);
-	heal.SetScale(200, 200);
-	heal.SetColor(Color4(0.f, 1.f, 0.f, 1.f));
-	heal.SetPosition(-400.f, 0.f);
-	heal.UpdateTransform();
 
-	damage.SetMesh(circle);
-	damage.SetScale(200, 200);
-	damage.SetColor(Color4(1.f, 0.f, 0.f, 1.f));
-	damage.SetPosition(400, 0.f);
-	damage.UpdateTransform();
-
-	playerSprite.SetMesh(circle);
-	playerSprite.SetScale(50, 50);
-	playerSprite.SetColor(Color4(1, 1, 1, 1));
-
-	healthBar.SetMesh(square);
-	healthBar.SetScale(600, 10);
-	healthBar.SetPosition(-300, 400);
-	healthBar.SetColor(Color4(1, 0, 0, 1));
-	barBG = healthBar;
-	barBG.SetColor(Color4(0.1f, .1f, .1f, 1));
-	barBG.SetScale(606, 16);
-
-	hpBarSegment.SetMesh(square);
-	hpBarSegment.SetScale(30, 15);
-	hpBarSegment.SetColor(Color4(1, 0, 0, 1));
-	hpBarSegment.SetPosition(-300, 300);
-
-	float health = 100;
-
-	//test map generation
-	Map testMap = Map::GenerateMap(MapType::Debug, 5, 5);
-	Map::DebugPrint(testMap);
+	for (const auto& end : enSystem->entities)
+	{
+		end->init();
+	}
 
 	// Game Loop
 	while (gGameRunning)
 	{
 		// Informing the system about the loop's start
 		AESysFrameStart();
-		float _dt = 1 / AEFrameRateControllerGetFrameRate();
-		// Basic way to trigger exiting the application
-		// when ESCAPE is hit or when the window is closed
+
+		// Close the window if press esacpe key
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;
 
-		if (AEInputCheckCurr(AEVK_W))
-		{
-			playerPos.y += 200 * _dt;
-		}
-		else if (AEInputCheckCurr(AEVK_S))
-		{
-			playerPos.y -= 200 * _dt;
-		}
 
-		if (AEInputCheckCurr(AEVK_A))
-		{
-			playerPos.x -= 200 * _dt;
+
+		//Chrono stuff
+		auto newTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> frameTime = newTime - currentTime;
+		currentTime = newTime;
+
+		if (frameTime.count() > 0.25) {
+			frameTime = std::chrono::duration<double>(0.25);
 		}
+		accumulator += frameTime.count();
 
-		if (AEInputCheckCurr(AEVK_D))
+
+
+	 	// Your own update logic goes here
+	    //Update everything
+		for (const auto& end : enSystem->entities)
 		{
-			playerPos.x += 200 * _dt;
-		}
-
-		// Your own update logic goes here
-		playerSprite.SetPosition(playerPos.x, playerPos.y);
-
-		if (AEVec2Distance(&playerPos, &heal.position) <= 200)
-		{
-			health += 25 * _dt;
+			end->update();
 		}
 
-		if (AEVec2Distance(&playerPos, &damage.position) <= 200)
+		// Game Update and rendering
+		game_update();
+
+
+		//Fixed Update everything
+		if (accumulator >= FIXED_DT)
 		{
-			health -= 25 * _dt;
+			for (const auto& end : enSystem->entities)
+			{
+				end->fixedUpdate();
+			}
+			phSystem->fixedUpdate(FIXED_DT);
+			accumulator -= FIXED_DT;
 		}
 
-		float hpperc = health / 100.f;
-		health = AEClamp(health, 0.f, 100.f);
-		healthBar.SetScale(600 * hpperc, 10);
-		healthBar.color = (health < 33.3f) ? Color4(1, 0, 0, 1) : Color4(0, 1, 1, 1);
 
-		// Your own rendering logic goes here
-		// Tell the Alpha Engine to set the background to black.
-		AEGfxSetBackgroundColor(0.3f, 0.3f, 0.3f);
-		heal.Draw();
-		damage.Draw();
-		playerSprite.Draw();
-
-		barBG.Draw();
-		healthBar.Draw();
-		hpBarSegment.offset = { 0 };
-		for (int i = 0; i < static_cast<int>(10 * hpperc); i++)
-		{
-			hpBarSegment.offset = {62.f * i, 0};
-			hpBarSegment.Draw();
-		}
 		// Informing the system about the loop's end
 		AESysFrameEnd();
-
 	}
 
 	// free the system
-	AEGfxMeshFree(square);
+	game_exit();
 	AESysExit();
 }

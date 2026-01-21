@@ -33,7 +33,7 @@
     </Filter>
     <Filter Include="Source Files\Map Systems">
       <UniqueIdentifier>{98f6d40e-880d-4114-937b-1af9f8caa82e}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Source Files\Base Systems\Scene Handler">
       <UniqueIdentifier>{45eeaac4-8227-4d88-a66a-8b395fdd22ee}</UniqueIdentifier>
     </Filter>
@@ -116,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Map\Map.cpp">
       <Filter>Source Files\Map Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\Move.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +223,18 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
       <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Move.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
+      <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

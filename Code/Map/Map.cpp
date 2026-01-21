@@ -2,6 +2,7 @@
 #include <random> //used for random generation
 #include <iostream> //used to debug print the map to console
 
+//mass include files
 #include "../Maps_WZBJ_Pak.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
@@ -250,7 +251,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 
 	//designate map-specific fixed-event node on one of the remaining end nodes
 	printf("Generating Map-Specific Event Node.\n");
-	int eventNodeIndex = std::uniform_int_distribution<>(0, endNodes.size() - 1)(gen);
+	int eventNodeIndex = std::uniform_int_distribution<>(0, static_cast<int>(endNodes.size()) - 1)(gen);
 	
 	switch (type)
 	{
@@ -305,7 +306,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 void Map::DebugPrint(Map map)
 {
 	//printing in blocks of 3x3 characters per node for representation
-	int height = map.mapNodes.size() * 3, length = map.mapNodes[0].size() * 3;
+	size_t height = map.mapNodes.size() * 3, length = map.mapNodes[0].size() * 3;
 	for (int y = 0; y < height; y++) {for (int x = 0; x < length; x++) {
 		int yPos = y % 3, xPos = x % 3;
 		char out = '#'; //standard character for wall
@@ -389,6 +390,8 @@ bool isEndNode(MapNode node)
 
 Map::Map()
 {
+	Map::mapType = MapType::Debug;
+	Map::mapNodes.clear();
 	//bruh
 }
 

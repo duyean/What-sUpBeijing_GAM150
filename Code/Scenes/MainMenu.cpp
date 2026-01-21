@@ -15,6 +15,8 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
 #include "../Combat/BattleManager/BattleManager.hpp"
+#include "../Code/Combat/Move.hpp"
+#include "../Code/Combat/Modifier/Modifier.hpp"
 
 // This is all temporary btw
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
@@ -112,6 +114,9 @@ void MainMenu::Init()
 
 	battleManager = new BattleManager();
 	battleManager->LoadBattleUnit(character);
+
+	InitModifierDatabase();
+	Move::InitMoveDatabase();
 }
 
 /*!

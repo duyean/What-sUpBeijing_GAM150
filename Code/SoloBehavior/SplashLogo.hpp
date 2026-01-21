@@ -24,8 +24,10 @@ public:
 
 	EntityManager* enSystem = nullptr;
 
+	void awake() override;
 	void init() override;
 	void update() override;
+	void fixedUpdate() override;
 	void destroy() override;
 
 	SplashLogo() {

@@ -31,8 +31,26 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Load()
 {
+	meshSystem = MeshGen::getInstance();
+	meshSystem->CreateTexture("../../Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
+
+	enSystem = EntityManager::getInstance();
+	auto r = std::make_unique<Entity>("ROOT");
+	enSystem->rootEntity = r.get();
+	AEVec2 pos = { 0.f,0.f };
+	AEVec2 scale = { 1.f, 1.f };
+	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+	enSystem->entities.push_back(std::move(r));
+
 	auto e = std::make_unique<Entity>("SPLASHLOGO");
-	//ensystem->e.get();
+	Entity* en = e.get();
+	pos = { 0.f,0.f };
+	scale = { 1525.f, 445.f };
+	en->addComponent<Transform2D>(pos, scale, 0.f);
+	en->addComponent<Mesh>("Box", "SplashLogo", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	enSystem->rootEntity->transform->AddChild(en->transform);
+	enSystem->entities.push_back(std::move(e));
+
 }
 
 
@@ -47,5 +65,5 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void SplashScreen::Unload()
 {
-	
+	enSystem->entities.clear();
 }

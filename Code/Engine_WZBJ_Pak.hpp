@@ -13,6 +13,7 @@
 ===================================
 */
 
+#include "BaseSystems/Engine/MeshNew.hpp"
 #include "BaseSystems/Engine/Entity.hpp"
 #include "BaseSystems/Engine/MeshGen.hpp"
 #include "BaseSystems/Engine/EntityManager.hpp"

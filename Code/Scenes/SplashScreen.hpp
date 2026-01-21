@@ -11,13 +11,14 @@ This file contains the declarations of functions for splash screen
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
+#include "../Engine_WZBJ_Pak.hpp"
 
 class SplashScreen : public GameState
 {
 private:
 	//CP_Image logo;
-	Entity* ensystem;
-
+	EntityManager* enSystem = nullptr;
+	MeshGen* meshSystem = nullptr;
 public:
 	SplashScreen();
 	~SplashScreen();

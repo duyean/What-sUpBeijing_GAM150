@@ -37,6 +37,7 @@
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="..\Code\Scenes\SplashScreen.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\Player.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_win32.h" />

@@ -31,7 +31,8 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Load()
 {
-	
+	auto e = std::make_unique<Entity>("SPLASHLOGO");
+	//ensystem->e.get();
 }
 
 

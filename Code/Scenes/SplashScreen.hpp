@@ -16,10 +16,7 @@ class SplashScreen : public GameState
 {
 private:
 	//CP_Image logo;
-	Sprite logo;
-	float curSplashTimer;
-	float maxSplashTimer = 6.f;
-	int splashOpacity = 0;
+	Entity* ensystem;
 
 public:
 	SplashScreen();

@@ -16,6 +16,6 @@
 */
 
 #include "rapidjson/prettywriter.h"
-#include "rapidjson/filewritestream.h"
+#include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
+#include "rapidjson/istreamwrapper.h"

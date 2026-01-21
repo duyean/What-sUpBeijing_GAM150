@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include <iostream>
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -16,6 +17,33 @@ void Character::TakeDamage(float incomingDamage)
 	{
 		Death();
 	}
+}
+
+void Character::LoadCharacter(JSONSerializer &serializer, const char *fileName)
+{
+	rapidjson::Document doc = serializer.ReadDocument(fileName);
+	if (doc == nullptr)
+	{
+		std::cout << "Unable to load a character as Document is nullptr" << std::endl;
+		return;
+	}
+
+	this->name = doc["name"].GetString(); // name
+	this->element = static_cast<Game::WUXING_ELEMENT>(doc["element"].GetInt()); // element
+	this->baseMaxHP = doc["baseHP"].GetFloat(); // base hp
+	this->baseATK = doc["baseATK"].GetFloat(); // base attack
+	this->baseDEF = doc["baseDEF"].GetFloat(); // base defense
+	this->faction = static_cast<Game::FACTION>(doc["faction"].GetInt()); // faction
+	// move list
+	// this->moveList.insert(MOVE_SLOT_1, );
+
+	std::cout << this->name << " = " 
+		<< this->element << " element, "
+		<< this->baseMaxHP << " HP, " 
+		<< this->baseATK << " ATK, " 
+		<< this->baseDEF << " DEF, "
+		<< this->faction << " faction"
+		<< std::endl;
 }
 
 void Character::UseMove(MOVE_SLOT slot, Character* target)

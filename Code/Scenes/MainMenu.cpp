@@ -14,24 +14,75 @@ This file contains the definitions for the collection of functions in MainMenu.h
 
 #include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
-#include "../Code/Combat/Move.hpp"
-#include "../Code/Combat/Modifier/Modifier.hpp"
+#include "../Combat/BattleManager/BattleManager.hpp"
 
 // This is all temporary btw
-void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::FileWriteStream>& writer)
+void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 {
 	writer.StartObject();
-	writer.Key("test");
-	writer.String("yay!");
+		writer.Key("name");
+		writer.String("Guy");
+
+		writer.Key("element");
+		writer.Int(Game::WUXING_ELEMENT::EARTH);
+	
+		writer.Key("baseHP");
+		writer.Double(100.0);
+	
+		writer.Key("baseATK");
+		writer.Double(20.0);
+	
+		writer.Key("baseDEF");
+		writer.Double(15.5);
+	
+		writer.Key("faction");
+		writer.Int(Game::FACTION::PLAYER);
+
+		writer.Key("moves");
+		writer.StartObject();
+			writer.Key("0");
+			writer.String("test");
+			writer.Key("1");
+			writer.String("test");
+			writer.Key("2");
+			writer.String("test");
+			writer.Key("3");
+			writer.String("test");
+		writer.EndObject();
 	writer.EndObject();
 }
 
-void ReadFromJSON(rapidjson::Document& doc)
+void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 {
-	std::cout << doc["test"].GetString();
+	writer.StartObject();
+		writer.Key("0");
+		writer.StartObject();
+			writer.Key("name");
+			writer.String("Generic Damage Move");
+			writer.Key("coefficient");
+			writer.Double(0.5);
+			writer.Key("brief");
+			writer.String("This is a short brief of Move 1.");
+			writer.Key("description");
+			writer.String("This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr");
+		writer.EndObject();
+		writer.Key("1");
+		writer.StartObject();
+			writer.Key("name");
+			writer.String("Burn Move");
+			writer.Key("coefficient");
+			writer.Double(0.7);
+			writer.Key("brief");
+			writer.String("This is a short brief of Move 2.");
+			writer.Key("description");
+			writer.String("This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now.");
+		writer.EndObject();
+	writer.EndObject();
 }
 
-JSONSerializer* jsonSerializer = nullptr;
+JSONSerializer jsonSerializer{};
+Character* character = nullptr;
+BattleManager* battleManager = nullptr;
 
 MainMenu::MainMenu()
 {
@@ -53,11 +104,14 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Init()
 {
-	jsonSerializer = new JSONSerializer();
-	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
+	jsonSerializer.WriteIntoFile("../../Assets/Characters/Guy.json", WriteIntoJSON);
+	jsonSerializer.WriteIntoFile("../../Assets/Moves/moves-list.json", WriteMovesJSON);
 
-	InitModifierDatabase();
-	Move::InitMoveDatabase();
+	character = new Character();
+	character->LoadCharacter(jsonSerializer, "../../Assets/Characters/Guy.json");
+
+	battleManager = new BattleManager();
+	battleManager->LoadBattleUnit(character);
 }
 
 /*!
@@ -72,9 +126,7 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void MainMenu::Update(float _dt)
 {
-	// JSON Serializer test
-	if (AEInputCheckTriggered(AEVK_SPACE))
-		jsonSerializer->ReadFromFile("Assets/test.json", ReadFromJSON);
+
 }
 
 /*!
@@ -102,5 +154,6 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void MainMenu::Exit()
 {
-	delete jsonSerializer;
+	delete character;
+	delete battleManager;
 }

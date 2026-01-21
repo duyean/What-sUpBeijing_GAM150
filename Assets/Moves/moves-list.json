@@ -1,0 +1,14 @@
+{
+    "0": {
+        "name": "Generic Damage Move",
+        "coefficient": 0.5,
+        "brief": "This is a short brief of Move 1.",
+        "description": "This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr"
+    },
+    "1": {
+        "name": "Burn Move",
+        "coefficient": 0.7,
+        "brief": "This is a short brief of Move 2.",
+        "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now."
+    }
+}

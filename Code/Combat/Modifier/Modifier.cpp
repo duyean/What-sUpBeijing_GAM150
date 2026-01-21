@@ -36,7 +36,7 @@ std::unique_ptr<Modifier> AttributeModifier::Clone() const
 
 std::unordered_map<MODIFIER_ID, std::unique_ptr<Modifier>> modifierDatabase;
 
-static void InitModifierDatabase()
+void InitModifierDatabase()
 {
     modifierDatabase.emplace(
         GENERIC_DOT_BURN,

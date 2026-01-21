@@ -27,6 +27,7 @@ namespace Game
 
 	enum FACTION
 	{
+		NONE,
 		PLAYER,
 		ENEMY
 	};

@@ -14,6 +14,8 @@ This file contains the definitions for the collection of functions in MainMenu.h
 
 #include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
+#include "../Code/Combat/Move.hpp"
+#include "../Code/Combat/Modifier/Modifier.hpp"
 
 // This is all temporary btw
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::FileWriteStream>& writer)
@@ -53,6 +55,9 @@ void MainMenu::Init()
 {
 	jsonSerializer = new JSONSerializer();
 	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
+
+	InitModifierDatabase();
+	Move::InitMoveDatabase();
 }
 
 /*!

@@ -37,6 +37,7 @@
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
+    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
     <ClInclude Include="..\Code\Combat\Move.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />

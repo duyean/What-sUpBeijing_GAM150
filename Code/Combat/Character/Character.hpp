@@ -1,6 +1,7 @@
 #include "AEEngine.h"
 #include "../Globals/Globals.hpp"
 #include "../Move.hpp"
+#include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include <vector>
 #include <functional>
 #include <unordered_map>
@@ -9,7 +10,7 @@ class Character
 {
 private:
 	//Name of the unit
-	const char* name;
+	std::string name;
 
 	//Element of the character
 	Game::WUXING_ELEMENT element;
@@ -53,7 +54,7 @@ public:
 	using DeathCallback = std::function<void(Character*)>;
 
 	//Load character data from JSON
-	virtual void LoadCharacter(void); 
+	virtual void LoadCharacter(JSONSerializer &serializer, const char *fileName);
 
 	//Use the character's move, specified by the enum MOVE_SLOT
 	virtual void UseMove(MOVE_SLOT slot, Character* target);
@@ -86,6 +87,11 @@ public:
 	Game::FACTION GetFaction() const { return faction; }
 	int GetInitiative(void) const { return initiative; }
 	bool TurnFinished(void) const { return turnFinished; }
+
+	Character() {};
+	Character(std::string name, Game::WUXING_ELEMENT elemnt, float baseAtk, float baseDef, float baseHp, Game::FACTION faction,
+		std::unordered_map<MOVE_SLOT, Move>moveList) :name(name), element(elemnt), baseATK(baseAtk), baseMaxHP(baseHp), faction(faction),
+		moveList(moveList) {};
 
 private:
 	DeathCallback onDeath;

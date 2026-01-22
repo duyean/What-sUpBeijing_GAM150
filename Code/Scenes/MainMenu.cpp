@@ -22,64 +22,14 @@ This file contains the definitions for the collection of functions in MainMenu.h
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 {
 	writer.StartObject();
-		writer.Key("name");
-		writer.String("Guy");
-
-		writer.Key("element");
-		writer.Int(Game::WUXING_ELEMENT::EARTH);
-	
-		writer.Key("baseHP");
-		writer.Double(100.0);
-	
-		writer.Key("baseATK");
-		writer.Double(20.0);
-	
-		writer.Key("baseDEF");
-		writer.Double(15.5);
-	
-		writer.Key("faction");
-		writer.Int(Game::FACTION::PLAYER);
-
-		writer.Key("moves");
-		writer.StartObject();
-			writer.Key("0");
-			writer.String("test");
-			writer.Key("1");
-			writer.String("test");
-			writer.Key("2");
-			writer.String("test");
-			writer.Key("3");
-			writer.String("test");
-		writer.EndObject();
+	writer.Key("test");
+	writer.String("yay!");
 	writer.EndObject();
 }
 
-void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
+void ReadFromJSON(rapidjson::Document& doc)
 {
-	writer.StartObject();
-		writer.Key("0");
-		writer.StartObject();
-			writer.Key("name");
-			writer.String("Generic Damage Move");
-			writer.Key("coefficient");
-			writer.Double(0.5);
-			writer.Key("brief");
-			writer.String("This is a short brief of Move 1.");
-			writer.Key("description");
-			writer.String("This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr");
-		writer.EndObject();
-		writer.Key("1");
-		writer.StartObject();
-			writer.Key("name");
-			writer.String("Burn Move");
-			writer.Key("coefficient");
-			writer.Double(0.7);
-			writer.Key("brief");
-			writer.String("This is a short brief of Move 2.");
-			writer.Key("description");
-			writer.String("This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now.");
-		writer.EndObject();
-	writer.EndObject();
+	std::cout << doc["test"].GetString();
 }
 
 JSONSerializer jsonSerializer{};
@@ -106,8 +56,9 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Init()
 {
-	jsonSerializer.WriteIntoFile("../../Assets/Characters/Guy.json", WriteIntoJSON);
-	jsonSerializer.WriteIntoFile("../../Assets/Moves/moves-list.json", WriteMovesJSON);
+	jsonSerializer.WriteIntoFile("Assets/test.json", WriteIntoJSON);
+	//jsonSerializer.WriteIntoFile("../../Assets/Characters/Guy.json", WriteIntoJSON);
+	//jsonSerializer->WriteIntoFile("../../Assets/Moves/moves-list.json", WriteMovesJSON);
 
 	character = new Character();
 	character->LoadCharacter(jsonSerializer, "../../Assets/Characters/Guy.json");
@@ -131,7 +82,9 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void MainMenu::Update(float _dt)
 {
-
+	// JSON Serializer test
+	if (AEInputCheckTriggered(AEVK_SPACE))
+		jsonSerializer.ReadFromFile("Assets/test.json", ReadFromJSON);
 }
 
 /*!

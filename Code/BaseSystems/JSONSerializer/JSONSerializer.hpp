@@ -4,8 +4,8 @@
 #include <string>
 #include "../../JSONSerializer_WZBJ_Pak.hpp"
 
-using WriteFunction = std::function<void(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>&)>;
-using ReadFunction = std::function<void(rapidjson::Document&)>;
+typedef std::function<void(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>&)> WriteFunction;
+typedef std::function<void(rapidjson::Document&)> ReadFunction;
 
 class JSONSerializer
 {
@@ -15,13 +15,10 @@ public:
 	
 	// Read from a JSON file
 	bool ReadFromFile(std::string fileName, ReadFunction function);
-	
-	// Create and parse rapidjson Document from a JSON file
-	rapidjson::Document ReadDocument(std::string fileName);
 
 	// Constructor
-	JSONSerializer();
+	JSONSerializer() {};
 	// Destructor
-	~JSONSerializer();
+	~JSONSerializer() {};
 };
 

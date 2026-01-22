@@ -8,12 +8,12 @@ bool JSONSerializer::WriteIntoFile(std::string fileName, WriteFunction function)
 	std::ofstream ofs(fileName);
 	if (!ofs.is_open())
 	{
-		std::cout << fileName << " could not be opened." << std::endl;
+		std::cout << "Cannot open " << fileName << std::endl;
 		return false;
 	}
 
-	rapidjson::OStreamWrapper osw(ofs);
-	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
 
 	function(writer);
 	return true;
@@ -24,13 +24,13 @@ bool JSONSerializer::ReadFromFile(std::string fileName, ReadFunction function)
 	std::ifstream ifs(fileName);
 	if (!ifs.is_open())
 	{
-		std::cout << fileName << " could not be opened." << std::endl;
+		std::cout << "Cannot open " << fileName << std::endl;
 		return false;
 	}
 
-	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::IStreamWrapper is(ifs);
 	rapidjson::Document doc;
-	doc.ParseStream(isw);
+	doc.ParseStream(is);
 	if (!doc.IsObject())
 	{
 		std::cout << fileName << " is not a valid JSON file" << std::endl;
@@ -39,33 +39,4 @@ bool JSONSerializer::ReadFromFile(std::string fileName, ReadFunction function)
 
 	function(doc);
 	return false;
-}
-
-rapidjson::Document JSONSerializer::ReadDocument(std::string fileName)
-{
-	std::ifstream ifs(fileName);
-	if (!ifs.is_open())
-	{
-		std::cout << fileName << " could not be opened." << std::endl;
-		return nullptr;
-	}
-
-	rapidjson::IStreamWrapper isw(ifs);
-	rapidjson::Document doc;
-	doc.ParseStream(isw);
-	if (!doc.IsObject())
-	{
-		std::cout << fileName << " is not a valid JSON file" << std::endl;
-		return nullptr;
-	}
-	
-	return doc;
-}
-
-JSONSerializer::JSONSerializer()
-{
-}
-
-JSONSerializer::~JSONSerializer()
-{
 }

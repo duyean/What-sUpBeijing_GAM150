@@ -18,6 +18,7 @@
     <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
     <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+    <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
@@ -38,6 +39,9 @@
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
+    <ClInclude Include="..\Code\Combat\Globals\Blessing.hpp" />
+    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
+    <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
     <ClInclude Include="..\Code\Combat\Move.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />

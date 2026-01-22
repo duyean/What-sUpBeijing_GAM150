@@ -1,4 +1,5 @@
 #include "Character.hpp"
+
 #include <iostream>
 
 void Character::DealDamage(Character* target, float coefficient)
@@ -19,31 +20,9 @@ void Character::TakeDamage(float incomingDamage)
 	}
 }
 
-void Character::LoadCharacter(JSONSerializer &serializer, const char *fileName)
+void Character::LoadCharacter(JSONSerializer& serializer, const char* fileName)
 {
-	rapidjson::Document doc = serializer.ReadDocument(fileName);
-	if (doc == nullptr)
-	{
-		std::cout << "Unable to load a character as Document is nullptr" << std::endl;
-		return;
-	}
-
-	this->name = doc["name"].GetString(); // name
-	this->element = static_cast<Game::WUXING_ELEMENT>(doc["element"].GetInt()); // element
-	this->baseMaxHP = doc["baseHP"].GetFloat(); // base hp
-	this->baseATK = doc["baseATK"].GetFloat(); // base attack
-	this->baseDEF = doc["baseDEF"].GetFloat(); // base defense
-	this->faction = static_cast<Game::FACTION>(doc["faction"].GetInt()); // faction
-	// move list
-	// this->moveList.insert(MOVE_SLOT_1, );
-
-	std::cout << this->name << " = " 
-		<< this->element << " element, "
-		<< this->baseMaxHP << " HP, " 
-		<< this->baseATK << " ATK, " 
-		<< this->baseDEF << " DEF, "
-		<< this->faction << " faction"
-		<< std::endl;
+	std::cout << "loading character" << std::endl;
 }
 
 void Character::UseMove(MOVE_SLOT slot, Character* target)
@@ -118,7 +97,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			case (STACK_BEHAVIOUR::STACK):
 			{
 				(*modExists)->stackCount += modifier->stackCount; //Add extra stack count, maybe cap it?
-				(*modExists)->duration = max(modifier->duration, (*modExists)->duration); //Pick longest duration
+				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}
 			case (STACK_BEHAVIOUR::UNIQUE):

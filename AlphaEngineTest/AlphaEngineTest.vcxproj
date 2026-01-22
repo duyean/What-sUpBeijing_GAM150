@@ -37,9 +37,9 @@
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
+    <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
-    <ClInclude Include="..\Code\Combat\Globals\Blessing.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
     <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
     <ClInclude Include="..\Code\Combat\Move.hpp" />

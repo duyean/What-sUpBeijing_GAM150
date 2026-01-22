@@ -20,9 +20,34 @@ void Character::TakeDamage(float incomingDamage)
 	}
 }
 
-void Character::LoadCharacter(JSONSerializer& serializer, const char* fileName)
+void Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 {
-	std::cout << "loading character" << std::endl;
+	rapidjson::Document doc = serializer.ReadDocument(fileName);
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load a character as Document is nullptr" << std::endl;
+		return;
+	}
+
+	this->name = doc["name"].GetString(); // name
+	this->element = static_cast<Game::WUXING_ELEMENT>(doc["element"].GetInt()); // element
+	this->baseMaxHP = doc["baseHP"].GetFloat(); // base hp
+	this->baseATK = doc["baseATK"].GetFloat(); // base attack
+	this->baseDEF = doc["baseDEF"].GetFloat(); // base defense
+	this->faction = static_cast<Game::FACTION>(doc["faction"].GetInt()); // faction
+	// move list
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
+
+	std::cout << this->name << " = "
+		<< this->element << " element, "
+		<< this->baseMaxHP << " HP, "
+		<< this->baseATK << " ATK, "
+		<< this->baseDEF << " DEF, "
+		<< this->faction << " faction"
+		<< std::endl;
 }
 
 void Character::UseMove(MOVE_SLOT slot, Character* target)
@@ -32,12 +57,13 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 		target = this;
 	}
 
-	auto move = moveList.find(slot); //Find the move via slot
-	if (move != moveList.end())
+	auto move_id = moveList[slot]; //Find the move via slot
+	Move* move = &Move::moveDatabase[move_id];
+	if (move)
 	{
-		if (move->second.moveModifiers.size() > 0)
+		if (move->moveModifiers.size() > 0)
 		{
-			for (auto modifier_id : move->second.moveModifiers)
+			for (auto modifier_id : move->moveModifiers)
 			{
 				auto proto = modifierDatabase.find(modifier_id);
 				if (proto != modifierDatabase.end())
@@ -45,13 +71,13 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 					auto modifier = proto->second->Clone();
 					if (auto* status = dynamic_cast<StatusEffect*>(modifier.get())) //Check if it is a dot buff
 					{
-						status->damage = atk * move->second.dot_coefficient;
+						status->damage = atk * move->dot_coefficient;
 					}
-					target->AddModifier(std::move(modifier)); 
+					target->AddModifier(std::move(modifier));
 				}
 			}
 		}
-		DealDamage(target, move->second.coefficient);
+		DealDamage(target, move->coefficient);
 	}
 }
 

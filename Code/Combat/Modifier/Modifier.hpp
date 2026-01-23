@@ -4,6 +4,7 @@
 #include "AEEngine.h"
 #include <unordered_map>
 #include "../Globals/Globals.hpp"
+#include "../../BaseSystems/JSONSerializer/JSONSerializer.hpp"
 
 class Character;
 
@@ -106,4 +107,4 @@ public:
 
 //The modifier database to store generic versions of modifiers
 extern std::unordered_map<MODIFIER_ID, std::unique_ptr<Modifier>> modifierDatabase;
-extern void InitModifierDatabase();
+extern void InitModifierDatabase(JSONSerializer& serializer, std::string fileName);

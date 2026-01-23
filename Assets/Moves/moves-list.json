@@ -1,0 +1,26 @@
+{
+    "moves": [
+        {
+            "id": 0,
+            "name": "Basic Attack",
+            "coefficient": 0.2,
+            "dot": 0.0,
+            "brief": "Attacks a single enemy",
+            "description": "This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr",
+            "target": 2,
+            "modifiers": []
+        },
+        {
+            "id": 1,
+            "name": "Scorch",
+            "coefficient": 0.1,
+            "dot": 0.15,
+            "brief": "Attacks an enemy and applies BURN",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now.",
+            "target": 2,
+            "modifiers": [
+              1
+            ]
+        }
+    ]
+}

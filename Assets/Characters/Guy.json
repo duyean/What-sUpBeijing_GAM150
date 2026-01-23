@@ -1,0 +1,14 @@
+{
+    "name": "Guy",
+    "element": 1,
+    "baseHP": 100.0,
+    "baseATK": 20.0,
+    "baseDEF": 15.5,
+    "faction": 1,
+    "moves": {
+        "0": 0,
+        "1": 1,
+        "2": 0,
+        "3": 1
+    }
+}

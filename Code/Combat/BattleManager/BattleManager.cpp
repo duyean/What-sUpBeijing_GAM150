@@ -1,5 +1,6 @@
 #include "BattleManager.hpp"
 #include <algorithm>
+#include <iostream>
 
 void BattleManager::LoadBattleUnit(Character* unit)
 {
@@ -8,6 +9,7 @@ void BattleManager::LoadBattleUnit(Character* unit)
 		printf("Warning: Attempted to add a null character to battle!\n");
 		return;
 	}
+	unit->Init();
 	battleUnits.push_back(unit);
 }
 
@@ -25,7 +27,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-
+	std::cout << "Battle Start\n========================\n";
 }
 
 void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
@@ -33,18 +35,33 @@ void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
 	if (inBattle)
 	{
 		Character* activeUnit = battleUnits[currentActiveUnit];
-		if (!activeUnit->TurnFinished())
+		if (!wait)
 		{
 			activeUnit->StartTurn();
+			wait = true;
 		}
 
-		if (activeUnit->TurnFinished())
+		if (!activeUnit->TurnFinished() && wait)
+		{
+			//Register Inputs
+			if (AEInputCheckTriggered(AEVK_Z))
+			{
+				activeUnit->UseMove(MOVE_SLOT_1, activeUnit);
+			}
+			else if (AEInputCheckTriggered(AEVK_X))
+			{
+				activeUnit->UseMove(MOVE_SLOT_2, activeUnit);
+			}
+		}
+
+		if (activeUnit->TurnFinished() && wait)
 		{
 			currentActiveUnit++;
-			if (currentActiveUnit > (battleUnits.size() - 1))
+			if (currentActiveUnit >= battleUnits.size())
 			{
 				currentActiveUnit = 0;
 			}
+			wait = false;
 		}
 	}
 }
@@ -58,6 +75,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 		{
 			inBattle = false;
 			outcome = VICTORY;
+			std::cout << "Battle Over!\n";
 		}
 	}
 }

@@ -2,8 +2,8 @@
     "name": "Guy",
     "element": 1,
     "baseHP": 100.0,
-    "baseATK": 20.0,
-    "baseDEF": 15.5,
+    "baseATK": 50.0,
+    "baseDEF": 10.0,
     "faction": 1,
     "moves": {
         "0": 0,

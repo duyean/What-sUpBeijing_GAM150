@@ -100,6 +100,7 @@ void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 
 JSONSerializer jsonSerializer{};
 Character* character = nullptr;
+Character* testEnemy = nullptr;
 BattleManager* battleManager = nullptr;
 
 MainMenu::MainMenu()
@@ -131,8 +132,15 @@ void MainMenu::Init()
     character = new Character();
     character->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
 
+    testEnemy = new Character();
+    testEnemy->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
+    testEnemy->SetName("TestEnemy");
+    testEnemy->SetFaction(Game::FACTION::ENEMY);
+
     battleManager = new BattleManager();
     battleManager->LoadBattleUnit(character);
+    battleManager->LoadBattleUnit(testEnemy);
+    battleManager->StartBattle();
 }
 
 /*!
@@ -147,7 +155,7 @@ makes image fade in and out before loading main menu.
 *//*______________________________________________________________*/
 void MainMenu::Update(float _dt)
 {
-
+    battleManager->Update(_dt);
 }
 
 /*!

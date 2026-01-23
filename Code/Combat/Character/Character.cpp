@@ -5,7 +5,12 @@
 void Character::DealDamage(Character* target, float coefficient)
 {
 	float critRoll = AERandFloat();
-	float finalDamage = (this->atk * coefficient) * ((critRoll < this->critRate) ? 1 + critDMG : 1) * (1 + this->dmgBonus);
+	bool isCrit = (critRoll < this->critRate);
+	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
+	if (isCrit)
+	{
+		std::cout << name << " scored a CRITICAL HIT!\n";
+	}
 	target->TakeDamage(finalDamage);
 }
 
@@ -14,6 +19,7 @@ void Character::TakeDamage(float incomingDamage)
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
 	float finalDamageTaken = incomingDamage * (1 - defDMGReduction) * (1 - dmgReduction);
 	hp -= finalDamageTaken;
+	std::cout << name << " took " << finalDamageTaken << " damage!\n";
 	if (hp <= 0)
 	{
 		Death();
@@ -50,6 +56,13 @@ void Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 		<< std::endl;
 }
 
+void Character::Init(void)
+{
+	//Load Blessings
+	UpdateAttributes();
+	hp = maxHP;
+}
+
 void Character::UseMove(MOVE_SLOT slot, Character* target)
 {
 	if (target == nullptr) //If no target is specified, assume self-cast
@@ -61,6 +74,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 	Move* move = &Move::moveDatabase[move_id];
 	if (move)
 	{
+		std::cout << name << " used " << move->name << " on " << target->name << std::endl;
 		if (move->moveModifiers.size() > 0)
 		{
 			for (auto modifier_id : move->moveModifiers)
@@ -78,6 +92,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 			}
 		}
 		DealDamage(target, move->coefficient);
+		turnFinished = true;
 	}
 }
 
@@ -135,6 +150,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 	}
 	else
 	{
+		std::cout << name << " gained modifier " << modifier->name << std::endl;
 		effectList.emplace_back(std::move(modifier));
 	}
 	UpdateAttributes();
@@ -165,6 +181,7 @@ void Character::StartTurn(void)
 	ProcessModifiers();
 	UpdateAttributes();
 	turnFinished = false;
+	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
 }
 
 void Character::EndTurn(void)
@@ -176,6 +193,7 @@ void Character::Death(void)
 {
 	if (onDeath)
 	{
+		std::cout << name << " has died!\n";
 		onDeath(this);
 	}
 }

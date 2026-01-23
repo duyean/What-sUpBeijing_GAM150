@@ -85,12 +85,18 @@ public:
 	//Process this unit's death
 	virtual void Death(void);
 	
+	//Initialise the character, typically used at the start of battle
+	virtual void Init(void);
+
+	//Modify the attribute bonus by a value
 	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
 
 	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
 	Game::FACTION GetFaction() const { return faction; }
 	int GetInitiative(void) const { return initiative; }
 	bool TurnFinished(void) const { return turnFinished; }
+	void SetName(std::string name) { this->name = name; }
+	void SetFaction(Game::FACTION faction) { this->faction = faction; }
 
 private:
 	DeathCallback onDeath;

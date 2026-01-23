@@ -40,3 +40,24 @@ bool JSONSerializer::ReadFromFile(std::string fileName, ReadFunction function)
 	function(doc);
 	return false;
 }
+
+rapidjson::Document JSONSerializer::ReadDocument(std::string fileName)
+{
+	std::ifstream ifs(fileName);
+	if (!ifs.is_open())
+	{
+		std::cout << "Cannot open " << fileName << std::endl;
+		return nullptr;
+	}
+
+	rapidjson::IStreamWrapper is(ifs);
+	rapidjson::Document doc;
+	doc.ParseStream(is);
+	if (!doc.IsObject())
+	{
+		std::cout << fileName << " is not a valid JSON file" << std::endl;
+		return nullptr;
+	}
+
+	return doc;
+}

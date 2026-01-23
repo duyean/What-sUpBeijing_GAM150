@@ -16,6 +16,9 @@ public:
 	// Read from a JSON file
 	bool ReadFromFile(std::string fileName, ReadFunction function);
 
+	// 
+	rapidjson::Document ReadDocument(std::string fileName);
+
 	// Constructor
 	JSONSerializer() {};
 	// Destructor

@@ -3,6 +3,7 @@
 #include <vector>
 #include "../Combat/Globals/Globals.hpp"
 #include "Modifier/Modifier.hpp"
+#include "../BaseSystems/JSONSerializer/JSONSerializer.hpp"
 
 enum MOVE_SLOT
 {
@@ -71,5 +72,5 @@ public:
 	~Move() = default;
 
 	static std::unordered_map<MOVE_ID, Move> moveDatabase;
-	static void InitMoveDatabase();
+	static void InitMoveDatabase(JSONSerializer& serializer, std::string fileName);
 };

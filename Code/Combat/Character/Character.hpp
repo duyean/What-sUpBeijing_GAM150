@@ -5,13 +5,14 @@
 #include "../../BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include <vector>
 #include <functional>
+#include <string>
 
 
 class Character
 {
 private:
 	//Name of the unit
-	const char* name;
+	std::string name;
 
 	//Element of the character
 	Game::WUXING_ELEMENT element;
@@ -49,13 +50,13 @@ private:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
 
-	std::unordered_map<MOVE_SLOT, Move> moveList;
+	std::unordered_map<MOVE_SLOT, MOVE_ID> moveList;
 
 public:
 	using DeathCallback = std::function<void(Character*)>;
 
 	//Load character data from JSON
-	virtual void LoadCharacter(JSONSerializer& serializer, const char* fileName); 
+	virtual void LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
 	//Use the character's move, specified by the enum MOVE_SLOT
 	virtual void UseMove(MOVE_SLOT slot, Character* target);

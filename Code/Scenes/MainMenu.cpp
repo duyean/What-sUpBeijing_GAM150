@@ -74,6 +74,9 @@ void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
             writer.String("This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr");
             writer.Key("target");
             writer.Int(2);
+            writer.Key("modifiers");
+            writer.StartArray();
+            writer.EndArray();
         writer.EndObject();
         writer.StartObject();
             writer.Key("id");
@@ -122,7 +125,7 @@ void MainMenu::Init()
 	//jsonSerializer.WriteIntoFile("Assets/Characters/Guy.json", WriteIntoJSON);
 	//jsonSerializer.WriteIntoFile("Assets/Moves/moves-list.json", WriteMovesJSON);
 
-	InitModifierDatabase();
+	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     character = new Character();

@@ -52,7 +52,7 @@ public:
 	Store MODIFIER_IDs (declared in Modifier.hpp) to
 	have this move apply the effect to the target
 	*/
-	std::vector<MODIFIER_ID> moveModifiers;
+	std::vector<MODIFIER_ID> moveModifiers {};
 
 	/*
 	Which group the move targets:

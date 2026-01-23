@@ -1,6 +1,8 @@
 #include "Modifier.hpp"
 #include "../Character/Character.hpp"
 
+#include <iostream>
+
 void AttributeModifier::Apply(Character* target)
 {
     if (!target)
@@ -36,15 +38,33 @@ std::unique_ptr<Modifier> AttributeModifier::Clone() const
 
 std::unordered_map<MODIFIER_ID, std::unique_ptr<Modifier>> modifierDatabase;
 
-void InitModifierDatabase()
+void InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
 {
-    modifierDatabase.emplace(
-        GENERIC_DOT_BURN,
-        std::make_unique<StatusEffect>("Burn", 3, BURN, nullptr, GENERIC_DOT_BURN, 0.0f, STACK)
-    );
+    rapidjson::Document doc = serializer.ReadDocument(fileName);
+    if (doc.IsNull())
+    {
+        std::cout << "Unable to load modifier database as Document is nullptr" << std::endl;
+        return;
+    }
 
-    modifierDatabase.emplace(
-        GENERIC_DOT_POISON,
-        std::make_unique<StatusEffect>("Poison", 3, POISON, nullptr, GENERIC_DOT_POISON, 0.0f, STACK)
-    );
+
+    const rapidjson::Value& modifiers = doc["modifiers"];
+    for (rapidjson::Value::ConstValueIterator p = modifiers.Begin(); p != modifiers.End(); ++p)
+    {
+        modifierDatabase.emplace(static_cast<MODIFIER_ID>((*p)["id"].GetInt()),
+            std::make_unique<StatusEffect>((*p)["name"].GetString(),
+                (*p)["duration"].GetInt(),
+                static_cast<EFFECT_TYPE>((*p)["type"].GetInt()),
+                nullptr,
+                static_cast<MODIFIER_ID>((*p)["id"].GetInt()),
+                (*p)["damage"].GetFloat(),
+                static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt())));
+
+        std::cout << "Modifier id = " << (*p)["id"].GetInt()
+            << "\nname = " << (*p)["name"].GetString()
+            << "\nduration = " << (*p)["duration"].GetInt()
+            << "\neffect type = " << (*p)["type"].GetInt()
+            << "\ndamage = " << (*p)["damage"].GetFloat()
+            << "\nstack behaviour = " << (*p)["behaviour"].GetInt() << std::endl;
+    }
 }

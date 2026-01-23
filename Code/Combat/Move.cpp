@@ -16,13 +16,21 @@ void Move::InitMoveDatabase(JSONSerializer& serializer, std::string fileName)
 	const rapidjson::Value& moves = doc["moves"];
 	for (rapidjson::Value::ConstValueIterator p = moves.Begin(); p != moves.End(); ++p)
 	{
-		moveDatabase.emplace(static_cast<MOVE_ID>((*p)["id"].GetInt()),
-			Move((*p)["name"].GetString(),
-				(*p)["coefficient"].GetFloat(),
-				(*p)["dot"].GetFloat(),
-				(*p)["brief"].GetString(),
-				(*p)["description"].GetString(),
-				static_cast<Game::FACTION>((*p)["target"].GetInt())));
+		Move m = Move((*p)["name"].GetString(),
+			(*p)["coefficient"].GetFloat(),
+			(*p)["dot"].GetFloat(),
+			(*p)["brief"].GetString(),
+			(*p)["description"].GetString(),
+			static_cast<Game::FACTION>((*p)["target"].GetInt()));
+
+		const rapidjson::Value& modifiers = (*p)["modifiers"];
+		for (rapidjson::SizeType q = 0; q < modifiers.Size(); ++q)
+		{
+			m.moveModifiers.push_back(static_cast<MODIFIER_ID>(modifiers[q].GetInt()));
+			std::cout << "modifier" << modifiers[q].GetInt() << " set for next move " << std::endl;
+		}
+
+		moveDatabase.emplace(static_cast<MOVE_ID>((*p)["id"].GetInt()), m);
 
 		std::cout << "Move id = " << (*p)["id"].GetInt()
 			<< "\nname = " << (*p)["name"].GetString()
@@ -32,6 +40,4 @@ void Move::InitMoveDatabase(JSONSerializer& serializer, std::string fileName)
 			<< "\ndesc = " << (*p)["description"].GetString()
 			<< "\ntarget = " << (*p)["target"].GetInt() << std::endl;
 	}
-
-	moveDatabase[MOVE_BURN_MOVE].moveModifiers = std::vector <MODIFIER_ID>{GENERIC_DOT_BURN};
 }

@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -47,6 +49,10 @@
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Button.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />

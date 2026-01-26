@@ -1,25 +1,14 @@
 #pragma once
 #ifndef _InputInterfaces_
 #include <iostream>
+#include "UIElement.hpp"
 
-
-enum class MouseButton
-{
-    LEFT,
-    RIGHT,
-    MIDDLE
-};
 
 struct PointerEventData
 {
-    int x;
-    int y;
-
-    int deltaX;
-    int deltaY;
-
-    MouseButton button;
-    int clickCount;
+    s32 x;
+    s32 y;
+    UIElement* currentUIObject;
 };
 
 struct IPointerDown

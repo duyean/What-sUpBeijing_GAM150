@@ -15,11 +15,13 @@ This file contains the declarations of functions to manage the game
 #include "../../BaseSystems/Engine/Entity.hpp"
 #include "../../BaseSystems/Engine/EntityManager.hpp"
 #include "../../BaseSystems/Engine/PhysicSystem.hpp"
+#include "../../BaseSystems/Engine/EventSystem.hpp"
 
 class GameManager : public SingletonPattern<GameManager>
 {
 	friend SingletonPattern<GameManager>;
 private:
+	EventSystem* eventSystem;
 	GameStateManager* stateManager;
 	MeshGen* meshSystem;
 	EntityManager* enSystem;

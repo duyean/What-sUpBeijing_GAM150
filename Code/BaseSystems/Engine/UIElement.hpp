@@ -16,8 +16,8 @@
 class UIElement : public SoloBehavior
 {
 public:
-	AEVec2 size;
-	AEVec2 pos;
+	void awake() override;
+	void destroy() override;
 
 	UIElement(){}
 	~UIElement(){};

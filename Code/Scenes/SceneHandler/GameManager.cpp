@@ -62,6 +62,7 @@ void GameManager::Update(float _dt)
 	{
 		end->update();
 	}
+	eventSystem->Update(_dt);
 }
 
 void GameManager::FixedUpdate(double _fixedDt, double accumulator)

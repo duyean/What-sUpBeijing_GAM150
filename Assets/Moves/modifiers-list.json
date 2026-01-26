@@ -1,0 +1,20 @@
+{
+    "modifiers": [
+        {
+            "id": 1,
+            "name": "Burn",
+            "duration": 3,
+            "type": 2,
+            "damage": 0.0,
+            "behaviour": 2
+        },
+        {
+            "id": 2,
+            "name": "Poison",
+            "duration": 3,
+            "type": 3,
+            "damage": 0.0,
+            "behaviour": 2
+        }
+    ]
+}

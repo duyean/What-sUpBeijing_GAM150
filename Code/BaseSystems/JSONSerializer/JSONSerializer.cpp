@@ -1,39 +1,36 @@
 #include "JSONSerializer.hpp"
 
 #include <iostream>
-#include <array>
+#include <fstream>
 
-bool JSONSerializer::WriteIntoFile(const char *fileName, WriteFunction function)
+bool JSONSerializer::WriteIntoFile(std::string fileName, WriteFunction function)
 {
-	FILE* file;
-	if (fopen_s(&file, fileName, "w") != 0)
+	std::ofstream ofs(fileName);
+	if (!ofs.is_open())
 	{
 		std::cout << "Cannot open " << fileName << std::endl;
 		return false;
 	}
 
-	char buffer[MAX_BUFFER_SIZE]{};
-	rapidjson::FileWriteStream os(file, buffer, sizeof(buffer));
-	rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
 
 	function(writer);
-	fclose(file);
 	return true;
 }
 
-bool JSONSerializer::ReadFromFile(const char* fileName, ReadFunction function)
+bool JSONSerializer::ReadFromFile(std::string fileName, ReadFunction function)
 {
-	FILE* file;
-	if (fopen_s(&file, fileName, "r") != 0)
+	std::ifstream ifs(fileName);
+	if (!ifs.is_open())
 	{
 		std::cout << "Cannot open " << fileName << std::endl;
 		return false;
 	}
 
-	char buffer[MAX_BUFFER_SIZE]{};
-	rapidjson::FileReadStream is(file, buffer, sizeof(buffer));
+	rapidjson::IStreamWrapper is(ifs);
 	rapidjson::Document doc;
-	doc.Parse(buffer);
+	doc.ParseStream(is);
 	if (!doc.IsObject())
 	{
 		std::cout << fileName << " is not a valid JSON file" << std::endl;
@@ -41,14 +38,26 @@ bool JSONSerializer::ReadFromFile(const char* fileName, ReadFunction function)
 	}
 
 	function(doc);
-	fclose(file);
 	return false;
 }
 
-JSONSerializer::JSONSerializer()
+rapidjson::Document JSONSerializer::ReadDocument(std::string fileName)
 {
-}
+	std::ifstream ifs(fileName);
+	if (!ifs.is_open())
+	{
+		std::cout << "Cannot open " << fileName << std::endl;
+		return nullptr;
+	}
 
-JSONSerializer::~JSONSerializer()
-{
+	rapidjson::IStreamWrapper is(ifs);
+	rapidjson::Document doc;
+	doc.ParseStream(is);
+	if (!doc.IsObject())
+	{
+		std::cout << fileName << " is not a valid JSON file" << std::endl;
+		return nullptr;
+	}
+
+	return doc;
 }

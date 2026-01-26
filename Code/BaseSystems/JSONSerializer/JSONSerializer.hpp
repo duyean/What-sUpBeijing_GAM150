@@ -1,27 +1,27 @@
 #pragma once
 
 #include <functional>
+#include <string>
 #include "../../JSONSerializer_WZBJ_Pak.hpp"
 
-typedef std::function<void(rapidjson::PrettyWriter<rapidjson::FileWriteStream>&)> WriteFunction;
-typedef std::function<void(rapidjson::Document&)> ReadFunction;
+using WriteFunction = std::function<void(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>&)>;
+using ReadFunction = std::function<void(rapidjson::Document&)>;
 
 class JSONSerializer
 {
-private:
-	// Max buffer size
-	enum { MAX_BUFFER_SIZE = 2048 };
-
 public:
 	// Write into a JSON file
-	bool WriteIntoFile(const char *fileName, WriteFunction function);
+	bool WriteIntoFile(std::string fileName, WriteFunction function);
 	
 	// Read from a JSON file
-	bool ReadFromFile(const char* fileName, ReadFunction function);
+	bool ReadFromFile(std::string fileName, ReadFunction function);
+
+	// Create and Parse rapidjson Document from a JSON file
+	rapidjson::Document ReadDocument(std::string fileName);
 
 	// Constructor
-	JSONSerializer();
+	JSONSerializer() {};
 	// Destructor
-	~JSONSerializer();
+	~JSONSerializer() {};
 };
 

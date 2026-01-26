@@ -1,15 +1,18 @@
 #include "AEEngine.h"
 #include "../Globals/Globals.hpp"
+#include "../Modifier/Modifier.hpp"
 #include "../Move.hpp"
+#include "../../BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include <vector>
 #include <functional>
-#include <unordered_map>
+#include <string>
+
 
 class Character
 {
 private:
 	//Name of the unit
-	const char* name;
+	std::string name;
 
 	//Element of the character
 	Game::WUXING_ELEMENT element;
@@ -33,7 +36,7 @@ private:
 	float dmgBonus;
 
 	//Storing the modifiers of the unit
-	std::vector<Game::Modifier> effectList;
+	std::vector<std::unique_ptr<Modifier>> effectList;
 
 	//A separate multipler for reducing damage
 	float dmgReduction;
@@ -47,13 +50,13 @@ private:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
 
-	std::unordered_map<MOVE_SLOT, Move> moveList;
+	std::unordered_map<MOVE_SLOT, MOVE_ID> moveList;
 
 public:
 	using DeathCallback = std::function<void(Character*)>;
 
 	//Load character data from JSON
-	virtual void LoadCharacter(void); 
+	virtual void LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
 	//Use the character's move, specified by the enum MOVE_SLOT
 	virtual void UseMove(MOVE_SLOT slot, Character* target);
@@ -71,7 +74,7 @@ public:
 	virtual void StartTurn(void);
 
 	//Add a Modifier to this unit. Automatically calls UpdateAttribute() 
-	virtual void AddModifier(Game::Modifier modifier);
+	virtual void AddModifier(std::unique_ptr<Modifier> modifier);
 
 	//Process any modifiers, usually used for damage over time effects
 	virtual void ProcessModifiers(void);
@@ -82,10 +85,18 @@ public:
 	//Process this unit's death
 	virtual void Death(void);
 	
+	//Initialise the character, typically used at the start of battle
+	virtual void Init(void);
+
+	//Modify the attribute bonus by a value
+	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
+
 	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
 	Game::FACTION GetFaction() const { return faction; }
 	int GetInitiative(void) const { return initiative; }
 	bool TurnFinished(void) const { return turnFinished; }
+	void SetName(std::string name) { this->name = name; }
+	void SetFaction(Game::FACTION faction) { this->faction = faction; }
 
 private:
 	DeathCallback onDeath;

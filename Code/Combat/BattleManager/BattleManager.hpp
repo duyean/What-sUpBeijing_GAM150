@@ -9,6 +9,7 @@ class BattleManager
 	int currentActiveUnit;
 	bool inBattle;
 	int enemyCount;
+	bool wait;
 
 	enum BATTLE_OUTCOME
 	{

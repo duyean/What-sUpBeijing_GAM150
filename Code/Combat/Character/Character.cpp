@@ -1,9 +1,16 @@
 #include "Character.hpp"
 
+#include <iostream>
+
 void Character::DealDamage(Character* target, float coefficient)
 {
 	float critRoll = AERandFloat();
-	float finalDamage = (this->atk * coefficient) * ((critRoll < this->critRate) ? 1 + critDMG : 1) * (1 + this->dmgBonus);
+	bool isCrit = (critRoll < this->critRate);
+	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
+	if (isCrit)
+	{
+		std::cout << name << " scored a CRITICAL HIT!\n";
+	}
 	target->TakeDamage(finalDamage);
 }
 
@@ -12,10 +19,48 @@ void Character::TakeDamage(float incomingDamage)
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
 	float finalDamageTaken = incomingDamage * (1 - defDMGReduction) * (1 - dmgReduction);
 	hp -= finalDamageTaken;
+	std::cout << name << " took " << finalDamageTaken << " damage!\n";
 	if (hp <= 0)
 	{
 		Death();
 	}
+}
+
+void Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
+{
+	rapidjson::Document doc = serializer.ReadDocument(fileName);
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load a character as Document is nullptr" << std::endl;
+		return;
+	}
+
+	this->name = doc["name"].GetString(); // name
+	this->element = static_cast<Game::WUXING_ELEMENT>(doc["element"].GetInt()); // element
+	this->baseMaxHP = doc["baseHP"].GetFloat(); // base hp
+	this->baseATK = doc["baseATK"].GetFloat(); // base attack
+	this->baseDEF = doc["baseDEF"].GetFloat(); // base defense
+	this->faction = static_cast<Game::FACTION>(doc["faction"].GetInt()); // faction
+	// move list
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
+
+	std::cout << this->name << " = "
+		<< this->element << " element, "
+		<< this->baseMaxHP << " HP, "
+		<< this->baseATK << " ATK, "
+		<< this->baseDEF << " DEF, "
+		<< this->faction << " faction"
+		<< std::endl;
+}
+
+void Character::Init(void)
+{
+	//Load Blessings
+	UpdateAttributes();
+	hp = maxHP;
 }
 
 void Character::UseMove(MOVE_SLOT slot, Character* target)
@@ -25,51 +70,42 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 		target = this;
 	}
 
-	auto it = moveList.find(slot); //Find the move via slot
-	if (it != moveList.end())
+	auto move_id = moveList[slot]; //Find the move via slot
+	Move* move = &Move::moveDatabase[move_id];
+	if (move)
 	{
-		DealDamage(target, it->second.coefficient);
-		if (it->second.moveModifiers.size() > 0)
+		std::cout << name << " used " << move->name << " on " << target->name << std::endl;
+		if (move->moveModifiers.size() > 0)
 		{
-			for (Game::Modifier& mod : it->second.moveModifiers)//If adding debuff chance, can edit here
+			for (auto modifier_id : move->moveModifiers)
 			{
-				target->AddModifier(mod);
+				auto proto = modifierDatabase.find(modifier_id);
+				if (proto != modifierDatabase.end())
+				{
+					auto modifier = proto->second->Clone();
+					if (auto* status = dynamic_cast<StatusEffect*>(modifier.get())) //Check if it is a dot buff
+					{
+						status->damage = atk * move->dot_coefficient;
+					}
+					target->AddModifier(std::move(modifier));
+				}
 			}
 		}
+		DealDamage(target, move->coefficient);
+		turnFinished = true;
 	}
 }
 
 void Character::UpdateAttributes(void)
 {
-	atkBonus = defBonus = maxHPBonus = 0;
+	atkBonus = defBonus = maxHPBonus = 0; //Reset stats first
 	critRate = 0.05f; //5% Base Crit Rate
 	critDMG = 0.5f; //50% Base Crit DMG
-	for (Game::Modifier& mod : effectList)
+	for (auto& mod : effectList)
 	{
-		if (mod.effectType == Game::ATTRIBUTE_MODIFIER)
+		if (mod->effectType == ATTRIBUTE_MODIFIER)
 		{
-			Game::AttributeModifier* attribute = dynamic_cast<Game::AttributeModifier*>(&mod);
-			if (attribute != nullptr)
-			{
-				switch (attribute->attributeType) //All are additive
-				{
-					case (Game::ATK):
-					{
-						atkBonus += attribute->value;
-						break;
-					}
-					case (Game::DEF):
-					{
-						defBonus += attribute->value;
-						break;
-					}
-					case (Game::HP):
-					{
-						maxHPBonus += attribute->value;
-						break;
-					}
-				}
-			}
+			mod->Apply(this);
 		}
 	}
 	maxHP = baseMaxHP * (1 + maxHPBonus);
@@ -77,41 +113,67 @@ void Character::UpdateAttributes(void)
 	def = baseDEF * (1 + defBonus);
 }
 
-void Character::AddModifier(Game::Modifier modifier)
+void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
-	auto modExists = std::find_if(effectList.begin(), effectList.end(), [modifier](const Game::Modifier& m) {return m.ID == modifier.ID;});
+	auto modExists = std::find_if(
+		effectList.begin(),
+		effectList.end(),
+		[&](const std::unique_ptr<Modifier>& m) { return m->ID == modifier->ID; }
+	);
+
 	if (modExists != effectList.end()) //Player already has an existing modifier
 	{
-		modExists->duration = modifier.duration;
+		switch (modifier->stackBehaviour)
+		{
+			case (STACK_BEHAVIOUR::NO_STACK):
+			{
+				//Nothing happens, maybe print text to show player effect cannot stack?
+				break;
+			}
+			case (STACK_BEHAVIOUR::REFRESH):
+			{
+				(*modExists)->duration = modifier->duration; //Refresh the duration
+				break;
+			}
+			case (STACK_BEHAVIOUR::STACK):
+			{
+				(*modExists)->stackCount += modifier->stackCount; //Add extra stack count, maybe cap it?
+				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
+				break;
+			}
+			case (STACK_BEHAVIOUR::UNIQUE):
+			{
+				effectList.emplace_back(std::move(modifier)); //Add a whole separate modifier
+				break;
+			}
+		}
 	}
 	else
 	{
-		effectList.emplace_back(modifier);
+		std::cout << name << " gained modifier " << modifier->name << std::endl;
+		effectList.emplace_back(std::move(modifier));
 	}
 	UpdateAttributes();
 }
 
 void Character::ProcessModifiers(void)
 {
-	for (Game::Modifier& modifier : effectList)
+	for (auto& modifier : effectList)
 	{
-		switch (modifier.effectType)
+		if (modifier->effectType != ATTRIBUTE_MODIFIER)
 		{
-			case (Game::EFFECT_TYPE::BURN):
-			case (Game::EFFECT_TYPE::POISON):
-			case (Game::EFFECT_TYPE::STUN):
-			{
-				if (Game::StatusEffect* effect = dynamic_cast<Game::StatusEffect*>(&modifier))
-				{
-					TakeDamage(effect->damage);
-				}
-				break;
-			}
+			modifier->Apply(this); //Apply DOT Effects
 		}
-		modifier.duration--;
+		modifier->duration--; //Tick down all effects
 	}
 
-	effectList.erase(std::remove_if(effectList.begin(), effectList.end(), [](const Game::Modifier& m) { return m.duration <= 0;}), effectList.end());
+	effectList.erase(
+		std::remove_if(effectList.begin(), effectList.end(),
+			[](const std::unique_ptr<Modifier>& m) { return m->duration <= 0; }),
+		effectList.end() //Remove all modifiers whose duration <= 0
+	);
+
+	//No need call UpdateAttributes as StartTurn does it.
 }
 
 void Character::StartTurn(void)
@@ -119,6 +181,7 @@ void Character::StartTurn(void)
 	ProcessModifiers();
 	UpdateAttributes();
 	turnFinished = false;
+	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
 }
 
 void Character::EndTurn(void)
@@ -130,6 +193,23 @@ void Character::Death(void)
 {
 	if (onDeath)
 	{
+		std::cout << name << " has died!\n";
 		onDeath(this);
+	}
+}
+
+void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
+{
+	switch (type)
+	{
+	case Game::ATK:
+		atkBonus += value;
+		break;
+	case Game::DEF:
+		defBonus += value;
+		break;
+	case Game::HP:
+		maxHPBonus += value;
+		break;
 	}
 }

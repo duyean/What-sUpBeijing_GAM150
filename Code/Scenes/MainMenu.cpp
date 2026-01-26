@@ -121,7 +121,7 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void MainMenu::Init()
+void MainMenu::Load()
 {
 	//jsonSerializer.WriteIntoFile("Assets/Characters/Guy.json", WriteIntoJSON);
 	//jsonSerializer.WriteIntoFile("Assets/Moves/moves-list.json", WriteMovesJSON);
@@ -181,7 +181,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void MainMenu::Exit()
+void MainMenu::Unload()
 {
 	delete character;
 	delete battleManager;

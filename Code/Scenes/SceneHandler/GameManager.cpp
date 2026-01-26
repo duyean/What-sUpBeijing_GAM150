@@ -12,6 +12,9 @@ This file contains the definition of functions for GameManager.h
 GameManager::GameManager()
 {
 	stateManager = GameStateManager::GetInstance();
+	meshSystem = MeshGen::getInstance();
+	enSystem = EntityManager::getInstance();
+	phSystem = PhysicSystem::getInstance();
 }
 
 GameManager::~GameManager()
@@ -32,6 +35,13 @@ void GameManager::Init()
 	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
 	//Initialize our singleton classes here...
+	meshSystem->initialize();
+
+	//initialize all entities
+	for (const auto& end : enSystem->entities)
+	{
+		end->init();
+	}
 }
 
 /*!
@@ -45,7 +55,28 @@ This function updates managers per frame
 void GameManager::Update(float _dt)
 {
 	stateManager->Update(_dt);
+
+	// Your own update logic goes here
+		//Update everything
+	for (const auto& end : enSystem->entities)
+	{
+		end->update();
+	}
 }
+
+void GameManager::FixedUpdate(double _fixedDt, double accumulator)
+{
+	if (accumulator >= _fixedDt)
+	{
+		for (const auto& end : enSystem->entities)
+		{
+			end->fixedUpdate();
+		}
+		phSystem->fixedUpdate(_fixedDt);
+		accumulator -= _fixedDt;
+	}
+}
+
 
 /*!
 @brief Render game frame
@@ -57,9 +88,7 @@ This functions clears background for new frame and renders frame
 *//*______________________________________________________________*/
 void GameManager::Render() 
 {
-	//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
-	stateManager->Render();
 }
 
 /*!

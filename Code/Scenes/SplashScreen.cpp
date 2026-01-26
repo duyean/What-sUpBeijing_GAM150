@@ -12,31 +12,13 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../SceneHandler_WZBJ_Pak.hpp"
 
 SplashScreen::SplashScreen()
-{
-	curSplashTimer = maxSplashTimer;
+{	
 }
 
 SplashScreen::~SplashScreen()
 {
 }
 
-AEGfxVertexList* Rectangle()
-{
-	AEGfxMeshStart();
-
-	AEGfxTriAdd(
-		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	AEGfxTriAdd(
-		0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,
-		0.5f, 0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
-
-	return AEGfxMeshEnd();
-
-}
 
 /*!
 @brief Initialize splash screen variables
@@ -47,58 +29,30 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Init()
+void SplashScreen::Load()
 {
-	logo.SetMesh(Rectangle());
-	logo.SetTexture(AEGfxTextureLoad("Assets/Images/DigiPen_Singapore_WEB_RED.png"));
-	logo.SetScale(1525, 445);
-	logo.SetPosition(0, 0);
-	logo.SetColor(Color4(1, 1, 1, 1));
-	logo.opacity = 0;
-	logo.SetRenderMode(AE_GFX_RM_TEXTURE);
+	meshSystem = MeshGen::getInstance();
+	meshSystem->CreateTexture("../../Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
+
+	enSystem = EntityManager::getInstance();
+	auto r = std::make_unique<Entity>("ROOT");
+	enSystem->rootEntity = r.get();
+	AEVec2 pos = { 0.f,0.f };
+	AEVec2 scale = { 1.f, 1.f };
+	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+	enSystem->entities.push_back(std::move(r));
+
+	auto e = std::make_unique<Entity>("SPLASHLOGO");
+	Entity* en = e.get();
+	pos = { 0.f,0.f };
+	scale = { 1525.f, 445.f };
+	en->addComponent<Transform2D>(pos, scale, 0.f);
+	en->addComponent<Mesh>("Box", "SplashLogo", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	enSystem->rootEntity->transform->AddChild(en->transform);
+	enSystem->entities.push_back(std::move(e));
+
 }
 
-/*!
-@brief Updates splash screen frame
-
-Overwrites virtual GameState::Update(). 
-This function updates variables in splash screen per frame to
-makes image fade in and out before loading main menu.
-
-@param float
-@return void
-*//*______________________________________________________________*/
-void SplashScreen::Update(float _dt)
-{
-	if (curSplashTimer < 0 || AEInputCheckCurr(VK_SPACE)){
-		GameStateManager::GetInstance()->NextScene(GameStateManager::MAIN_MENU);
-		return;
-	}
-
-	curSplashTimer -= _dt;
-
-	
-	if (curSplashTimer > maxSplashTimer/2) {
-		logo.opacity = Lerp(0.f, 1.f, (maxSplashTimer - curSplashTimer) / (maxSplashTimer / 2));
-	}
-	else {
-		logo.opacity = Lerp(1.f, 0.f, (maxSplashTimer / 2 - curSplashTimer) / (maxSplashTimer / 2));
-	}
-}
-
-/*!
-@brief Render splash screen
-
-Overwrites virtual GameState::Render().
-This function renders splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
-void SplashScreen::Render()
-{
-	logo.Draw();
-}
 
 /*!
 @brief Clears splash screen variables
@@ -109,7 +63,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Exit()
+void SplashScreen::Unload()
 {
-	logo.FreeTexture();
+	enSystem->entities.clear();
 }

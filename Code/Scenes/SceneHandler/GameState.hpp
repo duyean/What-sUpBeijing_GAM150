@@ -18,8 +18,6 @@ public:
 	GameState();
 	~GameState();
 
-	virtual void Init() { return; }					//Virtual Initialize function
-	virtual void Update(float _dt) { return; }		//Virtual Update function to calculate frame
-	virtual void Render() { return; }				//Virtual Render function
-	virtual void Exit() { return; }					//Virtual Exit function
+	virtual void Load() { return; }					//Virtual Initialize function
+	virtual void Unload() { return; }					//Virtual Exit function
 };

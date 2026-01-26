@@ -2,24 +2,39 @@
 // includes
 
 #include <crtdbg.h> // To check for memory leaks
+#include <chrono>
 #include "AEEngine.h"
+#include "../Engine/MeshGen.hpp"
+#include "../Engine/Entity.hpp"
+#include "../Engine/EntityManager.hpp"
+#include "../Engine/PhysicSystem.hpp"
+
+
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
+#include "../../Maps_WZBJ_Pak.hpp"
 
 GameManager* gameManager = nullptr;
+
+
+#define CAPSPEED 60.0
+MeshGen* MeshGen::instance = nullptr;
+mutex MeshGen::mtx;
+
+EntityManager* EntityManager::instance = nullptr;
+mutex EntityManager::mtx;
+
+PhysicSystem* PhysicSystem::instance = nullptr;
+mutex PhysicSystem::mtx;
+
+
 
 void game_init(void)
 {
 	gameManager = GameManager::GetInstance();
 	gameManager->Init();
-}
-
-void game_update(void)
-{
-	gameManager->Update(AEFrameRateControllerGetFrameTime());
-	gameManager->Render();
 }
 
 void game_exit(void)
@@ -28,6 +43,7 @@ void game_exit(void)
 	GameManager::DestroyInstance();
 }
 
+constexpr double FIXED_DT = 1.0 / CAPSPEED;
 // ---------------------------------------------------------------------------
 // main
 
@@ -44,9 +60,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	int gGameRunning = 1;
 
-	//Game Initialization
-	game_init();
-
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
 
@@ -55,6 +68,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// reset the system modules
 	AESysReset();
+
+	//Game Initialization
+	game_init();
+
+	//FixedUpdate
+	auto currentTime = std::chrono::high_resolution_clock::now();
+	double accumulator = 0.0;
 
 	// Game Loop
 	while (gGameRunning)
@@ -66,8 +86,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;
 
-		// Game Update and rendering
-		game_update();
+
+		//Chrono stuff
+		auto newTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> frameTime = newTime - currentTime;
+		currentTime = newTime;
+
+		if (frameTime.count() > 0.25) {
+			frameTime = std::chrono::duration<double>(0.25);
+		}
+		accumulator += frameTime.count();
+
+
+		// Game Update 
+		gameManager->Update(AEFrameRateControllerGetFrameTime());
+		// Game rendering
+		gameManager->Render();
+		// Game Fixed Update
+		gameManager->FixedUpdate(FIXED_DT, accumulator);
+
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();

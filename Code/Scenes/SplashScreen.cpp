@@ -48,7 +48,7 @@ void SplashScreen::Load()
 	scale = { 1525.f, 445.f };
 	en->addComponent<Transform2D>(pos, scale, 0.f);
 	en->addComponent<Mesh>("Box", "SplashLogo", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
-	en->addComponent<UIElement>();
+	en->addComponent<Button>();
 	enSystem->rootEntity->transform->AddChild(en->transform);
 	enSystem->entities.push_back(std::move(e));
 

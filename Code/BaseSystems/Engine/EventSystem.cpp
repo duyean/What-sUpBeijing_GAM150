@@ -23,10 +23,10 @@ bool EventSystem::pointOverlap(s32 m_x, s32 m_y, UIElement* ui)
 	float halfx = ui->entity->transform->getScale().x / 2;
 	float halfy = ui->entity->transform->getScale().y / 2;
 	
-	s32 min_x = (s32) ui_x - halfx;
-	s32 min_y = (s32) ui_y - halfy;
-	s32 max_x = (s32) ui_x + halfx;
-	s32 max_y = (s32) ui_y + halfy;
+	float min_x =  ui_x - halfx;
+	float min_y =  ui_y - halfy;
+	float max_x =  ui_x + halfx;
+	float max_y =  ui_y + halfy;
 
 	if (m_x >= min_x &&
 		m_y >= min_y &&
@@ -44,19 +44,27 @@ void EventSystem::Update(double dt)
 	//get the mouse position
 	s32 m_x{}, m_y{};
 	AEInputGetCursorPosition(&m_x, &m_y);
+	s32 screen_x_offset = AEGfxGetWindowWidth() / 2;
+	s32 screen_y_offset = AEGfxGetWindowHeight() / 2;
 
 	//check for each ui element whether it is colliding with it
 	for (auto& uiElement : uiElements) {
-		if (pointOverlap(m_x, m_y, uiElement))
+		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{
 			eventData.currentUIObject = uiElement;
-			std::cout << "Mouse is over ui element:" << uiElement->entity->name;
 		}
 	}
 
 	//return event data
-	/*eventData.x = m_x;
-	eventData.y = m_y;*/
+
+	// Mouse poition in world space (center being middle of the screen):
+	eventData.x = m_x - screen_x_offset;
+	eventData.y = m_y - screen_y_offset;
+
+	// Mouse position in screen space (center being top left of the screen):
+	eventData.delta_x = m_x;
+	eventData.delta_y = m_y;
+
 }
 
 EventSystem::EventSystem()

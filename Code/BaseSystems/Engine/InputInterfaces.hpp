@@ -8,6 +8,10 @@ struct PointerEventData
 {
     s32 x;
     s32 y;
+
+    s32 delta_x;
+    s32 delta_y;
+
     UIElement* currentUIObject;
 };
 

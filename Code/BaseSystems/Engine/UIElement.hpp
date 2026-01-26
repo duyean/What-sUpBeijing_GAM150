@@ -16,9 +16,6 @@
 class UIElement : public SoloBehavior
 {
 public:
-	void awake() override;
-	void destroy() override;
-
 	UIElement(){}
 	~UIElement(){};
 };

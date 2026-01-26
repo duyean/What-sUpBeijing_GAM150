@@ -32,37 +32,38 @@ void BattleManager::StartBattle()
 
 void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
 {
-	if (inBattle)
+	if (!inBattle)
 	{
-		Character* activeUnit = battleUnits[currentActiveUnit];
-		if (!wait)
-		{
-			activeUnit->StartTurn();
-			wait = true;
-		}
+		return;
+	}
+	Character* activeUnit = battleUnits[currentActiveUnit];
+	if (!wait)
+	{
+		activeUnit->StartTurn();
+		wait = true;
+	}
 
-		if (!activeUnit->TurnFinished() && wait)
+	if (!activeUnit->TurnFinished() && wait)
+	{
+		//Register Inputs
+		if (AEInputCheckTriggered(AEVK_Z))
 		{
-			//Register Inputs
-			if (AEInputCheckTriggered(AEVK_Z))
-			{
-				activeUnit->UseMove(MOVE_SLOT_1, activeUnit);
-			}
-			else if (AEInputCheckTriggered(AEVK_X))
-			{
-				activeUnit->UseMove(MOVE_SLOT_2, activeUnit);
-			}
+			activeUnit->UseMove(MOVE_SLOT_1, activeUnit);
 		}
+		else if (AEInputCheckTriggered(AEVK_X))
+		{
+			activeUnit->UseMove(MOVE_SLOT_2, activeUnit);
+		}
+	}
 
-		if (activeUnit->TurnFinished() && wait)
+	if (activeUnit->TurnFinished() && wait)
+	{
+		currentActiveUnit++;
+		if (currentActiveUnit >= battleUnits.size())
 		{
-			currentActiveUnit++;
-			if (currentActiveUnit >= battleUnits.size())
-			{
-				currentActiveUnit = 0;
-			}
-			wait = false;
+			currentActiveUnit = 0;
 		}
+		wait = false;
 	}
 }
 

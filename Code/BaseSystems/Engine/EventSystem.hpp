@@ -29,6 +29,7 @@ public:
 	void addUIElement(UIElement* ui);
 	void removeUIElement(UIElement* ui);
 	bool pointOverlap(s32 m_x, s32 m_y, UIElement* ui);
+	void DispatchPointerTriggered(UIElement* uiElement, const PointerEventData& event);
 	void Update(double dt);
 
 	EventSystem();

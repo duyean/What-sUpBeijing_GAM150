@@ -39,6 +39,16 @@ bool EventSystem::pointOverlap(s32 m_x, s32 m_y, UIElement* ui)
 	return false;
 }
 
+void EventSystem::DispatchPointerTriggered(UIElement* uiElement, const PointerEventData& event)
+{
+	if (auto* handler = dynamic_cast<IPointerTriggered*>(uiElement))
+	{
+		handler->OnPointerTriggered(event);
+		std::cout << "Mouse Button click Handler called for UI Element:" << uiElement->entity->name<<std::endl;
+		return;
+	}
+}
+
 void EventSystem::Update(double dt)
 {
 	//get the mouse position
@@ -47,15 +57,6 @@ void EventSystem::Update(double dt)
 	s32 screen_x_offset = AEGfxGetWindowWidth() / 2;
 	s32 screen_y_offset = AEGfxGetWindowHeight() / 2;
 
-	//check for each ui element whether it is colliding with it
-	for (auto& uiElement : uiElements) {
-		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
-		{
-			eventData.currentUIObject = uiElement;
-		}
-	}
-
-	//return event data
 
 	// Mouse poition in world space (center being middle of the screen):
 	eventData.x = m_x - screen_x_offset;
@@ -64,6 +65,19 @@ void EventSystem::Update(double dt)
 	// Mouse position in screen space (center being top left of the screen):
 	eventData.delta_x = m_x;
 	eventData.delta_y = m_y;
+
+	//check for each ui element whether it is colliding with it
+	for (auto& uiElement : uiElements) {
+		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
+		{
+			//call the respective dispatchers to return event data
+			if (AEInputCheckTriggered(AEVK_LBUTTON))
+			{
+				DispatchPointerTriggered(uiElement, eventData);
+			}
+			
+		}
+	}
 
 }
 

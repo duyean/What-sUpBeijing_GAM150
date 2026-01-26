@@ -12,7 +12,7 @@ struct PointerEventData
     s32 delta_x;
     s32 delta_y;
 
-    UIElement* currentUIObject;
+    //UIElement* currentUIObject;
 };
 
 struct IPointerDown
@@ -25,6 +25,12 @@ struct IPointerUp
 {
     virtual ~IPointerUp() = default;
     virtual void OnPointerUp(const PointerEventData& event) = 0;
+};
+
+struct IPointerTriggered
+{
+    virtual ~IPointerTriggered() = default;
+    virtual void OnPointerTriggered(const PointerEventData& event) = 0;
 };
 
 struct IDrag

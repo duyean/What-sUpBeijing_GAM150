@@ -7,6 +7,7 @@ EventSystem* eventSystem = EventSystem::getInstance();
 void Button::awake()
 {
 	eventSystem->addUIElement(this);
+	buttonMesh = this->entity->getComponent<Mesh>();
 }
 
 
@@ -28,4 +29,9 @@ void Button::fixedUpdate()
 void Button::destroy()
 {
 	eventSystem->removeUIElement(this);
+}
+
+void Button::OnPointerTriggered(const PointerEventData& event)
+{
+
 }

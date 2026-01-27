@@ -53,6 +53,8 @@ void MainMenu::Load()
 {
 	jsonSerializer = new JSONSerializer();
 	jsonSerializer->WriteIntoFile("Assets/test.json", WriteIntoJSON);
+
+	std::cout << "Now in Main Menu!!" << std::endl;
 }
 
 

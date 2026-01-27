@@ -90,7 +90,7 @@ This functions clears background for new frame and renders frame
 *//*______________________________________________________________*/
 void GameManager::Render() 
 {
-	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
+	AEGfxSetBackgroundColor(0.3f, 0.3f, 0.3f);
 }
 
 /*!

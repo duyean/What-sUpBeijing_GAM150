@@ -31,6 +31,7 @@ public:
 	bool pointOverlap(s32 m_x, s32 m_y, UIElement* ui);
 	void DispatchPointerTriggered(UIElement* uiElement, const PointerEventData& event);
 	void Update(double dt);
+	bool IsPointerOverObject();
 
 	EventSystem();
 	~EventSystem();
@@ -38,6 +39,8 @@ public:
 private:
 
 	PointerEventData eventData;
+	bool p_overObject = false;
+	UIElement* lastUIObject = nullptr;
 
 public:
 

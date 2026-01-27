@@ -15,7 +15,7 @@ void Healthbar1::awake()
 
 void Healthbar1::init()
 {
-	Healthbar1::enSystem = EntityManager::getInstance();
+	Healthbar1::enSystem = &EntityManager::getInstance();
 }
 
 void Healthbar1::update()

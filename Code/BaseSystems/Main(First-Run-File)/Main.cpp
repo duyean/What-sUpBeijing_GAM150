@@ -8,6 +8,7 @@
 #include "../Engine/Entity.hpp"
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
+#include "../Engine/RenderSystem.hpp"
 
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
@@ -15,18 +16,24 @@
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
 
+#include "../Engine/Editor/Editor.hpp"
+
+
+#ifdef ALPHA_EDITOR
+LRESULT CALLBACK EditorWndProc(HWND, UINT, WPARAM, LPARAM);
+#endif
+
 GameManager* gameManager = nullptr;
 
 
 #define CAPSPEED 60.0
-MeshGen* MeshGen::instance = nullptr;
-mutex MeshGen::mtx;
+MeshGen* meshSystem = &MeshGen::getInstance();
 
-EntityManager* EntityManager::instance = nullptr;
-mutex EntityManager::mtx;
+EntityManager* enSystem = &EntityManager::getInstance();
 
-PhysicSystem* PhysicSystem::instance = nullptr;
-mutex PhysicSystem::mtx;
+PhysicSystem* phSystem = &PhysicSystem::getInstance();
+
+RenderSystem* rSystem = &RenderSystem::getInstance();
 
 
 
@@ -65,11 +72,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	int gGameRunning = 1;
 
-	//Game Initialization
-	game_init();
+
+
+	LRESULT(CALLBACK * wndProc)(
+		HWND, UINT, WPARAM, LPARAM
+		) = nullptr;
+
+
+    #ifdef ALPHA_EDITOR
+	wndProc = EditorWndProc;
+    #endif
 
 	// Using custom window procedure
-	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
+	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, wndProc);
 
 	// Window Title
 	AESysSetWindowTitle("Gam150");
@@ -78,20 +93,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AESysReset();
 
 
+	//Game Initialization
+	game_init();
+
 	//FixedUpdate
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	double accumulator = 0.0;
 
-	//SetUp Meshes
-	MeshGen* meshSystem = MeshGen::getInstance();
-
-	//Setup EntityManager System
-	EntityManager* enSystem = EntityManager::getInstance();
-
-	//Setup Physics System
-	PhysicSystem* phSystem = PhysicSystem::getInstance();
-
 	meshSystem->initialize();
+
+
 
 	//Move all of these into a GameSceneManager/GameStateManager
    //Root
@@ -99,14 +110,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	enSystem->rootEntity = r.get();
 	AEVec2 pos = { 0.f,0.f };
 	AEVec2 scale = { 1.f,1.f };
-	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f); //MUST HAVE
+	enSystem->rootEntity->addComponent<MeshNew>("Box");
 	enSystem->entities.push_back(std::move(r));
 
 
-	for (const auto& end : enSystem->entities)
-	{
-		end->init();
-	}
+
 
 	// Game Loop
 	while (gGameRunning)
@@ -131,29 +140,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		accumulator += frameTime.count();
 
 
-
 	 	// Your own update logic goes here
 	    //Update everything
 		for (const auto& end : enSystem->entities)
 		{
-			end->update();
+			if (end->allComponentsInit == false)
+			{
+				end->init();
+			}
+			if (end->isActive == true)
+			{
+				end->update();
+			}
 		}
-
-		// Game Update and rendering
-		game_update();
-
 
 		//Fixed Update everything
 		if (accumulator >= FIXED_DT)
 		{
 			for (const auto& end : enSystem->entities)
 			{
-				end->fixedUpdate();
+				if (end->isActive == true)
+				{
+					end->fixedUpdate();
+				}
 			}
 			phSystem->fixedUpdate(FIXED_DT);
 			accumulator -= FIXED_DT;
 		}
 
+		rSystem->RenderObjects(enSystem->entities);
+
+		// Game Update and rendering
+		game_update();
+
+		//change to optimized move and pop once drawing layers are implemented
+		enSystem->clearAllDestroyed();
+
+#ifdef ALPHA_EDITOR
+		//Editor code
+		ImGuiLayer::Begin();
+		EditorApp::Draw();
+		ImGuiLayer::End();
+#endif
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();

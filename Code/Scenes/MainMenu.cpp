@@ -11,7 +11,6 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "MainMenu.hpp"
 
 #include <iostream>
-
 #include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
 

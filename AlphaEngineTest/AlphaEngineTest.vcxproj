@@ -14,6 +14,10 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -25,7 +29,6 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\PhysicSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp" />
     <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
@@ -48,6 +51,10 @@
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />
@@ -61,8 +68,6 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
@@ -139,6 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,6 +166,7 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

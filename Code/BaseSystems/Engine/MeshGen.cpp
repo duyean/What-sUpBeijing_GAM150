@@ -63,10 +63,10 @@ void MeshGen::DrawBoxTexture(float Xpos, float Ypos, float width, float height, 
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 
 	AEGfxTextureSet(pTex.at(fileName), 0, 0);
 
@@ -98,10 +98,11 @@ void MeshGen::DrawCircle(float Xpos, float Ypos, float width, float height, Colo
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
+
 	AEGfxSetTransform(transform.m);
 	AEGfxMeshDraw(pMesh.at("Circle"), AE_GFX_MDM_TRIANGLES);
 
@@ -131,10 +132,10 @@ void MeshGen::DrawCircleTexture(float Xpos, float Ypos, float width, float heigh
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 
 	AEGfxTextureSet(pTex.at(fileName), 0, 0);
 
@@ -346,20 +347,23 @@ AEGfxTexture* MeshGen::getTexture(const char* fileName)
 
 void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 {
-	pFont.insert({fileName, AEGfxCreateFont(fileName, 72)});
+	pFont.insert({fileName, AEGfxCreateFont(filePath, pixelSize)});
 }
 
 void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName)
 {
+	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
+	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
+	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
 	AEGfxPrint(pFont.at(fileName),          
 		text,   
 		Xpos,             
 		Ypos,             
 		scale,             
-		static_cast<float>(color.R),
-		static_cast<float>(color.G),
-		static_cast<float>(color.B),
-		static_cast<float>(color.A));            
+		red,
+		green,
+		blue,
+		color.A);            
 }
 
 void MeshGen::ClearFont(string name)

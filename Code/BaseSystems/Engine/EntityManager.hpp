@@ -7,6 +7,7 @@
 #include <mutex>
 #include <map>
 #include <memory>
+#include <algorithm> 
 #include "AEEngine.h"
 #include "OOP.hpp"
 #include "Entity.hpp"
@@ -18,41 +19,25 @@ using namespace std;
 //Singleton class MeshGen Run once before game loop starts
 class EntityManager
 {
-	static EntityManager* instance;
-
-	static mutex mtx;
-
-
 
 public:
 
 	Entity* rootEntity = nullptr;
+	bool needsCleanup = false;
 
 	std::vector<std::unique_ptr<Entity>> entities;
 
-	EntityManager()
-	{
 
-	}
-
-	~EntityManager()
-	{
-
-	}
 
 public:
 
-	EntityManager(const EntityManager& obj) = delete;
 
-	static EntityManager* getInstance() {
-		if (instance == nullptr)
-		{
-			lock_guard<mutex> lock(mtx);
-			if (instance == nullptr) {
-				instance = new EntityManager();
-			}
-		}
+	EntityManager(const EntityManager&) = delete;
+	EntityManager& operator=(const EntityManager&) = delete;
 
+	static EntityManager& getInstance() {
+
+		static EntityManager instance;
 		return instance;
 	}
 
@@ -85,7 +70,47 @@ public:
 
 	}
 
+	void clearAllDestroyed() {
 
+		std::erase_if(entities, [](auto& entity) {
+			if (entity->toDestroy) {
+				entity->destroy();
+				return true;
+			}
+			return false;
+			});
+	}
+
+	//use this after drawing layers is complete
+	void optimizedDeletion()
+	{
+			if (!needsCleanup) return;
+
+			for (size_t i = 0; i < entities.size(); ) {
+				if (entities[i]->toDestroy) {
+					entities[i]->destroy();
+					entities[i] = std::move(entities.back());
+
+					entities.pop_back();
+				}
+				else {
+					++i;
+				}
+			}
+			needsCleanup = false;
+	}
+
+private:
+
+	EntityManager()
+	{
+
+	}
+
+	~EntityManager()
+	{
+
+	}
 
 };
 

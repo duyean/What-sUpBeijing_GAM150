@@ -76,6 +76,12 @@
     <Filter Include="Header Files\Entities\UIObjects">
       <UniqueIdentifier>{4e9be823-af89-407a-914a-f99ae5a32ad4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ENGINE\Editor">
+      <UniqueIdentifier>{c41279f4-0e36-4092-8cdf-f615a69967a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ENGINE\Editor">
+      <UniqueIdentifier>{43ac9b14-d4b4-45b2-8c7c-dc7459c6386c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
@@ -101,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp">
-      <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
       <Filter>Source Files\Base Systems</Filter>
@@ -174,6 +177,18 @@
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -182,13 +197,7 @@
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp">
@@ -301,6 +310,18 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

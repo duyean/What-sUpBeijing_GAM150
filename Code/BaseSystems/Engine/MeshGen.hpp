@@ -31,7 +31,7 @@ using namespace std;
 
 
 
-	public:
+	private:
 
 		//DO a draw layer by adding draw queueing instead of letting things draw every loop
 
@@ -86,17 +86,12 @@ using namespace std;
 	public:
 		//Singleton functions
 
-		MeshGen(const MeshGen& obj) = delete;
+		MeshGen(const MeshGen&) = delete;
+		MeshGen& operator=(const MeshGen&) = delete;
 
-		static MeshGen* getInstance() {
-			if (instance == nullptr)
-			{
-				lock_guard<mutex> lock(mtx);
-				if (instance == nullptr) {
-					instance = new MeshGen();
-				}
-			}
+		static MeshGen& getInstance() {
 
+			static MeshGen instance;
 			return instance;
 		}
 

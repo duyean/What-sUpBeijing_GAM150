@@ -56,7 +56,7 @@ public:
 	using DeathCallback = std::function<void(Character*)>;
 
 	//Load character data from JSON
-	virtual void LoadCharacter(JSONSerializer& serializer, std::string fileName); 
+	virtual bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
 	//Use the character's move, specified by the enum MOVE_SLOT
 	virtual void UseMove(MOVE_SLOT slot, Character* target);

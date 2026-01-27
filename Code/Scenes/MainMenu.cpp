@@ -17,91 +17,13 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Combat/BattleManager/BattleManager.hpp"
 #include "../Code/Combat/Move.hpp"
 #include "../Code/Combat/Modifier/Modifier.hpp"
-
- // This is all temporary btw
-void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
-{
-    writer.StartObject();
-        writer.Key("name");
-        writer.String("Guy");
-
-        writer.Key("element");
-        writer.Int(static_cast<int>(Game::WUXING_ELEMENT::EARTH));
-    
-        writer.Key("baseHP");
-        writer.Double(100.0);
-    
-        writer.Key("baseATK");
-        writer.Double(20.0);
-    
-        writer.Key("baseDEF");
-        writer.Double(15.5);
-    
-        writer.Key("faction");
-        writer.Int(static_cast<int>(Game::FACTION::PLAYER));
-
-        writer.Key("moves");
-        writer.StartObject();
-            writer.Key("0");
-            writer.Int(1);
-            writer.Key("1");
-            writer.Int(2);
-            writer.Key("2");
-            writer.Int(3);
-            writer.Key("3");
-            writer.Int(4);
-        writer.EndObject();
-    writer.EndObject();
-}
-
-void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
-{
-    writer.StartObject();
-    writer.Key("moves");
-    writer.StartArray();
-        writer.StartObject();
-            writer.Key("id");
-            writer.Int(0);
-            writer.Key("name");
-            writer.String("Basic Attack");
-            writer.Key("coefficient");
-            writer.Double(0.2);
-            writer.Key("dot");
-            writer.Double(0.0);
-            writer.Key("brief");
-            writer.String("Attacks a single enemy");
-            writer.Key("description");
-            writer.String("This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr");
-            writer.Key("target");
-            writer.Int(2);
-            writer.Key("modifiers");
-            writer.StartArray();
-            writer.EndArray();
-        writer.EndObject();
-        writer.StartObject();
-            writer.Key("id");
-            writer.Int(1);
-            writer.Key("name");
-            writer.String("Scorch");
-            writer.Key("coefficient");
-            writer.Double(0.1);
-            writer.Key("dot");
-            writer.Double(0.15);
-            writer.Key("brief");
-            writer.String("Attacks an enemy and applies BURN");
-            writer.Key("description");
-            writer.String("This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now.");
-            writer.Key("target");
-            writer.Int(2);
-        writer.EndObject();
-    writer.EndArray();
-    writer.EndObject();
-}
+#include "../Maps_WZBJ_Pak.hpp"
 
 JSONSerializer jsonSerializer{};
 Character* character = nullptr;
 Character* testEnemy = nullptr;
 BattleManager* battleManager = nullptr;
+Map myMap{};
 
 MainMenu::MainMenu()
 {
@@ -123,9 +45,6 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Init()
 {
-	//jsonSerializer.WriteIntoFile("Assets/Characters/Guy.json", WriteIntoJSON);
-	//jsonSerializer.WriteIntoFile("Assets/Moves/moves-list.json", WriteMovesJSON);
-
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
@@ -141,6 +60,11 @@ void MainMenu::Init()
     battleManager->LoadBattleUnit(character);
     battleManager->LoadBattleUnit(testEnemy);
     battleManager->StartBattle();
+
+    //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
+    Map myMap;
+    Map::LoadMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
+    //Map::SaveMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
 }
 
 /*!

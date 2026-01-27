@@ -38,15 +38,14 @@ std::unique_ptr<Modifier> AttributeModifier::Clone() const
 
 std::unordered_map<MODIFIER_ID, std::unique_ptr<Modifier>> modifierDatabase;
 
-void InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
+bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
 {
     rapidjson::Document doc = serializer.ReadDocument(fileName);
     if (doc.IsNull())
     {
         std::cout << "Unable to load modifier database as Document is nullptr" << std::endl;
-        return;
+        return false;
     }
-
 
     const rapidjson::Value& modifiers = doc["modifiers"];
     for (rapidjson::Value::ConstValueIterator p = modifiers.Begin(); p != modifiers.End(); ++p)
@@ -67,4 +66,5 @@ void InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
             << "\ndamage = " << (*p)["damage"].GetFloat()
             << "\nstack behaviour = " << (*p)["behaviour"].GetInt() << std::endl;
     }
+    return true;
 }

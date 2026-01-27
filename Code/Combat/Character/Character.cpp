@@ -26,13 +26,13 @@ void Character::TakeDamage(float incomingDamage)
 	}
 }
 
-void Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
+bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 {
 	rapidjson::Document doc = serializer.ReadDocument(fileName);
 	if (doc.IsNull())
 	{
 		std::cout << "Unable to load a character as Document is nullptr" << std::endl;
-		return;
+		return false;
 	}
 
 	this->name = doc["name"].GetString(); // name
@@ -54,6 +54,8 @@ void Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 		<< this->baseDEF << " DEF, "
 		<< this->faction << " faction"
 		<< std::endl;
+
+	return true;
 }
 
 void Character::Init(void)

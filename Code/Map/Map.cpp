@@ -1,9 +1,11 @@
 #pragma once
 #include <random> //used for random generation
 #include <iostream> //used to debug print the map to console
+#include <fstream> //used to save and load the map to json files
 
 //mass include files
 #include "../Maps_WZBJ_Pak.hpp"
+#include "../JSONSerializer_WZBJ_Pak.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
 Map Map::GenerateMap(MapType type, int xLen, int yLen)
@@ -375,6 +377,93 @@ void Map::DebugPrint(Map map)
 	printf("\n");
 	}
 	printf("end of map debug printing.\n");
+}
+
+bool Map::SaveMap(Map map, JSONSerializer serializer, std::string fileName)
+{
+	std::ofstream ofs(fileName);
+	if (!ofs.is_open())
+	{
+		std::cout << "Cannot open " << fileName << std::endl;
+		return false;
+	}
+
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
+
+	int x{}, y{};
+	writer.StartObject();
+		writer.Key("nodes");
+		writer.StartArray();
+			for (std::vector <MapNode> vector : map.mapNodes)
+			{
+				for (MapNode node : vector)
+				{
+					writer.StartObject();
+						writer.Key("n");
+						writer.Bool(node.n);
+						writer.Key("s");
+						writer.Bool(node.s);
+						writer.Key("e");
+						writer.Bool(node.e);
+						writer.Key("w");
+						writer.Bool(node.w);
+						writer.Key("type");
+						writer.Int(static_cast<int>(node.type));
+					writer.EndObject();
+					++x;
+				}
+				++y;
+			}
+		writer.EndArray();
+		writer.Key("type");
+		writer.Int(static_cast<int>(map.mapType));
+		writer.Key("x-length");
+		writer.Int(x / y);
+		writer.Key("y-length");
+		writer.Int(y);
+	writer.EndObject();
+
+	return true;
+}
+
+bool Map::LoadMap(Map map, JSONSerializer& serializer, std::string fileName)
+{
+	rapidjson::Document doc = serializer.ReadDocument(fileName);
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load the Map as Document is nullptr" << std::endl;
+		return false;
+	}
+
+	map.mapType = static_cast<MapType>(doc["type"].GetInt());
+	const rapidjson::Value& nodes = doc["nodes"];
+	rapidjson::Value::ConstValueIterator p = nodes.Begin();
+	//set map height
+	int yLen = doc["y-length"].GetInt();
+	int xLen = doc["x-length"].GetInt();
+	map.mapNodes.resize(yLen);
+	for (int y = 0; y < yLen; y++)
+	{
+		//set map width (per width row in nested list)
+		map.mapNodes[y].resize(xLen);
+		for (int x = 0; x < xLen; x++)
+		{
+			MapNode newNode;
+			// Block out all the Grid Walls first.
+			newNode.n = (*p)["n"].GetBool();
+			newNode.s = (*p)["s"].GetBool();
+			newNode.e = (*p)["e"].GetBool();
+			newNode.w = (*p)["w"].GetBool();
+			newNode.type = static_cast<NodeType>((*p)["type"].GetInt());
+			map.mapNodes[y][x] = newNode;
+			++p;
+		}
+	}
+
+	Map::DebugPrint(map);
+
+	return true;
 }
 
 bool isEndNode(MapNode node)

@@ -9,7 +9,7 @@
 #include <algorithm>
 #include "AEEngine.h"
 #include "Colors.hpp"
-#include "MeshNew.hpp"
+#include "Mesh.hpp"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ class RenderSystem
 public:
 
 	bool needsSort = false;
-	void Draw(const MeshNew& mesh);
+	void Draw(const Mesh& mesh);
 	void RenderObjects(const std::vector<std::unique_ptr<Entity>>& entities);
 
 private:

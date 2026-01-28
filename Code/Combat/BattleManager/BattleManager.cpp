@@ -1,6 +1,7 @@
 #include "BattleManager.hpp"
 #include <algorithm>
 #include <iostream>
+#include "../CombatUIManager.hpp"
 
 BattleManager* BattleManager::instance;
 
@@ -47,7 +48,8 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	std::cout << "Battle Start\n========================\n";
+	AEVec2 pos = { 0.f, 0.6f };
+	CombatUIManager::instance->CreateMessageText(pos, "Battle Start");
 }
 
 void BattleManager::update()

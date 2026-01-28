@@ -50,6 +50,7 @@ private:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
 
+	//A map to store the move set for this character
 	std::unordered_map<MOVE_SLOT, MOVE_ID> moveList;
 
 public:

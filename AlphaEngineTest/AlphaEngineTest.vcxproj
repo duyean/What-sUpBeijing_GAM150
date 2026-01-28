@@ -15,6 +15,11 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -56,6 +61,11 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />
@@ -155,6 +165,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,6 +187,7 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

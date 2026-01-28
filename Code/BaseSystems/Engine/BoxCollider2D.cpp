@@ -3,7 +3,7 @@
 #include "PhysicSystem.hpp"
 
 //Setup Physics System
-PhysicSystem* phSystem = PhysicSystem::getInstance();
+PhysicSystem* phSystem = &PhysicSystem::getInstance();
 
 void BoxCollider2D::awake()
 {

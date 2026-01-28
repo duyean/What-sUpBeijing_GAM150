@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Combat Systems\Modifier">
       <UniqueIdentifier>{91b20986-71d5-444f-9ab5-b153f2def17f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ENGINE\Editor">
+      <UniqueIdentifier>{c41279f4-0e36-4092-8cdf-f615a69967a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ENGINE\Editor">
+      <UniqueIdentifier>{43ac9b14-d4b4-45b2-8c7c-dc7459c6386c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Combat\Character\Character.cpp">
@@ -83,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Mesh\Mesh.cpp">
-      <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
       <Filter>Source Files\Base Systems</Filter>
@@ -189,6 +192,18 @@
     <ClCompile Include="..\Code\Combat\CombatUIManager.cpp">
       <Filter>Source Files\Combat Systems</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp">
+      <Filter>Source Files\ENGINE\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -196,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp">
-      <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
       <Filter>Header Files\Base Systems</Filter>
@@ -367,6 +379,18 @@
     </ClInclude>
     <ClInclude Include="..\Code\Combat\CombatUIManager.hpp">
       <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp">
+      <Filter>Header Files\ENGINE\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

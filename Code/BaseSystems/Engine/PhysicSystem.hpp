@@ -28,9 +28,6 @@ struct ColliderPair {
 //Singleton class PhysicSystem Run once before game loop starts
 class PhysicSystem
 {
-	static PhysicSystem* instance;
-
-	static mutex mtx;
 
 	std::vector<BoxCollider2D*> colliders;
 
@@ -68,6 +65,7 @@ public:
 
 	void fixedUpdate(double dt);
 
+private:
 	PhysicSystem()
 	{
 
@@ -80,17 +78,12 @@ public:
 
 public:
 
-	PhysicSystem(const PhysicSystem& obj) = delete;
+	PhysicSystem(const PhysicSystem&) = delete;
+	PhysicSystem& operator=(const PhysicSystem&) = delete;
 
-	static PhysicSystem* getInstance() {
-		if (instance == nullptr)
-		{
-			lock_guard<mutex> lock(mtx);
-			if (instance == nullptr) {
-				instance = new PhysicSystem();
-			}
-		}
+	static PhysicSystem& getInstance() {
 
+		static PhysicSystem instance;
 		return instance;
 	}
 

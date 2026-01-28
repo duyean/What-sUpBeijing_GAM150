@@ -22,6 +22,7 @@ using namespace std;
 
 class Entity
 {
+	friend class EntityManager;
 private:
 	std::vector<std::unique_ptr<SoloBehavior>> components;
 
@@ -31,6 +32,10 @@ public:
 	string name;
 	Transform2D* transform = nullptr;
 	Mesh* mesh = nullptr;
+
+	bool toDestroy = false;
+	bool isActive = true;
+	bool allComponentsInit = false;
 
 	template<typename T, typename... Args>
 	T* addComponent(Args&&... args) {
@@ -63,6 +68,9 @@ public:
 			mesh = ptr;
 		}
 
+		allComponentsInit = false;
+		ptr->isActive = true;
+		ptr->isInit = false;
 		ptr->awake();
 		return ptr;
 	}
@@ -141,30 +149,48 @@ public:
 
 
 	void init() {
-		for (auto& c : components) {
-			c->init();
-		}
+			for (auto& c : components) {
+				if (c->isInit == false)
+				{
+					c->init();
+					c->isInit = true;
+				}
+
+			}
+			allComponentsInit = true;
+		
 	}
 
 	void update() {
 		for (auto& c : components) {
-			c->update();
+			if (c->isActive == true)
+			{
+				c->update();
+			}
+			
 		}
 	}
 
 	void fixedUpdate() {
 		for (auto& c : components) {
-			c->fixedUpdate();
+			if (c->isActive == true)
+			{
+				c->fixedUpdate();
+			}
 		}
 	}
 
+	private:
+	//only call the entity manager's delete
 	void destroy() {
 		for (auto& c : components) {
+			c->entity == nullptr;
 			c->destroy();
 		}
 		components.clear();
 	}
 
+	public:
 	Entity(string Name) { name = Name; }
 
 	Entity() {

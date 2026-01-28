@@ -18,7 +18,7 @@ public:
 	int R;
 	int G;
 	int B;
-	int A;
+	float A;
 	u32 hexCode;
 
 	float normalize(float oldValue)

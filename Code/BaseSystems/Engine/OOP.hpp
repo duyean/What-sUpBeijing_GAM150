@@ -23,8 +23,14 @@ public:
 
 	Entity* entity = nullptr;
 
+	bool isInit = false;
+	bool isActive = false;
+	bool toDestroy = false;
+
 	template<typename T>
 	T* GetComponent();
+
+	void Destroy(Entity& entity);
 
 	SoloBehavior() = default;
 

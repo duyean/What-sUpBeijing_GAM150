@@ -17,6 +17,7 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Combat/BattleManager/BattleManager.hpp"
 #include "../Code/Combat/Move.hpp"
 #include "../Code/Combat/Modifier/Modifier.hpp"
+#include "../Combat/CombatUIManager.hpp"
 
  // This is all temporary btw
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
@@ -99,13 +100,58 @@ void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 }
 
 JSONSerializer jsonSerializer{};
-Character* character = nullptr;
-Character* testEnemy = nullptr;
+std::unique_ptr<Entity> character, testEnemy;
 BattleManager* battleManager = nullptr;
 
 MainMenu::MainMenu()
 {
-	
+    enSystem = enSystem->getInstance();
+    meshSystem = meshSystem->getInstance();
+    stateManager = stateManager->GetInstance();
+
+    auto r = std::make_unique<Entity>("ROOT");
+    enSystem->rootEntity = r.get();
+    AEVec2 pos = { 0.f,0.f };
+    AEVec2 scale = { 1.f,1.f };
+    enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+    enSystem->entities.push_back(std::move(r));
+
+    auto manager = std::make_unique<Entity>("Manager");
+    manager->addComponent<Transform2D>(pos, scale, 0.f);
+    manager->addComponent<BattleManager>();
+    manager->addComponent<CombatUIManager>();
+    enSystem->entities.push_back(std::move(manager));
+
+    auto background = std::make_unique<Entity>("BackgroundIMG");
+    pos = { 0.f,0.f };
+    scale = {1600, 900.f };
+    background->addComponent<Transform2D>(pos, scale, 0.f);
+    background->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+    enSystem->rootEntity->transform->AddChild(background->transform);
+    enSystem->entities.push_back(std::move(background));
+
+    character = std::make_unique<Entity>("Guy");
+    pos = { -500.f, -300.f };
+    scale = { 50.f, 100.f };
+    character->addComponent<Transform2D>(pos, scale, 0.f);
+    character->addComponent<Character>();
+    character->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
+    character->getComponent<Character>()->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
+    enSystem->rootEntity->transform->AddChild(character->transform);
+    enSystem->entities.push_back(std::move(character));
+
+    testEnemy = std::make_unique<Entity>("Enemy");
+    pos = { 500.f, 300.f };
+    scale = { 50.f, 100.f };
+    testEnemy->addComponent<Transform2D>(pos, scale, 0.f);
+    testEnemy->addComponent<Character>();
+    testEnemy->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+    Character* ch = testEnemy->getComponent<Character>();
+    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
+    ch->SetName("Enemy");
+    ch->SetFaction(Game::FACTION::ENEMY);
+    enSystem->rootEntity->transform->AddChild(testEnemy->transform);
+    enSystem->entities.push_back(std::move(testEnemy));
 }
 
 MainMenu::~MainMenu()
@@ -129,47 +175,10 @@ void MainMenu::Load()
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    character = new Character();
-    character->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
-
-    testEnemy = new Character();
-    testEnemy->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
-    testEnemy->SetName("TestEnemy");
-    testEnemy->SetFaction(Game::FACTION::ENEMY);
-
-    battleManager = new BattleManager();
-    battleManager->LoadBattleUnit(character);
-    battleManager->LoadBattleUnit(testEnemy);
+    battleManager = BattleManager::instance;
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
     battleManager->StartBattle();
-}
-
-/*!
-@brief Updates splash screen frame
-
-Overwrites virtual GameState::Update().
-This function updates variables in splash screen per frame to
-makes image fade in and out before loading main menu.
-
-@param float
-@return void
-*//*______________________________________________________________*/
-void MainMenu::Update(float _dt)
-{
-    battleManager->Update(_dt);
-}
-
-/*!
-@brief Render splash screen
-
-Overwrites virtual GameState::Render().
-This function renders splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
-void MainMenu::Render()
-{
-
 }
 
 /*!
@@ -183,6 +192,5 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void MainMenu::Unload()
 {
-	delete character;
-	delete battleManager;
+
 }

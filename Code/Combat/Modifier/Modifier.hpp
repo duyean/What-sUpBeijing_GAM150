@@ -58,12 +58,15 @@ public:
 	//How do handle same effect
 	STACK_BEHAVIOUR stackBehaviour;
 
+	//Who applied the effect
+	Character* source;
+
 	//How many stacks this effect have
 	int stackCount;
 
-	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(nullptr), ID(GENERIC_MODIFIER), duration(3), stackBehaviour(REFRESH), stackCount(1) {};
+	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(nullptr), ID(GENERIC_MODIFIER), duration(3), stackBehaviour(REFRESH), stackCount(1), source(nullptr) {};
 	inline Modifier(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, STACK_BEHAVIOUR stackBeh, int stackCount = 1) :
-		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount) {
+		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount), source(nullptr) {
 	};
 	virtual ~Modifier() = default;
 	virtual void Apply(Character* target) {};

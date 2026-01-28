@@ -19,7 +19,7 @@ void EventSystem::removeUIElement(UIElement* ui)
 bool EventSystem::pointOverlap(UIElement* ui)
 {
 	AEInputGetCursorPosition(m_x, m_y);
-
+	return false;
 }
 
 void EventSystem::Update(double dt)

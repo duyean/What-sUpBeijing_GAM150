@@ -1,5 +1,5 @@
 #include "Character.hpp"
-
+#include "../CombatUIManager.hpp"
 #include <iostream>
 
 void Character::DealDamage(Character* target, float coefficient)
@@ -7,19 +7,26 @@ void Character::DealDamage(Character* target, float coefficient)
 	float critRoll = AERandFloat();
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
-	if (isCrit)
-	{
-		std::cout << name << " scored a CRITICAL HIT!\n";
-	}
-	target->TakeDamage(finalDamage);
+	Game::DamageInfo info = Game::DamageInfo();
+	info.damage = finalDamage;
+	info.isCritical = isCrit;
+	info.elementType = this->element;
+	info.source = this;
+	target->TakeDamage(info);
 }
 
-void Character::TakeDamage(float incomingDamage)
+void Character::TakeDamage(Game::DamageInfo damageInfo)
 {
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
-	float finalDamageTaken = incomingDamage * (1 - defDMGReduction) * (1 - dmgReduction);
+	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 - dmgReduction);
 	hp -= finalDamageTaken;
-	std::cout << name << " took " << finalDamageTaken << " damage!\n";
+	AEVec2 offset = { 0, 50 };
+	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition(), damageInfo);
+	//if (damageInfo.isCritical)
+	//{
+	//	std::cout << "A critical hit!\n";
+	//}
+	//std::cout << name << " took " << finalDamageTaken << " damage from " << damageInfo.source->name << std::endl;
 	if (hp <= 0)
 	{
 		Death();
@@ -83,6 +90,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 				if (proto != modifierDatabase.end())
 				{
 					auto modifier = proto->second->Clone();
+					modifier->source = this;
 					if (auto* status = dynamic_cast<StatusEffect*>(modifier.get())) //Check if it is a dot buff
 					{
 						status->damage = atk * move->dot_coefficient;
@@ -212,4 +220,29 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 		maxHPBonus += value;
 		break;
 	}
+}
+
+void Character::init()
+{
+	Init();
+}
+
+void Character::awake()
+{
+
+}
+
+void Character::update()
+{
+
+}
+
+void Character::fixedUpdate()
+{
+
+}
+
+void Character::destroy()
+{
+
 }

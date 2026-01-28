@@ -31,11 +31,13 @@ This function sets game window size and intializes all other managers.
 *//*______________________________________________________________*/
 void GameManager::Init()
 {
-	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
 	//Initialize our singleton classes here...
 	meshSystem->initialize();
+
+	//Set the starting game scene
+	stateManager->NextScene(GameStateManager::MAIN_MENU); //GAME_SCREEN SPLASHSCREEN
+
 
 	//initialize all entities
 	for (const auto& end : enSystem->entities)

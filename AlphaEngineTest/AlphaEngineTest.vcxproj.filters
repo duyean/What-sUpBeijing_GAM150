@@ -189,6 +189,12 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Combat\DamageNumber.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\CombatUIManager.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -269,24 +275,18 @@
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Combat\Move.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Combat\Globals\Blessing.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp">
       <Filter>Header Files\Combat Systems\Modifier</Filter>
-    </ClCompile>
+    </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
@@ -352,6 +352,18 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp">
       <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\DamageNumber.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

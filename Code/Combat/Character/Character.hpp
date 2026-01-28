@@ -6,9 +6,9 @@
 #include <vector>
 #include <functional>
 #include <string>
+#include "../../Engine_WZBJ_Pak.hpp"
 
-
-class Character
+class Character : public SoloBehavior
 {
 private:
 	//Name of the unit
@@ -62,7 +62,7 @@ public:
 	virtual void UseMove(MOVE_SLOT slot, Character* target);
 
 	//Handles incoming damage, reduced by DEF and other factors
-	virtual void TakeDamage(float incomingDamage);
+	virtual void TakeDamage(Game::DamageInfo damageInfo);
 
 	//Deals damage to the target, followed by the coefficient of the move
 	virtual void DealDamage(Character* target, float coefficient);
@@ -97,6 +97,12 @@ public:
 	bool TurnFinished(void) const { return turnFinished; }
 	void SetName(std::string name) { this->name = name; }
 	void SetFaction(Game::FACTION faction) { this->faction = faction; }
+
+	void init() override;
+	void awake() override;
+	void update() override;
+	void fixedUpdate() override;
+	void destroy() override;
 
 private:
 	DeathCallback onDeath;

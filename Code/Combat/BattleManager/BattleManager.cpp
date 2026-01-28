@@ -2,6 +2,26 @@
 #include <algorithm>
 #include <iostream>
 
+BattleManager* BattleManager::instance;
+
+void BattleManager::awake()
+{
+	if (!instance)
+	{
+		instance = this;
+	}
+}
+
+void BattleManager::init()
+{
+
+}
+
+BattleManager::BattleManager()
+{
+
+}
+
 void BattleManager::LoadBattleUnit(Character* unit)
 {
 	if (!unit)
@@ -30,17 +50,23 @@ void BattleManager::StartBattle()
 	std::cout << "Battle Start\n========================\n";
 }
 
-void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
+void BattleManager::update()
 {
 	if (!inBattle)
 	{
 		return;
 	}
+
 	Character* activeUnit = battleUnits[currentActiveUnit];
 	if (!wait)
 	{
 		activeUnit->StartTurn();
 		wait = true;
+	}
+
+	if (activeUnit->GetFaction() == Game::PLAYER)
+	{
+		//activeUnit->Draw();
 	}
 
 	if (!activeUnit->TurnFinished() && wait)
@@ -67,6 +93,11 @@ void BattleManager::Update(float _dt = 1 / AEFrameRateControllerGetFrameRate())
 	}
 }
 
+void BattleManager::fixedUpdate()
+{
+
+}
+
 void BattleManager::ProcessDeadUnit(Character* dead)
 {
 	if (dead->GetFaction() == Game::FACTION::ENEMY)
@@ -79,4 +110,9 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			std::cout << "Battle Over!\n";
 		}
 	}
+}
+
+void BattleManager::destroy()
+{
+	battleUnits.clear();
 }

@@ -28,6 +28,8 @@
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
+    <ClCompile Include="..\Code\Combat\CombatUIManager.cpp" />
+    <ClCompile Include="..\Code\Combat\DamageNumber.cpp" />
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
@@ -74,7 +76,8 @@
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
-    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
+    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp" />
+    <ClInclude Include="..\Code\Combat\DamageNumber.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
     <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />

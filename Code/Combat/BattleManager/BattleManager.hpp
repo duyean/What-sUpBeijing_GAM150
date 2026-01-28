@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include "../Character/Character.hpp"
+#include "../../Engine_WZBJ_Pak.hpp"
 
-class BattleManager
+class BattleManager : public SoloBehavior
 {
-
 	std::vector<Character*> battleUnits;
 	int currentActiveUnit;
 	bool inBattle;
@@ -20,9 +20,15 @@ class BattleManager
 	BATTLE_OUTCOME outcome;
 
 public:
-
+	static BattleManager* instance;
+	BattleManager();
 	void LoadBattleUnit(Character* unit);
 	void StartBattle();
 	void ProcessDeadUnit(Character* deadUnit);
-	void Update(float _dt);
+
+	void awake() override;
+	void init() override;
+	void update() override;
+	void fixedUpdate() override;
+	void destroy() override;
 };

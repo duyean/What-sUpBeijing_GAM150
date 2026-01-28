@@ -346,7 +346,7 @@ AEGfxTexture* MeshGen::getTexture(const char* fileName)
 
 void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 {
-	pFont.insert({fileName, AEGfxCreateFont(fileName, 72)});
+	pFont.insert({fileName, AEGfxCreateFont(filePath, pixelSize)});
 }
 
 void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName)

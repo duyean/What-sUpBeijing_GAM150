@@ -11,12 +11,19 @@ This file contains the declarations of functions to manage the game
 #pragma once
 #include "AEEngine.h"
 #include "GameStateManager.hpp"
+#include "../../BaseSystems/Engine/MeshGen.hpp"
+#include "../../BaseSystems/Engine/Entity.hpp"
+#include "../../BaseSystems/Engine/EntityManager.hpp"
+#include "../../BaseSystems/Engine/PhysicSystem.hpp"
 
 class GameManager : public SingletonPattern<GameManager>
 {
 	friend SingletonPattern<GameManager>;
 private:
 	GameStateManager* stateManager;
+	MeshGen* meshSystem;
+	EntityManager* enSystem;
+	PhysicSystem* phSystem;
 	bool ShowDebug;
 
 public:
@@ -36,6 +43,13 @@ public:
 	@return void
 	*//*______________________________________________________________*/
 	void Update(float _dt);
+
+	/*!
+	@brief Updates game at fixed intervals
+	@param float
+	@return void
+	*//*______________________________________________________________*/
+	void FixedUpdate(double _fixedDt, double accumulator);
 
 	/*!
 	@brief Render game frame

@@ -1,6 +1,8 @@
 #pragma once
 //global combat enums
 
+class Character;
+
 namespace Game
 {
 	static constexpr int DEF_CONSTANT = 500; //The Damage Reduction from DEF will be 0.5 at this DEF value
@@ -22,7 +24,8 @@ namespace Game
 		EARTH,
 		WOOD,
 		WATER,
-		METAL
+		METAL,
+		NORMAL
 	};
 
 	enum FACTION
@@ -30,5 +33,13 @@ namespace Game
 		NONE,
 		PLAYER,
 		ENEMY
+	};
+
+	struct DamageInfo
+	{
+		float damage;
+		bool isCritical;
+		Character* source;
+		WUXING_ELEMENT elementType;
 	};
 }

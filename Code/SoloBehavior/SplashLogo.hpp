@@ -13,8 +13,13 @@ using namespace std;
 
 class EntityManager;
 
-class Healthbar1: public SoloBehavior
+class SplashLogo: public SoloBehavior
 {
+private:
+	float curSplashTimer;
+	float maxSplashTimer = 6.f;
+	int splashOpacity = 0;
+
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -25,14 +30,11 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Healthbar1() {
+	SplashLogo() {
 		enSystem = nullptr;
 	}
 
-	~Healthbar1()
-	{
-
-	}
+	~SplashLogo(){}
 
 };
 

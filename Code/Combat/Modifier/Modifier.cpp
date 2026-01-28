@@ -18,7 +18,11 @@ void StatusEffect::Apply(Character* target)
     {
         return;
     }
-    target->TakeDamage(damage * stackCount);
+    Game::DamageInfo info;
+    info.damage = damage * stackCount;
+    info.elementType = Game::NORMAL;
+    info.source = source;
+    target->TakeDamage(info);
 }
 
 Game::ATTRIBUTE_TYPE AttributeModifier::GetAttributeType(void) const

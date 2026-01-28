@@ -30,7 +30,7 @@ protected:
 public:
 	string name;
 	Transform2D* transform = nullptr;
-	MeshNew* mesh = nullptr;
+	Mesh* mesh = nullptr;
 
 	template<typename T, typename... Args>
 	T* addComponent(Args&&... args) {
@@ -45,7 +45,7 @@ public:
 				return transform;
 			}
 		}
-		else if constexpr (std::is_same_v<T, MeshNew>) {
+		else if constexpr (std::is_same_v<T, Mesh>) {
 			if (mesh) {
 				return mesh;
 			}
@@ -59,7 +59,7 @@ public:
 		if constexpr (std::is_same_v<T, Transform2D>) {
 			transform = ptr;
 		}
-		else if constexpr (std::is_same_v<T, MeshNew>) {
+		else if constexpr (std::is_same_v<T, Mesh>) {
 			mesh = ptr;
 		}
 

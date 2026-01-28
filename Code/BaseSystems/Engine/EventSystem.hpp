@@ -1,0 +1,61 @@
+#pragma once
+#ifndef _InputSystem_
+#include <iostream>
+#include <cstdint>
+#include <vector>
+#include <crtdbg.h> // To check for memory leaks
+#include <mutex>
+#include <map>
+#include <memory>
+#include <algorithm>
+#include "AEEngine.h"
+#include "OOP.hpp"
+#include "InputInterfaces.hpp"
+#include "Entity.hpp"
+#include "UIElement.hpp"
+
+using namespace std;
+
+//Singleton class PhysicSystem Run once before game loop starts
+class EventSystem
+{
+	std::vector<UIElement*> uiElements;
+	static EventSystem* instance;
+	static mutex mtx;
+
+public:
+
+	void addUIElement(UIElement* ui);
+	void removeUIElement(UIElement* ui);
+	bool pointOverlap(UIElement* ui);
+	void Update(double dt);
+
+	EventSystem(){}
+	~EventSystem(){}
+
+private:
+
+	PointerEventData eventData;
+	s32* m_x = nullptr;
+	s32* m_y = nullptr;
+
+public:
+
+	EventSystem(const EventSystem& obj) = delete;
+
+	static EventSystem* getInstance() {
+		if (instance == nullptr)
+		{
+			lock_guard<mutex> lock(mtx);
+			if (instance == nullptr) {
+				instance = new EventSystem();
+			}
+		}
+
+		return instance;
+	}
+};
+
+
+
+#endif

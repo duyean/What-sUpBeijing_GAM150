@@ -26,7 +26,7 @@ enum MeshType{
 };
 
 
-class MeshNew : public SoloBehavior
+class Mesh : public SoloBehavior
 {
 public:
 
@@ -53,11 +53,11 @@ public:
 	void setMesh(char const* fileName);
 	void setTexture(char const* fileName);
 
-	MeshNew() {
+	Mesh() {
 
 	}
 
-	MeshNew(AEGfxVertexList* t, AEGfxTexture* p, Color col, int depth, MeshType ty) {
+	Mesh(AEGfxVertexList* t, AEGfxTexture* p, Color col, int depth, MeshType ty) {
 		targetMesh = t;
 		pTex = p;
 		drawOrder = depth;
@@ -65,7 +65,7 @@ public:
 		color = col;
 	}
 	//Init with this please
-	MeshNew(const char* filenameM, const char* filenameT, Color col, int depth, MeshType t) {
+	Mesh(const char* filenameM, const char* filenameT, Color col, int depth, MeshType t) {
 		setMesh(filenameM);
 		setTexture(filenameT);
 		drawOrder = depth;
@@ -74,14 +74,14 @@ public:
 	}
 
 	//Only for BOX and CIRCLE no TEX
-	MeshNew(const char* filenameM, Color col, int depth, MeshType t) {
+	Mesh(const char* filenameM, Color col, int depth, MeshType t) {
 		setMesh(filenameM);
 		drawOrder = depth;
 		type = t;
 		color = col;
 	}
 
-	~MeshNew()
+	~Mesh()
 	{
 
 	}
@@ -89,7 +89,7 @@ public:
 
 
 
-class SpriteSheetMesh : MeshNew
+class SpriteSheetMesh : Mesh
 {
 	int row = 0;
 	int column = 0;

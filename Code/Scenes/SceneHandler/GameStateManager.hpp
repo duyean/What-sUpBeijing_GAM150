@@ -48,12 +48,6 @@ public:
 	*//*______________________________________________________________*/
 	void Update(float _dt);
 
-	/*!
-	@brief Render current screen
-	@param void
-	@return void
-	*//*______________________________________________________________*/
-	void Render();
 
 	/*!
 	@brief Clears GameStateManager variables

@@ -37,12 +37,6 @@ void game_init(void)
 	gameManager->Init();
 }
 
-void game_update(void)
-{
-	gameManager->Update(AEFrameRateControllerGetFrameTime());
-	gameManager->Render();
-}
-
 void game_exit(void)
 {
 	gameManager->Exit();
@@ -66,9 +60,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	int gGameRunning = 1;
 
-	//Game Initialization
-	game_init();
-
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
 
@@ -78,36 +69,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// reset the system modules
 	AESysReset();
 
+	//Game Initialization
+	game_init();
 
 	//FixedUpdate
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	double accumulator = 0.0;
-
-	//SetUp Meshes
-	MeshGen* meshSystem = MeshGen::getInstance();
-
-	//Setup EntityManager System
-	EntityManager* enSystem = EntityManager::getInstance();
-
-	//Setup Physics System
-	PhysicSystem* phSystem = PhysicSystem::getInstance();
-
-	meshSystem->initialize();
-
-	//Move all of these into a GameSceneManager/GameStateManager
-   //Root
-	auto r = std::make_unique<Entity>("ROOT");
-	enSystem->rootEntity = r.get();
-	AEVec2 pos = { 0.f,0.f };
-	AEVec2 scale = { 1.f,1.f };
-	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
-	enSystem->entities.push_back(std::move(r));
-
-
-	for (const auto& end : enSystem->entities)
-	{
-		end->init();
-	}
 
 	// Game Loop
 	while (gGameRunning)
@@ -118,7 +85,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// Close the window if press esacpe key
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;
-
 
 
 		//Chrono stuff
@@ -132,28 +98,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		accumulator += frameTime.count();
 
 
-
-	 	// Your own update logic goes here
-	    //Update everything
-		for (const auto& end : enSystem->entities)
-		{
-			end->update();
-		}
-
-		// Game Update and rendering
-		game_update();
-
-
-		//Fixed Update everything
-		if (accumulator >= FIXED_DT)
-		{
-			for (const auto& end : enSystem->entities)
-			{
-				end->fixedUpdate();
-			}
-			phSystem->fixedUpdate(FIXED_DT);
-			accumulator -= FIXED_DT;
-		}
+		// Game Update 
+		gameManager->Update(AEFrameRateControllerGetFrameTime());
+		// Game rendering
+		gameManager->Render();
+		// Game Fixed Update
+		gameManager->FixedUpdate(FIXED_DT, accumulator);
 
 
 		// Informing the system about the loop's end

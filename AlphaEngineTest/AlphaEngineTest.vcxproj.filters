@@ -144,6 +144,51 @@
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp">
       <Filter>Source Files\Combat Systems\Modifier</Filter>
     </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_demo.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>Source Files\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Player.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\DamageNumber.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\CombatUIManager.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Combat\Character\Character.hpp">
@@ -158,31 +203,10 @@
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\Mesh.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Map\MapClass.hpp">
-      <Filter>Header Files\Map Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\MapNodeClass.hpp">
-      <Filter>Header Files\Map Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
-      <Filter>Header Files\Map Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\Map.hpp">
-      <Filter>Header Files\Map Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp">
@@ -245,7 +269,7 @@
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Combat\Move.hpp">
@@ -260,14 +284,89 @@
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Combat\Globals\Blessing.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp">
       <Filter>Header Files\Combat Systems\Modifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imconfig.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imgui.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imgui_internal.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_rectpack.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_textedit.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\imstb_truetype.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3.h">
+      <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\imgui\backends\imgui_impl_win32.h">
+      <Filter>Header Files\ImGui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Player.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\Map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapClass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapNodeClass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Button.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\DamageNumber.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

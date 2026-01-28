@@ -43,28 +43,13 @@ void GameStateManager::Update(float _dt)
 {
 	if (curGameState != nextGameState) {
 		if (curGameState != nullptr) {
-			curGameState->Exit();
+			curGameState->Unload();
 			delete curGameState;
 		}
 
 		curGameState = nextGameState;
-		curGameState->Init();
+		curGameState->Load();
 	}
-
-	curGameState->Update(_dt);
-}
-
-/*!
-@brief Renders current scene
-
-This function renders current scene
-
-@param float
-@return void
-*//*______________________________________________________________*/
-void GameStateManager::Render()
-{
-	curGameState->Render();
 }
 
 /*!
@@ -79,7 +64,7 @@ void GameStateManager::Exit()
 {
 	nextGameState = nullptr;
 	if (curGameState != nullptr) {
-		curGameState->Exit();
+		curGameState->Unload();
 		delete curGameState;
 	}
 }

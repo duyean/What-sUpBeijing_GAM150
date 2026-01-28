@@ -33,7 +33,7 @@ void PhysicSystem::setOverlapState(BoxCollider2D* a, BoxCollider2D* b, bool over
 }
 
 bool PhysicSystem::aabbOverlap(BoxCollider2D* a, BoxCollider2D* b) {
-	auto* ta = a->entity->transform;
+    auto* ta = a->entity->transform;
 	auto* tb = b->entity->transform;
 
 	AEVec2 d = abs(ta->getPosition() - tb->getPosition());

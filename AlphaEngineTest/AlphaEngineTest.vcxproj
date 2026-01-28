@@ -15,6 +15,7 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\UIElement.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -76,6 +77,8 @@
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
+    <ClInclude Include="..\Code\EngineUI_WZBJ_Pak .hpp" />
+    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Map\Map.hpp" />
     <ClInclude Include="..\Code\Map\MapClass.hpp" />

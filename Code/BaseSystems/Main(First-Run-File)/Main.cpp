@@ -8,6 +8,7 @@
 #include "../Engine/Entity.hpp"
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
+#include "../Engine/EventSystem.hpp"
 
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
@@ -29,7 +30,8 @@ mutex EntityManager::mtx;
 PhysicSystem* PhysicSystem::instance = nullptr;
 mutex PhysicSystem::mtx;
 
-
+EventSystem* EventSystem::instance = nullptr;
+mutex EventSystem::mtx;
 
 void game_init(void)
 {

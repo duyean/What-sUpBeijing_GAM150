@@ -19,25 +19,28 @@ using namespace std;
 //Singleton class PhysicSystem Run once before game loop starts
 class EventSystem
 {
-	std::vector<UIElement*> uiElements;
 	static EventSystem* instance;
 	static mutex mtx;
+
+	std::vector<UIElement*> uiElements;
 
 public:
 
 	void addUIElement(UIElement* ui);
 	void removeUIElement(UIElement* ui);
-	bool pointOverlap(UIElement* ui);
+	bool pointOverlap(s32 m_x, s32 m_y, UIElement* ui);
+	void DispatchPointerTriggered(UIElement* uiElement, const PointerEventData& event);
 	void Update(double dt);
+	bool IsPointerOverObject();
 
-	EventSystem(){}
-	~EventSystem(){}
+	EventSystem();
+	~EventSystem();
 
 private:
 
 	PointerEventData eventData;
-	s32* m_x = nullptr;
-	s32* m_y = nullptr;
+	bool p_overObject = false;
+	UIElement* lastUIObject = nullptr;
 
 public:
 

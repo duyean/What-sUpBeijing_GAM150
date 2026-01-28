@@ -18,6 +18,7 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Code/Combat/Move.hpp"
 #include "../Code/Combat/Modifier/Modifier.hpp"
 #include "../Combat/CombatUIManager.hpp"
+#include "../Maps_WZBJ_Pak.hpp"
 
  // This is all temporary btw
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)

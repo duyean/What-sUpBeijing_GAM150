@@ -15,6 +15,7 @@ GameManager::GameManager()
 	meshSystem = MeshGen::getInstance();
 	enSystem = EntityManager::getInstance();
 	phSystem = PhysicSystem::getInstance();
+	eventSystem = EventSystem::getInstance();
 }
 
 GameManager::~GameManager()
@@ -31,13 +32,11 @@ This function sets game window size and intializes all other managers.
 *//*______________________________________________________________*/
 void GameManager::Init()
 {
-
 	//Initialize our singleton classes here...
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::MAIN_MENU); //GAME_SCREEN SPLASHSCREEN
-
+	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (const auto& end : enSystem->entities)
@@ -64,6 +63,7 @@ void GameManager::Update(float _dt)
 	{
 		end->update();
 	}
+	eventSystem->Update(_dt);
 }
 
 void GameManager::FixedUpdate(double _fixedDt, double accumulator)
@@ -90,7 +90,7 @@ This functions clears background for new frame and renders frame
 *//*______________________________________________________________*/
 void GameManager::Render() 
 {
-	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
+	AEGfxSetBackgroundColor(0.3f, 0.3f, 0.3f);
 }
 
 /*!

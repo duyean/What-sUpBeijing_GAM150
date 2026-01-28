@@ -16,9 +16,8 @@
 class UIElement : public SoloBehavior
 {
 public:
-	AEVec2 size;
-	AEVec2 pos;
-
+	virtual void OnHover() = 0;
+	virtual void OnHoverExit() = 0;
 	UIElement(){}
 	~UIElement(){};
 };

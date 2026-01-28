@@ -1,25 +1,18 @@
 #pragma once
 #ifndef _InputInterfaces_
 #include <iostream>
+#include "UIElement.hpp"
 
-
-enum class MouseButton
-{
-    LEFT,
-    RIGHT,
-    MIDDLE
-};
 
 struct PointerEventData
 {
-    int x;
-    int y;
+    s32 x;
+    s32 y;
 
-    int deltaX;
-    int deltaY;
+    s32 delta_x;
+    s32 delta_y;
 
-    MouseButton button;
-    int clickCount;
+    //UIElement* currentUIObject;
 };
 
 struct IPointerDown
@@ -32,6 +25,12 @@ struct IPointerUp
 {
     virtual ~IPointerUp() = default;
     virtual void OnPointerUp(const PointerEventData& event) = 0;
+};
+
+struct IPointerTriggered
+{
+    virtual ~IPointerTriggered() = default;
+    virtual void OnPointerTriggered(const PointerEventData& event) = 0;
 };
 
 struct IDrag

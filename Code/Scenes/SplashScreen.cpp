@@ -19,6 +19,11 @@ SplashScreen::~SplashScreen()
 {
 }
 
+void NextScene()
+{
+	GameStateManager::GetInstance()->NextScene(GameStateManager::SCENES::MAIN_MENU);
+}
+
 
 /*!
 @brief Initialize splash screen variables
@@ -32,7 +37,7 @@ This function loads splash screen image
 void SplashScreen::Load()
 {
 	meshSystem = MeshGen::getInstance();
-	meshSystem->CreateTexture("../../Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
+	meshSystem->CreateTexture("../../Assets/Images/Button.png", "ButtonDefault");
 
 	enSystem = EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");
@@ -42,12 +47,15 @@ void SplashScreen::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	auto e = std::make_unique<Entity>("SPLASHLOGO");
+	auto e = std::make_unique<Entity>("BUTTON1");
 	Entity* en = e.get();
 	pos = { 0.f,0.f };
-	scale = { 1525.f, 445.f };
+	scale = { 150.f, 40.f };
 	en->addComponent<Transform2D>(pos, scale, 0.f);
-	en->addComponent<Mesh>("Box", "SplashLogo", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	en->addComponent<Mesh>("Box", "ButtonDefault", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	Button* b = en->addComponent<Button>();
+	b->SetHighlightedColor(Color(30, 255, 30, 255));
+	b->SetOnClick(&NextScene);
 	enSystem->rootEntity->transform->AddChild(en->transform);
 	enSystem->entities.push_back(std::move(e));
 
@@ -65,5 +73,8 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void SplashScreen::Unload()
 {
+	for (auto& e : enSystem->entities) {
+		e->destroy();
+	}
 	enSystem->entities.clear();
 }

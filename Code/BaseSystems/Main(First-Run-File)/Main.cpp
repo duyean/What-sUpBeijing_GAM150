@@ -9,6 +9,7 @@
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
 #include "../Engine/RenderSystem.hpp"
+#include "../Engine/EventSystem.hpp"
 
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
@@ -36,7 +37,8 @@ PhysicSystem* phSystem = &PhysicSystem::getInstance();
 
 RenderSystem* rSystem = &RenderSystem::getInstance();
 
-
+EventSystem* EventSystem::instance = nullptr;
+mutex EventSystem::mtx;
 
 void game_init(void)
 {

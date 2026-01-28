@@ -106,6 +106,24 @@ Map myMap{};
 
 MainMenu::MainMenu()
 {
+    
+}
+
+MainMenu::~MainMenu()
+{
+}
+
+/*!
+@brief Initialize splash screen variables
+
+Overwrites virtual GameState::Init().
+This function loads splash screen image
+
+@param void
+@return void
+*//*______________________________________________________________*/
+void MainMenu::Load()
+{
     enSystem = enSystem->getInstance();
     meshSystem = meshSystem->getInstance();
     stateManager = stateManager->GetInstance();
@@ -125,7 +143,7 @@ MainMenu::MainMenu()
 
     auto background = std::make_unique<Entity>("BackgroundIMG");
     pos = { 0.f,0.f };
-    scale = {1600, 900.f };
+    scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
     background->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
     enSystem->rootEntity->transform->AddChild(background->transform);
@@ -153,23 +171,7 @@ MainMenu::MainMenu()
     ch->SetFaction(Game::FACTION::ENEMY);
     enSystem->rootEntity->transform->AddChild(testEnemy->transform);
     enSystem->entities.push_back(std::move(testEnemy));
-}
 
-MainMenu::~MainMenu()
-{
-}
-
-/*!
-@brief Initialize splash screen variables
-
-Overwrites virtual GameState::Init().
-This function loads splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
-void MainMenu::Load()
-{
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 

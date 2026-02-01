@@ -117,4 +117,5 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 void BattleManager::destroy()
 {
 	battleUnits.clear();
+
 }

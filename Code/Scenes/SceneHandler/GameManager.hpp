@@ -11,11 +11,14 @@ This file contains the declarations of functions to manage the game
 #pragma once
 #include "AEEngine.h"
 #include "GameStateManager.hpp"
-#include "../../BaseSystems/Engine/MeshGen.hpp"
-#include "../../BaseSystems/Engine/Entity.hpp"
-#include "../../BaseSystems/Engine/EntityManager.hpp"
-#include "../../BaseSystems/Engine/PhysicSystem.hpp"
-#include "../../BaseSystems/Engine/EventSystem.hpp"
+
+
+class EventSystem;
+class GameStateManager;
+class MeshGen;
+class EntityManager;
+class PhysicSystem;
+class RenderSystem;
 
 class GameManager : public SingletonPattern<GameManager>
 {
@@ -26,6 +29,7 @@ private:
 	MeshGen* meshSystem;
 	EntityManager* enSystem;
 	PhysicSystem* phSystem;
+	RenderSystem* rSystem;
 	bool ShowDebug;
 
 public:

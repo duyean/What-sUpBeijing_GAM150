@@ -9,9 +9,7 @@
 #include <memory>
 #include <algorithm> 
 #include "AEEngine.h"
-#include "OOP.hpp"
 #include "Entity.hpp"
-#include "Colors.hpp"
 
 using namespace std;
 

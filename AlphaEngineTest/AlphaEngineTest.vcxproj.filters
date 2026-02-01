@@ -28,12 +28,6 @@
     <Filter Include="Header Files\Global Inherit Files">
       <UniqueIdentifier>{86a8c647-cf36-4fe5-baf1-42191ff1a2cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Map Systems">
-      <UniqueIdentifier>{debc7b26-6cff-45d2-ac97-96384b611699}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Map Systems">
-      <UniqueIdentifier>{98f6d40e-880d-4114-937b-1af9f8caa82e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Base Systems\Scene Handler">
       <UniqueIdentifier>{45eeaac4-8227-4d88-a66a-8b395fdd22ee}</UniqueIdentifier>
     </Filter>
@@ -52,11 +46,35 @@
     <Filter Include="Source Files\ENGINE">
       <UniqueIdentifier>{45113a31-0a35-4f45-9ef8-3902c36f7fbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Combat Systems\Modifier">
-      <UniqueIdentifier>{39881df9-79d4-4e71-89bc-a5d92d0c71fc}</UniqueIdentifier>
+    <Filter Include="Header Files\ImGui">
+      <UniqueIdentifier>{ef401f6d-1ed1-423e-ba34-5d3c67d49e15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Combat Systems\Modifier">
-      <UniqueIdentifier>{91b20986-71d5-444f-9ab5-b153f2def17f}</UniqueIdentifier>
+    <Filter Include="Source Files\ImGui">
+      <UniqueIdentifier>{bf2a75bd-679a-4a56-b63c-1790d31848bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImGui\backends">
+      <UniqueIdentifier>{a230fac2-9a3d-4e1d-a9e9-f5aa881d09fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGui\ImGui">
+      <UniqueIdentifier>{54de5c79-3d4a-449f-8924-9d7f7a00dc37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{e7eea770-97a1-45b5-90a1-dd303157710f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{e28fa98b-5b10-4dc8-ad24-754c1e7e2d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\GameObjects">
+      <UniqueIdentifier>{d4a13c5c-2629-435f-a82f-63ddcd4304b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\UIObjects">
+      <UniqueIdentifier>{3f4cfbb5-297d-4311-ac41-6df4eea7b258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\GameObject">
+      <UniqueIdentifier>{1b5d0971-4e40-4d5f-b84c-c06aeda56a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\UIObjects">
+      <UniqueIdentifier>{4e9be823-af89-407a-914a-f99ae5a32ad4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ENGINE\Editor">
       <UniqueIdentifier>{c41279f4-0e36-4092-8cdf-f615a69967a4}</UniqueIdentifier>
@@ -64,11 +82,44 @@
     <Filter Include="Header Files\ENGINE\Editor">
       <UniqueIdentifier>{43ac9b14-d4b4-45b2-8c7c-dc7459c6386c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Combat Systems\BattleManager">
+      <UniqueIdentifier>{34441346-ef46-4201-9ced-a56c60fd9df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat Systems\Blessing">
+      <UniqueIdentifier>{f10e1250-bf9b-4b86-9db6-fb5f5063fb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat Systems\Character">
+      <UniqueIdentifier>{ba473c79-152d-48da-9157-d921fd8bb356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat Systems\Globals">
+      <UniqueIdentifier>{30d5e63b-aa42-4979-88ef-85fd7a683999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat Systems\Modifier">
+      <UniqueIdentifier>{9565f0aa-60d0-45c8-900e-78fc37a01b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat Systems\BattleManager">
+      <UniqueIdentifier>{79d1d63c-60e4-4a45-aa53-664f325e8a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat Systems\Blessing">
+      <UniqueIdentifier>{9760eab3-3b20-4fd6-a5bf-82e99c6b70f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat Systems\Character">
+      <UniqueIdentifier>{02fef6f3-df6d-4278-8747-bcdad6269204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat Systems\Globals">
+      <UniqueIdentifier>{303ebe2d-ad89-4e5e-9e20-f38382cbfb03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat Systems\Modifier">
+      <UniqueIdentifier>{4d869e40-8154-4aba-8582-4b9c3513cf09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{0f6b9e8e-4a4a-4124-8158-4687e56bb557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{771c5b61-31bd-478c-8ed5-0267ade279ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\Combat\Character\Character.cpp">
-      <Filter>Source Files\Combat Systems</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp">
       <Filter>Source Files\Base Systems\Scene Handler</Filter>
     </ClCompile>
@@ -89,9 +140,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp">
-      <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp">
       <Filter>Source Files\ENGINE</Filter>
@@ -117,35 +165,14 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp">
       <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\MeshNew.cpp">
+    <ClCompile Include="..\Code\BaseSystems\Engine\Mesh.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Map\Map.cpp">
-      <Filter>Source Files\Map Systems</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\Move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\Move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp">
-      <Filter>Source Files\Combat Systems\Modifier</Filter>
     </ClCompile>
     <ClCompile Include="..\Extern\imgui\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
@@ -174,24 +201,6 @@
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Map\Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
-      <Filter>Source Files\Entities\UIObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp">
-      <Filter>Source Files\ENGINE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp">
-      <Filter>Source Files\ENGINE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\DamageNumber.cpp">
-      <Filter>Source Files\Combat Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Combat\CombatUIManager.cpp">
-      <Filter>Source Files\Combat Systems</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp">
       <Filter>Source Files\ENGINE\Editor</Filter>
     </ClCompile>
@@ -204,21 +213,45 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Button.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\Character\Character.cpp">
+      <Filter>Source Files\Combat Systems\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\DamageNumber.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\CombatUIManager.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\Move.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp">
+      <Filter>Source Files\Combat Systems\BattleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp">
+      <Filter>Source Files\Combat Systems\Modifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\Map.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\Combat\Character\Character.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp">
+      <Filter>Header Files\Base Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp">
@@ -272,7 +305,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\MeshGen.hpp">
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\MeshNew.hpp">
+    <ClInclude Include="..\Code\BaseSystems\Engine\Mesh.hpp">
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
@@ -281,26 +314,8 @@
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\Move.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp">
-      <Filter>Header Files\Combat Systems\Modifier</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
@@ -335,51 +350,6 @@
     <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\Map.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\MapClass.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\MapNodeClass.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
-      <Filter>Header Files\Entities\UIObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\Button.hpp">
-      <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp">
-      <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp">
-      <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp">
-      <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\DamageNumber.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp">
-      <Filter>Header Files\Combat Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp">
       <Filter>Header Files\ENGINE\Editor</Filter>
     </ClInclude>
@@ -391,6 +361,69 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp">
       <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Button.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\UIElement.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\DamageNumber.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Character\Character.hpp">
+      <Filter>Header Files\Combat Systems\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Move.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp">
+      <Filter>Header Files\Combat Systems\BattleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp">
+      <Filter>Header Files\Combat Systems\Blessing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp">
+      <Filter>Header Files\Combat Systems\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp">
+      <Filter>Header Files\Combat Systems\Modifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\Map.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapClass.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapNodeClass.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

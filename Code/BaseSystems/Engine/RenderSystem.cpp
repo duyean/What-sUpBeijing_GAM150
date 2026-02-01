@@ -3,8 +3,11 @@
 
 #include "../EaseFunctions/AEVEC2OVERLOAD.hpp"
 
-MeshGen* meshSystem = &MeshGen::getInstance();
 
+void RenderSystem::init()
+{
+	meshSystem = &MeshGen::getInstance();
+}
 void RenderSystem::Draw(const Mesh &mesh)
 {
 	switch (mesh.type)
@@ -41,9 +44,11 @@ void RenderSystem::Draw(const Mesh &mesh)
 
 void RenderSystem::RenderObjects(const std::vector<std::unique_ptr<Entity>>& entities)
 {
+
     std::vector<Mesh*> queue;
-    for (const auto& entity : entities) {
-        if (auto mesh = entity->getComponent<Mesh>()) {
+	for (int i = 0; i < entities.size(); i++)
+	{
+        if (auto mesh = entities[i]->getComponent<Mesh>()) {
             if (mesh->isActive == true)
             {
                 queue.push_back(mesh);
@@ -51,8 +56,8 @@ void RenderSystem::RenderObjects(const std::vector<std::unique_ptr<Entity>>& ent
         }
     }
 
-    std::stable_sort(queue.begin(), queue.end(), [](const Mesh& a, const Mesh& b) {
-        return a.drawOrder < b.drawOrder;
+    std::stable_sort(queue.begin(), queue.end(), [](const Mesh* a, const Mesh* b) {
+        return a->drawOrder < b->drawOrder;
         });
 
 

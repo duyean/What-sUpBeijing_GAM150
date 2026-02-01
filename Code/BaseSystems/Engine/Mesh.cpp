@@ -1,40 +1,42 @@
-#include "MeshNew.hpp"
+#include "Mesh.hpp"
 #include "MeshGen.hpp"
 
-void MeshNew::setMesh(char const* fileName)
+
+
+void Mesh::setMesh(char const* fileName)
 {
-	targetMesh = meshSystem->getMesh(fileName);
+	targetMesh = MeshGen::getInstance().getMesh(fileName);
 }
-void MeshNew::setTexture(char const* fileName)
+void Mesh::setTexture(char const* fileName)
 {
-	pTex = meshSystem->getTexture(fileName);
-}
-
-
-void MeshNew::awake()
-{
-
+	pTex = MeshGen::getInstance().getTexture(fileName);
 }
 
 
-void MeshNew::init()
+void Mesh::awake()
+{
+	meshSystem = &MeshGen::getInstance();
+}
+
+
+void Mesh::init()
 {
 
 }
 
-void MeshNew::update()
+void Mesh::update()
 {
 	//Moved to a sorted draw layering
 	//Draw();
 
 }
 
-void MeshNew::fixedUpdate()
+void Mesh::fixedUpdate()
 {
 
 }
 
-void MeshNew::destroy()
+void Mesh::destroy()
 {
 
 }

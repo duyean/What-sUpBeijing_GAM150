@@ -13,20 +13,17 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\Engine\Button.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Sprite.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\Engine\UIElement.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Entity.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\EntityManager.cpp" />
-    <ClCompile Include="..\Code\BaseSystems\Engine\MeshNew.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Mesh.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\OOP.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\PhysicSystem.cpp" />
@@ -37,16 +34,17 @@
     <ClCompile Include="..\Code\Combat\CombatUIManager.cpp" />
     <ClCompile Include="..\Code\Combat\DamageNumber.cpp" />
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
-    <ClCompile Include="..\Code\Map\Map.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
+    <ClCompile Include="..\Code\Map\Map.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
-    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui.cpp" />
@@ -58,14 +56,12 @@
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\Button.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\UIElement.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
@@ -74,29 +70,30 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Entity.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\EntityManager.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\MeshGen.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\MeshNew.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Mesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\OOP.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\PhysicSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Mesh\MeshClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Combat\BattleManager\BattleManager.hpp" />
     <ClInclude Include="..\Code\Combat\Blessing\Blessing.hpp" />
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
-    <ClInclude Include="..\Code\EngineUI_WZBJ_Pak .hpp" />
-    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Combat\CombatUIManager.hpp" />
+    <ClInclude Include="..\Code\Combat\DamageNumber.hpp" />
+    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
+    <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
+    <ClInclude Include="..\Code\Combat\Move.hpp" />
     <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Map\Map.hpp" />
     <ClInclude Include="..\Code\Map\MapClass.hpp" />
     <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
-    <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
-    <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
-    <ClInclude Include="..\Code\Combat\Move.hpp" />
+    <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
@@ -104,9 +101,10 @@
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameState.hpp" />
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameStateManager.hpp" />
     <ClInclude Include="..\Code\Scenes\SplashScreen.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\Button.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\HEALTHBAR1.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\Player.hpp" />
-    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\UIElement.hpp" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="..\Extern\imgui\backends\imgui_impl_win32.h" />
@@ -198,7 +196,7 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</
       <AdditionalDependencies>Alpha_Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)Assets\" "$(OutDir)Assets\" /s /r /y /q /d
+      <Command>xcopy "$(SolutionDir)Assets\" "$(OutDir)Assets\" /s /r /y /q
 xcopy "$(SolutionDir)Extern\AlphaEngine\lib\freetype.dll" "$(OutDir)" /s /r /y /q
 xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_Engine.dll" "$(OutDir)" /s /r /y /q
 xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmod.dll" "$(OutDir)" /s /r /y /q</Command>

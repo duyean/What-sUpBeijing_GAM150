@@ -30,13 +30,14 @@ void MeshGen::DrawBox(float Xpos, float Ypos, float width, float height, Color c
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
+
 	AEGfxSetTransform(transform.m);
 	AEGfxMeshDraw(pMesh.at("Box"), AE_GFX_MDM_TRIANGLES);
-	
+
 }
 
 void MeshGen::DrawBoxTexture(float Xpos, float Ypos, float width, float height, Color color, float Deg, const char* fileName)
@@ -64,9 +65,9 @@ void MeshGen::DrawBoxTexture(float Xpos, float Ypos, float width, float height, 
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
 	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
-	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
+	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, color.A);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(color.A);
+	//AEGfxSetTransparency(color.A);
 
 	AEGfxTextureSet(pTex.at(fileName), 0, 0);
 
@@ -169,11 +170,11 @@ void MeshGen::DrawBox(AEVec2 position, AEVec2 scale, Color color, float Deg)
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
-	//AEGfxSetColorToMultiply(color.R, color.G, color.B, color.A);
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
+
 	AEGfxSetTransform(transform.m);
 	AEGfxMeshDraw(pMesh.at("Box"), AE_GFX_MDM_TRIANGLES);
 
@@ -217,11 +218,10 @@ void MeshGen::DrawBoxLeft(AEVec2 position, AEVec2 scale, Color color, float Deg)
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
-	//AEGfxSetColorToMultiply(color.R, color.G, color.B, color.A);
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 	AEGfxSetTransform(transform.m);
 	AEGfxMeshDraw(pMesh.at("Box"), AE_GFX_MDM_TRIANGLES);
 
@@ -254,10 +254,10 @@ void MeshGen::DrawBoxTexture(AEVec2 position, AEVec2 scale, Color color, float D
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 
 	AEGfxTextureSet(texture, 0, 0);
 
@@ -289,10 +289,10 @@ void MeshGen::DrawCircle(AEVec2 position, AEVec2 scale, Color color)
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 	AEGfxSetTransform(transform.m);
 	AEGfxMeshDraw(pMesh.at("Circle"), AE_GFX_MDM_TRIANGLES);
 
@@ -322,10 +322,10 @@ void MeshGen::DrawCircleTexture(AEVec2 position, AEVec2 scale, Color color, AEGf
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxSetColorToMultiply(red, green, blue, static_cast<float>(color.A));
+	AEGfxSetColorToMultiply(red, green, blue, 1.0f);
 	AEGfxSetColorToAdd(0.0f, 0.0f, 0.0f, 0.0f);
 	AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-	AEGfxSetTransparency(1.0f);
+	AEGfxSetTransparency(color.A);
 
 	AEGfxTextureSet(texture, 0, 0);
 
@@ -347,7 +347,7 @@ AEGfxTexture* MeshGen::getTexture(const char* fileName)
 
 void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 {
-	pFont.insert({fileName, AEGfxCreateFont(filePath, pixelSize)});
+	pFont.insert({ fileName, AEGfxCreateFont(filePath, pixelSize) });
 }
 
 void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName)
@@ -355,15 +355,15 @@ void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const c
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	AEGfxPrint(pFont.at(fileName),          
-		text,   
-		Xpos,             
-		Ypos,             
-		scale,             
+	AEGfxPrint(pFont.at(fileName),
+		text,
+		Xpos,
+		Ypos,
+		scale,
 		red,
 		green,
 		blue,
-		color.A);            
+		color.A);
 }
 
 void MeshGen::ClearFont(string name)
@@ -377,7 +377,7 @@ void MeshGen::ClearAllFont()
 	{
 		AEGfxDestroyFont(pair.second);
 	}
-	
+
 }
 
 
@@ -393,16 +393,16 @@ void MeshGen::CreateSpriteSheet(int column, int row, int fps, const char* fileNa
 	AEGfxTriAdd(
 		-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1 / static_cast<float>(row),
 		0.5f, -0.5f, 0xFFFFFFFF, 1 / static_cast<float>(column), 1 / static_cast<float>(row),
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);  
+		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
 
 	AEGfxTriAdd(
 		0.5f, -0.5f, 0xFFFFFFFF, 1 / static_cast<float>(column), 1 / static_cast<float>(row),
 		0.5f, 0.5f, 0xFFFFFFFF, 1 / static_cast<float>(column), 0.0f,
-		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f); 
+		-0.5f, 0.5f, 0xFFFFFFFF, 0.0f, 0.0f);
 
 	pMesh.insert({ fileName,  AEGfxMeshEnd() });
 	//int r, int c, int cF, int fps, float cT
-	sSprite.push_back({ new SpriteSheetMesh(row, column, 0, fps, 0.f)});
+	sSprite.push_back({ new SpriteSheetMesh(row, column, 0, fps, 0.f) });
 }
 
 void MeshGen::CreateAnimatedSprite(float Xpos, float Ypos, float width, float height, float animationSpeed, int face, float Deg, Color color, const char* fileName)
@@ -452,7 +452,7 @@ void MeshGen::CreateAnimatedSprite(float Xpos, float Ypos, float width, float he
 void MeshGen::ClearMesh(string name)
 {
 	AEGfxMeshFree(pMesh.at(name));
-	
+
 }
 
 void MeshGen::ClearTex(string name)

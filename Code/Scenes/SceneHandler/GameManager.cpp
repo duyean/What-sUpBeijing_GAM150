@@ -8,14 +8,16 @@
 This file contains the definition of functions for GameManager.h
 *//*______________________________________________________________________*/
 #include "GameManager.hpp"
+#include "../Code/Engine_WZBJ_Pak.hpp"
 
 GameManager::GameManager()
 {
 	stateManager = GameStateManager::GetInstance();
-	meshSystem = MeshGen::getInstance();
-	enSystem = EntityManager::getInstance();
-	phSystem = PhysicSystem::getInstance();
-	eventSystem = EventSystem::getInstance();
+	meshSystem = &MeshGen::getInstance();
+	enSystem = &EntityManager::getInstance();
+	phSystem = &PhysicSystem::getInstance();
+	rSystem = &RenderSystem::getInstance();
+	eventSystem = &EventSystem::getInstance();
 }
 
 GameManager::~GameManager()
@@ -39,9 +41,9 @@ void GameManager::Init()
 	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
-	for (const auto& end : enSystem->entities)
+	for (int i = 0; i < enSystem->entities.size(); i++)
 	{
-		end->init();
+		enSystem->entities[i]->init();
 	}
 }
 
@@ -55,24 +57,44 @@ This function updates managers per frame
 *//*______________________________________________________________*/
 void GameManager::Update(float _dt)
 {
+	
 	stateManager->Update(_dt);
 
 	// Your own update logic goes here
 		//Update everything
-	for (const auto& end : enSystem->entities)
-	{
-		end->update();
-	}
+
+
 	eventSystem->Update(_dt);
+	for (int i = 0; i < enSystem->entities.size(); i++)
+	{
+		if (enSystem->entities[i] != nullptr)
+		{
+			if (enSystem->entities[i]->allComponentsInit == false)
+			{
+				enSystem->entities[i]->init();
+			}
+			if (enSystem->entities[i]->isActive == true)
+			{
+				enSystem->entities[i]->update();
+			}
+		}
+
+	}
 }
 
 void GameManager::FixedUpdate(double _fixedDt, double accumulator)
 {
 	if (accumulator >= _fixedDt)
 	{
-		for (const auto& end : enSystem->entities)
+		for (int i = 0; i < enSystem->entities.size(); i++)
 		{
-			end->fixedUpdate();
+			if (enSystem->entities[i] != nullptr)
+			{
+				if (enSystem->entities[i]->isActive == true)
+				{
+					enSystem->entities[i]->fixedUpdate();
+				}
+			}
 		}
 		phSystem->fixedUpdate(_fixedDt);
 		accumulator -= _fixedDt;
@@ -90,7 +112,9 @@ This functions clears background for new frame and renders frame
 *//*______________________________________________________________*/
 void GameManager::Render() 
 {
+	
 	AEGfxSetBackgroundColor(0.3f, 0.3f, 0.3f);
+	rSystem->RenderObjects(enSystem->entities);
 }
 
 /*!

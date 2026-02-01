@@ -8,8 +8,7 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "../BaseSystems_WZBJ_Pak.hpp"
-#include "../SceneHandler_WZBJ_Pak.hpp"
+#include "SplashScreen.hpp"
 
 SplashScreen::SplashScreen()
 {	
@@ -36,10 +35,10 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void SplashScreen::Load()
 {
-	meshSystem = MeshGen::getInstance();
+	meshSystem = &MeshGen::getInstance();
 	meshSystem->CreateTexture("../../Assets/Images/Button.png", "ButtonDefault");
 
-	enSystem = EntityManager::getInstance();
+	enSystem = &EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");
 	enSystem->rootEntity = r.get();
 	AEVec2 pos = { 0.f,0.f };
@@ -52,7 +51,7 @@ void SplashScreen::Load()
 	pos = { 0.f,0.f };
 	scale = { 150.f, 40.f };
 	en->addComponent<Transform2D>(pos, scale, 0.f);
-	en->addComponent<Mesh>("Box", "ButtonDefault", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	en->addComponent<Mesh>("Box", "ButtonDefault", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	Button* b = en->addComponent<Button>();
 	b->SetHighlightedColor(Color(30, 255, 30, 255));
 	b->SetOnClick(&NextScene);
@@ -73,8 +72,8 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void SplashScreen::Unload()
 {
+	EntityManager::getInstance().needsCleanup = true;
 	for (auto& e : enSystem->entities) {
-		e->destroy();
+		e->toDestroy = true;
 	}
-	enSystem->entities.clear();
 }

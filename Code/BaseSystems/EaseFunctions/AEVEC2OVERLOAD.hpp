@@ -16,7 +16,14 @@ AEVec2 operator-(const AEVec2& lhs, const AEVec2& rhs);
 
 AEVec2 operator*(const AEVec2& lhs, const AEVec2& rhs);
 
+AEVec2 operator*(const AEVec2& lhs, const f64& rhs);
+
 AEVec2 operator/(const AEVec2& lhs, const AEVec2& rhs);
 
+AEVec2 operator/(const AEVec2& lhs, const f64& rhs);
+
+
 AEVec2 abs(const AEVec2& lhs);
+
+
 #endif

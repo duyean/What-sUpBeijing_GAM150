@@ -12,7 +12,7 @@ class JSONSerializer
 public:
 	// Write into a JSON file
 	bool WriteIntoFile(std::string fileName, WriteFunction function);
-	
+
 	// Read from a JSON file
 	bool ReadFromFile(std::string fileName, ReadFunction function);
 

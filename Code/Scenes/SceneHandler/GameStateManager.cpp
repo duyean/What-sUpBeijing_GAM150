@@ -9,7 +9,8 @@
 This file contains the definitions for the collection of functions in GameStateManager.h
 *//*______________________________________________________________________*/
 #include "../../SceneHandler_WZBJ_Pak.hpp"
-
+#include "../Code/Scenes/MainMenu.hpp"
+#include "../Code/Scenes/SplashScreen.hpp"
 
 GameStateManager::GameStateManager() :
 	curGameState(nullptr),
@@ -29,6 +30,7 @@ GameStateManager::~GameStateManager()
 *//*______________________________________________________________*/
 void GameStateManager::Init()
 {
+
 }
 
 /*!
@@ -41,15 +43,20 @@ This function updates current scene frame and changes scene if there is one on s
 *//*______________________________________________________________*/
 void GameStateManager::Update(float _dt)
 {
-	if (curGameState != nextGameState) {
-		if (curGameState != nullptr) {
-			curGameState->Unload();
-			delete curGameState;
+	if (nextGameState != nullptr)
+	{
+		if (curGameState != nextGameState) {
+			if (curGameState != nullptr) {
+				curGameState->Unload();
+				delete curGameState;
+
+			}
+			curGameState = nextGameState;
+			curGameState->Load();
 		}
 
-		curGameState = nextGameState;
-		curGameState->Load();
 	}
+	
 }
 
 /*!
@@ -111,6 +118,6 @@ GameStateManager::SCENES GameStateManager::GetCurrentLevel(void)
 
 void GameStateManager::LoadNextLevel(void)
 {
-	currentLevel = (SCENES)(currentLevel + 1);
-	NextScene(currentLevel);
+	//currentLevel = (SCENES)(currentLevel + 1);
+	//NextScene(currentLevel);
 }

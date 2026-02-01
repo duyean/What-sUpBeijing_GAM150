@@ -1,7 +1,6 @@
 #pragma once
 #ifndef _InputInterfaces_
 #include <iostream>
-#include "UIElement.hpp"
 
 
 struct PointerEventData

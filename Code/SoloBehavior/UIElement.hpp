@@ -9,9 +9,7 @@
 #include <memory>
 #include <algorithm>
 #include "AEEngine.h"
-#include "OOP.hpp"
-#include "Entity.hpp"
-#include "Colors.hpp"
+#include "../Engine_WZBJ_Pak.hpp"
 
 class UIElement : public SoloBehavior
 {

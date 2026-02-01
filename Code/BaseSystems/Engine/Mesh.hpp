@@ -25,6 +25,7 @@ enum MeshType{
 	SPRITE_T
 };
 
+class MeshGen;
 
 class Mesh : public SoloBehavior
 {
@@ -38,7 +39,8 @@ public:
 
 
 	int drawOrder = 100;
-
+private:
+	MeshGen* meshSystem = nullptr;
 
 public:
 

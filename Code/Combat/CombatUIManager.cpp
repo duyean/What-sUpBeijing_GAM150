@@ -12,7 +12,7 @@ void CombatUIManager::awake()
 		instance = this;
 	}
 
-	MeshGen::getInstance()->SetFont("Assets/Fonts/liberation-mono.ttf", "font1", 72);
+	MeshGen::getInstance().SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 100);
 }
 
 void CombatUIManager::init()
@@ -30,7 +30,8 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 	di->lifetime = 1.f;
 	di->text = std::to_string((int)info.damage);
 	di->textColor = DamageNumbers::GetElementColor(info.elementType);
-	EntityManager::getInstance()->entities.push_back(std::move(e)); //Make the entity and add it to the entityList
+	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
+	EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color)
 {
@@ -42,7 +43,8 @@ void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color
 	di->lifetime = 1.5f;
 	di->text = text;
 	di->textColor = color;
-	EntityManager::getInstance()->entities.push_back(std::move(e)); //Make the entity and add it to the entityList
+	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
+	EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 
 void CombatUIManager::update()

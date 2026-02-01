@@ -1,7 +1,7 @@
 #include "EventSystem.hpp"
 #include <cmath>
 #include "../EaseFunctions/AEVEC2OVERLOAD.hpp"
-
+#include "../../SoloBehavior/UIElement.hpp"
 
 void EventSystem::addUIElement(UIElement* ui)
 {

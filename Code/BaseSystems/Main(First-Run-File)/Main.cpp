@@ -9,14 +9,12 @@
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
 #include "../Engine/RenderSystem.hpp"
-#include "../Engine/EventSystem.hpp"
 
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
-#include "../../Maps_WZBJ_Pak.hpp"
 
 #include "../Engine/Editor/Editor.hpp"
 
@@ -37,13 +35,22 @@ PhysicSystem* phSystem = &PhysicSystem::getInstance();
 
 RenderSystem* rSystem = &RenderSystem::getInstance();
 
-EventSystem* EventSystem::instance = nullptr;
-mutex EventSystem::mtx;
+
 
 void game_init(void)
 {
 	gameManager = GameManager::GetInstance();
 	gameManager->Init();
+	meshSystem->initialize();
+	rSystem->init();
+
+}
+
+void game_update(void)
+{
+
+	gameManager->Render();
+	gameManager->Update(AEFrameRateControllerGetFrameTime());
 }
 
 void game_exit(void)
@@ -89,8 +96,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// reset the system modules
 	AESysReset();
 
-	//Game Initialization
-	game_init();
 
 	//Game Initialization
 	game_init();
@@ -99,22 +104,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	double accumulator = 0.0;
 
-	meshSystem->initialize();
-
-
-
 	//Move all of these into a GameSceneManager/GameStateManager
    //Root
-	auto r = std::make_unique<Entity>("ROOT");
-	enSystem->rootEntity = r.get();
-	AEVec2 pos = { 0.f,0.f };
-	AEVec2 scale = { 1.f,1.f };
-	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f); //MUST HAVE
-	enSystem->rootEntity->addComponent<MeshNew>("Box");
-	enSystem->entities.push_back(std::move(r));
-
-
-
+	enSystem->entities.reserve(1000);
 
 	// Game Loop
 	while (gGameRunning)
@@ -126,6 +118,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
 			gGameRunning = 0;
 
+	
 
 		//Chrono stuff
 		auto newTime = std::chrono::high_resolution_clock::now();
@@ -138,47 +131,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		accumulator += frameTime.count();
 
 
-		// Game Update 
-		gameManager->Update(AEFrameRateControllerGetFrameTime());
-		// Game rendering
-		gameManager->Render();
-		// Game Fixed Update
-		gameManager->FixedUpdate(FIXED_DT, accumulator);
 	 	// Your own update logic goes here
-	    //Update everything
-		for (const auto& end : enSystem->entities)
-		{
-			if (end->allComponentsInit == false)
-			{
-				end->init();
-			}
-			if (end->isActive == true)
-			{
-				end->update();
-			}
-		}
+		// Game Update 
+		//gameManager->Update(AEFrameRateControllerGetFrameTime());
+		// Game rendering
+		//gameManager->Render();
+		// Game Fixed Update
 
-		//Fixed Update everything
-		if (accumulator >= FIXED_DT)
-		{
-			for (const auto& end : enSystem->entities)
-			{
-				if (end->isActive == true)
-				{
-					end->fixedUpdate();
-				}
-			}
-			phSystem->fixedUpdate(FIXED_DT);
-			accumulator -= FIXED_DT;
-		}
 
-		rSystem->RenderObjects(enSystem->entities);
+		//rSystem->RenderObjects(enSystem->entities);
 
 		// Game Update and rendering
 		game_update();
-
-		//change to optimized move and pop once drawing layers are implemented
+		gameManager->FixedUpdate(FIXED_DT, accumulator);
 		enSystem->clearAllDestroyed();
+		//change to optimized move and pop once drawing layers are implemented
+
 
 #ifdef ALPHA_EDITOR
 		//Editor code

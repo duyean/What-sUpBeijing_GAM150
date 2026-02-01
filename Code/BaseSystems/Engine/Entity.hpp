@@ -9,7 +9,7 @@
 #include <memory>
 #include "AEEngine.h"
 #include "ECS.hpp"
-#include "MeshNew.hpp"
+#include "Mesh.hpp"
 #include "OOP.hpp"
 #include "Transform2D.hpp"
 #include "Colors.hpp"
@@ -184,7 +184,7 @@ public:
 	//only call the entity manager's delete
 	void destroy() {
 		for (auto& c : components) {
-			c->entity == nullptr;
+			c->entity = nullptr;
 			c->destroy();
 		}
 		components.clear();

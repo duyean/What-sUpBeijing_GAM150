@@ -11,6 +11,8 @@
 
 using namespace std;
 
+class PhysicSystem;
+
 class BoxCollider2D : public SoloBehavior
 {
 public:
@@ -18,7 +20,7 @@ public:
 
 private:
 	std::vector<CollisionCallback> onEnter, onStay, onExit;
-
+	PhysicSystem* phSystem;
 public:
     AEVec2 halfExtents;
     bool isTrigger = false;

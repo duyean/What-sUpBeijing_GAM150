@@ -27,11 +27,12 @@ public:
 	}
 
 	Color() {
-		R = G = B = A = 0;
+		R = G = B = 0;
+		A = 0.f;
 		hexCode = 0xFFFFFFFF;
 	}
 
-	Color(int Red, int Green, int Blue, int Alpha) {
+	Color(int Red, int Green, int Blue, float Alpha) {
 		R = Red;
 		G = Green;
 		B = Blue;

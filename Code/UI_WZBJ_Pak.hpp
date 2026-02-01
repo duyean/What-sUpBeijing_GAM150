@@ -12,6 +12,5 @@
 	- CharacterData WZBJ Pak -
 ===================================
 */
-#include "BaseSystems/Engine/Button.hpp"
-#include "BaseSystems/Engine/UIElement.hpp"
-#include "BaseSystems/Engine/EventSystem.hpp"
+#include "SoloBehavior/Button.hpp"
+#include "SoloBehavior/UIElement.hpp"

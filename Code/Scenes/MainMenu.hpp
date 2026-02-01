@@ -13,7 +13,6 @@ This file contains the declarations of functions for the main menu
 #include "../SceneHandler_WZBJ_Pak.hpp"
 #include "../Engine_WZBJ_Pak.hpp"
 
-
 class MainMenu : public GameState
 {
 private:

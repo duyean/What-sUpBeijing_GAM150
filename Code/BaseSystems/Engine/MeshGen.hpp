@@ -9,7 +9,7 @@
 #include <memory>
 #include "AEEngine.h"
 #include "ECS.hpp"
-#include "MeshNew.hpp"
+#include "Mesh.hpp"
 #include "Entity.hpp"
 #include "Colors.hpp"
 

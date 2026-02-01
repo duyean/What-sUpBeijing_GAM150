@@ -11,8 +11,9 @@ This file contains the declarations of functions for splash screen
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
+
 #include "../Engine_WZBJ_Pak.hpp"
-#include "../EngineUI_WZBJ_Pak .hpp"
+#include "../UI_WZBJ_Pak.hpp"
 
 class SplashScreen : public GameState
 {

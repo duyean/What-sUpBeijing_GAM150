@@ -124,8 +124,8 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Load()
 {
-    enSystem = enSystem->getInstance();
-    meshSystem = meshSystem->getInstance();
+    enSystem = &EntityManager::getInstance();
+    meshSystem = &MeshGen::getInstance();
     stateManager = stateManager->GetInstance();
 
     auto r = std::make_unique<Entity>("ROOT");
@@ -139,6 +139,7 @@ void MainMenu::Load()
     manager->addComponent<Transform2D>(pos, scale, 0.f);
     manager->addComponent<BattleManager>();
     manager->addComponent<CombatUIManager>();
+    enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
 
     auto background = std::make_unique<Entity>("BackgroundIMG");

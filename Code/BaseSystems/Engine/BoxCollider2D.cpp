@@ -3,11 +3,13 @@
 #include "PhysicSystem.hpp"
 
 //Setup Physics System
-PhysicSystem* phSystem = &PhysicSystem::getInstance();
+
 
 void BoxCollider2D::awake()
 {
+	phSystem = &PhysicSystem::getInstance();
 	phSystem->registerCollider(this);
+
 }
 
 

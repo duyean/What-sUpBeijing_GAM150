@@ -6,10 +6,8 @@
 #include <functional>
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
-#include "OOP.hpp"
-#include "Colors.hpp"
 #include "UIElement.hpp"
-#include "InputInterfaces.hpp"
+
 
 
 class Button : public UIElement, public IPointerTriggered

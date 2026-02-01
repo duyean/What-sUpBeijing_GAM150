@@ -31,6 +31,7 @@ public:
 	T* GetComponent();
 
 	void Destroy(Entity& entity);
+	void Destroy(Entity* entity);
 
 	SoloBehavior() = default;
 

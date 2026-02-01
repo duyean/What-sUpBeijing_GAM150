@@ -9,6 +9,7 @@ class DamageNumbers : public SoloBehavior
 public:
 	static Color GetElementColor(Game::WUXING_ELEMENT);
 	Color textColor;
+	float size;
 	std::string text;
 	float lifetime;
 

@@ -14,6 +14,7 @@
 
 #ifndef RAPIDJSON_DOCUMENT_H_
 #define RAPIDJSON_DOCUMENT_H_
+#define RAPIDJSON_NOMEMBERITERATORCLASS
 
 /*! \file document.h */
 
@@ -45,6 +46,7 @@ RAPIDJSON_DIAG_OFF(terminate) // ignore throwing RAPIDJSON_ASSERT in RAPIDJSON_N
 #endif // __GNUC__
 
 #undef min;
+
 #undef max;
 
 #ifndef RAPIDJSON_NOMEMBERITERATORCLASS

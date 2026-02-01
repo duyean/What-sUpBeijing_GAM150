@@ -11,6 +11,13 @@ T* SoloBehavior::GetComponent()
 void SoloBehavior::Destroy(Entity& entity)
 {
 	//set destroy flag
-	EntityManager::getInstance()->needsCleanup = true;
+	EntityManager::getInstance().needsCleanup = true;
 	entity.toDestroy = true;
+}
+
+void SoloBehavior::Destroy(Entity* entity)
+{
+	//set destroy flag
+	EntityManager::getInstance().needsCleanup = true;
+	entity->toDestroy = true;
 }

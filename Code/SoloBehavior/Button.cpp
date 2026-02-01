@@ -1,8 +1,6 @@
 #include "Button.hpp"
-#include "Entity.hpp"
-#include "EventSystem.hpp"
 
-EventSystem* eventSystem = EventSystem::getInstance();
+EventSystem* eventSystem = &EventSystem::getInstance();
 
 void Button::awake()
 {

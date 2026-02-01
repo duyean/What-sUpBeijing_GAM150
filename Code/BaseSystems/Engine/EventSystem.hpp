@@ -4,24 +4,20 @@
 #include <cstdint>
 #include <vector>
 #include <crtdbg.h> // To check for memory leaks
-#include <mutex>
 #include <map>
 #include <memory>
 #include <algorithm>
 #include "AEEngine.h"
-#include "OOP.hpp"
 #include "InputInterfaces.hpp"
 #include "Entity.hpp"
-#include "UIElement.hpp"
+
 
 using namespace std;
+class UIElement;
 
 //Singleton class PhysicSystem Run once before game loop starts
 class EventSystem
 {
-	static EventSystem* instance;
-	static mutex mtx;
-
 	std::vector<UIElement*> uiElements;
 
 public:
@@ -44,17 +40,13 @@ private:
 
 public:
 
-	EventSystem(const EventSystem& obj) = delete;
 
-	static EventSystem* getInstance() {
-		if (instance == nullptr)
-		{
-			lock_guard<mutex> lock(mtx);
-			if (instance == nullptr) {
-				instance = new EventSystem();
-			}
-		}
+	EventSystem(const EventSystem&) = delete;
+	EventSystem& operator=(const EventSystem&) = delete;
 
+	static EventSystem& getInstance() {
+
+		static EventSystem instance;
 		return instance;
 	}
 };

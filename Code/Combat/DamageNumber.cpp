@@ -4,7 +4,7 @@
 
 DamageNumbers::DamageNumbers()
 {
-	enSystem = EntityManager::getInstance();
+	enSystem = &EntityManager::getInstance();
 	lifetime = 0.8f;
 }
 
@@ -48,18 +48,41 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 
 void DamageNumbers::init()
 {
-
+	size = 0.4f;
 }
 
 void DamageNumbers::update()
 {
 
-	AEVec2 normalised = {(this->entity->transform->getPosition().x - this->entity->transform->getScale().x * 0.10f)/ 800, (this->entity->transform->getPosition().y + 100) / 450};
-	MeshGen::getInstance()->DrawFont(normalised.x, normalised.y, 1, textColor, text.c_str(), "font1");
+	AEVec2 normalised = {(this->entity->transform->getPosition().x - this->entity->transform->getScale().x * 0.10f)/ 800, (this->entity->transform->getPosition().y + 50) / 450};
+	MeshGen::getInstance().DrawFont(normalised.x, normalised.y, size, textColor, text.c_str(), "liberi");
 	lifetime -= 1 / 60.f;
 	if (lifetime <= 0)
 	{
-		destroy();
+		Destroy(entity);
+	}
+	else
+	{
+		if (lifetime > 0.7f && size < 1.f)
+		{
+			size += 25.f * AEFrameRateControllerGetFrameTime();
+		}
+		else if (lifetime < 0.7f && size > 0.f)
+		{
+			size -= 0.3f * AEFrameRateControllerGetFrameTime();
+			if (textColor.A >= 0.f) {
+				textColor.A -= 2.f * AEFrameRateControllerGetFrameTime();
+			}
+		
+
+		}
+		
+		float smoothing = 10.0f;
+		AEVec2 lerped{};
+		AEVec2 position = entity->transform->getPosition();
+		AEVec2 target = entity->transform->getPosition() + AEVec2(0, 5.f);
+		AEVec2Lerp(&lerped, &position, &target, 1.0f - exp(-smoothing * AEFrameRateControllerGetFrameTime()));
+		entity->transform->setPosition(lerped);
 	}
 }
 
@@ -69,15 +92,5 @@ void DamageNumbers::fixedUpdate()
 
 void DamageNumbers::destroy()
 {
-	printf("Destroyed Text\n");
-	enSystem->entities.erase(
-		std::remove_if(
-			enSystem->entities.begin(),
-			enSystem->entities.end(),
-			[this](const std::unique_ptr<Entity>& e) {
-				return e.get() == this->entity;
-			}
-		),
-		enSystem->entities.end()
-	);
+
 }

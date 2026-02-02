@@ -30,6 +30,7 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 	di->lifetime = 1.f;
 	di->text = std::to_string((int)info.damage);
 	di->textColor = DamageNumbers::GetElementColor(info.elementType);
+	di->size = info.isCritical ? 2.1f : 0.7f;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }

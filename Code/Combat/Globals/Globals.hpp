@@ -37,9 +37,9 @@ namespace Game
 
 	struct DamageInfo
 	{
-		float damage;
-		bool isCritical;
-		Character* source;
-		WUXING_ELEMENT elementType;
+		float damage = 0;
+		bool isCritical = false;
+		Character* source = nullptr;
+		WUXING_ELEMENT elementType = NORMAL;
 	};
 }

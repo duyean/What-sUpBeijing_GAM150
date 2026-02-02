@@ -48,7 +48,7 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 
 void DamageNumbers::init()
 {
-	size = .7f;
+
 }
 
 void DamageNumbers::update()

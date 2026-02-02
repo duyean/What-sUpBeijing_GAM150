@@ -43,7 +43,12 @@ void BattleManager::StartBattle()
 		unit->SetOnDeath([this](Character* dead) {ProcessDeadUnit(dead);});
 		if (unit->GetFaction() == Game::FACTION::ENEMY)
 		{
+			testEnemy = unit;
 			enemyCount++;
+		}
+		else
+		{
+			testPlayer = unit;
 		}
 	}
 	currentActiveUnit = 0;
@@ -76,11 +81,19 @@ void BattleManager::update()
 		//Register Inputs
 		if (AEInputCheckTriggered(AEVK_Z))
 		{
-			activeUnit->UseMove(MOVE_SLOT_1, activeUnit);
+			activeUnit->UseMove(MOVE_SLOT_1, activeUnit == testEnemy ? testPlayer : testEnemy);
 		}
 		else if (AEInputCheckTriggered(AEVK_X))
 		{
-			activeUnit->UseMove(MOVE_SLOT_2, activeUnit);
+			activeUnit->UseMove(MOVE_SLOT_2, activeUnit == testEnemy ? testPlayer : testEnemy);
+		}
+		else if (AEInputCheckTriggered(AEVK_C))
+		{
+			activeUnit->UseMove(MOVE_SLOT_3, activeUnit == testEnemy ? testPlayer : testEnemy);
+		}
+		else if (AEInputCheckTriggered(AEVK_V))
+		{
+			activeUnit->UseMove(MOVE_SLOT_4, activeUnit == testEnemy ? testPlayer : testEnemy);
 		}
 	}
 

@@ -21,6 +21,30 @@
             "modifiers": [
               1
             ]
+        },
+        {
+            "id": 2,
+            "name": "Empower",
+            "coefficient": 0.0,
+            "dot": 0.15,
+            "brief": "Gains an ATK buff.",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 1,
+            "modifiers": [
+              3
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Armor Piercing Strike",
+            "coefficient": 0.35,
+            "dot": 0.0,
+            "brief": "Strike an enemy and decreases their DEF",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+              4
+            ]
         }
     ]
 }

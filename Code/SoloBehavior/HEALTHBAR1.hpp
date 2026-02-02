@@ -15,6 +15,8 @@ class EntityManager;
 
 class Healthbar1: public SoloBehavior
 {
+private:
+	Color color;
 public:
 
 	EntityManager* enSystem = nullptr;

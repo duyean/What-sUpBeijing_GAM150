@@ -1,6 +1,7 @@
 #include "HEALTHBAR1.hpp"
 #include "../BaseSystems/Engine/EntityManager.hpp"
 #include "Player.hpp"
+#include "../Combat/Character/Character.hpp"
 
 float newRange(double oldV, double oldMin, double oldMax, double newMin, double newMax)
 {
@@ -20,20 +21,21 @@ void Healthbar1::init()
 
 void Healthbar1::update()
 {
-	float health = Healthbar1::enSystem->rootEntity->FindByName("PLAYER")->getComponent<Player>()->health;
-	if (health >= 40.f)
+	float hpperc = this->entity->getComponent<Character>()->GetHealthPercentage();
+	hpperc = AEClamp(hpperc, 0, 1);
+	if (hpperc >= 0.4f)
 	{
-		entity->mesh->color = Color(0, 255, 0, 1);
+		color = Color(0, 255, 0, 1);
 	}
 	else
 	{
-		entity->mesh->color = Color(255, 0, 0, 1);
+		color = Color(255, 0, 0, 1);
 	}
-
-	AEVec2 scale = entity->transform->getScale();
-	scale.x = newRange(health, 0.00, 100.00, 0.00, 1200.f);
-	entity->transform->setScale(scale);
-
+	AEVec2 scale = { 300, 10 };
+	AEVec2 trueScale = { scale.x * hpperc, scale.y };
+	AEVec2 offset{ -scale.x * 0.5f, -100 };
+	MeshGen::getInstance().DrawBoxLeft(this->entity->transform->getPosition() + offset, scale, Color(0, 0, 0, 1), 0);
+	MeshGen::getInstance().DrawBoxLeft(this->entity->transform->getPosition() + offset, trueScale, color, 0);
 }
 
 void Healthbar1::fixedUpdate()

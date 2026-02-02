@@ -18,6 +18,7 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Code/Combat/Modifier/Modifier.hpp"
 #include "../Combat/CombatUIManager.hpp"
 #include "../Maps_WZBJ_Pak.hpp"
+#include "../SoloBehavior/HEALTHBAR1.hpp"
 
  // This is all temporary btw
 void WriteIntoJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
@@ -157,6 +158,7 @@ void MainMenu::Load()
     character->addComponent<Character>();
     character->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
     character->getComponent<Character>()->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
+    character->addComponent<Healthbar1>();
     enSystem->rootEntity->transform->AddChild(character->transform);
     enSystem->entities.push_back(std::move(character));
 
@@ -166,6 +168,7 @@ void MainMenu::Load()
     testEnemy->addComponent<Transform2D>(pos, scale, 0.f);
     testEnemy->addComponent<Character>();
     testEnemy->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+    testEnemy->addComponent<Healthbar1>();
     Character* ch = testEnemy->getComponent<Character>();
     ch->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
     ch->SetName("Enemy");

@@ -98,6 +98,7 @@ public:
 	bool TurnFinished(void) const { return turnFinished; }
 	void SetName(std::string name) { this->name = name; }
 	void SetFaction(Game::FACTION faction) { this->faction = faction; }
+	float GetHealthPercentage(void) { return hp / maxHP; }
 
 	void init() override;
 	void awake() override;

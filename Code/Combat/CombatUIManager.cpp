@@ -12,7 +12,7 @@ void CombatUIManager::awake()
 		instance = this;
 	}
 
-	MeshGen::getInstance().SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 100);
+	MeshGen::getInstance().SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 50);
 }
 
 void CombatUIManager::init()
@@ -23,7 +23,7 @@ void CombatUIManager::init()
 void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 {
 	auto e = std::make_unique<Entity>("DamageNumber");
-	AEVec2 scale = { 300, 100 };
+	AEVec2 scale = { 150, 50 };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
 	e->addComponent<DamageNumbers>();
 	auto di = e->getComponent<DamageNumbers>();
@@ -36,7 +36,7 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color)
 {
 	auto e = std::make_unique<Entity>("Message");
-	AEVec2 scale = { 300, 100 };
+	AEVec2 scale = { 150, 50 };
 	e->addComponent<Transform2D>(position, scale, 0.f);
 	e->addComponent<DamageNumbers>();
 	auto di = e->getComponent<DamageNumbers>();

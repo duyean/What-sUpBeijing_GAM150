@@ -20,8 +20,8 @@ void Character::TakeDamage(Game::DamageInfo damageInfo)
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
 	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 - dmgReduction);
 	hp -= finalDamageTaken;
-	AEVec2 offset = { 0, 50 };
-	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition(), damageInfo);
+	AEVec2 offset = { 0, 100 };
+	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
 	//if (damageInfo.isCritical)
 	//{
 	//	std::cout << "A critical hit!\n";
@@ -125,6 +125,7 @@ void Character::UpdateAttributes(void)
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
+	AEVec2 offset = { 0, 100 };
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
@@ -142,17 +143,20 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			}
 			case (STACK_BEHAVIOUR::REFRESH):
 			{
+				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				(*modExists)->duration = modifier->duration; //Refresh the duration
 				break;
 			}
 			case (STACK_BEHAVIOUR::STACK):
 			{
+				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				(*modExists)->stackCount += modifier->stackCount; //Add extra stack count, maybe cap it?
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}
 			case (STACK_BEHAVIOUR::UNIQUE):
 			{
+				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				effectList.emplace_back(std::move(modifier)); //Add a whole separate modifier
 				break;
 			}
@@ -160,6 +164,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 	}
 	else
 	{
+		CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 		std::cout << name << " gained modifier " << modifier->name << std::endl;
 		effectList.emplace_back(std::move(modifier));
 	}

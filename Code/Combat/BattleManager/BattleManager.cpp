@@ -48,7 +48,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	AEVec2 pos = { 0.f, 0.6f };
+	AEVec2 pos = { 0.f, 225 };
 	CombatUIManager::instance->CreateMessageText(pos, "Battle Start");
 }
 
@@ -109,7 +109,8 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 		{
 			inBattle = false;
 			outcome = VICTORY;
-			std::cout << "Battle Over!\n";
+			AEVec2 pos = { 0.f, 225 };
+			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
 		}
 	}
 }

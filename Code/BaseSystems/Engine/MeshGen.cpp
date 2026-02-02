@@ -355,10 +355,12 @@ void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const c
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
+	f32 width, height;
+	AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
 	AEGfxPrint(pFont.at(fileName),
 		text,
-		Xpos,
-		Ypos,
+		Xpos - (width * 0.5f),
+		Ypos - (height * 0.5f),
 		scale,
 		red,
 		green,

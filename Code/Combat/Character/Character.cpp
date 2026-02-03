@@ -1,6 +1,7 @@
 #include "Character.hpp"
 #include "../CombatUIManager.hpp"
 #include <iostream>
+#include <random>
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -8,7 +9,14 @@ void Character::DealDamage(Character* target, float coefficient)
 	{
 		return;
 	}
-	float critRoll = AERandFloat();
+
+	//random seeding
+	std::random_device seedling; //random generation seed
+	std::mt19937 gen(seedling()); //Mersenne Twister Algorithm
+
+	//range examples
+	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
+	float critRoll = randFloat(gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
 	Game::DamageInfo info = Game::DamageInfo();

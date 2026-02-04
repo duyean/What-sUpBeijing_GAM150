@@ -63,7 +63,7 @@ public:
 	virtual void UseMove(MOVE_SLOT slot, Character* target);
 
 	//Handles incoming damage, reduced by DEF and other factors
-	virtual void TakeDamage(Game::DamageInfo damageInfo);
+	virtual void TakeDamage(Game::DamageInfo& damageInfo);
 
 	//Deals damage to the target, followed by the coefficient of the move
 	virtual void DealDamage(Character* target, float coefficient);

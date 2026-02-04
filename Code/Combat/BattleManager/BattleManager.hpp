@@ -6,6 +6,7 @@
 class BattleManager : public SoloBehavior
 {
 	std::vector<Character*> battleUnits;
+	Character* testEnemy, *testPlayer;
 	int currentActiveUnit;
 	bool inBattle;
 	int enemyCount;

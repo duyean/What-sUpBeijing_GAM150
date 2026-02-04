@@ -243,6 +243,15 @@
     <ClCompile Include="..\Code\Map\Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Scenes\Level1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\NavigationData.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -423,6 +432,18 @@
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\Level1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationData.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
   </ItemGroup>

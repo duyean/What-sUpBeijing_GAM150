@@ -19,3 +19,5 @@
 #include "Map/MapTypeClass.hpp"
 #include "Map/MapClass.hpp"
 #include "Map/Map.hpp"
+#include "Map/NavigationDataClass.hpp"
+#include "Map/NavigationData.hpp"

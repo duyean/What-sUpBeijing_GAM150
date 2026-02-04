@@ -36,6 +36,7 @@
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
+    <ClCompile Include="..\Code\Scenes\GameScene.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="..\Code\Map\MapClass.hpp" />
     <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
+    <ClInclude Include="..\Code\Scenes\GameScene.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />

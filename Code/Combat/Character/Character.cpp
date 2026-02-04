@@ -1,10 +1,22 @@
 #include "Character.hpp"
 #include "../CombatUIManager.hpp"
 #include <iostream>
+#include <random>
 
 void Character::DealDamage(Character* target, float coefficient)
 {
-	float critRoll = AERandFloat();
+	if (coefficient <= 0) //If coefficient is 0, the move doesn't do any damage
+	{
+		return;
+	}
+
+	//random seeding
+	std::random_device seedling; //random generation seed
+	std::mt19937 gen(seedling()); //Mersenne Twister Algorithm
+
+	//range examples
+	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
+	float critRoll = randFloat(gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
 	Game::DamageInfo info = Game::DamageInfo();
@@ -15,18 +27,15 @@ void Character::DealDamage(Character* target, float coefficient)
 	target->TakeDamage(info);
 }
 
-void Character::TakeDamage(Game::DamageInfo damageInfo)
+void Character::TakeDamage(Game::DamageInfo& damageInfo)
 {
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
 	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 - dmgReduction);
+	damageInfo.damage = finalDamageTaken;
 	hp -= finalDamageTaken;
+	hp = AEClamp(hp, 0, maxHP);
 	AEVec2 offset = { 0, 100 };
 	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
-	//if (damageInfo.isCritical)
-	//{
-	//	std::cout << "A critical hit!\n";
-	//}
-	//std::cout << name << " took " << finalDamageTaken << " damage from " << damageInfo.source->name << std::endl;
 	if (hp <= 0)
 	{
 		Death();
@@ -165,7 +174,6 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 	else
 	{
 		CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
-		std::cout << name << " gained modifier " << modifier->name << std::endl;
 		effectList.emplace_back(std::move(modifier));
 	}
 	UpdateAttributes();

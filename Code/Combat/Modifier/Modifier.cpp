@@ -54,21 +54,25 @@ bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
     const rapidjson::Value& modifiers = doc["modifiers"];
     for (rapidjson::Value::ConstValueIterator p = modifiers.Begin(); p != modifiers.End(); ++p)
     {
-        modifierDatabase.emplace(static_cast<MODIFIER_ID>((*p)["id"].GetInt()),
-            std::make_unique<StatusEffect>((*p)["name"].GetString(),
-                (*p)["duration"].GetInt(),
-                static_cast<EFFECT_TYPE>((*p)["type"].GetInt()),
-                nullptr,
-                static_cast<MODIFIER_ID>((*p)["id"].GetInt()),
-                (*p)["damage"].GetFloat(),
-                static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt())));
+        MODIFIER_ID id = static_cast<MODIFIER_ID>((*p)["id"].GetInt());
+        std::string name = (*p)["name"].GetString();
+        int duration = (*p)["duration"].GetInt();
+        EFFECT_TYPE type = static_cast<EFFECT_TYPE>((*p)["type"].GetInt());
+        STACK_BEHAVIOUR behaviour = static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt());
 
-        std::cout << "Modifier id = " << (*p)["id"].GetInt()
-            << "\nname = " << (*p)["name"].GetString()
-            << "\nduration = " << (*p)["duration"].GetInt()
-            << "\neffect type = " << (*p)["type"].GetInt()
-            << "\ndamage = " << (*p)["damage"].GetFloat()
-            << "\nstack behaviour = " << (*p)["behaviour"].GetInt() << std::endl;
+        if (type == EFFECT_TYPE::ATTRIBUTE_MODIFIER)
+        {
+            float value = (*p)["value"].GetFloat();
+            Game::ATTRIBUTE_TYPE attType = static_cast<Game::ATTRIBUTE_TYPE>((*p)["attribute"].GetInt());
+            modifierDatabase.emplace(id,
+                std::make_unique<AttributeModifier>(name, duration, type, nullptr, id, value, attType, behaviour));
+        }
+        else
+        {
+            float damage = (*p)["damage"].GetFloat();
+            modifierDatabase.emplace(id,
+                std::make_unique<StatusEffect>(name, duration, type, nullptr, id, damage, behaviour));
+        }
     }
     return true;
 }

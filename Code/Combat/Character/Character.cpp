@@ -1,7 +1,6 @@
 #include "Character.hpp"
 #include "../CombatUIManager.hpp"
 #include <iostream>
-#include <random>
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -10,13 +9,9 @@ void Character::DealDamage(Character* target, float coefficient)
 		return;
 	}
 
-	//random seeding
-	std::random_device seedling; //random generation seed
-	std::mt19937 gen(seedling()); //Mersenne Twister Algorithm
-
 	//range examples
 	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
-	float critRoll = randFloat(gen);
+	float critRoll = randFloat(Game::gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
 	Game::DamageInfo info = Game::DamageInfo();
@@ -134,7 +129,7 @@ void Character::UpdateAttributes(void)
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
-	AEVec2 offset = { 0, 100 };
+	AEVec2 offset = { 0, -150 };
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
@@ -205,6 +200,26 @@ void Character::StartTurn(void)
 	UpdateAttributes();
 	turnFinished = false;
 	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
+
+	if (faction == Game::FACTION::ENEMY)
+	{
+		std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
+		MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
+		auto& moveToUse = moveList[slotSelected];
+		Move* move = &Move::moveDatabase[moveToUse];
+		if (move->targetGroup == Game::MOVE_TARGET_GROUP::OPPOSITE)
+		{
+			if (!targets.empty())
+			{
+				std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
+				UseMove(slotSelected, targets[randTarget(Game::gen)]);
+			}
+		}
+		else
+		{
+			UseMove(slotSelected, this);
+		}
+	}
 }
 
 void Character::EndTurn(void)

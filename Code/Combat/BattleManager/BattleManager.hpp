@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
-#include "../Character/Character.hpp"
 #include "../../Engine_WZBJ_Pak.hpp"
+#include "../Character/Character.hpp"
 
 class BattleManager : public SoloBehavior
 {
 	std::vector<Character*> battleUnits;
-	Character* testEnemy, *testPlayer;
 	int currentActiveUnit;
+	Character* lastTargetedUnit;
 	bool inBattle;
 	int enemyCount;
 	bool wait;
@@ -26,6 +26,8 @@ public:
 	void LoadBattleUnit(Character* unit);
 	void StartBattle();
 	void ProcessDeadUnit(Character* deadUnit);
+	void ProcessTargeting();
+	bool PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
 
 	void awake() override;
 	void init() override;

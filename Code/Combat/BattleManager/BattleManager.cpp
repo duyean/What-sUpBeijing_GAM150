@@ -20,7 +20,48 @@ void BattleManager::init()
 
 BattleManager::BattleManager()
 {
+	lastTargetedUnit = nullptr;
+}
 
+bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
+{
+	float halfWidth = transform->getLocalScale().x * 0.5f;
+	float halfHeight = transform->getLocalScale().y * 0.5f;
+	float centerX = transform->getLocalPosition().x;
+	float centerY = transform->getLocalPosition().y;
+
+	return std::abs(mouseX - centerX) <= halfWidth &&
+		std::abs(mouseY - centerY) <= halfHeight;
+
+}
+
+void BattleManager::ProcessTargeting()
+{
+	for (Character* unit : battleUnits)
+	{
+		if (unit->GetFaction() != Game::FACTION::ENEMY)
+		{
+			continue;
+		}
+		s32 mouseX, mouseY;
+		AEInputGetCursorPosition(&mouseX, &mouseY);
+
+		//Convert to world space
+		mouseX = mouseX - (AEGfxGetWindowWidth() * 0.5f);
+		mouseY = (AEGfxGetWindowHeight() * 0.5f) - mouseY;
+		//End of conversion
+
+		if (PointInMesh(mouseX, mouseY, unit->entity->transform))
+		{
+			//Render crosshair here
+			if (AEInputCheckTriggered(AEVK_LBUTTON))
+			{
+				lastTargetedUnit = unit;
+				printf("Target Confirmed: %s", lastTargetedUnit->GetName().c_str());
+			}
+			break;
+		}
+	}
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -43,12 +84,11 @@ void BattleManager::StartBattle()
 		unit->SetOnDeath([this](Character* dead) {ProcessDeadUnit(dead);});
 		if (unit->GetFaction() == Game::FACTION::ENEMY)
 		{
-			testEnemy = unit;
 			enemyCount++;
-		}
-		else
-		{
-			testPlayer = unit;
+			if (!lastTargetedUnit)
+			{
+				lastTargetedUnit = unit;
+			}
 		}
 	}
 	currentActiveUnit = 0;
@@ -67,33 +107,46 @@ void BattleManager::update()
 	Character* activeUnit = battleUnits[currentActiveUnit];
 	if (!wait)
 	{
+		if (activeUnit->GetFaction() == Game::FACTION::ENEMY)
+		{
+			std::vector<Character*> playerTargets;
+			std::copy_if(battleUnits.begin(), battleUnits.end(), 
+				std::back_inserter(playerTargets), [](Character* ch) 
+				{ return ch->GetFaction() == Game::FACTION::PLAYER; }
+			);
+			activeUnit->SetTargets(playerTargets);
+		}
 		activeUnit->StartTurn();
 		wait = true;
 	}
 
-	if (activeUnit->GetFaction() == Game::PLAYER)
+	if (activeUnit->GetFaction() == Game::PLAYER) //Player's turn
 	{
-		//activeUnit->Draw();
-	}
-
-	if (!activeUnit->TurnFinished() && wait)
-	{
-		//Register Inputs
-		if (AEInputCheckTriggered(AEVK_Z))
+		ProcessTargeting();
+		if (lastTargetedUnit)
 		{
-			activeUnit->UseMove(MOVE_SLOT_1, activeUnit == testEnemy ? testPlayer : testEnemy);
+			//Placeholder to render targeting UI
+			MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), {100, 100}, Color(255, 0, 0, 0.3f));
 		}
-		else if (AEInputCheckTriggered(AEVK_X))
+		if (!activeUnit->TurnFinished() && wait)
 		{
-			activeUnit->UseMove(MOVE_SLOT_2, activeUnit == testEnemy ? testPlayer : testEnemy);
-		}
-		else if (AEInputCheckTriggered(AEVK_C))
-		{
-			activeUnit->UseMove(MOVE_SLOT_3, activeUnit == testEnemy ? testPlayer : testEnemy);
-		}
-		else if (AEInputCheckTriggered(AEVK_V))
-		{
-			activeUnit->UseMove(MOVE_SLOT_4, activeUnit == testEnemy ? testPlayer : testEnemy);
+			//Register Inputs
+			if (AEInputCheckTriggered(AEVK_Z))
+			{
+				activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
+			}
+			else if (AEInputCheckTriggered(AEVK_X))
+			{
+				activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
+			}
+			else if (AEInputCheckTriggered(AEVK_C))
+			{
+				activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
+			}
+			else if (AEInputCheckTriggered(AEVK_V))
+			{
+				activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+			}
 		}
 	}
 

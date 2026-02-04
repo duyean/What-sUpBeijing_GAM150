@@ -46,12 +46,14 @@ private:
 
 	//Used by combat manager to determine this unit has finished acting
 	bool turnFinished;
-
+protected:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
 
 	//A map to store the move set for this character
 	std::unordered_map<MOVE_SLOT, MOVE_ID> moveList;
+
+	std::vector<Character*> targets;
 
 public:
 	using DeathCallback = std::function<void(Character*)>;
@@ -92,13 +94,15 @@ public:
 	//Modify the attribute bonus by a value
 	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
 
-	void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
-	Game::FACTION GetFaction() const { return faction; }
-	int GetInitiative(void) const { return initiative; }
-	bool TurnFinished(void) const { return turnFinished; }
-	void SetName(std::string name) { this->name = name; }
-	void SetFaction(Game::FACTION faction) { this->faction = faction; }
-	float GetHealthPercentage(void) { return hp / maxHP; }
+	inline void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
+	inline Game::FACTION GetFaction() const { return faction; }
+	inline int GetInitiative(void) const { return initiative; }
+	inline bool TurnFinished(void) const { return turnFinished; }
+	inline std::string GetName() const { return name; }
+	inline void SetName(std::string name) { this->name = name; }
+	inline void SetFaction(Game::FACTION faction) { this->faction = faction; }
+	inline float GetHealthPercentage(void) { return hp / maxHP; }
+	inline void SetTargets(std::vector<Character*> targets) { this->targets = targets; }
 
 	void init() override;
 	void awake() override;

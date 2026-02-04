@@ -8,13 +8,13 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "GameScene.hpp"
+#include "Level1.hpp"
 
-GameScene::GameScene()
+Level1::Level1()
 {	
 }
 
-GameScene::~GameScene()
+Level1::~Level1()
 {
 }
 
@@ -28,10 +28,12 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void GameScene::Load()
+void Level1::Load()
 {
 	meshSystem = &MeshGen::getInstance();
-	//meshSystem->CreateTexture("../../Assets/Images/Button.png", "ButtonDefault");
+	map = new Map();
+
+	map->GenerateMap(MapType::OuterPalace, 15, 15);
 
 	enSystem = &EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");
@@ -42,14 +44,13 @@ void GameScene::Load()
 	enSystem->entities.push_back(std::move(r));
 
 	auto e = std::make_unique<Entity>("Player");
-	pos = { -500.f, -300.f };
+	pos = { 0.f, 0.f };
 	scale = { 50.f, 100.f };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
 	e->addComponent<Player>();
 	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
-
 }
 
 
@@ -62,10 +63,11 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void GameScene::Unload()
+void Level1::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;
 	}
+	delete map;
 }

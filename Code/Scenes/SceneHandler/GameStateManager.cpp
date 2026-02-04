@@ -11,7 +11,7 @@ This file contains the definitions for the collection of functions in GameStateM
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 #include "../Code/Scenes/MainMenu.hpp"
 #include "../Code/Scenes/SplashScreen.hpp"
-#include "../Code/Scenes/GameScene.hpp"
+#include "../Code/Scenes/Level1.hpp"
 
 GameStateManager::GameStateManager() :
 	curGameState(nullptr),
@@ -100,8 +100,8 @@ void GameStateManager::NextScene(SCENES _scene)
 	case MAIN_MENU:
 		nextGameState = new MainMenu;
 		break;
-	case GAME_SCENE:
-		nextGameState = new GameScene;
+	case LEVEL1:
+		nextGameState = new Level1;
 		break;
 	default:
 		//DEBUG

@@ -15,15 +15,17 @@ This file contains the declarations of functions for splash screen
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 #include "../SoloBehavior/Player.hpp"
+#include "../Map/MapClass.hpp"
 
-class GameScene : public GameState
+class Level1 : public GameState
 {
 private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
+	Map* map = nullptr;
 public:
-	GameScene();
-	~GameScene();
+	Level1();
+	~Level1();
 
 	/*!
 	@brief Initialize Splash Screen variables

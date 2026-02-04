@@ -7,7 +7,9 @@
 #include "AEEngine.h"
 #include "../BaseSystems/Engine/OOP.hpp"
 #include "../BaseSystems/Engine/Colors.hpp"
-
+#include "../BaseSystems/EaseFunctions/Math.hpp"
+#include "../BaseSystems/Engine/EntityManager.hpp"
+#include "../SceneHandler_WZBJ_Pak.hpp"
 
 using namespace std;
 
@@ -17,9 +19,8 @@ class SplashLogo: public SoloBehavior
 {
 private:
 	float curSplashTimer;
-	float maxSplashTimer = 6.f;
-	int splashOpacity = 0;
-
+	float maxSplashTimer;
+	float splashOpacity;
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -31,7 +32,9 @@ public:
 	void destroy() override;
 
 	SplashLogo() {
-		enSystem = nullptr;
+		curSplashTimer = 0.f;
+		maxSplashTimer = 6.f;
+		splashOpacity = 0.f;
 	}
 
 	~SplashLogo(){}

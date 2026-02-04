@@ -14,6 +14,7 @@ This file contains the declarations of functions for splash screen
 
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
+#include "../SoloBehavior/SplashLogo.hpp"
 
 class SplashScreen : public GameState
 {

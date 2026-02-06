@@ -18,9 +18,10 @@ void BattleManager::init()
 
 }
 
-BattleManager::BattleManager()
+BattleManager::BattleManager() : delay(0), wait(false),
+currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr)
 {
-	lastTargetedUnit = nullptr;
+
 }
 
 bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
@@ -57,7 +58,7 @@ void BattleManager::ProcessTargeting()
 			if (AEInputCheckTriggered(AEVK_LBUTTON))
 			{
 				lastTargetedUnit = unit;
-				printf("Target Confirmed: %s", lastTargetedUnit->GetName().c_str());
+				printf("Target Confirmed: %s\n", lastTargetedUnit->GetName().c_str());
 			}
 			break;
 		}
@@ -93,30 +94,29 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	AEVec2 pos = { 0.f, 225 };
-	CombatUIManager::instance->CreateMessageText(pos, "Battle Start");
+	CombatUIManager::instance->CreateMessageText({ 0.f, 225 }, "Battle Start");
 }
 
 void BattleManager::update()
 {
+	//No updates when there is no battle
 	if (!inBattle)
 	{
+		return;
+	}
+	
+	//To allow delay between unit actions
+	if (delay > 0.0f)
+	{
+		delay -= 1 / 60.0f;
 		return;
 	}
 
 	Character* activeUnit = battleUnits[currentActiveUnit];
 	if (!wait)
 	{
-		if (activeUnit->GetFaction() == Game::FACTION::ENEMY)
-		{
-			std::vector<Character*> playerTargets;
-			std::copy_if(battleUnits.begin(), battleUnits.end(), 
-				std::back_inserter(playerTargets), [](Character* ch) 
-				{ return ch->GetFaction() == Game::FACTION::PLAYER; }
-			);
-			activeUnit->SetTargets(playerTargets);
-		}
 		activeUnit->StartTurn();
+		delay = 1.5f;
 		wait = true;
 	}
 
@@ -149,6 +149,19 @@ void BattleManager::update()
 			}
 		}
 	}
+	else
+	{
+		if (activeUnit->GetFaction() == Game::FACTION::ENEMY)
+		{
+			std::vector<Character*> playerTargets;
+			std::copy_if(battleUnits.begin(), battleUnits.end(),
+				std::back_inserter(playerTargets), [](Character* ch)
+				{ return ch->GetFaction() == Game::FACTION::PLAYER; }
+			);
+			activeUnit->SetTargets(playerTargets);
+			activeUnit->AIAttack();
+		}
+	}
 
 	if (activeUnit->TurnFinished() && wait)
 	{
@@ -158,6 +171,7 @@ void BattleManager::update()
 			currentActiveUnit = 0;
 		}
 		wait = false;
+		delay = 1.5f;
 	}
 }
 
@@ -170,13 +184,29 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 {
 	if (dead->GetFaction() == Game::FACTION::ENEMY)
 	{
-		enemyCount--;
+		auto it = std::find(battleUnits.begin(), battleUnits.end(), dead);
+		if (it != battleUnits.end())
+		{
+			battleUnits.erase(it);
+			enemyCount--;
+			if (lastTargetedUnit == dead)
+			{
+				if (enemyCount > 0)
+				{
+					auto newTarget = std::find_if(battleUnits.begin(), battleUnits.end(), [](Character* ch) {return ch->GetFaction() == Game::FACTION::ENEMY;});
+					lastTargetedUnit = *newTarget;
+				}
+			}
+			Destroy(dead->entity);
+		}
+
 		if (enemyCount <= 0)
 		{
 			inBattle = false;
 			outcome = VICTORY;
 			AEVec2 pos = { 0.f, 225 };
 			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
+			//Change scene back to exploration
 		}
 	}
 }
@@ -184,5 +214,4 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 void BattleManager::destroy()
 {
 	battleUnits.clear();
-
 }

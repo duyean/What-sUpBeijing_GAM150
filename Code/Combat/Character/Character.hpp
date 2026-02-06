@@ -94,6 +94,9 @@ public:
 	//Modify the attribute bonus by a value
 	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
 
+	//TThe character uses a random attack
+	void AIAttack();
+
 	inline void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
 	inline Game::FACTION GetFaction() const { return faction; }
 	inline int GetInitiative(void) const { return initiative; }
@@ -103,6 +106,7 @@ public:
 	inline void SetFaction(Game::FACTION faction) { this->faction = faction; }
 	inline float GetHealthPercentage(void) { return hp / maxHP; }
 	inline void SetTargets(std::vector<Character*> targets) { this->targets = targets; }
+	inline Game::WUXING_ELEMENT GetElement() const { return element; }
 
 	void init() override;
 	void awake() override;

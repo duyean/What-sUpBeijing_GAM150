@@ -11,9 +11,11 @@ class BattleManager : public SoloBehavior
 	bool inBattle;
 	int enemyCount;
 	bool wait;
+	float delay;
 
 	enum BATTLE_OUTCOME
 	{
+		NONE,
 		VICTORY,
 		DEFEAT
 	};

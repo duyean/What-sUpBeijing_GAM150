@@ -9,7 +9,6 @@ void Character::DealDamage(Character* target, float coefficient)
 		return;
 	}
 
-	//range examples
 	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
 	float critRoll = randFloat(Game::gen);
 	bool isCrit = (critRoll < this->critRate);
@@ -101,10 +100,19 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 					{
 						status->damage = atk * move->dot_coefficient;
 					}
-					target->AddModifier(std::move(modifier));
+					if (modifier->selfCast)
+					{
+						AddModifier(std::move(modifier));
+					}
+					else
+					{
+						target->AddModifier(std::move(modifier));
+					}
 				}
 			}
 		}
+		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
+		CombatUIManager::instance->CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		DealDamage(target, move->coefficient);
 		turnFinished = true;
 	}
@@ -154,7 +162,8 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			case (STACK_BEHAVIOUR::STACK):
 			{
 				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
-				(*modExists)->stackCount += modifier->stackCount; //Add extra stack count, maybe cap it?
+				(*modExists)->stackCount += modifier->stackCount;
+				(*modExists)->stackCount = std::min((*modExists)->stackCount, 5);
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}
@@ -200,25 +209,25 @@ void Character::StartTurn(void)
 	UpdateAttributes();
 	turnFinished = false;
 	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
+}
 
-	if (faction == Game::FACTION::ENEMY)
+void Character::AIAttack()
+{
+	std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
+	MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
+	auto& moveToUse = moveList[slotSelected];
+	Move* move = &Move::moveDatabase[moveToUse];
+	if (move->targetGroup == Game::MOVE_TARGET_GROUP::OPPOSITE)
 	{
-		std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
-		MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
-		auto& moveToUse = moveList[slotSelected];
-		Move* move = &Move::moveDatabase[moveToUse];
-		if (move->targetGroup == Game::MOVE_TARGET_GROUP::OPPOSITE)
+		if (!targets.empty())
 		{
-			if (!targets.empty())
-			{
-				std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
-				UseMove(slotSelected, targets[randTarget(Game::gen)]);
-			}
+			std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
+			UseMove(slotSelected, targets[randTarget(Game::gen)]);
 		}
-		else
-		{
-			UseMove(slotSelected, this);
-		}
+	}
+	else
+	{
+		UseMove(slotSelected, this);
 	}
 }
 

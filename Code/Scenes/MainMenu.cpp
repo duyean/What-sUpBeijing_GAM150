@@ -101,7 +101,7 @@ void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 }
 
 JSONSerializer jsonSerializer{};
-std::unique_ptr<Entity> character, testEnemy;
+std::unique_ptr<Entity> character, testEnemy, testEnemy2;
 BattleManager* battleManager = nullptr;
 Map myMap{};
 
@@ -174,12 +174,25 @@ void MainMenu::Load()
     enSystem->rootEntity->transform->AddChild(testEnemy->transform);
     enSystem->entities.push_back(std::move(testEnemy));
 
+    testEnemy2 = std::make_unique<Entity>("Enemy2");
+    pos = { 550.f, 100.f };
+    scale = { 50.f, 100.f };
+    testEnemy2->addComponent<Transform2D>(pos, scale, 0.f);
+    testEnemy2->addComponent<Character>();
+    testEnemy2->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+    testEnemy2->addComponent<Healthbar1>();
+    ch = testEnemy2->getComponent<Character>();
+    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+    enSystem->rootEntity->transform->AddChild(testEnemy2->transform);
+    enSystem->entities.push_back(std::move(testEnemy2));
+
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     battleManager = BattleManager::instance;
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
     battleManager->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);

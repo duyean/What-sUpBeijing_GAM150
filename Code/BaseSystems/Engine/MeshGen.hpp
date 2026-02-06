@@ -68,10 +68,10 @@ using namespace std;
 
 			AEGfxMeshStart();
 
-			for (int i = 0; i <= 32; i++)
+			for (int i = 0; i < 31; i++)
 			{
-				float angle1 = i * 2 * PI / 32;
-				float angle2 = (i + 1) * 2 * PI / 32;
+				float angle1 = i * 2 * PI / 31;
+				float angle2 = (i + 1) * 2 * PI / 31;
 				AEGfxTriAdd(
 					0.0f, 0.0f, 0xFFFFFFFF, 0.0f, 0.0f,
 					cosf(angle1), sinf(angle1), 0xFFFFFFFF, 0.0f, 0.0f,

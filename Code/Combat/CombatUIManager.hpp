@@ -1,10 +1,14 @@
 #pragma once
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../Combat/Globals/Globals.hpp"
+#include <queue>
 
 
 class CombatUIManager : public SoloBehavior
 {
+private:
+	std::queue<std::unique_ptr<Entity>> damageNumbers, messages;
+	float dnDelay, messDelay;
 public:
 	static CombatUIManager* instance;
 	/// <summary>

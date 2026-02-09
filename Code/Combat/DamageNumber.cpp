@@ -6,6 +6,7 @@ DamageNumbers::DamageNumbers()
 {
 	enSystem = &EntityManager::getInstance();
 	lifetime = 0.8f;
+	activate = false;
 }
 
 void DamageNumbers::awake()
@@ -48,12 +49,15 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 
 void DamageNumbers::init()
 {
-
+	Activate();
 }
 
 void DamageNumbers::update()
 {
-
+	if (!activate)
+	{
+		return;
+	}
 	AEVec2 normalised = {this->entity->transform->getPosition().x / 800.f, this->entity->transform->getPosition().y / 450.f};
 	MeshGen::getInstance().DrawFont(normalised.x, normalised.y, size, textColor, text.c_str(), "liberi");
 	lifetime -= 1 / 60.f;

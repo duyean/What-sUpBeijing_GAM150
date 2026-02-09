@@ -32,7 +32,8 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 	di->textColor = DamageNumbers::GetElementColor(info.elementType);
 	di->size = info.isCritical ? 2.1f : 0.7f;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
-	EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
+	damageNumbers.push(std::move(e));
+	//EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color)
 {
@@ -45,12 +46,41 @@ void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color
 	di->text = text;
 	di->textColor = color;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
-	EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
+	messages.push(std::move(e));
+	//EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 
 void CombatUIManager::update()
 {
+	//Handle damageNumbers
+	if (!damageNumbers.empty())
+	{
+		if (dnDelay <= 0)
+		{
+			EntityManager::getInstance().entities.push_back(std::move(damageNumbers.front()));
+			damageNumbers.pop();
+			dnDelay = 0.1f;
+		}
+		else
+		{
+			dnDelay -= 1.0 / AEFrameRateControllerGetFrameRate();
+		}
+	}
 
+	//Handle messages
+	if (!messages.empty())
+	{
+		if (messDelay <= 0)
+		{
+			EntityManager::getInstance().entities.push_back(std::move(messages.front()));
+			messages.pop();
+			messDelay = 0.1f;
+		}
+		else
+		{
+			messDelay -= 1.0 / AEFrameRateControllerGetFrameRate();
+		}
+	}
 }
 
 void CombatUIManager::fixedUpdate()

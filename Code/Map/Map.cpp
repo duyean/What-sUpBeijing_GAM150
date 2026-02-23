@@ -8,25 +8,24 @@
 #include "../JSONSerializer_WZBJ_Pak.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
-Map Map::GenerateMap(MapType type, int xLen, int yLen)
+void Map::GenerateMap(MapType type, int xLen, int yLen)
 {
-	Map outMap;
-	outMap.mapType = type;
+	this->mapType = type;
 	printf("Map Type Set\n");
 
 	//set map height
-	outMap.mapNodes.resize(yLen);
+	this->mapNodes.resize(yLen);
 	for (int y = 0; y < yLen; y++)
 	{
 		//set map width (per width row in nested list)
-		outMap.mapNodes[y].resize(xLen);
+		this->mapNodes[y].resize(xLen);
 		for (int x = 0; x < xLen; x++)
 		{
 			MapNode newNode;
 			// Block out all the Grid Walls first.
 			newNode.n = newNode.s = newNode.w = newNode.e = 1;
 			newNode.type = NodeType::Debug; // Default type before further generation.
-			outMap.mapNodes[y][x] = newNode;
+			this->mapNodes[y][x] = newNode;
 		}
 	}
 	//Create base framework: DONE!
@@ -45,7 +44,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 	
 	//select a random point on the map
 	int currentX = randWidth(gen), currentY = randHeight(gen);
-	outMap.mapNodes[currentY][currentX].type = NodeType::Empty; //set starting point to empty node
+	this->mapNodes[currentY][currentX].type = NodeType::Empty; //set starting point to empty node
 
 	printf("Random Seeding Start\n");
 	//map generation pathbuilding maze
@@ -61,41 +60,41 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 			{
 				case 1: //north
 					if (currentY - 1 >= 0)
-						if (NodeType::Debug == outMap.mapNodes[currentY - 1][currentX].type)
+						if (NodeType::Debug == this->mapNodes[currentY - 1][currentX].type)
 						{
-							outMap.mapNodes[currentY][currentX].n = false;
-							outMap.mapNodes[currentY - 1][currentX].s = false;
-							outMap.mapNodes[currentY - 1][currentX].type = NodeType::Empty;
+							this->mapNodes[currentY][currentX].n = false;
+							this->mapNodes[currentY - 1][currentX].s = false;
+							this->mapNodes[currentY - 1][currentX].type = NodeType::Empty;
 							currentY--;
 							break;
 						}
 				case 2: //south
 					if (currentY + 1 <= mapHeight)
-						if (NodeType::Debug == outMap.mapNodes[currentY + 1][currentX].type)
+						if (NodeType::Debug == this->mapNodes[currentY + 1][currentX].type)
 						{
-							outMap.mapNodes[currentY][currentX].s = false;
-							outMap.mapNodes[currentY + 1][currentX].n = false;
-							outMap.mapNodes[currentY + 1][currentX].type = NodeType::Empty;
+							this->mapNodes[currentY][currentX].s = false;
+							this->mapNodes[currentY + 1][currentX].n = false;
+							this->mapNodes[currentY + 1][currentX].type = NodeType::Empty;
 							currentY++;
 							break;
 						}
 				case 3: //east
 					if (currentX + 1 <= mapWidth)
-						if (NodeType::Debug == outMap.mapNodes[currentY][currentX + 1].type)
+						if (NodeType::Debug == this->mapNodes[currentY][currentX + 1].type)
 						{
-							outMap.mapNodes[currentY][currentX].e = false;
-							outMap.mapNodes[currentY][currentX + 1].w = false;
-							outMap.mapNodes[currentY][currentX + 1].type = NodeType::Empty;
+							this->mapNodes[currentY][currentX].e = false;
+							this->mapNodes[currentY][currentX + 1].w = false;
+							this->mapNodes[currentY][currentX + 1].type = NodeType::Empty;
 							currentX++;
 							break;
 						}
 				case 4: //west
 					if (currentX - 1 >= 0)
-						if (NodeType::Debug == outMap.mapNodes[currentY][currentX - 1].type)
+						if (NodeType::Debug == this->mapNodes[currentY][currentX - 1].type)
 						{
-							outMap.mapNodes[currentY][currentX].w = false;
-							outMap.mapNodes[currentY][currentX - 1].e = false;
-							outMap.mapNodes[currentY][currentX - 1].type = NodeType::Empty;
+							this->mapNodes[currentY][currentX].w = false;
+							this->mapNodes[currentY][currentX - 1].e = false;
+							this->mapNodes[currentY][currentX - 1].type = NodeType::Empty;
 							currentX--;
 							break;
 						}
@@ -107,29 +106,29 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 		while (true)
 		{
 			currentX = randWidth(gen), currentY = randHeight(gen);
-			if (outMap.mapNodes[currentY][currentX].type == NodeType::Empty) break;
+			if (this->mapNodes[currentY][currentX].type == NodeType::Empty) break;
 		}
 
 		//check for full maze completion
 		noDebugTiles = true;
 		int counter = 0;
 		for (int y = 0; y < yLen; y++){ for (int x = 0; x < xLen; x++){
-			if (outMap.mapNodes[y][x].type == NodeType::Debug) { noDebugTiles = false; counter++; printf("Ungenerated Tile At: %d, %d\n", x, y); }
+			if (this->mapNodes[y][x].type == NodeType::Debug) { noDebugTiles = false; counter++; printf("Ungenerated Tile At: %d, %d\n", x, y); }
 		}	}
 		printf("Ungenerated Tiles Remaining: %d\n", counter);
 	}	//repeat until all debug panels are cleared.
 	printf("Random Seeding End\n");
 
-	Map travelPath = outMap; //copy of map for pathfinding
+	Map travelPath = *this; //copy of map for pathfinding
 
 	printf("Finding Random Edge Node.\n");
 	//mark one random edge node as entry
 	while (true)
 	{
 		currentX = randWidth(gen), currentY = randHeight(gen);
-		if (isEndNode(outMap.mapNodes[currentY][currentX]))
+		if (isEndNode(this->mapNodes[currentY][currentX]))
 		{
-			outMap.mapNodes[currentY][currentX].type = NodeType::Entry;
+			this->mapNodes[currentY][currentX].type = NodeType::Entry;
 			break;
 	}	}
 	printf("Entry Node Designated.\n");
@@ -140,7 +139,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 	traveller.push_back({ currentY, currentX, 0 });
 
 	printf("Printing Map Display pre-Exploration\n");
-	Map::DebugPrint(outMap);
+	Map::DebugPrint(*this);
 
 	printf("Exploring Nodes for generation.\n");
 	bool allNodesExplored = false;
@@ -240,7 +239,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 		if (endNodes[i][2] > endNodes[largestIndex][2]) largestIndex = i;
 	}
 
-	outMap.mapNodes[endNodes[largestIndex][0]][endNodes[largestIndex][1]].type = NodeType::Exit;
+	this->mapNodes[endNodes[largestIndex][0]][endNodes[largestIndex][1]].type = NodeType::Exit;
 	printf("Exit Node Designation complete.\n");
 
 	//erase debug map
@@ -267,13 +266,13 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 		}
 		case MapType::OuterPalace:
 		{
-			outMap.mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
+			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
 			printf("Outer Palace Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
 			break;
 		}
 		case MapType::InnerPalace:
 		{
-			outMap.mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
+			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
 			printf("Specific Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
 			break;
 		}
@@ -289,7 +288,7 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 	printf("Designating Remaining Nodes as Random Events or Enemy Encounters.\n");
 
 	for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) {
-		if (outMap.mapNodes[y][x].type == NodeType::Empty)
+		if (this->mapNodes[y][x].type == NodeType::Empty)
 		{
 			int rollPanel = randPercent(gen);
 			if (rollPanel <= 70) //30% chance of random event
@@ -297,12 +296,10 @@ Map Map::GenerateMap(MapType type, int xLen, int yLen)
 				int rollType = randPercent(gen);
 
 				if (rollType <= 65) //65% chance of encounter 
-					outMap.mapNodes[y][x].type = NodeType::EnemyEncounter;
+					this->mapNodes[y][x].type = NodeType::EnemyEncounter;
 				else	
-					outMap.mapNodes[y][x].type = NodeType::RandomEvent;
+					this->mapNodes[y][x].type = NodeType::RandomEvent;
 	}	}	}	}
-	
-	return outMap;
 }
 
 void Map::DebugPrint(Map map)
@@ -480,7 +477,6 @@ bool isEndNode(MapNode node)
 Map::Map()
 {
 	Map::mapType = MapType::Debug;
-	Map::mapNodes.clear();
 	//bruh
 }
 

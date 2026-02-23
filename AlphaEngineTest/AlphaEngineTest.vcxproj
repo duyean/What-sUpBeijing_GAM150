@@ -33,6 +33,7 @@
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
     <ClCompile Include="..\Code\Combat\CombatUIManager.cpp" />
     <ClCompile Include="..\Code\Combat\DamageNumber.cpp" />
+    <ClCompile Include="..\Code\Combat\EventHandler\CombatEventHandler.cpp" />
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -84,6 +86,7 @@
     <ClInclude Include="..\Code\Combat\Character\Character.hpp" />
     <ClInclude Include="..\Code\Combat\CombatUIManager.hpp" />
     <ClInclude Include="..\Code\Combat\DamageNumber.hpp" />
+    <ClInclude Include="..\Code\Combat\EventHandler\CombatEventHandler.hpp" />
     <ClInclude Include="..\Code\Combat\Globals\Globals.hpp" />
     <ClInclude Include="..\Code\Combat\Modifier\Modifier.hpp" />
     <ClInclude Include="..\Code\Combat\Move.hpp" />
@@ -92,6 +95,7 @@
     <ClInclude Include="..\Code\Map\MapClass.hpp" />
     <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\RunManager.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />

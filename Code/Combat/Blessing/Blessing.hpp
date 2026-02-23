@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../EventHandler/CombatEventHandler.hpp"
 
 class Character;
 
@@ -55,5 +56,6 @@ class AttributeBlessing : public Blessing
 
 class TriggerBlessing : public Blessing
 {
+	EventType triggerType;
 
 };

@@ -1,6 +1,7 @@
 #include "Character.hpp"
 #include "../CombatUIManager.hpp"
 #include <iostream>
+#include "../EventHandler/CombatEventHandler.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -30,6 +31,11 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	hp = AEClamp(hp, 0, maxHP);
 	AEVec2 offset = { 0, 100 };
 	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
+
+	//Event Handler
+	EventData evt{ damageInfo.source, this, (int)finalDamageTaken};
+	CombatEventHandler::instance->Dispatch(EventType::TookDamage, evt);
+
 	if (hp <= 0)
 	{
 		Death();

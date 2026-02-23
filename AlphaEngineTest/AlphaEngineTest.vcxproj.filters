@@ -118,6 +118,12 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{771c5b61-31bd-478c-8ed5-0267ade279ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Manager">
+      <UniqueIdentifier>{2aa81b70-ffec-4d5e-9f83-42bee538c1f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Manager">
+      <UniqueIdentifier>{1bb23150-1b23-45fe-94f2-52a679090927}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp">
@@ -242,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Map\Map.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Combat\EventHandler\CombatEventHandler.cpp">
+      <Filter>Source Files\Combat Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\RunManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Combat\EventHandler\CombatEventHandler.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -119,10 +119,10 @@
       <UniqueIdentifier>{771c5b61-31bd-478c-8ed5-0267ade279ec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Base Systems\Audio">
-      <UniqueIdentifier>{c0698152-1e1d-49f7-b2df-827b5c4a4c17}</UniqueIdentifier>
+      <UniqueIdentifier>{64ee87d3-c78b-4d1e-8736-51d19159f082}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Base Systems\Audio">
-      <UniqueIdentifier>{4d3f796c-c127-4aad-91ba-677350633ef1}</UniqueIdentifier>
+      <UniqueIdentifier>{45f7afc2-4f43-4f17-b12f-6d0152dd13b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
       <Filter>Source Files\ENGINE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Extern\imgui\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
@@ -249,11 +246,23 @@
     <ClCompile Include="..\Code\Map\Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Scenes\Level1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\NavigationData.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
+      <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
       <Filter>Source Files\Base Systems\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
+      <Filter>Source Files\Base Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,12 +331,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
       <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
@@ -437,13 +440,31 @@
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
-      <Filter>Header Files\Base Systems\Audio</Filter>
+    <ClInclude Include="..\Code\Scenes\Level1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationData.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
       <Filter>Header Files\Base Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
+      <Filter>Header Files\Base Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
   </ItemGroup>

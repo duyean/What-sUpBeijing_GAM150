@@ -1,14 +1,14 @@
 {
-    "name": "Chenyu",
-    "element": 1,
+    "name": "Infantry",
+    "element": 2,
     "baseHP": 1000.0,
     "baseATK": 500.0,
     "baseDEF": 100.0,
-    "faction": 1,
+    "faction": 2,
     "moves": {
         "0": 0,
         "1": 1,
-        "2": 2,
-        "3": 3
+        "2": 0,
+        "3": 1
     }
 }

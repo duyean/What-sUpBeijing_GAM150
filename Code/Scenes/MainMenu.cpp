@@ -92,9 +92,7 @@ void MainMenu::Load()
     testEnemy->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
     testEnemy->addComponent<Healthbar1>();
     Character* ch = testEnemy->getComponent<Character>();
-    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
-    ch->SetName("Enemy");
-    ch->SetFaction(Game::FACTION::ENEMY);
+    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
     enSystem->rootEntity->transform->AddChild(testEnemy->transform);
     enSystem->entities.push_back(std::move(testEnemy));
 

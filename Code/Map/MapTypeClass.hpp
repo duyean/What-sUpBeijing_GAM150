@@ -2,8 +2,14 @@
 
 enum MapType
 {
+	//for debugging
 	Debug,
+
+	//gameplay maps
 	CityStreets,
 	OuterPalace,
-	InnerPalace
+	InnerPalace,
+
+	//fog overlay map 
+	OverlayFog = -1
 };

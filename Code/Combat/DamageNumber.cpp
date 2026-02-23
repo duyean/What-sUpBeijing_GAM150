@@ -48,12 +48,12 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 
 void DamageNumbers::init()
 {
-	size = .7f;
+
 }
 
 void DamageNumbers::update()
 {
-
+	
 	AEVec2 normalised = {this->entity->transform->getPosition().x / 800.f, this->entity->transform->getPosition().y / 450.f};
 	MeshGen::getInstance().DrawFont(normalised.x, normalised.y, size, textColor, text.c_str(), "liberi");
 	lifetime -= 1 / 60.f;

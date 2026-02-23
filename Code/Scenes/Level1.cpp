@@ -8,13 +8,13 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "SplashScreen.hpp"
+#include "Level1.hpp"
 
-SplashScreen::SplashScreen()
+Level1::Level1()
 {	
 }
 
-SplashScreen::~SplashScreen()
+Level1::~Level1()
 {
 }
 
@@ -28,10 +28,12 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Load()
+void Level1::Load()
 {
 	meshSystem = &MeshGen::getInstance();
-	meshSystem->CreateTexture("../../Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
+	map = new Map();
+
+	map->GenerateMap(MapType::OuterPalace, 15, 15);
 
 	enSystem = &EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");
@@ -41,16 +43,14 @@ void SplashScreen::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	auto e = std::make_unique<Entity>("SPLASHSLOGO");
-	Entity* en = e.get();
-	pos = { 0.f,0.f };
-	scale = { 1525.f, 445.f };
-	en->addComponent<Transform2D>(pos, scale, 0.f);
-	en->addComponent<Mesh>("Box", "SplashLogo", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-	en->addComponent<SplashLogo>();
-	enSystem->rootEntity->transform->AddChild(en->transform);
+	auto e = std::make_unique<Entity>("Player");
+	pos = { 0.f, 0.f };
+	scale = { 50.f, 100.f };
+	e->addComponent<Transform2D>(pos, scale, 0.f);
+	e->addComponent<Player>();
+	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
+	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
-
 }
 
 
@@ -63,10 +63,11 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void SplashScreen::Unload()
+void Level1::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;
 	}
+	delete map;
 }

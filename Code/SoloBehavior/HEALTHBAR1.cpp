@@ -22,7 +22,6 @@ void Healthbar1::init()
 void Healthbar1::update()
 {
 	float hpperc = this->entity->getComponent<Character>()->GetHealthPercentage();
-	hpperc = AEClamp(hpperc, 0, 1);
 	if (hpperc >= 0.4f)
 	{
 		color = Color(0, 255, 0, 1);
@@ -34,7 +33,7 @@ void Healthbar1::update()
 	AEVec2 scale = { 300, 10 };
 	AEVec2 trueScale = { scale.x * hpperc, scale.y };
 	AEVec2 offset{ -scale.x * 0.5f, -100 };
-	MeshGen::getInstance().DrawBoxLeft(this->entity->transform->getPosition() + offset, scale, Color(0, 0, 0, 1), 0);
+	MeshGen::getInstance().DrawBoxLeft(this->entity->transform->getPosition() + offset, scale, Color(55, 55, 55, 1), 0);
 	MeshGen::getInstance().DrawBoxLeft(this->entity->transform->getPosition() + offset, trueScale, color, 0);
 }
 

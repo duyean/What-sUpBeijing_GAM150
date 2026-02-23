@@ -37,6 +37,7 @@
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
     <ClCompile Include="..\Code\Map\NavigationData.cpp" />
+    <ClCompile Include="..\Code\Scenes\BaseCamp.cpp" />
     <ClCompile Include="..\Code\Scenes\Level1.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
@@ -46,7 +47,9 @@
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -97,8 +100,11 @@
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
     <ClInclude Include="..\Code\Map\NavigationData.hpp" />
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp" />
+    <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
     <ClInclude Include="..\Code\Scenes\Level1.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />

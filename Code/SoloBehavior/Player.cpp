@@ -40,25 +40,25 @@ void Player::update()
 	if (AEInputCheckCurr(AEVK_W))
 	{
 		AEVec2 pos = entity->transform->getPosition();
-		pos.y += 200.f * dt;
+		pos.y += moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_S))
 	{
 		AEVec2 pos = entity->transform->getPosition();
-		pos.y -= 200.f * dt;
+		pos.y -= moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_A))
 	{
 		AEVec2 pos = entity->transform->getPosition();
-		pos.x -= 200.f * dt;
+		pos.x -= moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_D))
 	{
 		AEVec2 pos = entity->transform->getPosition();
-		pos.x += 200.f * dt;
+		pos.x += moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 

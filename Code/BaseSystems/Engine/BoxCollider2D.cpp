@@ -9,7 +9,6 @@ void BoxCollider2D::awake()
 {
 	phSystem = &PhysicSystem::getInstance();
 	phSystem->registerCollider(this);
-
 }
 
 
@@ -20,7 +19,7 @@ void BoxCollider2D::init()
 
 void BoxCollider2D::update()
 {
-
+	
 }
 
 void BoxCollider2D::fixedUpdate()

@@ -49,6 +49,9 @@ void PhysicSystem::testPair(BoxCollider2D* a, BoxCollider2D* b) {
     if (hit && !wasHit) {
         a->notifyEnter(b);
         b->notifyEnter(a);
+
+        //debug
+        std::cout << a->entity->name << " collided with " << b->entity->name << std::endl;
     }
     else if (hit && wasHit) {
         a->notifyStay(b);

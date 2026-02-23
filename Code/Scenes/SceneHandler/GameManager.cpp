@@ -38,7 +38,7 @@ void GameManager::Init()
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::LEVEL1); //GAME_SCREEN SPLASHSCREEN
+	stateManager->NextScene(GameStateManager::BASE_CAMP); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)

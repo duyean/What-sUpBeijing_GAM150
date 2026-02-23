@@ -252,6 +252,15 @@
     <ClCompile Include="..\Code\Map\NavigationData.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Scenes\BaseCamp.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -445,6 +454,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\BaseCamp.hpp">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

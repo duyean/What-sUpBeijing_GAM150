@@ -32,7 +32,6 @@ void Level1::Load()
 {
 	meshSystem = &MeshGen::getInstance();
 
-
 	//map data info
 	map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
 	//map data get current location data
@@ -46,6 +45,7 @@ void Level1::Load()
 	AEVec2 pos = { 0.f,0.f };
 	AEVec2 scale = { 1.f, 1.f };
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+	//enSystem->rootEntity->addComponent<TransitionScreen>();
 	enSystem->entities.push_back(std::move(r));
 
 	auto n_path = std::make_unique<Entity>("N_Path");
@@ -93,6 +93,15 @@ void Level1::Load()
 	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
+
+	auto ts = std::make_unique<Entity>("TransitionScreen");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	ts->addComponent<Transform2D>(pos, scale, 0.f);
+	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
+	ts->addComponent<TransitionScreen>(T_State::T_OUT);
+	enSystem->rootEntity->transform->AddChild(ts->transform);
+	enSystem->entities.push_back(std::move(ts));
 
 }
 

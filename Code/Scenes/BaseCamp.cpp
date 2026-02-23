@@ -44,15 +44,6 @@ void BaseCamp::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	auto baseExit = std::make_unique<Entity>("baseExit");
-	scale = { (float)AEGfxGetWindowWidth(), collidersize };
-	pos = { 0.f, scale.y/2 - (float)AEGfxGetWindowHeight()/2};
-	baseExit->addComponent<Transform2D>(pos, scale, 0.f);
-	baseExit->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
-	baseExit->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	baseExit->addComponent<SceneEdge>(EdgeType::BASEEXIT);
-	enSystem->rootEntity->transform->AddChild(baseExit->transform);
-	enSystem->entities.push_back(std::move(baseExit));
 
 	auto Shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
@@ -82,15 +73,24 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 
-	/*auto ts = std::make_unique<Entity>("TransitionScreen");
+	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	ts->addComponent<Transform2D>(pos, scale, 0.f);
-	ts->addComponent<Mesh>("Box", Color(0, 0, 0, 1), 100, MeshType::BOX_B);
-	ts->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	ts->addComponent<TransitionScreen>();
+	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
+	ts->addComponent<TransitionScreen>(T_State::T_OUT);
 	enSystem->rootEntity->transform->AddChild(ts->transform);
-	enSystem->entities.push_back(std::move(ts));*/
+	enSystem->entities.push_back(std::move(ts));
+
+	auto baseExit = std::make_unique<Entity>("baseExit");
+	scale = { (float)AEGfxGetWindowWidth(), collidersize };
+	pos = { 0.f, scale.y / 2 - (float)AEGfxGetWindowHeight() / 2 };
+	baseExit->addComponent<Transform2D>(pos, scale, 0.f);
+	baseExit->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
+	baseExit->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	baseExit->addComponent<SceneEdge>(EdgeType::BASE);
+	enSystem->rootEntity->transform->AddChild(baseExit->transform);
+	enSystem->entities.push_back(std::move(baseExit));
 }
 
 

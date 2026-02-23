@@ -12,6 +12,7 @@
 #include "../SceneHandler_WZBJ_Pak.hpp"
 #include "../Scenes/SceneHandler/GameStateManager.hpp"
 #include "../BaseSystems/Engine/BoxCollider2D.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
 
 using namespace std;
 
@@ -19,12 +20,8 @@ class EntityManager;
 
 enum EdgeType
 {
-	BASEEXIT,
-	N_PATH,
-	E_PATH,
-	S_PATH,
-	W_PATH,
-	NUM_PATHS
+	BASE,
+	NUM_PATHS,
 };
 
 class SceneEdge: public SoloBehavior
@@ -32,6 +29,9 @@ class SceneEdge: public SoloBehavior
 private:
 	EdgeType type;
 	BoxCollider2D* col;
+	TransitionScreen* t_screen;
+	bool changeBuffer;
+
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);
 	void onExit(BoxCollider2D* other);
@@ -45,7 +45,7 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	SceneEdge(EdgeType _type) : type{_type}{}
+	SceneEdge(EdgeType _type) : type{ _type }, col{ nullptr }, t_screen{nullptr}, changeBuffer {false} {}
 	~SceneEdge(){}
 
 };

@@ -6,18 +6,9 @@ void SceneEdge::onHit(BoxCollider2D* other)
 {
 	switch (type)
 	{
-	case BASEEXIT:
-		GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL1);
-		break;
-	case N_PATH:
-		break;
-	case E_PATH:
-		break;
-	case S_PATH:
-		break;
-	case W_PATH:
-		break;
-	case NUM_PATHS:
+	case BASE:
+		t_screen->SetState(T_State::T_IN);
+		changeBuffer = true;
 		break;
 	default:
 		break;
@@ -35,6 +26,7 @@ void SceneEdge::onExit(BoxCollider2D* other)
 void SceneEdge::awake()
 {
 	enSystem = &EntityManager::getInstance();
+	t_screen = enSystem->FindByNameGLOBAL("TransitionScreen")->getComponent<TransitionScreen>();
 
 	col = entity->getComponent<BoxCollider2D>();
 	if (col) {
@@ -51,7 +43,18 @@ void SceneEdge::init()
 
 void SceneEdge::update()
 {
-
+	switch (type)
+	{
+	case BASE:
+		if (t_screen->GetState() == DONE && changeBuffer)
+		{
+			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL1);
+			changeBuffer = false;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void SceneEdge::fixedUpdate()

@@ -118,6 +118,12 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{771c5b61-31bd-478c-8ed5-0267ade279ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Base Systems\Audio">
+      <UniqueIdentifier>{c0698152-1e1d-49f7-b2df-827b5c4a4c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Base Systems\Audio">
+      <UniqueIdentifier>{4d3f796c-c127-4aad-91ba-677350633ef1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp">
@@ -242,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Map\Map.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
+      <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +436,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

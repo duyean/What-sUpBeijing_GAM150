@@ -8,39 +8,36 @@
 #include "../JSONSerializer_WZBJ_Pak.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
-NavigationData NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
+void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 {
-	NavigationData outData;
-	outData.playMap = Map::GenerateMap(type, xLen, yLen);
+	this->playMap.GenerateMap(type, xLen, yLen);
 
 	//copy play map size to view map
-	outData.viewMap = outData.playMap; 
+	this->viewMap = this->playMap; 
 
 	//set up view map based on play map
-	outData.viewMap.mapType = MapType::OverlayFog; //for debug purposes if needed
+	this->viewMap.mapType = MapType::OverlayFog; //for debug purposes if needed
 	for (int x = 0; x < xLen; x++) for (int y = 0; y < yLen; y++)
 	{
 		//default all view map nodes to fog
-		outData.viewMap.mapNodes[y][x].type = NodeType::VisionFog; 
+		this->viewMap.mapNodes[y][x].type = NodeType::VisionFog; 
 
 		//find entry node position
-		if (outData.playMap.mapNodes[y][x].type == NodeType::Entry)
+		if (this->playMap.mapNodes[y][x].type == NodeType::Entry)
 		{
-			outData.xPos = x;
-			outData.yPos = y;
+			this->xPos = x;
+			this->yPos = y;
 
 			//reveal entry node
-			outData.viewMap.mapNodes[y][x].type = NodeType::VisionClear; 
+			this->viewMap.mapNodes[y][x].type = NodeType::VisionClear; 
 
 			//reveal any node movable to from entry node
-			if (!outData.viewMap.mapNodes[y][x].e)	outData.viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
-			if (!outData.viewMap.mapNodes[y][x].w)	outData.viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
-			if (!outData.viewMap.mapNodes[y][x].n)	outData.viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
-			if (!outData.viewMap.mapNodes[y][x].s)	outData.viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
+			if (!this->viewMap.mapNodes[y][x].e)	this->viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
+			if (!this->viewMap.mapNodes[y][x].w)	this->viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
+			if (!this->viewMap.mapNodes[y][x].n)	this->viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
+			if (!this->viewMap.mapNodes[y][x].s)	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
 		}
 	}
-
-	return outData;
 }
 
 void TravelNode(NavigationData& data, int newX, int newY)
@@ -104,6 +101,20 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 }
 
+void GetCurrentNodeInfo(NavigationData data)
+{
+	//used for easier parsing
+	NodeType currentNodeType = data.playMap.mapNodes[data.yPos][data.xPos].type;
+	//print node info to console for debug purposes
+	printf("Current Node Type: %d\n", static_cast<int>(currentNodeType));
+	printf("Current Node Position: %d, %d\n", data.xPos, data.yPos);
+	printf("Current Node Connections: \n");
+	printf("North: %d\n", !data.playMap.mapNodes[data.yPos][data.xPos].n);
+	printf("South: %d\n", !data.playMap.mapNodes[data.yPos][data.xPos].s);
+	printf("East: %d\n", !data.playMap.mapNodes[data.yPos][data.xPos].e);
+	printf("West: %d\n", !data.playMap.mapNodes[data.yPos][data.xPos].w);
+}
+
 bool NavigationData::SaveNavigationData(NavigationData data, JSONSerializer serializer, std::string fileName)
 {
 	//to be filled in by mr JSON
@@ -118,10 +129,9 @@ bool NavigationData::LoadNavigationData(NavigationData& data, JSONSerializer& se
 
 NavigationData::NavigationData()
 {
-	NavigationData::playMap = Map::GenerateMap(MapType::Debug, 3, 3);
-	viewMap = playMap;
-	xPos = 0;
-	yPos = 0;
+	viewMap = Map();
+	playMap = Map();
+	xPos = yPos = 0;
 }
 
 NavigationData::~NavigationData()

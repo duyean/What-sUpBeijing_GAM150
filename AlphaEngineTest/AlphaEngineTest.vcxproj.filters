@@ -332,9 +332,6 @@
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
     </ClInclude>
@@ -454,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>

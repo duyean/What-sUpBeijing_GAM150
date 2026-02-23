@@ -31,9 +31,13 @@ This function loads splash screen image
 void Level1::Load()
 {
 	meshSystem = &MeshGen::getInstance();
-	//map = new Map();
-	//map->GenerateMap(MapType::OuterPalace, 15, 15);
 
+
+	//map data info
+	map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
+	//map data get current location data
+	GetCurrentNodeInfo(map);
+	//map data info end
 	float collidersize = 100.f;
 
 	enSystem = &EntityManager::getInstance();
@@ -108,5 +112,4 @@ void Level1::Unload()
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;
 	}
-	delete map;
 }

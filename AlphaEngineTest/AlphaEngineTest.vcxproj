@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
@@ -60,6 +62,9 @@
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />

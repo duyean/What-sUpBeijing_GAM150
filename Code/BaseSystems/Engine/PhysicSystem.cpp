@@ -74,9 +74,17 @@ void PhysicSystem::broadPhase()
     const size_t count = colliders.size();
 
     for (size_t i = 0; i < count; ++i) {
+        if (colliders[i]->isActive == false || colliders[i]->entity->isActive == false)
+        {
+            continue;
+        }
         AEVec2 posA = colliders[i]->entity->transform->getPosition();
 
         for (size_t j = i + 1; j < count; ++j) {
+            if (colliders[j]->isActive == false || colliders[j]->entity->isActive == false)
+            {
+                continue;
+            }
             AEVec2 posB = colliders[j]->entity->transform->getPosition();
 
             float dx = posA.x - posB.x;

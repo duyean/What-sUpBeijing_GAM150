@@ -25,10 +25,10 @@ void EdgeManager::init()
 void EdgeManager::update()
 {
 	MapNode node = map.playMap.mapNodes[map.yPos][map.xPos];
-	N_path->isActive = node.n;
-	E_path->isActive = node.e;
-	S_path->isActive = node.s;
-	W_path->isActive = node.w;
+	N_path->isActive = !node.n;
+	E_path->isActive = !node.e;
+	S_path->isActive = !node.s;
+	W_path->isActive = !node.w;
 
 	if (SE_N->triggerBuffer)
 	{

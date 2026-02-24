@@ -109,10 +109,10 @@ void GetCurrentNodeInfo(NavigationData data)
 	printf("Current Node Type: %d\n", static_cast<int>(currentNodeType));
 	printf("Current Node Position: %d, %d\n", data.xPos, data.yPos);
 	printf("Current Node Connections: \n");
-	printf("North: %d\n", data.playMap.mapNodes[data.yPos][data.xPos].n);
-	printf("South: %d\n", data.playMap.mapNodes[data.yPos][data.xPos].s);
-	printf("East: %d\n", data.playMap.mapNodes[data.yPos][data.xPos].e);
-	printf("West: %d\n", data.playMap.mapNodes[data.yPos][data.xPos].w);
+	printf("North: %s\n", data.playMap.mapNodes[data.yPos][data.xPos].n ? "Wall" : "Path" );
+	printf("South: %s\n", data.playMap.mapNodes[data.yPos][data.xPos].s ? "Wall" : "Path");
+	printf("East: %s\n", data.playMap.mapNodes[data.yPos][data.xPos].e ? "Wall" : "Path");
+	printf("West: %s\n", data.playMap.mapNodes[data.yPos][data.xPos].w ? "Wall" : "Path");
 }
 
 bool NavigationData::SaveNavigationData(NavigationData data, JSONSerializer serializer, std::string fileName)

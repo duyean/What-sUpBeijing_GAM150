@@ -50,7 +50,9 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	SceneEdge(EdgeType _type) : type{ _type }, col{ nullptr }, t_screen{nullptr}, changeBuffer {false} {}
+	bool triggerBuffer = false;
+
+	SceneEdge(EdgeType _type) : type{ _type }, col{nullptr}, t_screen{nullptr}, changeBuffer{false} {}
 	~SceneEdge(){}
 
 };

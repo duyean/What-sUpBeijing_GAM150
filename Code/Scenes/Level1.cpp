@@ -45,8 +45,16 @@ void Level1::Load()
 	AEVec2 pos = { 0.f,0.f };
 	AEVec2 scale = { 1.f, 1.f };
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
-	//enSystem->rootEntity->addComponent<TransitionScreen>();
 	enSystem->entities.push_back(std::move(r));
+
+	auto ts = std::make_unique<Entity>("TransitionScreen");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	ts->addComponent<Transform2D>(pos, scale, 0.f);
+	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 101, MeshType::BOX_B);
+	ts->addComponent<TransitionScreen>(T_State::T_OUT);
+	enSystem->rootEntity->transform->AddChild(ts->transform);
+	enSystem->entities.push_back(std::move(ts));
 
 	auto n_path = std::make_unique<Entity>("N_Path");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
@@ -54,6 +62,7 @@ void Level1::Load()
 	n_path->addComponent<Transform2D>(pos, scale, 0.f);
 	n_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	n_path->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
+	n_path->addComponent<SceneEdge>(EdgeType::N_PATH);
 	enSystem->rootEntity->transform->AddChild(n_path->transform);
 	enSystem->entities.push_back(std::move(n_path));
 
@@ -63,6 +72,7 @@ void Level1::Load()
 	e_path->addComponent<Transform2D>(pos, scale, 0.f);
 	e_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	e_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e_path->addComponent<SceneEdge>(EdgeType::E_PATH);
 	enSystem->rootEntity->transform->AddChild(e_path->transform);
 	enSystem->entities.push_back(std::move(e_path));
 
@@ -72,6 +82,7 @@ void Level1::Load()
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
 	s_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	s_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	s_path->addComponent<SceneEdge>(EdgeType::S_PATH);
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
 	enSystem->entities.push_back(std::move(s_path));
 
@@ -81,6 +92,7 @@ void Level1::Load()
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
 	w_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	w_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	w_path->addComponent<SceneEdge>(EdgeType::W_PATH);
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
 	enSystem->entities.push_back(std::move(w_path));
 
@@ -93,15 +105,6 @@ void Level1::Load()
 	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
-
-	auto ts = std::make_unique<Entity>("TransitionScreen");
-	pos = { 0.f, 0.f };
-	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
-	ts->addComponent<Transform2D>(pos, scale, 0.f);
-	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
-	ts->addComponent<TransitionScreen>(T_State::T_OUT);
-	enSystem->rootEntity->transform->AddChild(ts->transform);
-	enSystem->entities.push_back(std::move(ts));
 
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
 	SE_Manager->addComponent<EdgeManager>(map);

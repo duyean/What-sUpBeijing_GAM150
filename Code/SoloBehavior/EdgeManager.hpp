@@ -24,11 +24,18 @@ class EntityManager;
 class EdgeManager : public SoloBehavior
 {
 private:
-	const NavigationData& map;
+	NavigationData& map;
 	Entity* N_path;
 	Entity* E_path;
 	Entity* S_path;
 	Entity* W_path;
+
+	SceneEdge* SE_N = nullptr;
+	SceneEdge* SE_E = nullptr;
+	SceneEdge* SE_S = nullptr;
+	SceneEdge* SE_W = nullptr;
+
+	Entity* player = nullptr;
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -39,7 +46,7 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	EdgeManager(const NavigationData& _map) : N_path{ nullptr }, E_path{ nullptr }, S_path{ nullptr }, W_path{ nullptr }, map{ _map } {}
+	EdgeManager(NavigationData& _map) : N_path{ nullptr }, E_path{ nullptr }, S_path{ nullptr }, W_path{ nullptr }, map{ _map } {}
 	~EdgeManager() {}
 
 };

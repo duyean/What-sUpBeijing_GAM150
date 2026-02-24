@@ -49,7 +49,7 @@ void RenderSystem::RenderObjects(const std::vector<std::unique_ptr<Entity>>& ent
 	for (int i = 0; i < entities.size(); i++)
 	{
         if (auto mesh = entities[i]->getComponent<Mesh>()) {
-            if (mesh->isActive == true)
+            if (entities[i]->isActive == true && mesh->isActive == true)
             {
                 queue.push_back(mesh);
             }

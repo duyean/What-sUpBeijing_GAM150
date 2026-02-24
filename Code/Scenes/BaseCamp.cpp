@@ -31,8 +31,6 @@ This function loads splash screen image
 void BaseCamp::Load()
 {
 	meshSystem = &MeshGen::getInstance();
-	//map = new Map();
-	//map->GenerateMap(MapType::OuterPalace, 15, 15);
 
 	float collidersize = 100.f;
 
@@ -109,5 +107,4 @@ void BaseCamp::Unload()
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;
 	}
-	delete map;
 }

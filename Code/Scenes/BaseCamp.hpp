@@ -24,7 +24,7 @@ class BaseCamp : public GameState
 private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
-	Map* map = nullptr;
+	//Map* map = nullptr;
 public:
 	BaseCamp();
 	~BaseCamp();

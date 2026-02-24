@@ -1,4 +1,5 @@
 #pragma once
+#include "NavigationDataClass.hpp"
 
 //Class-based definition and implementation are in NavigationData.cpp
 

@@ -103,6 +103,9 @@ void Level1::Load()
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 
+	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
+	SE_Manager->addComponent<EdgeManager>(map);
+	enSystem->entities.push_back(std::move(SE_Manager));
 }
 
 

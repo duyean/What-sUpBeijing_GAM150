@@ -47,6 +47,7 @@
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp" />
     <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
     <ClInclude Include="..\Code\Scenes\Level1.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />

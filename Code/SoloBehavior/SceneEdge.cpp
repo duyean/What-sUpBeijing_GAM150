@@ -10,6 +10,17 @@ void SceneEdge::onHit(BoxCollider2D* other)
 		t_screen->SetState(T_State::T_IN);
 		changeBuffer = true;
 		break;
+	case N_PATH:
+
+		break;
+	case E_PATH:
+		break;
+	case S_PATH:
+		break;
+	case W_PATH:
+		break;
+	case NUM_PATHS:
+		break;
 	default:
 		break;
 	}

@@ -17,6 +17,7 @@ This file contains the declarations of functions for splash screen
 #include "../UI_WZBJ_Pak.hpp"
 #include "../SoloBehavior/Player.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/EdgeManager.hpp"
 
 class Level1 : public GameState
 {

@@ -1,5 +1,5 @@
 #pragma once
-#ifndef SceneEdge
+#ifndef EdgeManager
 #include <iostream>
 #include <cstdint>
 #include <vector>
@@ -14,32 +14,21 @@
 #include "../BaseSystems/Engine/BoxCollider2D.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/Map/NavigationData.hpp"
+#include "../Code/SoloBehavior/SceneEdge.hpp"
 
 using namespace std;
 
 class EntityManager;
 
-enum EdgeType
-{
-	BASE,
-	N_PATH,
-	E_PATH,
-	S_PATH,
-	W_PATH,
-	NUM_PATHS,
-};
 
-class SceneEdge: public SoloBehavior
+class EdgeManager : public SoloBehavior
 {
 private:
-	EdgeType type;
-	BoxCollider2D* col;
-	TransitionScreen* t_screen;
-	bool changeBuffer;
-
-	void onHit(BoxCollider2D* other);
-	void onStay(BoxCollider2D* other);
-	void onExit(BoxCollider2D* other);
+	const NavigationData& map;
+	Entity* N_path;
+	Entity* E_path;
+	Entity* S_path;
+	Entity* W_path;
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -50,8 +39,8 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	SceneEdge(EdgeType _type) : type{ _type }, col{ nullptr }, t_screen{nullptr}, changeBuffer {false} {}
-	~SceneEdge(){}
+	EdgeManager(const NavigationData& _map) : N_path{ nullptr }, E_path{ nullptr }, S_path{ nullptr }, W_path{ nullptr }, map{ _map } {}
+	~EdgeManager() {}
 
 };
 

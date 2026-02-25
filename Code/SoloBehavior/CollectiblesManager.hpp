@@ -1,5 +1,5 @@
 #pragma once
-#ifndef SceneEdge
+#ifndef EdgeManager
 #include <iostream>
 #include <cstdint>
 #include <vector>
@@ -12,38 +12,24 @@
 #include "../SceneHandler_WZBJ_Pak.hpp"
 #include "../Scenes/SceneHandler/GameStateManager.hpp"
 #include "../BaseSystems/Engine/BoxCollider2D.hpp"
-#include "../Code/SoloBehavior/TransitionScreen.hpp"
-#include "../Code/Map/NavigationData.hpp"
 
 using namespace std;
 
 class EntityManager;
 
-class SceneEdge: public SoloBehavior
+class CollectiblesManager : public SoloBehavior
 {
 private:
-	BoxCollider2D* col;
-	TransitionScreen* t_screen;
-	bool changeBuffer;
-
-	void onHit(BoxCollider2D* other);
-	void onStay(BoxCollider2D* other);
-	void onExit(BoxCollider2D* other);
+	
 public:
-
-	EntityManager* enSystem = nullptr;
-
 	void awake() override;
 	void init() override;
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
 
-	bool triggerBuffer = false;
-
-	SceneEdge() : col{nullptr}, t_screen{nullptr}, changeBuffer{false} {}
-	~SceneEdge(){}
-
+	CollectiblesManager(){}
+	~CollectiblesManager() {}
 };
 
 

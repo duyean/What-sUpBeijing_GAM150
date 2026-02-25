@@ -56,6 +56,7 @@ void game_update(void)
 void game_exit(void)
 {
 	gameManager->Exit();
+	enSystem->forceClearAllDestroyed();
 	GameManager::DestroyInstance();
 }
 

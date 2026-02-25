@@ -118,12 +118,6 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{771c5b61-31bd-478c-8ed5-0267ade279ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Base Systems\Audio">
-      <UniqueIdentifier>{64ee87d3-c78b-4d1e-8736-51d19159f082}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Base Systems\Audio">
-      <UniqueIdentifier>{45f7afc2-4f43-4f17-b12f-6d0152dd13b1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp">
@@ -176,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
       <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Extern\imgui\imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
@@ -255,14 +252,23 @@
     <ClCompile Include="..\Code\Map\NavigationData.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Scenes\BaseCamp.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
-      <Filter>Source Files\Base Systems\Audio</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
-      <Filter>Source Files\Base Systems\Audio</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
-      <Filter>Source Files\Base Systems</Filter>
+    <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
       <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
       <Filter>Header Files\ImGui</Filter>
@@ -452,20 +461,29 @@
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
-      <Filter>Header Files\Global Inherit Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
-      <Filter>Header Files\Base Systems\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
-      <Filter>Header Files\Base Systems\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
       <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\BaseCamp.hpp">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

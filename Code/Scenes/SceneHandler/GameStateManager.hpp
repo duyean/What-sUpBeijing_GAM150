@@ -21,6 +21,7 @@ public:
 	enum SCENES {
 	SPLASHSCREEN,
 	MAIN_MENU,
+	BASE_CAMP,
 	LEVEL1,
 	NUM_SCENES
 };

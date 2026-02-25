@@ -15,7 +15,7 @@ void Character::DealDamage(Character* target, float coefficient)
 	std::mt19937 gen(seedling()); //Mersenne Twister Algorithm
 
 	//range examples
-	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
+	std::uniform_real_distribution<float> randFloat(0.0f, 1.0f);
 	float critRoll = randFloat(gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);

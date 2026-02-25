@@ -5,7 +5,7 @@
 
 class Character;
 
-enum EventType
+enum struct EventType
 {
 	DealtDamage,
 	TookDamage,
@@ -31,8 +31,7 @@ public:
 	void Dispatch(EventType type, const EventData& data);
 	void ClearAll();
 	void Clear(EventType type);
-	static CombatEventHandler* instance;
-
+	static CombatEventHandler& Instance();
 	CombatEventHandler();
 private:
 	std::unordered_map<EventType, std::vector<Callback>> listeners;

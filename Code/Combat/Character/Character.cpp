@@ -34,7 +34,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 
 	//Event Handler
 	EventData evt{ damageInfo.source, this, (int)finalDamageTaken};
-	CombatEventHandler::instance->Dispatch(EventType::TookDamage, evt);
+	CombatEventHandler::Instance().Dispatch(EventType::TookDamage, evt);
 
 	if (hp <= 0)
 	{

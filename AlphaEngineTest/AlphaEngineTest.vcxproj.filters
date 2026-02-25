@@ -255,6 +255,9 @@
     <ClCompile Include="..\Code\Combat\EventHandler\CombatEventHandler.cpp">
       <Filter>Source Files\Combat Systems</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Combat\Blessing\Blessing.cpp">
+      <Filter>Source Files\Combat Systems\Blessing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">

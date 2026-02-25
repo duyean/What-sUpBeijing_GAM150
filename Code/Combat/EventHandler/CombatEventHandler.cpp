@@ -3,10 +3,13 @@
 
 CombatEventHandler::CombatEventHandler()
 {
-    if (!instance)
-    {
-        instance = this;
-    }
+    listeners = {};
+}
+
+CombatEventHandler& CombatEventHandler::Instance()
+{
+    static CombatEventHandler instance;
+    return instance;
 }
 
 void CombatEventHandler::Register(EventType type, Callback cb)
@@ -16,6 +19,11 @@ void CombatEventHandler::Register(EventType type, Callback cb)
 
 void CombatEventHandler::Dispatch(EventType type, const EventData& data)
 {
+    if (listeners.empty())
+    {
+        return;
+    }
+
     auto it = listeners.find(type);
     if (it != listeners.end())
     {

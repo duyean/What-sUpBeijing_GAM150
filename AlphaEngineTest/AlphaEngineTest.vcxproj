@@ -30,6 +30,7 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp" />
     <ClCompile Include="..\Code\Combat\BattleManager\BattleManager.cpp" />
+    <ClCompile Include="..\Code\Combat\Blessing\Blessing.cpp" />
     <ClCompile Include="..\Code\Combat\Character\Character.cpp" />
     <ClCompile Include="..\Code\Combat\CombatUIManager.cpp" />
     <ClCompile Include="..\Code\Combat\DamageNumber.cpp" />

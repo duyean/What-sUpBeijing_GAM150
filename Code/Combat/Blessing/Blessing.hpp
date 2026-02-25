@@ -1,23 +1,26 @@
 #pragma once
 #include <string>
 #include "../EventHandler/CombatEventHandler.hpp"
+#include "../Globals/Globals.hpp"
+#include "../Extern/AlphaEngine/include/AEEngine.h"
 
 class Character;
 
-enum BLESSING_ID
+enum struct BLESSING_ID
 {
+	NONE,
 	MINOR_ATK_BUFF,
 	MINOR_DEF_BUFF,
 	MINOR_HP_BUFF
 };
 
-enum BLESSING_TYPE
+enum struct BLESSING_TYPE
 {
 	ATTRIBUTE_BOOST,
 	TRIGGERED_BLESSING
 };
 
-enum BLESSING_RARITY
+enum struct BLESSING_RARITY
 {
 	COMMON,
 	RARE,
@@ -44,18 +47,29 @@ public:
 	//The rarity of the blessing. Used for the RNG weightage
 	BLESSING_RARITY blessingRarity;
 
-	virtual void Apply(Character* target) {};
-	virtual void RemoveBuff(Character* target) {};
+	//The icon of the blessing
+	AEGfxTexture* logo;
+	Blessing();
+	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*);
+	virtual void Apply(Character* target) = 0;
+	virtual void RemoveBuff(Character* target) = 0;
 	virtual ~Blessing() = default;
 };
 
 class AttributeBlessing : public Blessing
 {
-
+	Game::ATTRIBUTE_TYPE attType;
+	float value;
+	void Apply(Character* target) override;
+	void RemoveBuff(Character* target) override;
 };
 
 class TriggerBlessing : public Blessing
 {
 	EventType triggerType;
-
+	std::function<void(const EventData& data)> triggerEffect;
+	int blessingCooldown;
+	int cooldown;
+	void Apply(Character* target) override;
+	void RemoveBuff(Character* target) override;
 };

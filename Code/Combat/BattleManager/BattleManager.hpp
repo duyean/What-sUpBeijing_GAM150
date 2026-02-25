@@ -2,6 +2,7 @@
 #include <vector>
 #include "../../Engine_WZBJ_Pak.hpp"
 #include "../Character/Character.hpp"
+#include "../Code/Combat/EventHandler/CombatEventHandler.hpp"
 
 class BattleManager : public SoloBehavior
 {

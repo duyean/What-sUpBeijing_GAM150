@@ -57,6 +57,8 @@ void game_exit(void)
 {
 	gameManager->Exit();
 	enSystem->forceClearAllDestroyed();
+	meshSystem->ClearAllFont();
+	meshSystem->ClearAllMesh();
 	GameManager::DestroyInstance();
 }
 

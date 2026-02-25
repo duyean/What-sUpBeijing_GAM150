@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------
 // includes
 
+//#include "vld.h"
 #include <crtdbg.h> // To check for memory leaks
 #include <chrono>
 #include "AEEngine.h"
@@ -27,8 +28,6 @@ GameManager* gameManager = nullptr;
 
 
 #define CAPSPEED 60.0
-MeshGen* meshSystem = &MeshGen::getInstance();
-
 EntityManager* enSystem = &EntityManager::getInstance();
 
 PhysicSystem* phSystem = &PhysicSystem::getInstance();
@@ -41,7 +40,6 @@ void game_init(void)
 {
 	gameManager = GameManager::GetInstance();
 	gameManager->Init();
-	meshSystem->initialize();
 	rSystem->init();
 
 }
@@ -50,15 +48,13 @@ void game_update(void)
 {
 
 	gameManager->Render();
-	gameManager->Update(AEFrameRateControllerGetFrameTime());
+	gameManager->Update(static_cast<float>(AEFrameRateControllerGetFrameTime()));
 }
 
 void game_exit(void)
 {
 	gameManager->Exit();
 	enSystem->forceClearAllDestroyed();
-	meshSystem->ClearAllFont();
-	meshSystem->ClearAllMesh();
 	GameManager::DestroyInstance();
 }
 

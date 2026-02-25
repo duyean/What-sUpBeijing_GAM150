@@ -65,13 +65,13 @@ void DamageNumbers::update()
 	{
 		if (lifetime > 0.7f && size < 1.f)
 		{
-			size += 25.f * AEFrameRateControllerGetFrameTime();
+			size += 25.f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 		}
 		else if (lifetime < 0.7f && size > 0.f)
 		{
-			size -= 0.3f * AEFrameRateControllerGetFrameTime();
+			size -= 0.3f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 			if (textColor.A >= 0.f) {
-				textColor.A -= 2.f * AEFrameRateControllerGetFrameTime();
+				textColor.A -= 2.f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 			}
 		
 
@@ -81,7 +81,7 @@ void DamageNumbers::update()
 		AEVec2 lerped{};
 		AEVec2 position = entity->transform->getPosition();
 		AEVec2 target = entity->transform->getPosition() + AEVec2(0, 5.f);
-		AEVec2Lerp(&lerped, &position, &target, 1.0f - exp(-smoothing * AEFrameRateControllerGetFrameTime()));
+		AEVec2Lerp(&lerped, &position, &target, 1.0f - static_cast<float>(exp(-smoothing * AEFrameRateControllerGetFrameTime())));
 		entity->transform->setPosition(lerped);
 	}
 }

@@ -105,7 +105,6 @@ void MainMenu::Load()
     battleManager->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
-    Map myMap;
     Map::LoadMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
     //Map::SaveMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
 }

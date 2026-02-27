@@ -15,6 +15,7 @@ void AttributeBlessing::Apply(Character* target)
 {
 	auto mod = std::make_unique<AttributeModifier>("blessing", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, UNIQUE, true);
 	target->AddModifier(std::move(mod));
+	std::cout << "Added Blessing: " << blessingName << std::endl;
 }
 
 void AttributeBlessing::RemoveBuff(Character* target) {}

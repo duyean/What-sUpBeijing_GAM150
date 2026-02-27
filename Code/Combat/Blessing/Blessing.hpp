@@ -58,18 +58,46 @@ public:
 
 class AttributeBlessing : public Blessing
 {
+public:
 	Game::ATTRIBUTE_TYPE attType;
 	float value;
 	void Apply(Character* target) override;
 	void RemoveBuff(Character* target) override;
+	AttributeBlessing(BLESSING_ID id,
+		std::string name,
+		std::string desc,
+		BLESSING_RARITY rarity,
+		AEGfxTexture* logo,
+		Game::ATTRIBUTE_TYPE type,
+		float val)
+		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo),
+		attType(type),
+		value(val) {}
+
 };
 
 class TriggerBlessing : public Blessing
 {
+public:
 	EventType triggerType;
 	std::function<void(const EventData& data)> triggerEffect;
 	int blessingCooldown;
 	int cooldown;
 	void Apply(Character* target) override;
 	void RemoveBuff(Character* target) override;
+
+	TriggerBlessing(BLESSING_ID id,
+		std::string name,
+		std::string desc,
+		BLESSING_RARITY rarity,
+		AEGfxTexture* logo,
+		EventType trigger,
+		std::function<void(const EventData&)> effect,
+		int cd)
+		: Blessing(id, name, desc, BLESSING_TYPE::TRIGGERED_BLESSING, rarity, logo),
+		triggerType(trigger),
+		triggerEffect(effect),
+		blessingCooldown(cd),
+		cooldown(0) {
+	}
 };

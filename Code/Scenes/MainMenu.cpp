@@ -20,6 +20,8 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Maps_WZBJ_Pak.hpp"
 #include "../SoloBehavior/HEALTHBAR1.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
+
 
 JSONSerializer jsonSerializer{};
 std::unique_ptr<Entity> character, testEnemy, testEnemy2;
@@ -58,7 +60,7 @@ void MainMenu::Load()
 
     auto manager = std::make_unique<Entity>("Manager");
     manager->addComponent<Transform2D>(pos, scale, 0.f);
-    manager->addComponent<BattleManager>();
+    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<CombatUIManager>();
     manager->addComponent<AudioManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
@@ -107,13 +109,17 @@ void MainMenu::Load()
     enSystem->rootEntity->transform->AddChild(testEnemy2->transform);
     enSystem->entities.push_back(std::move(testEnemy2));
 
+    auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
+        nullptr, Game::ATK, 99);
+    RunManager::Instance().AddBlessing(std::move(test));
+
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
-    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
-    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
-    BattleManager::Instance()->StartBattle();
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
+    battleManager->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
     Map::LoadMap(myMap, jsonSerializer, "Assets/Map/testmap.json");

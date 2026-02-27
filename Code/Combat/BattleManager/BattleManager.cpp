@@ -26,7 +26,6 @@ currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NO
 
 BattleManager* BattleManager::Instance()
 {
-
 	return instance;
 }
 

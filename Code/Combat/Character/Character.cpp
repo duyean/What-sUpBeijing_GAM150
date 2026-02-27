@@ -2,6 +2,7 @@
 #include "../CombatUIManager.hpp"
 #include <iostream>
 #include "../EventHandler/CombatEventHandler.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -77,6 +78,13 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 void Character::Init(void)
 {
 	//Load Blessings
+	if (faction == Game::PLAYER)
+	{
+		for (auto& blessing : RunManager::Instance().GetBlessings())
+		{
+			blessing.get()->Apply(this);
+		}
+	}
 	UpdateAttributes();
 	hp = maxHP;
 }

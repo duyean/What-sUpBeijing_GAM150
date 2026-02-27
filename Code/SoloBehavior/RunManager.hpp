@@ -14,4 +14,6 @@ public:
 	static RunManager& Instance();
 	void StartRun();
 	void ResetRun();
+	void AddBlessing(std::unique_ptr<Blessing> blessing);
+	const std::vector<std::unique_ptr<Blessing>>& GetBlessings() const;
 };

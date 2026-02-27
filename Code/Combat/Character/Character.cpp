@@ -2,6 +2,7 @@
 #include "../CombatUIManager.hpp"
 #include <iostream>
 #include "../EventHandler/CombatEventHandler.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -76,7 +77,15 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 
 void Character::Init(void)
 {
+	printf("Init: %s\n", name.c_str());
 	//Load Blessings
+	if (faction == Game::PLAYER)
+	{
+		for (auto& blessing : RunManager::Instance().GetBlessings())
+		{
+			blessing.get()->Apply(this);
+		}
+	}
 	UpdateAttributes();
 	hp = maxHP;
 }
@@ -197,7 +206,10 @@ void Character::ProcessModifiers(void)
 		{
 			modifier->Apply(this); //Apply DOT Effects
 		}
-		modifier->duration--; //Tick down all effects
+		if (modifier)
+		{
+			modifier->duration--; //Tick down all effects
+		}
 	}
 
 	effectList.erase(
@@ -269,7 +281,11 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 
 void Character::init()
 {
-	Init();
+	/*
+	This is a temp fix for when the a TookDamage event triggers that resulted in adding a modifier, which causes
+	a vector reallocation mid loop in ProcessModifiers.
+	*/
+	effectList.reserve(128);
 }
 
 void Character::awake()

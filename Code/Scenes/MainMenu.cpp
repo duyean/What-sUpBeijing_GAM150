@@ -110,9 +110,18 @@ void MainMenu::Load()
     enSystem->entities.push_back(std::move(testEnemy2));
 
     auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
-        nullptr, Game::ATK, 99);
+        nullptr, Game::ATK, 0.15f);
     RunManager::Instance().AddBlessing(std::move(test));
 
+    auto test2 = std::make_unique<TriggerBlessing>(BLESSING_ID::NONE, "Test2", "Test2", BLESSING_RARITY::MYTHICAL,
+        nullptr, EventType::TookDamage, 
+        [](const EventData& data) 
+        {
+            auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, nullptr, GENERIC_, 0.25f,
+                Game::ATK, UNIQUE, true);
+            data.target->AddModifier(std::move(mod));
+        }, -1);
+    RunManager::Instance().AddBlessing(std::move(test2));
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 

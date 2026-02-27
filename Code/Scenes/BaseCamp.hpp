@@ -14,17 +14,20 @@ This file contains the declarations of functions for splash screen
 
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-#include "../SoloBehavior/SplashLogo.hpp"
+#include "../SoloBehavior/Player.hpp"
+#include "../Map/MapClass.hpp"
+#include "../SoloBehavior/TransitionScreen.hpp"
+#include "../SoloBehavior/SceneEdge.hpp"
 
-class SplashScreen : public GameState
+class BaseCamp : public GameState
 {
 private:
-	//CP_Image logo;
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
+	//Map* map = nullptr;
 public:
-	SplashScreen();
-	~SplashScreen();
+	BaseCamp();
+	~BaseCamp();
 
 	/*!
 	@brief Initialize Splash Screen variables

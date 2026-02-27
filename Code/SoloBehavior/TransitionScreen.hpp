@@ -13,14 +13,22 @@
 
 using namespace std;
 
+enum T_State
+{
+	T_IN,
+	T_OUT,
+	DONE
+};
+
 class EntityManager;
 
-class SplashLogo: public SoloBehavior
+class TransitionScreen: public SoloBehavior
 {
 private:
-	float curSplashTimer;
-	float maxSplashTimer;
-	float splashOpacity;
+	float transitionSpeed;
+	bool t_buffer;
+	T_State state;
+
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -30,14 +38,18 @@ public:
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
+	void SetState(T_State _state) { state = _state; t_buffer = true; }
+	T_State GetState() const { return state; }
 
-	SplashLogo() {
-		curSplashTimer = 0.f;
-		maxSplashTimer = 6.f;
-		splashOpacity = 0.f;
+	TransitionScreen() = default;
+
+	TransitionScreen(T_State _state) {
+		transitionSpeed = 1000.f;
+		t_buffer = false;
+		state = _state;
 	}
 
-	~SplashLogo(){}
+	~TransitionScreen(){}
 
 };
 

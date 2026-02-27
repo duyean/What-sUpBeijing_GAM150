@@ -11,20 +11,23 @@ This file contains the declarations of functions for splash screen
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
+#include "../Maps_WZBJ_Pak.hpp"
 
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-#include "../SoloBehavior/SplashLogo.hpp"
+#include "../SoloBehavior/Player.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/EdgeManager.hpp"
 
-class SplashScreen : public GameState
+class Level1 : public GameState
 {
 private:
-	//CP_Image logo;
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
+	NavigationData map { };
 public:
-	SplashScreen();
-	~SplashScreen();
+	Level1();
+	~Level1();
 
 	/*!
 	@brief Initialize Splash Screen variables

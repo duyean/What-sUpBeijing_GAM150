@@ -258,6 +258,33 @@
     <ClCompile Include="..\Code\Combat\Blessing\Blessing.cpp">
       <Filter>Source Files\Combat Systems\Blessing</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Scenes\Level1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Map\NavigationData.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scenes\BaseCamp.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -327,9 +354,6 @@
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Extern\imgui\imconfig.h">
@@ -445,6 +469,42 @@
     </ClInclude>
     <ClInclude Include="..\Code\Combat\EventHandler\CombatEventHandler.hpp">
       <Filter>Header Files\Combat Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\Level1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationData.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Map\NavigationDataClass.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\BaseCamp.hpp">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

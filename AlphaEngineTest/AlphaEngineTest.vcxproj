@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
@@ -38,15 +40,22 @@
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
+    <ClCompile Include="..\Code\Map\NavigationData.cpp" />
+    <ClCompile Include="..\Code\Scenes\BaseCamp.cpp" />
+    <ClCompile Include="..\Code\Scenes\Level1.cpp" />
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -57,6 +66,9 @@
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
@@ -96,7 +108,14 @@
     <ClInclude Include="..\Code\Map\MapClass.hpp" />
     <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
-    <ClInclude Include="..\Code\SoloBehavior\RunManager.hpp" />
+    <ClInclude Include="..\Code\Map\NavigationData.hpp" />
+    <ClInclude Include="..\Code\Map\NavigationDataClass.hpp" />
+    <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
+    <ClInclude Include="..\Code\Scenes\Level1.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
@@ -154,8 +173,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\AlphaEngine\lib</LibraryPath>
+    <IncludePath>E:\Program Files %28x86%29\Visual Leak Detector\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern</IncludePath>
+    <LibraryPath>E:\Program Files %28x86%29\Visual Leak Detector\lib\Win64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\AlphaEngine\lib</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -167,7 +186,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>

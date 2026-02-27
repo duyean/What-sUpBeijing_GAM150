@@ -79,6 +79,16 @@ public:
 			});
 	}
 
+
+	void forceClearAllDestroyed() {
+
+		for (size_t i = 0; i < entities.size(); i++)
+		{
+			entities[i]->toDestroy = true;
+		}
+		clearAllDestroyed();
+	}
+
 	//use this after drawing layers is complete
 	void optimizedDeletion()
 	{

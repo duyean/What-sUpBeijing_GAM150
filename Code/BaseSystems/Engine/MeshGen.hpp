@@ -91,8 +91,8 @@ using namespace std;
 
 		static MeshGen& getInstance() {
 
-			static MeshGen instance;
-			return instance;
+			static MeshGen newInstance;
+			return newInstance;
 		}
 
 		void initialize()

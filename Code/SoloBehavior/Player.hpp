@@ -33,6 +33,7 @@ public:
 	}
 
 private:
+	float moveSpeed = 500.f;
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);
 	void onExit(BoxCollider2D* other);

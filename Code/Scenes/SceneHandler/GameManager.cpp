@@ -128,5 +128,7 @@ This functions clears variables for all managers and destroys instances.
 void GameManager::Exit()
 {
 	stateManager->Exit();
+	meshSystem->ClearAllFont();
+	meshSystem->ClearAllMesh();
 	GameStateManager::DestroyInstance();
 }

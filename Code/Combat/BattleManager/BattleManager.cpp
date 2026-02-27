@@ -3,9 +3,14 @@
 #include <iostream>
 #include "../CombatUIManager.hpp"
 
+BattleManager* BattleManager::instance;
+
 void BattleManager::awake()
 {
-
+	if (!instance)
+	{
+		instance = this;
+	}
 }
 
 void BattleManager::init()
@@ -19,9 +24,9 @@ currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NO
 
 }
 
-BattleManager& BattleManager::Instance()
+BattleManager* BattleManager::Instance()
 {
-	static BattleManager instance;
+
 	return instance;
 }
 

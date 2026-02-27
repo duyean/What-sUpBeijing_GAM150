@@ -110,10 +110,10 @@ void MainMenu::Load()
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
-    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
-    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
-    BattleManager::Instance().StartBattle();
+    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
+    BattleManager::Instance()->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
+    BattleManager::Instance()->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
     Map::LoadMap(myMap, jsonSerializer, "Assets/Map/testmap.json");

@@ -24,7 +24,8 @@ class BattleManager : public SoloBehavior
 	BATTLE_OUTCOME outcome;
 
 public:
-	static BattleManager* instance;
+	static BattleManager& Instance();
+
 	BattleManager();
 	void LoadBattleUnit(Character* unit);
 	void StartBattle();

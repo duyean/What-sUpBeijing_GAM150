@@ -3,14 +3,9 @@
 #include <iostream>
 #include "../CombatUIManager.hpp"
 
-BattleManager* BattleManager::instance;
-
 void BattleManager::awake()
 {
-	if (!instance)
-	{
-		instance = this;
-	}
+
 }
 
 void BattleManager::init()
@@ -22,6 +17,12 @@ BattleManager::BattleManager() : delay(0), wait(false),
 currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr)
 {
 
+}
+
+BattleManager& BattleManager::Instance()
+{
+	static BattleManager instance;
+	return instance;
 }
 
 bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
@@ -207,6 +208,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			AEVec2 pos = { 0.f, 225 };
 			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
 			//Change scene back to exploration
+			CombatEventHandler::Instance().ClearAll();
 		}
 	}
 }

@@ -102,7 +102,6 @@ void WriteMovesJSON(rapidjson::PrettyWriter<rapidjson::OStreamWrapper>& writer)
 
 JSONSerializer jsonSerializer{};
 std::unique_ptr<Entity> character, testEnemy, testEnemy2;
-BattleManager* battleManager = nullptr;
 Map myMap{};
 
 MainMenu::MainMenu()
@@ -189,11 +188,10 @@ void MainMenu::Load()
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    battleManager = BattleManager::instance;
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
-    battleManager->StartBattle();
+    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
+    BattleManager::Instance().LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
+    BattleManager::Instance().StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
     Map myMap;

@@ -7,6 +7,11 @@ void RunManager::StartRun()
 
 void RunManager::ResetRun()
 {
+	runBlessings.clear();
+}
 
-	//runBlessings.clear();
+RunManager& RunManager::Instance()
+{
+	static RunManager instance;
+	return instance;
 }

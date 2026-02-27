@@ -5,12 +5,13 @@
 
 class Character;
 
-class RunManager : public SoloBehavior
+class RunManager
 {
 	std::vector<Character*> party;
 
 	std::vector<std::unique_ptr<Blessing>> runBlessings;
 public:
+	static RunManager& Instance();
 	void StartRun();
 	void ResetRun();
 };

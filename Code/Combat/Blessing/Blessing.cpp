@@ -21,5 +21,20 @@ void AttributeBlessing::RemoveBuff(Character* target) {}
 
 void TriggerBlessing::Apply(Character* target)
 {
-	CombatEventHandler::Instance().Register(triggerType, triggerEffect);
+	CombatEventHandler::Instance().Register(triggerType, [this, target](const EventData& data)
+		{
+			if (data.target == target)
+			{
+				if (cooldown <= 0)
+				{
+					triggerEffect(data);
+					cooldown = blessingCooldown;
+				}
+			}
+		});
+}
+
+void TriggerBlessing::RemoveBuff(Character* target)
+{
+	cooldown = 999;
 }

@@ -36,7 +36,6 @@ public:
 		curSplashTimer = 0.f;
 		maxSplashTimer = 6.f;
 		splashOpacity = 0.f;
-		transition = true;
 	}
 
 	~SplashLogo(){}

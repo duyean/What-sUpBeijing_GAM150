@@ -17,21 +17,27 @@ void EdgeManager::awake()
 	player = enSystem->FindByNameGLOBAL("Player");
 }
 
-void EdgeManager::init()
-{
-	
-}
-
-void EdgeManager::update()
+void EdgeManager::UpdateEdges()
 {
 	MapNode node = map.playMap.mapNodes[map.yPos][map.xPos];
 	N_path->isActive = !node.n;
 	E_path->isActive = !node.e;
 	S_path->isActive = !node.s;
 	W_path->isActive = !node.w;
+}
+
+void EdgeManager::init()
+{
+	UpdateEdges();
+}
+
+void EdgeManager::update()
+{
 
 	if (SE_N->triggerBuffer)
 	{
+		UpdateEdges();
+
 		TravelNode(map, map.xPos, --map.yPos);
 		GetCurrentNodeInfo(map);
 		SE_N->triggerBuffer = false;
@@ -42,6 +48,8 @@ void EdgeManager::update()
 	}
 	if (SE_E->triggerBuffer)
 	{
+		UpdateEdges();
+
 		TravelNode(map, ++map.xPos, map.yPos);
 		GetCurrentNodeInfo(map);
 		SE_E->triggerBuffer = false;
@@ -52,6 +60,8 @@ void EdgeManager::update()
 	}
 	if (SE_S->triggerBuffer) 
 	{ 
+		UpdateEdges();
+
 		TravelNode(map, map.xPos, ++map.yPos); 
 		GetCurrentNodeInfo(map);
 		SE_S->triggerBuffer = false;
@@ -62,6 +72,8 @@ void EdgeManager::update()
 	}
 	if (SE_W->triggerBuffer) 
 	{ 
+		UpdateEdges();
+
 		TravelNode(map, --map.xPos, map.yPos); 
 		GetCurrentNodeInfo(map);
 		SE_W->triggerBuffer = false;

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include "../CombatUIManager.hpp"
+#include "../../Scenes/SceneHandler/GameStateManager.hpp"
 
 BattleManager* BattleManager::instance;
 
@@ -212,6 +213,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			AEVec2 pos = { 0.f, 225 };
 			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
 			//Change scene back to exploration
+			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
 			CombatEventHandler::Instance().ClearAll();
 		}
 	}

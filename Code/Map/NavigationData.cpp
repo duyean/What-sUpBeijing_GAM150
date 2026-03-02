@@ -38,6 +38,14 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 			if (!this->viewMap.mapNodes[y][x].s)	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
 		}
 	}
+
+	std::cout << "Play Map:\n";
+	Map::DebugPrint(playMap);
+	std::cout << "View Map:\n";
+	Map::DebugPrint(viewMap);
+
+	JSONSerializer serializer{};
+	SaveNavigationData(serializer);
 }
 
 void TravelNode(NavigationData& data, int newX, int newY)
@@ -115,16 +123,51 @@ void GetCurrentNodeInfo(NavigationData data)
 	printf("West: %s\n", data.playMap.mapNodes[data.yPos][data.xPos].w ? "Wall" : "Path");
 }
 
-bool NavigationData::SaveNavigationData(NavigationData data, JSONSerializer serializer, std::string fileName)
+bool NavigationData::SaveNavigationData(JSONSerializer serializer)
 {
 	//to be filled in by mr JSON
-	return 0;
+	if (!playMap.SaveMap(serializer, "Assets/Map/PlayMap.json")) return 0;
+	if (!viewMap.SaveMap(serializer, "Assets/Map/ViewMap.json")) return 0;
+
+	std::ofstream ofs("Assets/Map/NavData.json");
+	if (!ofs.is_open())
+	{
+		std::cout << "Cannot open Assets/Map/NavData.json" << std::endl;
+		return false;
+	}
+
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
+
+	writer.StartObject();
+		writer.Key("x");
+		writer.Int(xPos);
+		writer.Key("y");
+		writer.Int(yPos);
+	writer.EndObject();
+	return 1;
 }
 
-bool NavigationData::LoadNavigationData(NavigationData& data, JSONSerializer& serializer, std::string fileName)
+bool NavigationData::LoadNavigationData(JSONSerializer& serializer)
 {
 	//to be filled in by mr JSON
-	return 0;
+	if (!playMap.LoadMap(serializer, "Assets/Map/PlayMap.json")) return 0;
+	if (!viewMap.LoadMap(serializer, "Assets/Map/ViewMap.json")) return 0;
+
+	rapidjson::Document doc = serializer.ReadDocument("Assets/Map/NavData.json");
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load the Map as Document is nullptr" << std::endl;
+		return false;
+	}
+	xPos = doc["x"].GetInt();
+	yPos = doc["y"].GetInt();
+
+	std::cout << "Play Map:\n";
+	Map::DebugPrint(playMap);
+	std::cout << "View Map:\n";
+	Map::DebugPrint(viewMap);
+	return 1;
 }
 
 NavigationData::NavigationData()

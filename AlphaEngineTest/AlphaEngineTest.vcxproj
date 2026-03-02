@@ -42,8 +42,8 @@
     <ClCompile Include="..\Code\Map\Map.cpp" />
     <ClCompile Include="..\Code\Map\NavigationData.cpp" />
     <ClCompile Include="..\Code\Scenes\BaseCamp.cpp" />
-    <ClCompile Include="..\Code\Scenes\Level1.cpp" />
-    <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
+    <ClCompile Include="..\Code\Scenes\LevelScene.cpp" />
+    <ClCompile Include="..\Code\Scenes\BattleScene.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
@@ -112,7 +112,7 @@
     <ClInclude Include="..\Code\Map\NavigationData.hpp" />
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp" />
     <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
-    <ClInclude Include="..\Code\Scenes\Level1.hpp" />
+    <ClInclude Include="..\Code\Scenes\LevelScene.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
@@ -122,7 +122,7 @@
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\SceneHandler_WZBJ_Pak.hpp" />
-    <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
+    <ClInclude Include="..\Code\Scenes\BattleScene.hpp" />
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameManager.hpp" />
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameState.hpp" />
     <ClInclude Include="..\Code\Scenes\SceneHandler\GameStateManager.hpp" />

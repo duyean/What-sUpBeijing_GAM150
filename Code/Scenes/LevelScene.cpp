@@ -8,13 +8,13 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "Level1.hpp"
+#include "LevelScene.hpp"
 
-Level1::Level1()
+LevelScene::LevelScene()
 {	
 }
 
-Level1::~Level1()
+LevelScene::~LevelScene()
 {
 }
 
@@ -28,7 +28,7 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void Level1::Load()
+void LevelScene::Load()
 {
 	meshSystem = &MeshGen::getInstance();
 
@@ -121,7 +121,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void Level1::Unload()
+void LevelScene::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;
 	for (auto& e : enSystem->entities) {

@@ -9,9 +9,9 @@
 This file contains the definitions for the collection of functions in GameStateManager.h
 *//*______________________________________________________________________*/
 #include "../../SceneHandler_WZBJ_Pak.hpp"
-#include "../Code/Scenes/MainMenu.hpp"
+#include "../Code/Scenes/BattleScene.hpp"
 #include "../Code/Scenes/SplashScreen.hpp"
-#include "../Code/Scenes/Level1.hpp"
+#include "../Code/Scenes/LevelScene.hpp"
 #include "../Code/Scenes/BaseCamp.hpp"
 
 GameStateManager::GameStateManager() :
@@ -99,13 +99,16 @@ void GameStateManager::NextScene(SCENES _scene)
 		nextGameState = new SplashScreen;
 		break;	
 	case MAIN_MENU:
-		nextGameState = new MainMenu;
+		//nextGameState = new MainMenu;
 		break;
 	case BASE_CAMP:
 		nextGameState = new BaseCamp;
 		break;
-	case LEVEL1:
-		nextGameState = new Level1;
+	case LEVEL_SCENE:
+		nextGameState = new LevelScene;
+		break;
+	case BATTLE_SCENE:
+		nextGameState = new BattleScene;
 		break;
 	default:
 		//DEBUG

@@ -14,8 +14,8 @@ public:
 	//NOTE: xLen and yLen are unique grid value, NOT PIXEL POSITION!
 	void GenerateMap(MapType type, int xLen, int yLen);
 	static void DebugPrint(Map map);
-	static bool SaveMap(Map map, JSONSerializer serializer, std::string fileName);
-	static bool LoadMap(Map map, JSONSerializer& serializer, std::string fileName);
+	bool SaveMap(JSONSerializer serializer, std::string fileName);
+	bool LoadMap(JSONSerializer& serializer, std::string fileName);
 
 	Map();
 	~Map();

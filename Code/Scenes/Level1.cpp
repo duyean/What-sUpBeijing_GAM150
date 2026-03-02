@@ -33,7 +33,9 @@ void Level1::Load()
 	meshSystem = &MeshGen::getInstance();
 
 	//map data info
-	map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
+	//map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
+	JSONSerializer serializer{};
+	map.LoadNavigationData(serializer);
 	//map data get current location data
 	GetCurrentNodeInfo(map);
 	//map data info end
@@ -123,6 +125,8 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void Level1::Unload()
 {
+	JSONSerializer serializer{};
+	map.SaveNavigationData(serializer);
 	EntityManager::getInstance().needsCleanup = true;
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;

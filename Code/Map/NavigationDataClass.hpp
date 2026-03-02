@@ -12,8 +12,8 @@ public:
 	int xPos, yPos; //x, y position on playMap (set to 0 on default)
 
 	void GenerateNavigationData(MapType type, int xLen, int yLen);
-	static bool SaveNavigationData(NavigationData data, JSONSerializer serializer, std::string fileName);
-	static bool LoadNavigationData(NavigationData& data, JSONSerializer& serializer, std::string fileName);
+	bool SaveNavigationData(JSONSerializer serializer);
+	bool LoadNavigationData(JSONSerializer& serializer);
 
 	NavigationData();
 	~NavigationData();

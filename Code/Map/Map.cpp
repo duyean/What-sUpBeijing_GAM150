@@ -376,7 +376,7 @@ void Map::DebugPrint(Map map)
 	printf("end of map debug printing.\n");
 }
 
-bool Map::SaveMap(Map map, JSONSerializer serializer, std::string fileName)
+bool Map::SaveMap(JSONSerializer serializer, std::string fileName)
 {
 	std::ofstream ofs(fileName);
 	if (!ofs.is_open())
@@ -392,7 +392,7 @@ bool Map::SaveMap(Map map, JSONSerializer serializer, std::string fileName)
 	writer.StartObject();
 		writer.Key("nodes");
 		writer.StartArray();
-			for (std::vector <MapNode> vector : map.mapNodes)
+			for (std::vector <MapNode> vector : mapNodes)
 			{
 				for (MapNode node : vector)
 				{
@@ -414,7 +414,7 @@ bool Map::SaveMap(Map map, JSONSerializer serializer, std::string fileName)
 			}
 		writer.EndArray();
 		writer.Key("type");
-		writer.Int(static_cast<int>(map.mapType));
+		writer.Int(static_cast<int>(mapType));
 		writer.Key("x-length");
 		writer.Int(x / y);
 		writer.Key("y-length");
@@ -424,7 +424,7 @@ bool Map::SaveMap(Map map, JSONSerializer serializer, std::string fileName)
 	return true;
 }
 
-bool Map::LoadMap(Map map, JSONSerializer& serializer, std::string fileName)
+bool Map::LoadMap(JSONSerializer& serializer, std::string fileName)
 {
 	rapidjson::Document doc = serializer.ReadDocument(fileName);
 	if (doc.IsNull())
@@ -433,17 +433,17 @@ bool Map::LoadMap(Map map, JSONSerializer& serializer, std::string fileName)
 		return false;
 	}
 
-	map.mapType = static_cast<MapType>(doc["type"].GetInt());
+	mapType = static_cast<MapType>(doc["type"].GetInt());
 	const rapidjson::Value& nodes = doc["nodes"];
 	rapidjson::Value::ConstValueIterator p = nodes.Begin();
 	//set map height
 	int yLen = doc["y-length"].GetInt();
 	int xLen = doc["x-length"].GetInt();
-	map.mapNodes.resize(yLen);
+	mapNodes.resize(yLen);
 	for (int y = 0; y < yLen; y++)
 	{
 		//set map width (per width row in nested list)
-		map.mapNodes[y].resize(xLen);
+		mapNodes[y].resize(xLen);
 		for (int x = 0; x < xLen; x++)
 		{
 			MapNode newNode;
@@ -453,12 +453,10 @@ bool Map::LoadMap(Map map, JSONSerializer& serializer, std::string fileName)
 			newNode.e = (*p)["e"].GetBool();
 			newNode.w = (*p)["w"].GetBool();
 			newNode.type = static_cast<NodeType>((*p)["type"].GetInt());
-			map.mapNodes[y][x] = newNode;
+			mapNodes[y][x] = newNode;
 			++p;
 		}
 	}
-
-	Map::DebugPrint(map);
 
 	return true;
 }

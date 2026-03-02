@@ -32,7 +32,7 @@ void EdgeManager::update()
 
 	if (SE_N->triggerBuffer)
 	{
-		TravelNode(map, map.xPos, ++map.yPos);
+		TravelNode(map, map.xPos, --map.yPos);
 		GetCurrentNodeInfo(map);
 		SE_N->triggerBuffer = false;
 
@@ -52,7 +52,7 @@ void EdgeManager::update()
 	}
 	if (SE_S->triggerBuffer) 
 	{ 
-		TravelNode(map, map.xPos, --map.yPos); 
+		TravelNode(map, map.xPos, ++map.yPos); 
 		GetCurrentNodeInfo(map);
 		SE_S->triggerBuffer = false;
 

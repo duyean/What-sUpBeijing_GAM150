@@ -61,12 +61,15 @@ public:
 	//Who applied the effect
 	Character* source;
 
+	//Will this modifier be applied on the source or the target
+	bool selfCast;
+
 	//How many stacks this effect have
 	int stackCount;
 
-	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(nullptr), ID(GENERIC_MODIFIER), duration(3), stackBehaviour(REFRESH), stackCount(1), source(nullptr) {};
-	inline Modifier(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, STACK_BEHAVIOUR stackBeh, int stackCount = 1) :
-		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount), source(nullptr) {
+	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(nullptr), ID(GENERIC_MODIFIER), duration(3), stackBehaviour(REFRESH), stackCount(1), source(nullptr), selfCast(false) {};
+	inline Modifier(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, STACK_BEHAVIOUR stackBeh, int stackCount = 1, bool selfCast = false) :
+		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount), source(nullptr), selfCast(selfCast) {
 	};
 	virtual ~Modifier() = default;
 	virtual void Apply(Character* target) {};
@@ -89,8 +92,8 @@ public:
 	Game::ATTRIBUTE_TYPE GetAttributeType(void) const;
 	std::unique_ptr<Modifier> Clone() const override;
 	inline AttributeModifier() : Modifier("Name", 3, ATTRIBUTE_MODIFIER, nullptr, GENERIC_MODIFIER, REFRESH), value(0.0f), attributeType(Game::ATK) {};
-	inline AttributeModifier(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, float value, Game::ATTRIBUTE_TYPE attType, STACK_BEHAVIOUR b) :
-		Modifier(name, duration, type, icon, id, b), value(value), attributeType(attType) {
+	inline AttributeModifier(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, float value, Game::ATTRIBUTE_TYPE attType, STACK_BEHAVIOUR b, bool self) :
+		Modifier(name, duration, type, icon, id, b, 1, self), value(value), attributeType(attType) {
 	};
 };
 
@@ -101,10 +104,11 @@ public:
 	float damage;
 
 	void Apply(Character* target) override;
+	Game::WUXING_ELEMENT GetModifierElement() const;
 	std::unique_ptr<Modifier> Clone() const override;
 	inline StatusEffect() : Modifier("Name", 3, ATTRIBUTE_MODIFIER, nullptr, GENERIC_MODIFIER, STACK), damage(0.0f) {};
-	inline StatusEffect(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, float damage, STACK_BEHAVIOUR be) :
-		Modifier(name, duration, type, icon, id, be), damage(damage) {
+	inline StatusEffect(std::string name, int duration, EFFECT_TYPE type, AEGfxTexture* icon, MODIFIER_ID id, float damage, STACK_BEHAVIOUR be, int stackCount = 1, bool self = false) :
+		Modifier(name, duration, type, icon, id, be, stackCount, self), damage(damage) {
 	};
 };
 

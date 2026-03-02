@@ -21,7 +21,7 @@ void Move::InitMoveDatabase(JSONSerializer& serializer, std::string fileName)
 			(*p)["dot"].GetFloat(),
 			(*p)["brief"].GetString(),
 			(*p)["description"].GetString(),
-			static_cast<Game::FACTION>((*p)["target"].GetInt()));
+			static_cast<Game::MOVE_TARGET_GROUP>((*p)["target"].GetInt()));
 
 		const rapidjson::Value& modifiers = (*p)["modifiers"];
 		for (rapidjson::SizeType q = 0; q < modifiers.Size(); ++q)

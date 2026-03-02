@@ -39,11 +39,11 @@
             "name": "Armor Piercing Strike",
             "coefficient": 0.35,
             "dot": 0.0,
-            "brief": "Strike an enemy and decreases their DEF",
+            "brief": "Strike an enemy and decreases their DEF, while increasing your ATK",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
             "modifiers": [
-              4
+              3, 4
             ]
         }
     ]

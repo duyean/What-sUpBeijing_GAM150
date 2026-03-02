@@ -56,18 +56,18 @@ public:
 
 	/*
 	Which group the move targets:
-	NONE(0) -> Self-Casted
-	PLAYER(1) -> Target Ally
-	ENEMY(2) -> Target Enemy
+	SELF(0) -> Self-Casted
+	ALLY(1) -> Target Ally
+	OPPOSITE(2) -> Target Enemy
 	*/
-	Game::FACTION targetGroup;
+	Game::MOVE_TARGET_GROUP targetGroup;
 
 	Move()
 	{
 		coefficient = dot_coefficient = 0;
 		name = description = brief = "";
 	}
-	Move(std::string name, float coefficient, float dot_coeff, std::string brief, std::string desc, Game::FACTION target) :
+	Move(std::string name, float coefficient, float dot_coeff, std::string brief, std::string desc, Game::MOVE_TARGET_GROUP target) :
 		name(name), coefficient(coefficient), dot_coefficient(dot_coeff), brief(brief), description(desc), targetGroup(target) {};
 	~Move() = default;
 

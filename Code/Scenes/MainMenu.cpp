@@ -20,10 +20,11 @@ This file contains the definitions for the collection of functions in MainMenu.h
 #include "../Maps_WZBJ_Pak.hpp"
 #include "../SoloBehavior/HEALTHBAR1.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
+
 
 JSONSerializer jsonSerializer{};
-std::unique_ptr<Entity> character, testEnemy;
-BattleManager* battleManager = nullptr;
+std::unique_ptr<Entity> character, testEnemy, testEnemy2;
 Map myMap{};
 
 MainMenu::MainMenu()
@@ -59,7 +60,7 @@ void MainMenu::Load()
 
     auto manager = std::make_unique<Entity>("Manager");
     manager->addComponent<Transform2D>(pos, scale, 0.f);
-    manager->addComponent<BattleManager>();
+    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<CombatUIManager>();
     manager->addComponent<AudioManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
@@ -96,16 +97,40 @@ void MainMenu::Load()
     enSystem->rootEntity->transform->AddChild(testEnemy->transform);
     enSystem->entities.push_back(std::move(testEnemy));
 
+    testEnemy2 = std::make_unique<Entity>("Enemy2");
+    pos = { 550.f, 100.f };
+    scale = { 50.f, 100.f };
+    testEnemy2->addComponent<Transform2D>(pos, scale, 0.f);
+    testEnemy2->addComponent<Character>();
+    testEnemy2->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+    testEnemy2->addComponent<Healthbar1>();
+    ch = testEnemy2->getComponent<Character>();
+    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+    enSystem->rootEntity->transform->AddChild(testEnemy2->transform);
+    enSystem->entities.push_back(std::move(testEnemy2));
+
+    auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
+        nullptr, Game::ATK, 0.15f);
+    RunManager::Instance().AddBlessing(std::move(test));
+
+    auto test2 = std::make_unique<TriggerBlessing>(BLESSING_ID::NONE, "Test2", "Test2", BLESSING_RARITY::MYTHICAL,
+        nullptr, EventType::TookDamage, 
+        [](const EventData& data) 
+        {
+            auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, nullptr, GENERIC_, 0.25f,
+                Game::ATK, UNIQUE, true);
+            data.target->AddModifier(std::move(mod));
+        }, -1);
+    RunManager::Instance().AddBlessing(std::move(test2));
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    battleManager = BattleManager::instance;
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
+    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
     battleManager->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
-    Map myMap;
     Map::LoadMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
     //Map::SaveMap(myMap, jsonSerializer, "Assets/Map/testmap.json");
 }

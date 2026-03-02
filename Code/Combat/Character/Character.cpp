@@ -1,7 +1,8 @@
 #include "Character.hpp"
 #include "../CombatUIManager.hpp"
 #include <iostream>
-#include <random>
+#include "../EventHandler/CombatEventHandler.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -10,13 +11,8 @@ void Character::DealDamage(Character* target, float coefficient)
 		return;
 	}
 
-	//random seeding
-	std::random_device seedling; //random generation seed
-	std::mt19937 gen(seedling()); //Mersenne Twister Algorithm
-
-	//range examples
 	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
-	float critRoll = randFloat(gen);
+	float critRoll = randFloat(Game::gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
 	Game::DamageInfo info = Game::DamageInfo();
@@ -36,6 +32,11 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	hp = AEClamp(hp, 0, maxHP);
 	AEVec2 offset = { 0, 100 };
 	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
+
+	//Event Handler
+	EventData evt{ damageInfo.source, this, (int)finalDamageTaken};
+	CombatEventHandler::Instance().Dispatch(EventType::TookDamage, evt);
+
 	if (hp <= 0)
 	{
 		Death();
@@ -76,7 +77,15 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 
 void Character::Init(void)
 {
+	printf("Init: %s\n", name.c_str());
 	//Load Blessings
+	if (faction == Game::PLAYER)
+	{
+		for (auto& blessing : RunManager::Instance().GetBlessings())
+		{
+			blessing.get()->Apply(this);
+		}
+	}
 	UpdateAttributes();
 	hp = maxHP;
 }
@@ -106,10 +115,19 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 					{
 						status->damage = atk * move->dot_coefficient;
 					}
-					target->AddModifier(std::move(modifier));
+					if (modifier->selfCast)
+					{
+						AddModifier(std::move(modifier));
+					}
+					else
+					{
+						target->AddModifier(std::move(modifier));
+					}
 				}
 			}
 		}
+		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
+		CombatUIManager::instance->CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		DealDamage(target, move->coefficient);
 		turnFinished = true;
 	}
@@ -134,7 +152,7 @@ void Character::UpdateAttributes(void)
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
-	AEVec2 offset = { 0, 100 };
+	AEVec2 offset = { 0, -150 };
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
@@ -159,7 +177,8 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			case (STACK_BEHAVIOUR::STACK):
 			{
 				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
-				(*modExists)->stackCount += modifier->stackCount; //Add extra stack count, maybe cap it?
+				(*modExists)->stackCount += modifier->stackCount;
+				(*modExists)->stackCount = std::min((*modExists)->stackCount, 5);
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}
@@ -187,7 +206,10 @@ void Character::ProcessModifiers(void)
 		{
 			modifier->Apply(this); //Apply DOT Effects
 		}
-		modifier->duration--; //Tick down all effects
+		if (modifier)
+		{
+			modifier->duration--; //Tick down all effects
+		}
 	}
 
 	effectList.erase(
@@ -205,6 +227,26 @@ void Character::StartTurn(void)
 	UpdateAttributes();
 	turnFinished = false;
 	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
+}
+
+void Character::AIAttack()
+{
+	std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
+	MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
+	auto& moveToUse = moveList[slotSelected];
+	Move* move = &Move::moveDatabase[moveToUse];
+	if (move->targetGroup == Game::MOVE_TARGET_GROUP::OPPOSITE)
+	{
+		if (!targets.empty())
+		{
+			std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
+			UseMove(slotSelected, targets[randTarget(Game::gen)]);
+		}
+	}
+	else
+	{
+		UseMove(slotSelected, this);
+	}
 }
 
 void Character::EndTurn(void)
@@ -239,7 +281,11 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 
 void Character::init()
 {
-	Init();
+	/*
+	This is a temp fix for when the a TookDamage event triggers that resulted in adding a modifier, which causes
+	a vector reallocation mid loop in ProcessModifiers.
+	*/
+	effectList.reserve(128);
 }
 
 void Character::awake()

@@ -1,8 +1,8 @@
 {
     "name": "Infantry",
     "element": 2,
-    "baseHP": 1000.0,
-    "baseATK": 500.0,
+    "baseHP": 500.0,
+    "baseATK": 200.0,
     "baseDEF": 100.0,
     "faction": 2,
     "moves": {

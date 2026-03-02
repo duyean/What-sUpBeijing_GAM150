@@ -3,6 +3,25 @@
 
 #include <iostream>
 
+Game::WUXING_ELEMENT StatusEffect::GetModifierElement() const
+{
+    switch (this->effectType)
+    {
+        case (EFFECT_TYPE::BURN):
+        {
+            return Game::WUXING_ELEMENT::FIRE;
+        }
+        case (EFFECT_TYPE::POISON):
+        {
+            return Game::WUXING_ELEMENT::WOOD;
+        }
+        default:
+        {
+            return Game::WUXING_ELEMENT::NORMAL;
+        }
+    }
+}
+
 void AttributeModifier::Apply(Character* target)
 {
     if (!target)
@@ -20,8 +39,8 @@ void StatusEffect::Apply(Character* target)
     }
     Game::DamageInfo info;
     info.damage = damage * stackCount;
-    info.elementType = Game::NORMAL;
     info.source = source;
+    info.elementType = GetModifierElement();
     target->TakeDamage(info);
 }
 
@@ -59,19 +78,20 @@ bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
         int duration = (*p)["duration"].GetInt();
         EFFECT_TYPE type = static_cast<EFFECT_TYPE>((*p)["type"].GetInt());
         STACK_BEHAVIOUR behaviour = static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt());
+        bool self = static_cast<bool>((*p)["self"].GetInt());
 
         if (type == EFFECT_TYPE::ATTRIBUTE_MODIFIER)
         {
             float value = (*p)["value"].GetFloat();
             Game::ATTRIBUTE_TYPE attType = static_cast<Game::ATTRIBUTE_TYPE>((*p)["attribute"].GetInt());
             modifierDatabase.emplace(id,
-                std::make_unique<AttributeModifier>(name, duration, type, nullptr, id, value, attType, behaviour));
+                std::make_unique<AttributeModifier>(name, duration, type, nullptr, id, value, attType, behaviour, self));
         }
         else
         {
             float damage = (*p)["damage"].GetFloat();
             modifierDatabase.emplace(id,
-                std::make_unique<StatusEffect>(name, duration, type, nullptr, id, damage, behaviour));
+                std::make_unique<StatusEffect>(name, duration, type, nullptr, id, damage, behaviour, 1, self));
         }
     }
     return true;

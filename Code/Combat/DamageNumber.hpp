@@ -5,6 +5,7 @@
 class DamageNumbers : public SoloBehavior
 {
 	EntityManager* enSystem;
+	bool activate;
 	
 public:
 	static Color GetElementColor(Game::WUXING_ELEMENT);
@@ -14,6 +15,7 @@ public:
 	float lifetime;
 
 	DamageNumbers();
+	inline void Activate() { activate = true; }
 	void awake() override;
 	void init() override;
 	void update() override;

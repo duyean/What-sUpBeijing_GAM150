@@ -17,6 +17,9 @@
 #define RAPIDJSON_NOMEMBERITERATORCLASS
 
 /*! \file document.h */
+#pragma warning(push)
+#pragma warning(disable: 5054)
+#pragma warning(disable: 4067)
 
 #include "reader.h"
 #include "internal/meta.h"
@@ -2577,4 +2580,5 @@ private:
 RAPIDJSON_NAMESPACE_END
 RAPIDJSON_DIAG_POP
 
+#pragma warning(pop)
 #endif // RAPIDJSON_DOCUMENT_H_

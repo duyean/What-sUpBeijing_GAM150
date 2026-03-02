@@ -404,7 +404,7 @@ void MeshGen::CreateSpriteSheet(int column, int row, int fps, const char* fileNa
 
 	pMesh.insert({ fileName,  AEGfxMeshEnd() });
 	//int r, int c, int cF, int fps, float cT
-	sSprite.push_back({ new SpriteSheetMesh(row, column, 0, fps, 0.f) });
+	//sSprite.push_back({ new SpriteSheetMesh(row, column, 0, fps, 0.f) });
 }
 
 void MeshGen::CreateAnimatedSprite(float Xpos, float Ypos, float width, float height, float animationSpeed, int face, float Deg, Color color, const char* fileName)

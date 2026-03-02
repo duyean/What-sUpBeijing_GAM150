@@ -71,6 +71,25 @@ void BattleManager::ProcessTargeting()
 	}
 }
 
+void BattleManager::ResetBattle()
+{
+	//Delete the background
+	Destroy(EntityManager::getInstance().FindByNameGLOBAL("BattleBackgroundIMG"));
+	
+	//Destroy all player sprites
+	for (Character* unit : battleUnits)
+	{
+		Destroy(unit->entity);
+	}
+	CombatUIManager::instance->Reset();
+	battleUnits.clear();
+	lastTargetedUnit = nullptr;
+	inBattle = false;
+	currentActiveUnit = 0;
+	enemyCount = 0;
+	wait = false;
+}
+
 void BattleManager::LoadBattleUnit(Character* unit)
 {
 	if (!unit)
@@ -85,6 +104,7 @@ void BattleManager::LoadBattleUnit(Character* unit)
 void BattleManager::StartBattle()
 {
 	//Sort the list based on initiative in descending order
+	outcome = NONE;
 	std::sort(battleUnits.begin(), battleUnits.end(), [](const Character* a, const Character* b) {return a->GetInitiative() > b->GetInitiative();});
 	for (Character* unit : battleUnits)
 	{
@@ -100,7 +120,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	CombatUIManager::instance->CreateMessageText({ 0.f, 225 }, "Battle Start");
+	CombatUIManager::instance->CreateMessageText({0.f, 225}, "Battle Start");
 }
 
 void BattleManager::update()
@@ -115,6 +135,18 @@ void BattleManager::update()
 	if (delay > 0.0f)
 	{
 		delay -= 1 / 60.0f;
+		return;
+	}
+
+	if (outcome != BATTLE_OUTCOME::NONE)
+	{
+		if (delay < 0)
+		{
+			ResetBattle();
+			//Change scene back to exploration
+			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
+			CombatEventHandler::Instance().ClearAll();
+		}
 		return;
 	}
 
@@ -208,13 +240,10 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 
 		if (enemyCount <= 0)
 		{
-			inBattle = false;
 			outcome = VICTORY;
 			AEVec2 pos = { 0.f, 225 };
 			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
-			//Change scene back to exploration
-			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
-			CombatEventHandler::Instance().ClearAll();
+			delay = 1.5f;
 		}
 	}
 }

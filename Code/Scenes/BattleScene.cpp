@@ -66,7 +66,7 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
 
-    auto background = std::make_unique<Entity>("BackgroundIMG");
+    auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
@@ -110,7 +110,7 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(testEnemy2));
 
     auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
-        nullptr, Game::ATK, 0.15f);
+        nullptr, Game::ATK, 90.15f);
     RunManager::Instance().AddBlessing(std::move(test));
 
     auto test2 = std::make_unique<TriggerBlessing>(BLESSING_ID::NONE, "Test2", "Test2", BLESSING_RARITY::MYTHICAL,

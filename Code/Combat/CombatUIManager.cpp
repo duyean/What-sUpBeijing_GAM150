@@ -17,7 +17,8 @@ void CombatUIManager::awake()
 
 void CombatUIManager::init()
 {
-
+	messages = {};
+	damageNumbers = {};
 }
 
 void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
@@ -48,6 +49,20 @@ void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	messages.push(std::move(e));
 	//EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
+}
+
+void CombatUIManager::Reset()
+{
+	while (!damageNumbers.empty())
+	{
+		damageNumbers.pop();
+	}
+	dnDelay = 0;
+	while (!messages.empty())
+	{
+		messages.pop();
+	}
+	messDelay = 0;
 }
 
 void CombatUIManager::update()
@@ -90,5 +105,5 @@ void CombatUIManager::fixedUpdate()
 
 void CombatUIManager::destroy()
 {
-
+	printf("Combat UI Manager: Destroyed\n");
 }

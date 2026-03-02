@@ -32,6 +32,7 @@ public:
 	void StartBattle();
 	void ProcessDeadUnit(Character* deadUnit);
 	void ProcessTargeting();
+	void ResetBattle();
 	bool PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
 
 	void awake() override;

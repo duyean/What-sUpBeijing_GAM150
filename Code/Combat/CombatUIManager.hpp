@@ -7,6 +7,7 @@
 class CombatUIManager : public SoloBehavior
 {
 private:
+	std::unique_ptr<Entity> mainHP;
 	std::queue<std::unique_ptr<Entity>> damageNumbers, messages;
 	float dnDelay, messDelay;
 public:

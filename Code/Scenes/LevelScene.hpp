@@ -1,31 +1,33 @@
 /*!
-@file MainMenu.hpp
+@file SplashScreen.hpp
 @author Tai Qian Yi (t.qianyi)
 @course CSD11451
 @section B
 @Final Project
 @date 13/1/26
 @brief
-This file contains the declarations of functions for the main menu
+This file contains the declarations of functions for splash screen
 *//*______________________________________________________________________*/
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
+#include "../Maps_WZBJ_Pak.hpp"
+
 #include "../Engine_WZBJ_Pak.hpp"
+#include "../UI_WZBJ_Pak.hpp"
+#include "../SoloBehavior/Player.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/EdgeManager.hpp"
 
-class BattleManager;
-
-class MainMenu : public GameState
+class LevelScene : public GameState
 {
 private:
-	GameStateManager* stateManager;
-	MeshGen* meshSystem;
-	EntityManager* enSystem;
-	BattleManager* battleManager;
-
+	EntityManager* enSystem = nullptr;
+	MeshGen* meshSystem = nullptr;
+	NavigationData map { };
 public:
-	MainMenu();
-	~MainMenu();
+	LevelScene();
+	~LevelScene();
 
 	/*!
 	@brief Initialize Splash Screen variables
@@ -33,7 +35,8 @@ public:
 	@return void
 	*//*______________________________________________________________*/
 	void Load() override;
-
+	/*!
+	* 
 	/*!
 	@brief Clears splash screen variables
 	@param void
@@ -41,3 +44,4 @@ public:
 	*//*______________________________________________________________*/
 	void Unload() override;
 };
+

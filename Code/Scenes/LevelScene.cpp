@@ -8,13 +8,13 @@
 @brief
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
-#include "Level1.hpp"
+#include "LevelScene.hpp"
 
-Level1::Level1()
+LevelScene::LevelScene()
 {	
 }
 
-Level1::~Level1()
+LevelScene::~LevelScene()
 {
 }
 
@@ -28,7 +28,7 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void Level1::Load()
+void LevelScene::Load()
 {
 	meshSystem = &MeshGen::getInstance();
 
@@ -64,7 +64,7 @@ void Level1::Load()
 	n_path->addComponent<Transform2D>(pos, scale, 0.f);
 	n_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	n_path->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
-	n_path->addComponent<SceneEdge>(EdgeType::N_PATH);
+	n_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(n_path->transform);
 	enSystem->entities.push_back(std::move(n_path));
 
@@ -74,7 +74,7 @@ void Level1::Load()
 	e_path->addComponent<Transform2D>(pos, scale, 0.f);
 	e_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	e_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	e_path->addComponent<SceneEdge>(EdgeType::E_PATH);
+	e_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(e_path->transform);
 	enSystem->entities.push_back(std::move(e_path));
 
@@ -84,7 +84,7 @@ void Level1::Load()
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
 	s_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	s_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	s_path->addComponent<SceneEdge>(EdgeType::S_PATH);
+	s_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
 	enSystem->entities.push_back(std::move(s_path));
 
@@ -94,7 +94,7 @@ void Level1::Load()
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
 	w_path->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	w_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	w_path->addComponent<SceneEdge>(EdgeType::W_PATH);
+	w_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
 	enSystem->entities.push_back(std::move(w_path));
 
@@ -123,7 +123,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void Level1::Unload()
+void LevelScene::Unload()
 {
 	JSONSerializer serializer{};
 	map.SaveNavigationData(serializer);

@@ -30,38 +30,38 @@ void Player::awake()
 
 void Player::init()
 {
-	
+
 }
 
 void Player::update()
 {
 	float dt = AEFrameRateControllerGetFrameTime();
+	AEVec2 pos = entity->transform->getPosition();
 
 	if (AEInputCheckCurr(AEVK_W))
 	{
-		AEVec2 pos = entity->transform->getPosition();
 		pos.y += moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_S))
 	{
-		AEVec2 pos = entity->transform->getPosition();
 		pos.y -= moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_A))
 	{
-		AEVec2 pos = entity->transform->getPosition();
 		pos.x -= moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 	if (AEInputCheckCurr(AEVK_D))
 	{
-		AEVec2 pos = entity->transform->getPosition();
 		pos.x += moveSpeed * dt;
 		entity->transform->setPosition(pos);
 	}
 
+	pos.y = AEClamp(pos.y, -400, 400);
+	pos.x = AEClamp(pos.x, -775, 775);
+	entity->transform->setPosition(pos);
 }
 
 void Player::fixedUpdate()

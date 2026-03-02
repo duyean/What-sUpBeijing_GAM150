@@ -1,14 +1,14 @@
 /*!
-@file SplashScreen.cpp
+@file BattleScene.cpp
 @author Tai Qian Yi (t.qianyi)
 @course CSD11451
 @section B
 @Final Project
 @date 13/1/26
 @brief
-This file contains the definitions for the collection of functions in MainMenu.hpp
+This file contains the definitions for the collection of functions in BattleScene.hpp
 *//*______________________________________________________________________*/
-#include "MainMenu.hpp"
+#include "BattleScene.hpp"
 
 #include <iostream>
 #include "../Code/BaseSystems/JSONSerializer/JSONSerializer.hpp"
@@ -27,12 +27,12 @@ JSONSerializer jsonSerializer{};
 std::unique_ptr<Entity> character, testEnemy, testEnemy2;
 Map myMap{};
 
-MainMenu::MainMenu()
+BattleScene::BattleScene()
 {
     
 }
 
-MainMenu::~MainMenu()
+BattleScene::~BattleScene()
 {
 }
 
@@ -45,7 +45,7 @@ This function loads splash screen image
 @param void
 @return void
 *//*______________________________________________________________*/
-void MainMenu::Load()
+void BattleScene::Load()
 {
     enSystem = &EntityManager::getInstance();
     meshSystem = &MeshGen::getInstance();
@@ -144,7 +144,7 @@ This function frees splash screen image used.
 @param void
 @return void
 *//*______________________________________________________________*/
-void MainMenu::Unload()
+void BattleScene::Unload()
 {
 
 }

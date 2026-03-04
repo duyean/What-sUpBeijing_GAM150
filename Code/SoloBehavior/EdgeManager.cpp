@@ -87,7 +87,6 @@ void EdgeManager::init()
 void EdgeManager::update()
 {
 	
-	std::cout << this->entity->name << std::endl;
 	if (SE_N && SE_N->triggerBuffer)
 	{
 		TravelNode(map, map.xPos, --map.yPos);

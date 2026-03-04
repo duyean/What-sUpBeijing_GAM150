@@ -21,6 +21,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/HEALTHBAR1.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
 
 
 JSONSerializer jsonSerializer{};

@@ -75,7 +75,8 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+
+			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 
 		case NodeType::RandomEvent:
@@ -93,8 +94,6 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 		case NodeType::Entry:
 			//write function for returning to base here
-
-			//ReturnToBase();
 			break;
 
 		case NodeType::Exit:

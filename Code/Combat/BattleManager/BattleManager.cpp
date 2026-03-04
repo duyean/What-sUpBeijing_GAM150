@@ -4,14 +4,9 @@
 #include "../CombatUIManager.hpp"
 #include "../../Scenes/SceneHandler/GameStateManager.hpp"
 
-BattleManager* BattleManager::instance;
-
 void BattleManager::awake()
 {
-	if (!instance)
-	{
-		instance = this;
-	}
+
 }
 
 void BattleManager::init()
@@ -23,11 +18,6 @@ BattleManager::BattleManager() : delay(0), wait(false),
 currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr)
 {
 
-}
-
-BattleManager* BattleManager::Instance()
-{
-	return instance;
 }
 
 bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
@@ -81,13 +71,18 @@ void BattleManager::ResetBattle()
 	{
 		Destroy(unit->entity);
 	}
-	CombatUIManager::instance->Reset();
+
+	//Clear Event Listeners
+	CombatEventHandler::Instance().ClearAll();
+
+	CombatUIManager::Instance().Reset();
 	battleUnits.clear();
 	lastTargetedUnit = nullptr;
 	inBattle = false;
 	currentActiveUnit = 0;
 	enemyCount = 0;
 	wait = false;
+
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -120,7 +115,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	CombatUIManager::instance->CreateMessageText({0.f, 225}, "Battle Start");
+	CombatUIManager::Instance().CreateMessageText({0.f, 225}, "Battle Start");
 }
 
 void BattleManager::update()
@@ -145,7 +140,6 @@ void BattleManager::update()
 			ResetBattle();
 			//Change scene back to exploration
 			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
-			CombatEventHandler::Instance().ClearAll();
 		}
 		return;
 	}
@@ -242,7 +236,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 		{
 			outcome = VICTORY;
 			AEVec2 pos = { 0.f, 225 };
-			CombatUIManager::instance->CreateMessageText(pos, "Battle Over!");
+			CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
 			delay = 1.5f;
 		}
 	}

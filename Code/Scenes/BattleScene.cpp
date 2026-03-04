@@ -60,8 +60,8 @@ void BattleScene::Load()
 
     auto manager = std::make_unique<Entity>("Manager");
     manager->addComponent<Transform2D>(pos, scale, 0.f);
-    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<CombatUIManager>();
+    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<AudioManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
@@ -146,5 +146,8 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void BattleScene::Unload()
 {
-
+    EntityManager::getInstance().needsCleanup = true;
+    for (auto& e : enSystem->entities) {
+        e->toDestroy = true;
+    }
 }

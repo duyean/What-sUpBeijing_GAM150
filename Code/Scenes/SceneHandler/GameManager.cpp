@@ -69,6 +69,10 @@ void GameManager::Update(float _dt)
 	{
 		if (enSystem->entities[i] != nullptr)
 		{
+			if (enSystem->entities[i]->toDestroy == true)
+			{
+				continue;
+			}
 			if (enSystem->entities[i]->allComponentsInit == false)
 			{
 				enSystem->entities[i]->init();
@@ -88,6 +92,10 @@ void GameManager::FixedUpdate(double _fixedDt, double accumulator)
 	{
 		for (int i = 0; i < enSystem->entities.size(); i++)
 		{
+			if (enSystem->entities[i]->toDestroy == true)
+			{
+				continue;
+			}
 			if (enSystem->entities[i] != nullptr)
 			{
 				if (enSystem->entities[i]->isActive == true)

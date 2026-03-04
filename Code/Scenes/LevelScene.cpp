@@ -71,9 +71,9 @@ void LevelScene::Load()
 	pos = { 0.f, 0.f };
 	scale = { 50.f, 100.f };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
-	e->addComponent<Player>();
 	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
 	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e->addComponent<Player>();
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 
@@ -118,6 +118,7 @@ void LevelScene::Load()
 	enSystem->entities.push_back(std::move(w_path));
 
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
+	SE_Manager->addComponent<Transform2D>();
 	SE_Manager->addComponent<EdgeManager>(map);
 	enSystem->entities.push_back(std::move(SE_Manager));
 }

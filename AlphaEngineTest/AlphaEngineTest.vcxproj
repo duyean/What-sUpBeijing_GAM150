@@ -40,6 +40,7 @@
     <ClCompile Include="..\Code\Combat\Modifier\Modifier.cpp" />
     <ClCompile Include="..\Code\Combat\Move.cpp" />
     <ClCompile Include="..\Code\Map\Map.cpp" />
+    <ClCompile Include="..\Code\Map\MapDisplay.cpp" />
     <ClCompile Include="..\Code\Map\NavigationData.cpp" />
     <ClCompile Include="..\Code\Scenes\BaseCamp.cpp" />
     <ClCompile Include="..\Code\Scenes\LevelScene.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="..\Code\Maps_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Map\Map.hpp" />
     <ClInclude Include="..\Code\Map\MapClass.hpp" />
+    <ClInclude Include="..\Code\Map\MapDisplay.hpp" />
     <ClInclude Include="..\Code\Map\MapNodeClass.hpp" />
     <ClInclude Include="..\Code\Map\MapTypeClass.hpp" />
     <ClInclude Include="..\Code\Map\NavigationData.hpp" />

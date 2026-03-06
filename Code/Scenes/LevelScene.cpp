@@ -49,6 +49,28 @@ void LevelScene::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
+	//map entities
+	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; x < map.playMap.mapNodes.size(); y++) {
+		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
+		pos = { (float)x * 100.f, (float)y * 100.f };
+		scale = { 10.f, 10.f };
+		mapNode->addComponent<Transform2D>(pos, scale, 0.f);
+		mapNode->addComponent<Mesh>("Box", Color(0, 255, 255, 1), 50, MeshType::BOX_T);
+		enSystem->rootEntity->transform->AddChild(mapNode->transform);
+		enSystem->entities.push_back(std::move(mapNode));
+	}	}
+
+	//map fog
+	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) {for (int y = 0; x < map.playMap.mapNodes.size(); y++) {
+			auto mapNode = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
+			pos = { (float)x * 100.f, (float)y * 100.f };
+			scale = { 10.f, 10.f };
+			mapNode->addComponent<Transform2D>(pos, scale, 0.f);
+			mapNode->addComponent<Mesh>("Box", Color(0, 255, 255, 1), 50, MeshType::BOX_T);
+			enSystem->rootEntity->transform->AddChild(mapNode->transform);
+			enSystem->entities.push_back(std::move(mapNode));
+	}	}
+
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };

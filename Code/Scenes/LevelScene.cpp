@@ -44,7 +44,7 @@ void LevelScene::Load()
 		map.LoadNavigationData(serializer);
 	}
 	else
-		map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
+		map.GenerateNavigationData(MapType::OuterPalace, 4, 4);
 	//map data get current location data
 	//GetCurrentNodeInfo(map);
 	//map data info end

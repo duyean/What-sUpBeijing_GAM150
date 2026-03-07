@@ -139,8 +139,19 @@ void BattleManager::update()
 		if (delay < 0)
 		{
 			ResetBattle();
-			//Change scene back to exploration
-			GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
+
+			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
+			if (bt != BATTLE_TYPE::BOSS)
+			{
+				//Change scene back to exploration
+				GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
+			}
+			else
+			{
+				//Change scene back to base camp
+				GameStateManager::GetInstance()->NextScene(GameStateManager::BASE_CAMP);
+			}
+
 		}
 		return;
 	}

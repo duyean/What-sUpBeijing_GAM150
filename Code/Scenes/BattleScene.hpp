@@ -12,14 +12,10 @@ This file contains the declarations of functions for the main menu
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
 #include "../Engine_WZBJ_Pak.hpp"
-
-enum struct BATTLE_TYPE
-{
-	NORMAL,
-	BOSS
-};
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 class BattleManager;
+
 
 class BattleScene : public GameState
 {

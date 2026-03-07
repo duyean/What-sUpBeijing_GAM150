@@ -29,10 +29,10 @@ void EdgeManager::UpdateEdges()
 	//check east
 	if (!node.e)
 	{
-		if (map.playMap.mapNodes[map.yPos][map.xPos + 1].type == NodeType::Entry)
+		if (map.playMap.mapNodes[map.yPos][map.xPos + 1].type == NodeType::Exit)
 		{
 			std::cout << "//////////////////////" << std::endl;
-			std::cout << "EAST NODE IS ENTRY!!!!" << std::endl;
+			std::cout << "EAST NODE IS EXIT!!!!" << std::endl;
 			std::cout << "//////////////////////" << std::endl;
 
 			switch_BC = true;
@@ -42,10 +42,10 @@ void EdgeManager::UpdateEdges()
 	//check west
 	if (!node.w)
 	{
-		if (map.playMap.mapNodes[map.yPos][map.xPos - 1].type == NodeType::Entry)
+		if (map.playMap.mapNodes[map.yPos][map.xPos - 1].type == NodeType::Exit)
 		{
 			std::cout << "//////////////////////" << std::endl;
-			std::cout << "WEST NODE IS ENTRY!!!!" << std::endl;
+			std::cout << "WEST NODE IS Exit!!!!" << std::endl;
 			std::cout << "//////////////////////" << std::endl;
 
 			switch_BC = true;
@@ -55,10 +55,10 @@ void EdgeManager::UpdateEdges()
 	//check north
 	if (!node.n)
 	{
-		if (map.playMap.mapNodes[map.yPos - 1][map.xPos].type == NodeType::Entry)
+		if (map.playMap.mapNodes[map.yPos - 1][map.xPos].type == NodeType::Exit)
 		{
 			std::cout << "//////////////////////" << std::endl;
-			std::cout << "NORTH NODE IS ENTRY!!!!" << std::endl;
+			std::cout << "NORTH NODE IS Exit!!!!" << std::endl;
 			std::cout << "//////////////////////" << std::endl;
 
 			switch_BC = true;
@@ -68,10 +68,10 @@ void EdgeManager::UpdateEdges()
 	//check south
 	if (!node.s)
 	{
-		if (map.playMap.mapNodes[map.yPos + 1][map.xPos].type == NodeType::Entry)
+		if (map.playMap.mapNodes[map.yPos + 1][map.xPos].type == NodeType::Exit)
 		{
 			std::cout << "//////////////////////" << std::endl;
-			std::cout << "SOUTH NODE IS ENTRY!!!!" << std::endl;
+			std::cout << "SOUTH NODE IS EXIT!!!!" << std::endl;
 			std::cout << "//////////////////////" << std::endl;
 
 			switch_BC = true;

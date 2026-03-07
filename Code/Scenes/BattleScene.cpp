@@ -48,6 +48,7 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void BattleScene::Load()
 {
+
     enSystem = &EntityManager::getInstance();
     meshSystem = &MeshGen::getInstance();
     stateManager = stateManager->GetInstance();
@@ -96,7 +97,7 @@ void BattleScene::Load()
 
 
     //Parameter is BOSS if player is in Boss Node
-    GenerateEnemies();
+    GenerateEnemies(RunManager::Instance().GetBattleType());
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
@@ -171,6 +172,19 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         case (BATTLE_TYPE::BOSS):
         {
             //To-do, Get Boss Type and load boss data
+            character = std::make_unique<Entity>("Melee_Boss");
+            AEVec2 pos = enemyPositions[0];
+            AEVec2 scale = { 50.f, 100.f };
+            character->addComponent<Transform2D>(pos, scale, 0.f);
+            character->addComponent<Character>();
+            character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+            character->addComponent<Healthbar1>();
+            Character* ch = character->getComponent<Character>();
+
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Melee_Boss.json");
+            battleManager->LoadBattleUnit(ch);
+            enSystem->rootEntity->transform->AddChild(character->transform);
+            enSystem->entities.push_back(std::move(character));
             break;
         }
     }

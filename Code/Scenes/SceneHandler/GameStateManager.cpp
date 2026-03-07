@@ -127,6 +127,8 @@ GameStateManager::SCENES GameStateManager::GetCurrentLevel(void)
 	return currentLevel;
 }
 
+
+
 void GameStateManager::LoadNextLevel(void)
 {
 	//currentLevel = (SCENES)(currentLevel + 1);

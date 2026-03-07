@@ -2,7 +2,6 @@
 #include "DamageNumber.hpp"
 #include <string>
 
-
 CombatUIManager* CombatUIManager::instance;
 
 void CombatUIManager::awake()
@@ -11,14 +10,18 @@ void CombatUIManager::awake()
 	{
 		instance = this;
 	}
-
-	MeshGen::getInstance().SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 50);
+	messages = {};
+	damageNumbers = {};
 }
 
 void CombatUIManager::init()
 {
-	messages = {};
-	damageNumbers = {};
+
+}
+
+CombatUIManager& CombatUIManager::Instance()
+{
+	return *instance;
 }
 
 void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
@@ -34,7 +37,6 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 	di->size = info.isCritical ? 2.1f : 0.7f;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	damageNumbers.push(std::move(e));
-	//EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color)
 {
@@ -48,7 +50,6 @@ void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color
 	di->textColor = color;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	messages.push(std::move(e));
-	//EntityManager::getInstance().entities.push_back(std::move(e)); //Make the entity and add it to the entityList
 }
 
 void CombatUIManager::Reset()
@@ -106,4 +107,5 @@ void CombatUIManager::fixedUpdate()
 void CombatUIManager::destroy()
 {
 	printf("Combat UI Manager: Destroyed\n");
+	instance = nullptr;
 }

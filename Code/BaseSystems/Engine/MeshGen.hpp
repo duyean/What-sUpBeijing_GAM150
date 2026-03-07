@@ -99,6 +99,7 @@ using namespace std;
 		{
 			baseBox();
 			baseCircle();
+			SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 50);
 		}
 
 		void DrawBox(float Xpos, float Ypos, float width, float height, Color color, float Deg);

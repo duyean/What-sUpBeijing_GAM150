@@ -25,7 +25,7 @@ This file contains the definitions for the collection of functions in BattleScen
 
 
 JSONSerializer jsonSerializer{};
-std::unique_ptr<Entity> character, testEnemy, testEnemy2;
+std::unique_ptr<Entity> character;
 Map myMap{};
 
 BattleScene::BattleScene()
@@ -61,8 +61,8 @@ void BattleScene::Load()
 
     auto manager = std::make_unique<Entity>("Manager");
     manager->addComponent<Transform2D>(pos, scale, 0.f);
-    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<CombatUIManager>();
+    battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<AudioManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
@@ -86,49 +86,23 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(character->transform);
     enSystem->entities.push_back(std::move(character));
 
-    testEnemy = std::make_unique<Entity>("Enemy");
-    pos = { 500.f, 300.f };
-    scale = { 50.f, 100.f };
-    testEnemy->addComponent<Transform2D>(pos, scale, 0.f);
-    testEnemy->addComponent<Character>();
-    testEnemy->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
-    testEnemy->addComponent<Healthbar1>();
-    Character* ch = testEnemy->getComponent<Character>();
-    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
-    enSystem->rootEntity->transform->AddChild(testEnemy->transform);
-    enSystem->entities.push_back(std::move(testEnemy));
+    /* To do, shift the above code block into a for loop
+    *     
+    for (Character* ch : RunManager::Instance().GetParty())
+    {
+        battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+    }
+    */
 
-    testEnemy2 = std::make_unique<Entity>("Enemy2");
-    pos = { 550.f, 100.f };
-    scale = { 50.f, 100.f };
-    testEnemy2->addComponent<Transform2D>(pos, scale, 0.f);
-    testEnemy2->addComponent<Character>();
-    testEnemy2->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
-    testEnemy2->addComponent<Healthbar1>();
-    ch = testEnemy2->getComponent<Character>();
-    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
-    enSystem->rootEntity->transform->AddChild(testEnemy2->transform);
-    enSystem->entities.push_back(std::move(testEnemy2));
 
-    auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
-        nullptr, Game::ATK, 90.15f);
-    RunManager::Instance().AddBlessing(std::move(test));
+    //Parameter is BOSS if player is in Boss Node
+    GenerateEnemies();
 
-    auto test2 = std::make_unique<TriggerBlessing>(BLESSING_ID::NONE, "Test2", "Test2", BLESSING_RARITY::MYTHICAL,
-        nullptr, EventType::TookDamage, 
-        [](const EventData& data) 
-        {
-            auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, nullptr, GENERIC_, 0.25f,
-                Game::ATK, UNIQUE, true);
-            data.target->AddModifier(std::move(mod));
-        }, -1);
-    RunManager::Instance().AddBlessing(std::move(test2));
+    //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
     battleManager->StartBattle();
 
     //Map myMap = Map::GenerateMap(CityStreets, 5, 5);
@@ -147,5 +121,57 @@ This function frees splash screen image used.
 *//*______________________________________________________________*/
 void BattleScene::Unload()
 {
+    EntityManager::getInstance().needsCleanup = true;
+    for (auto& e : enSystem->entities) {
+        e->toDestroy = true;
+    }
+}
 
+void BattleScene::GenerateEnemies(BATTLE_TYPE type)
+{
+    switch (type)
+    {
+        case (BATTLE_TYPE::NORMAL):
+        {
+            //Generate between 1 to 3 enemies
+            std::uniform_int_distribution<int> dist(1, 3);
+            int enemies = dist(Game::gen);
+
+            for (int i = 0; i < enemies; ++i)
+            {
+                character = std::make_unique<Entity>("Enemy");
+                AEVec2 pos = enemyPositions[i];
+                AEVec2 scale = { 50.f, 100.f };
+                character->addComponent<Transform2D>(pos, scale, 0.f);
+                character->addComponent<Character>();
+                character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+                character->addComponent<Healthbar1>();
+                Character* ch = character->getComponent<Character>();
+                //Use a switch case and edit the line below for different enemy types
+                /*
+                ENEMY_TYPE type = dist(0, MAX_ENEMY_TYPE - 1);
+                switch (type)
+                {
+                    ...
+                    case (ENEMY_TYPE::MELEE)
+                    {
+                        ch->LoadCharacter(jsonSerializer, "Assets/Characters/EnemyMelee.json);
+                        break;
+                    }
+                    ...
+                }
+                */
+                ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                battleManager->LoadBattleUnit(ch);
+                enSystem->rootEntity->transform->AddChild(character->transform);
+                enSystem->entities.push_back(std::move(character));
+            }
+            break;
+        }
+        case (BATTLE_TYPE::BOSS):
+        {
+            //To-do, Get Boss Type and load boss data
+            break;
+        }
+    }
 }

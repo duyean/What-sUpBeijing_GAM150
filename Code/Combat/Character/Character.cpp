@@ -31,7 +31,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	hp -= finalDamageTaken;
 	hp = AEClamp(hp, 0, maxHP);
 	AEVec2 offset = { 0, 100 };
-	CombatUIManager::instance->CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
+	CombatUIManager::Instance().CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
 
 	//Event Handler
 	EventData evt{ damageInfo.source, this, (int)finalDamageTaken};
@@ -127,7 +127,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 			}
 		}
 		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
-		CombatUIManager::instance->CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
+		CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		DealDamage(target, move->coefficient);
 		turnFinished = true;
 	}
@@ -170,13 +170,13 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			}
 			case (STACK_BEHAVIOUR::REFRESH):
 			{
-				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
+				CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				(*modExists)->duration = modifier->duration; //Refresh the duration
 				break;
 			}
 			case (STACK_BEHAVIOUR::STACK):
 			{
-				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
+				CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				(*modExists)->stackCount += modifier->stackCount;
 				(*modExists)->stackCount = std::min((*modExists)->stackCount, 5);
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
@@ -184,7 +184,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			}
 			case (STACK_BEHAVIOUR::UNIQUE):
 			{
-				CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
+				CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 				effectList.emplace_back(std::move(modifier)); //Add a whole separate modifier
 				break;
 			}
@@ -192,7 +192,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 	}
 	else
 	{
-		CombatUIManager::instance->CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
+		CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifier->name);
 		effectList.emplace_back(std::move(modifier));
 	}
 	UpdateAttributes();

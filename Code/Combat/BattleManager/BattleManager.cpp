@@ -32,6 +32,7 @@ bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Tran
 
 }
 
+
 void BattleManager::ProcessTargeting()
 {
 	for (Character* unit : battleUnits)

@@ -4,6 +4,7 @@
 #include "../Character/Character.hpp"
 #include "../Code/Combat/EventHandler/CombatEventHandler.hpp"
 
+
 class BattleManager : public SoloBehavior
 {
 	//A vector of all the current units in battle
@@ -26,6 +27,7 @@ class BattleManager : public SoloBehavior
 
 	//Float for delayed executions
 	float delay;
+
 
 	enum BATTLE_OUTCOME
 	{

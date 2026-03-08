@@ -477,7 +477,3 @@ Map::Map()
 	Map::mapType = MapType::Debug;
 	//bruh
 }
-
-Map::~Map()
-{
-}

@@ -52,24 +52,20 @@ void LevelScene::Load()
 	//map entities
 	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; x < map.playMap.mapNodes.size(); y++) {
 		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
+		auto mapFog = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
 		pos = { (float)x * 100.f, (float)y * 100.f };
 		scale = { 10.f, 10.f };
 		mapNode->addComponent<Transform2D>(pos, scale, 0.f);
-		mapNode->addComponent<Mesh>("Box", Color(0, 255, 255, 1), 50, MeshType::BOX_T);
+		mapFog->addComponent<Transform2D>(pos, scale, 0.f);
 		enSystem->rootEntity->transform->AddChild(mapNode->transform);
 		enSystem->entities.push_back(std::move(mapNode));
+		enSystem->rootEntity->transform->AddChild(mapFog->transform);
+		enSystem->entities.push_back(std::move(mapFog));
 	}	}
 
-	//map fog
-	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) {for (int y = 0; x < map.playMap.mapNodes.size(); y++) {
-			auto mapNode = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
-			pos = { (float)x * 100.f, (float)y * 100.f };
-			scale = { 10.f, 10.f };
-			mapNode->addComponent<Transform2D>(pos, scale, 0.f);
-			mapNode->addComponent<Mesh>("Box", Color(0, 255, 255, 1), 50, MeshType::BOX_T);
-			enSystem->rootEntity->transform->AddChild(mapNode->transform);
-			enSystem->entities.push_back(std::move(mapNode));
-	}	}
+	auto MD_Manager = std::make_unique<Entity>("MapDisplayManager");
+	MD_Manager->addComponent<MapDisplay>(map);
+	enSystem->entities.push_back(std::move(MD_Manager));
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };

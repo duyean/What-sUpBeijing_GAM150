@@ -179,5 +179,6 @@ NavigationData::NavigationData()
 
 NavigationData::~NavigationData()
 {
-
+	viewMap.~Map();
+	playMap.~Map();
 }

@@ -21,3 +21,4 @@
 #include "Map/Map.hpp"
 #include "Map/NavigationDataClass.hpp"
 #include "Map/NavigationData.hpp"
+#include "Map/MapDisplay.hpp"

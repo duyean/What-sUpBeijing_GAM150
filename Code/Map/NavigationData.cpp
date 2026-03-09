@@ -6,6 +6,8 @@
 //mass include files
 #include "../Maps_WZBJ_Pak.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
+#include "../Scenes/SceneHandler/GameStateManager.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
 void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
@@ -74,10 +76,8 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			//write function for trigger enemy encounter here 
-			
-			//StartBattleEncounter(data.playMap.mapType); 
-			//mapType data is used to decide what kind of enemies spawn
+			//RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
+			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 
 		case NodeType::RandomEvent:
@@ -95,8 +95,6 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 		case NodeType::Entry:
 			//write function for returning to base here
-
-			//ReturnToBase();
 			break;
 
 		case NodeType::Exit:
@@ -104,6 +102,10 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 			//StartBossBattle(data.playMap.mapType);
 			//mapType data is used to decide what kind of boss spawns
+
+
+			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
+			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 	}
 

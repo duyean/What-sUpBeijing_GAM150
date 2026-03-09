@@ -38,7 +38,7 @@ void GameManager::Init()
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::LEVEL_SCENE); //GAME_SCREEN SPLASHSCREEN
+	stateManager->NextScene(GameStateManager::BASE_CAMP); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)
@@ -69,6 +69,10 @@ void GameManager::Update(float _dt)
 	{
 		if (enSystem->entities[i] != nullptr)
 		{
+			if (enSystem->entities[i]->toDestroy == true)
+			{
+				continue;
+			}
 			if (enSystem->entities[i]->allComponentsInit == false)
 			{
 				enSystem->entities[i]->init();
@@ -88,6 +92,10 @@ void GameManager::FixedUpdate(double _fixedDt, double accumulator)
 	{
 		for (int i = 0; i < enSystem->entities.size(); i++)
 		{
+			if (enSystem->entities[i]->toDestroy == true)
+			{
+				continue;
+			}
 			if (enSystem->entities[i] != nullptr)
 			{
 				if (enSystem->entities[i]->isActive == true)

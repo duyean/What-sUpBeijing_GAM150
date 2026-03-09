@@ -10,6 +10,8 @@ This file contains the implementation for a Run Manager for our game.
 *//*______________________________________________________________________*/
 #include "RunManager.hpp"
 
+
+
 void RunManager::StartRun()
 {
 	//Set default values
@@ -27,10 +29,21 @@ void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 	runBlessings.push_back(std::move(bless));
 }
 
+void RunManager::SetBattleType(BATTLE_TYPE type)
+{
+	bt = type;
+}
+
+BATTLE_TYPE RunManager::GetBattleType() const
+{
+	return bt;
+}
+
 const std::vector<std::unique_ptr<Blessing>>& RunManager::GetBlessings() const
 {
 	return runBlessings;
 }
+
 
 RunManager& RunManager::Instance()
 {

@@ -44,7 +44,7 @@ public:
 		//Only searches base parent, use recursive search from root entity for children
 		for (const auto& end : entities)
 		{
-			if (end->name == Name)
+			if (end->name == Name && end->toDestroy == false)
 			{
 				return end.get();
 			}
@@ -59,7 +59,7 @@ public:
 		//Only searches base parent, use recursive search from root entity for children
 		for (const auto& end : entities)
 		{
-			if (end->getComponent<T>() != nullptr)
+			if (end->getComponent<T>() != nullptr && end->toDestroy == false)
 			{
 				return end.get();
 			}

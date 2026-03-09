@@ -9,6 +9,10 @@
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
 #include "LevelScene.hpp"
+#include <fstream>
+#include "../SoloBehavior/Player.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/EdgeManager.hpp"
 
 LevelScene::LevelScene()
 {	
@@ -33,11 +37,16 @@ void LevelScene::Load()
 	meshSystem = &MeshGen::getInstance();
 
 	//map data info
-	//map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
-	JSONSerializer serializer{};
-	map.LoadNavigationData(serializer);
+	std::ifstream ifs("Assets/Map/NavData.json");
+	if (ifs.good())
+	{
+		JSONSerializer serializer{};
+		map.LoadNavigationData(serializer);
+	}
+	else
+		map.GenerateNavigationData(MapType::OuterPalace, 4, 4);
 	//map data get current location data
-	GetCurrentNodeInfo(map);
+	//GetCurrentNodeInfo(map);
 	//map data info end
 	float collidersize = 100.f;
 
@@ -75,6 +84,16 @@ void LevelScene::Load()
 	ts->addComponent<TransitionScreen>(T_State::T_OUT);
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
+
+	auto e = std::make_unique<Entity>("Player");
+	pos = { 0.f, 0.f };
+	scale = { 50.f, 100.f };
+	e->addComponent<Transform2D>(pos, scale, 0.f);
+	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
+	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e->addComponent<Player>();
+	enSystem->rootEntity->transform->AddChild(e->transform);
+	enSystem->entities.push_back(std::move(e));
 
 	auto n_path = std::make_unique<Entity>("N_Path");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
@@ -116,17 +135,8 @@ void LevelScene::Load()
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
 	enSystem->entities.push_back(std::move(w_path));
 
-	auto e = std::make_unique<Entity>("Player");
-	pos = { 0.f, 0.f };
-	scale = { 50.f, 100.f };
-	e->addComponent<Transform2D>(pos, scale, 0.f);
-	e->addComponent<Player>();
-	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
-	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
-	enSystem->rootEntity->transform->AddChild(e->transform);
-	enSystem->entities.push_back(std::move(e));
-
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
+	SE_Manager->addComponent<Transform2D>();
 	SE_Manager->addComponent<EdgeManager>(map);
 	enSystem->entities.push_back(std::move(SE_Manager));
 }

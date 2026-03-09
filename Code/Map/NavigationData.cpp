@@ -38,6 +38,7 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 			if (!this->viewMap.mapNodes[y][x].w)	this->viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
 			if (!this->viewMap.mapNodes[y][x].n)	this->viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
 			if (!this->viewMap.mapNodes[y][x].s)	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
+			break;
 		}
 	}
 

@@ -9,6 +9,7 @@
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
 #include "BaseCamp.hpp"
+#include "../Code/SoloBehavior/EdgeManagerBase.hpp"
 
 BaseCamp::BaseCamp()
 {	
@@ -86,9 +87,13 @@ void BaseCamp::Load()
 	baseExit->addComponent<Transform2D>(pos, scale, 0.f);
 	baseExit->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
 	baseExit->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	//baseExit->addComponent<SceneEdge>(EdgeType::BASE, );
+	baseExit->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(baseExit->transform);
 	enSystem->entities.push_back(std::move(baseExit));
+
+	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
+	SE_Manager->addComponent<EdgeManagerBase>();
+	enSystem->entities.push_back(std::move(SE_Manager));
 }
 
 

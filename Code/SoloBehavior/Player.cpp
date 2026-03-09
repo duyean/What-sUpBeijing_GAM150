@@ -59,8 +59,8 @@ void Player::update()
 		entity->transform->setPosition(pos);
 	}
 
-	pos.y = AEClamp(pos.y, -400, 400);
-	pos.x = AEClamp(pos.x, -775, 775);
+	pos.y = AEClamp(pos.y, -AEGfxGetWindowHeight() / 2.f + (entity->transform->getScale().y / 2.f), AEGfxGetWindowHeight() / 2.f - (entity->transform->getScale().y / 2.f));
+	pos.x = AEClamp(pos.x, -AEGfxGetWindowWidth() / 2.f + (entity->transform->getScale().x / 2.f), AEGfxGetWindowWidth() / 2.f - (entity->transform->getScale().x / 2.f));
 	entity->transform->setPosition(pos);
 }
 

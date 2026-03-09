@@ -365,6 +365,7 @@ void Map::DebugPrint(Map map)
 					break;
 				case NodeType::Exit:
 					out = 'X';
+					//std::cout << "OUT = [" << x << ", " << y << "]";
 					break;
 			}
 		}

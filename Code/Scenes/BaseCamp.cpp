@@ -11,6 +11,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "BaseCamp.hpp"
 #include "../Code/SoloBehavior/EdgeManagerBase.hpp"
 #include "../Code/SoloBehavior/Shop.hpp"
+#include "../Code/SoloBehavior/PartyManagerObject.hpp"
 
 BaseCamp::BaseCamp()
 {	
@@ -55,6 +56,7 @@ void BaseCamp::Load()
 	auto decisionBox = std::make_unique<Entity>("DecisionBox");
 	decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionBox->addComponent<Mesh>("Box", Color(155, 155, 155, 0.5f), 200, MeshType::BOX_B);
+	decisionBox->addComponent<TextMesh>(pos, 1.5, "wehwehwehweh", Color(255, 255, 255, 1.f));
 	decisionBox->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionBox->transform);
 	pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f};
@@ -79,28 +81,38 @@ void BaseCamp::Load()
 	decisionButtonRight->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
 
-	auto shop = std::make_unique<Entity>("Shop");
-	pos = { -300.f, 100.f };
-	scale = { 200.f, 200.f };
-	shop->addComponent<Transform2D>(pos, scale, 0.f);
-	shop->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
-	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	shop->addComponent<Shop>(decisionBoxManager.get()->getComponent<DecisionBoxManager>());
-	enSystem->rootEntity->transform->AddChild(shop->transform);
-	enSystem->entities.push_back(std::move(shop));
-	enSystem->entities.push_back(std::move(decisionBox));
-	enSystem->entities.push_back(std::move(decisionBoxManager));
-	enSystem->entities.push_back(std::move(decisionButtonLeft));
-	enSystem->entities.push_back(std::move(decisionButtonRight));
-
 	auto PartyManager = std::make_unique<Entity>("PartyManager");
 	pos = { 300.f, 100.f };
 	scale = { 200.f, 200.f };
 	PartyManager->addComponent<Transform2D>(pos, scale, 0.f);
 	PartyManager->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
 	PartyManager->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	PartyManager->addComponent<PartyManagerObject>(decisionBoxManager.get()->getComponent<DecisionBoxManager>());
 	enSystem->rootEntity->transform->AddChild(PartyManager->transform);
 	enSystem->entities.push_back(std::move(PartyManager));
+	enSystem->entities.push_back(std::move(decisionBox));
+	enSystem->entities.push_back(std::move(decisionBoxManager));
+	enSystem->entities.push_back(std::move(decisionButtonLeft));
+	enSystem->entities.push_back(std::move(decisionButtonRight));
+
+	meshSystem->CreateTexture("Assets/UI/shop-back.png", "ShopBGTexture");
+	auto shopBackground = std::make_unique<Entity>("ShopBG");
+	pos = { 0.f, 0.f };
+	scale = { static_cast<float>(AEGfxGetWindowWidth()), static_cast<float>(AEGfxGetWindowHeight()) };
+	shopBackground->addComponent<Transform2D>(pos, scale, 0.f);
+	shopBackground->addComponent<Mesh>("Box", "ShopBGTexture", Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
+	shopBackground->isActive = false;
+
+	auto shop = std::make_unique<Entity>("Shop");
+	pos = { -300.f, 100.f };
+	scale = { 200.f, 200.f };
+	shop->addComponent<Transform2D>(pos, scale, 0.f);
+	shop->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	shop->addComponent<Shop>(shopBackground.get());
+	enSystem->rootEntity->transform->AddChild(shop->transform);
+	enSystem->entities.push_back(std::move(shopBackground));
+	enSystem->entities.push_back(std::move(shop));
 
 	auto e = std::make_unique<Entity>("Player");
 	pos = { 0.f, -200.f };

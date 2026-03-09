@@ -3,13 +3,14 @@
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
 {
-	decisionBox->ToggleDecisionBox(true);
+	shopDisplay->isActive = true;
 }
 void Shop::onStay(BoxCollider2D* other)
 {
 }
 void Shop::onExit(BoxCollider2D* other)
 {
+	shopDisplay->isActive = false;
 }
 
 void Shop::awake()
@@ -40,11 +41,12 @@ void Shop::destroy()
 
 Shop::Shop()
 {
+	shopDisplay = nullptr;
 }
 
-Shop::Shop(DecisionBoxManager* box)
+Shop::Shop(Entity* display)
 {
-	decisionBox = box;
+	shopDisplay = display;
 }
 
 Shop::~Shop()

@@ -2,7 +2,7 @@
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/DecisionBoxManager.hpp"
 
-class Shop : public SoloBehavior
+class PartyManagerObject : public SoloBehavior
 {
 public:
 	void awake() override;
@@ -11,11 +11,11 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Shop();
-	Shop(Entity* display);
-	~Shop();
+	PartyManagerObject();
+	PartyManagerObject(DecisionBoxManager* box);
+	~PartyManagerObject();
 private:
-	Entity* shopDisplay;
+	DecisionBoxManager* decisionBox{ nullptr };
 
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

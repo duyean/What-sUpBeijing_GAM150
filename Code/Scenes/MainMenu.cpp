@@ -43,6 +43,16 @@ void MainMenu::Load()
 	enSystem->entities.push_back(std::move(r));
 
 
+	auto title_en = std::make_unique<Entity>("TITLE");
+	Entity* te = title_en.get();
+	pos = { -500.f,800.f };
+	scale = { 1525.f, 445.f };
+	te->addComponent<Transform2D>(pos, scale, 0.f);
+	te->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 1.5, "THE HEAVENS MOVE", Color{ 255,255,255,1 });
+	enSystem->rootEntity->transform->AddChild(te->transform);
+	enSystem->entities.push_back(std::move(title_en));
+
+
 	////////////////////////////////////////////////
 	// 
 	// START BUTTON

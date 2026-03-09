@@ -43,31 +43,42 @@ void BaseCamp::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
+	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
+	auto bg = std::make_unique<Entity>("Background");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	bg->addComponent<Transform2D>(pos, scale, 0.f);
+	bg->addComponent<Mesh>("Box", "BC_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	enSystem->rootEntity->transform->AddChild(bg->transform);
+	enSystem->entities.push_back(std::move(bg));
 
+	meshSystem->CreateTexture("../../Assets/Images/shop.png", "shop");
 	auto Shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
 	scale = { 200.f, 200.f };
 	Shop->addComponent<Transform2D>(pos, scale, 0.f);
-	Shop->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+	Shop->addComponent<Mesh>("Box", "shop", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	Shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	enSystem->rootEntity->transform->AddChild(Shop->transform);
 	enSystem->entities.push_back(std::move(Shop));
 
+	meshSystem->CreateTexture("../../Assets/Images/barracks.png", "barracks");
 	auto PartyManager = std::make_unique<Entity>("PartyManager");
 	pos = { 300.f, 100.f };
 	scale = { 200.f, 200.f };
 	PartyManager->addComponent<Transform2D>(pos, scale, 0.f);
-	PartyManager->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+	PartyManager->addComponent<Mesh>("Box", "barracks", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	PartyManager->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	enSystem->rootEntity->transform->AddChild(PartyManager->transform);
 	enSystem->entities.push_back(std::move(PartyManager));
 
+	meshSystem->CreateTexture("../../Assets/Images/GuanShiYinBack.png", "player_sprite");
 	auto e = std::make_unique<Entity>("Player");
 	pos = { 0.f, -200.f };
-	scale = { 50.f, 100.f };
+	scale = { 100.f, 100.f };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
 	e->addComponent<Player>();
-	e->addComponent<Mesh>("Box", Color(0, 255, 0, 1), 100, MeshType::BOX_B);
+	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
@@ -85,7 +96,7 @@ void BaseCamp::Load()
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, scale.y / 2 - (float)AEGfxGetWindowHeight() / 2 };
 	baseExit->addComponent<Transform2D>(pos, scale, 0.f);
-	baseExit->addComponent<Mesh>("Box", Color(0, 0, 255, 0.5), 100, MeshType::BOX_B);
+	baseExit->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	baseExit->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	baseExit->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(baseExit->transform);

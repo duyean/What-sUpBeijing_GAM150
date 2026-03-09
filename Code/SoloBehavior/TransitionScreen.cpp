@@ -18,6 +18,10 @@ void TransitionScreen::init()
 		pos = { 0.f , 0.f };
 		entity->transform->setPosition(pos);
 		break;
+	case T_NONE:
+		pos = { -(float)AEGfxGetWindowWidth() , 0.f };
+		entity->transform->setPosition(pos);
+		break;
 	}
 }
 

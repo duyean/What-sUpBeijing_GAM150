@@ -38,7 +38,7 @@ void GameManager::Init()
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::BASE_CAMP); //GAME_SCREEN SPLASHSCREEN
+	stateManager->NextScene(GameStateManager::MAIN_MENU); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)
@@ -59,6 +59,8 @@ void GameManager::Update(float _dt)
 {
 	
 	stateManager->Update(_dt);
+
+
 
 	// Your own update logic goes here
 		//Update everything

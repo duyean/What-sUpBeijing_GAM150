@@ -20,6 +20,7 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\Code\Scenes\BaseCamp.cpp" />
     <ClCompile Include="..\Code\Scenes\LevelScene.cpp" />
     <ClCompile Include="..\Code\Scenes\BattleScene.cpp" />
+    <ClCompile Include="..\Code\Scenes\MainMenu.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
@@ -81,6 +83,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\InputInterfaces.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />
@@ -115,6 +118,7 @@
     <ClInclude Include="..\Code\Map\NavigationDataClass.hpp" />
     <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
     <ClInclude Include="..\Code\Scenes\LevelScene.hpp" />
+    <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />

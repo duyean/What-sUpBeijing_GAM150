@@ -11,7 +11,7 @@ void Button::awake()
 
 void Button::init()
 {
-	
+	buttonMesh->color = normal_color;
 }
 
 void Button::update()

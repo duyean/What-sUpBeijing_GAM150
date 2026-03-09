@@ -19,6 +19,9 @@ class BattleManager : public SoloBehavior
 	//Pointer to the last enemy the player targeted
 	Character* lastTargetedUnit;
 
+	//Get the current turn
+	int currentTurn;
+
 	//Boolean to indicate whether a battle is ongoing
 	bool inBattle;
 
@@ -79,6 +82,12 @@ public:
 	/// Helper function for target selection
 	/// </summary>
 	bool PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
+
+	bool InBattle() const;
+	int GetCurrentTurn() const;
+	Character* GetActiveUnit();
+	std::vector<Character*> GetPlayerParty();
+
 
 	void awake() override;
 	void init() override;

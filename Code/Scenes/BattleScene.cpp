@@ -95,6 +95,8 @@ void BattleScene::Load()
     */
 
 
+    //Parameter is BOSS if player is in Boss Node
+    GenerateEnemies();
     // UI
     meshSystem->CreateTexture("Assets/UI/MainHP.png", "MainHP");
     auto UI_MainHealthbar = std::make_unique<Entity>("MainHealthbar");
@@ -132,11 +134,11 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(UI_Bottom3->transform);
     enSystem->entities.push_back(std::move(UI_Bottom3));
 
-    auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
-        nullptr, Game::ATK, 90.15f);
-    RunManager::Instance().AddBlessing(std::move(test));
-    //Parameter is BOSS if player is in Boss Node
-    GenerateEnemies(RunManager::Instance().GetBattleType());
+    // auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
+    //     nullptr, Game::ATK, 90.15f);
+    // RunManager::Instance().AddBlessing(std::move(test));
+    // //Parameter is BOSS if player is in Boss Node
+    // GenerateEnemies(RunManager::Instance().GetBattleType());
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");

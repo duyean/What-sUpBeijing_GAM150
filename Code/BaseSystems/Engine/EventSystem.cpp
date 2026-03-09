@@ -19,7 +19,7 @@ void EventSystem::removeUIElement(UIElement* ui)
 bool EventSystem::pointOverlap(s32 m_x, s32 m_y, UIElement* ui)
 {	
 
-	float ui_x = -ui->entity->transform->getPosition().x;
+	float ui_x = ui->entity->transform->getPosition().x;
 	float ui_y = -ui->entity->transform->getPosition().y;
 	float halfx = ui->entity->transform->getScale().x / 2;
 	float halfy = ui->entity->transform->getScale().y / 2;

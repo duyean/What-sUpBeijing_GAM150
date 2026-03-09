@@ -139,8 +139,6 @@ void BattleScene::Load()
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("CharacterBack")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy")->getComponent<Character>());
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Enemy2")->getComponent<Character>());
     battleManager->StartBattle();
 }
 
@@ -163,6 +161,7 @@ void BattleScene::Unload()
 
 void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
+    JSONSerializer jsonSerializer{};
     switch (type)
     {
         case (BATTLE_TYPE::NORMAL):

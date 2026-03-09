@@ -76,6 +76,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 		case NodeType::EnemyEncounter:
 			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			data.playMap.mapNodes[newY][newX].type = NodeType::Empty;
 			break;
 
 		case NodeType::RandomEvent:

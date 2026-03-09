@@ -6,6 +6,7 @@
 using namespace std;
 
 class EntityManager;
+class MeshGen;
 
 class MapDisplay : public SoloBehavior
 {
@@ -17,7 +18,9 @@ public:
 	std::vector<Entity*> mapNodesFog;
 	int x, y;
 
-	string textureDir[6] = 
+	#define TEXTURE_COUNT 6
+
+	string textureDir[TEXTURE_COUNT] =
 	{
 	"../Assets/Image/MapIcons/FogTile.png",			//fog no vision
 	"../Assets/Image/MapIcons/Tile.png",			//standard tile
@@ -27,7 +30,18 @@ public:
 	"../Assets/Image/MapIcons/Exit.png"				//boss fight
 	};
 
+	string textureName[TEXTURE_COUNT] =
+	{
+	"FogTile",			//fog no vision
+	"BaseTile",			//standard tile
+	"EncounterTile",	//enemy encounter
+	"EventTile",		//random encounter
+	"EntranceTile",		//map start
+	"ExitTile"			//boss fight
+	};
+
 	EntityManager* enSystem = nullptr;
+	MeshGen* meSystem = nullptr;
 
 	void awake() override;
 	void init() override;

@@ -7,7 +7,13 @@
 void MapDisplay::awake()
 {
 	enSystem = &EntityManager::getInstance();
+	meSystem = &MeshGen::getInstance();
 	int count = 0;
+
+	for (int textureIndex = 0; textureIndex < TEXTURE_COUNT; textureIndex++)
+	{
+		meSystem->CreateTexture(textureDir[textureIndex].c_str(), textureName[textureIndex].c_str());
+	}
 
 	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; x < map.playMap.mapNodes.size(); y++) {
 		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(x) + "_" + std::to_string(y)));
@@ -15,22 +21,22 @@ void MapDisplay::awake()
 		switch (map.playMap.mapNodes[y][x].type)
 		{
 			case NodeType::EnemyEncounter:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureDir[2], 50, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 				break;
 			case NodeType::RandomEvent:	//both events have same sprite
 			case NodeType::FixedEvent:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureDir[3], 50, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 				break;
 			case NodeType::Entry:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureDir[4], 50, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 				break;
 			case NodeType::Exit:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureDir[5], 50, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 				break;
 			default:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureDir[1], 50, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 		}
-		mapNodesFog[count]->addComponent<Mesh>("Box", textureDir[0], 50, MeshType::BOX_T);
+		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), 50, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;
 		if (map.playMap.mapNodes[y][x].type == NodeType::VisionClear)
 		{

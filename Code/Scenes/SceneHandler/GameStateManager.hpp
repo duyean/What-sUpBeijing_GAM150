@@ -25,7 +25,6 @@ public:
 	LEVEL_SCENE,
 	BATTLE_SCENE,
 	NUM_SCENES,
-	QUIT = -1
 };
 
 private:

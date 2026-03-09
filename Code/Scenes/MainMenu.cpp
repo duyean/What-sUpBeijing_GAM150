@@ -10,6 +10,7 @@ This file contains the definitions for the collection of functions in SplashScre
 *//*______________________________________________________________________*/
 #include "MainMenu.hpp"
 
+
 MainMenu::MainMenu()
 {	
 }
@@ -61,7 +62,6 @@ void MainMenu::Load()
 	startButton->SetNormalColor(Color{ 0,200,0,1 });
 	startButton->SetHighlightedColor(Color{ 0,255,0,1 });
 	sb->addComponent<TextMesh>(AEVec2{ pos.x + 100.f , pos.y + 30.f }, 0.6, "PLAY", Color{1,1,1,1});
-
 
 	enSystem->rootEntity->transform->AddChild(sb->transform);
 	enSystem->entities.push_back(std::move(b));
@@ -116,7 +116,7 @@ void MainMenu::SwitchToGame()
 
 void MainMenu::QuitGame()
 {
-	
+	GameManager::GetInstance()->quitGame = true;
 }
 
 

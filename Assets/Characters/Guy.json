@@ -2,7 +2,7 @@
     "name": "Chenyu",
     "element": 1,
     "baseHP": 1000.0,
-    "baseATK": 500.0,
+    "baseATK": 9999999.0,
     "baseDEF": 100.0,
     "faction": 1,
     "moves": {

@@ -5,6 +5,8 @@
 #include "../Code/Combat/EventHandler/CombatEventHandler.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 
+#include "../../BaseSystems/Engine/EntityManager.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
 
 class BattleManager : public SoloBehavior
 {
@@ -40,6 +42,8 @@ class BattleManager : public SoloBehavior
 	//Enum to determine the outcome of the battle
 	BATTLE_OUTCOME outcome;
 
+	EntityManager* enSystem = nullptr;
+	TransitionScreen* ts = nullptr;
 public:
 	//Constructor
 	BattleManager();

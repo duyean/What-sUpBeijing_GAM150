@@ -6,7 +6,8 @@
 
 void BattleManager::awake()
 {
-
+	enSystem = &EntityManager::getInstance();
+	ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
 }
 
 void BattleManager::init()
@@ -144,12 +145,12 @@ void BattleManager::update()
 			if (bt != BATTLE_TYPE::BOSS)
 			{
 				//Change scene back to exploration
-				GameStateManager::GetInstance()->NextScene(GameStateManager::LEVEL_SCENE);
+				ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 			}
 			else
 			{
 				//Change scene back to base camp
-				GameStateManager::GetInstance()->NextScene(GameStateManager::BASE_CAMP);
+				ts->TransitionToScene(GameStateManager::BASE_CAMP);
 			}
 
 		}

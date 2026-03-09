@@ -23,9 +23,8 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 
-
-
 std::unique_ptr<Entity> character;
+//Map myMap{};
 
 BattleScene::BattleScene()
 {
@@ -166,6 +165,7 @@ void BattleScene::Unload()
 
 void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
+    JSONSerializer jsonSerializer{};
     switch (type)
     {
         case (BATTLE_TYPE::NORMAL):

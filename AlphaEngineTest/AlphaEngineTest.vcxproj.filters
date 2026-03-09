@@ -517,7 +517,7 @@
     </ClInclude>
     <ClInclude Include="..\Code\Map\MapDisplay.hpp">
       <Filter>Header Files\Map</Filter>
-    </ClCompile>
+    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>

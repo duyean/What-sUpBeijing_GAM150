@@ -12,14 +12,19 @@ This file contains the implementation for a Run Manager for our game.
 
 RunManager::RunManager()
 {
-	party.reserve(2);
+	party.reserve(3);
 	party.push_back("Guy");
 	party.push_back("Char2");
+	party.push_back("Char3");
 }
 
 void RunManager::StartRun()
 {
 	//Set default values
+	enemyDifficulty = 1;
+
+	//Can change this if the player owns an artifact
+	currency = 50;
 }
 
 const std::vector<std::string>& RunManager::GetParty() const

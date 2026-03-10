@@ -297,6 +297,9 @@
     <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -525,6 +528,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

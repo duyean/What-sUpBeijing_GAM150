@@ -100,6 +100,7 @@ void BattleManager::ResetBattle()
 	enemyCount = 0;
 	wait = false;
 
+	RunManager::Instance().ModifyEnemyDifficulty(1);
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -177,7 +178,7 @@ void BattleManager::update()
 	{
 		currentTurn++;
 		activeUnit->StartTurn();
-		delay = 1.5f;
+		delay = 0.5f;
 		wait = true;
 	}
 
@@ -232,7 +233,7 @@ void BattleManager::update()
 			currentActiveUnit = 0;
 		}
 		wait = false;
-		delay = 1.5f;
+		delay = 0.5f;
 	}
 }
 

@@ -54,6 +54,7 @@
     <ClCompile Include="..\Code\SoloBehavior\EdgeManagerBase.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />

@@ -43,9 +43,9 @@ public:
 
 	Button() {
 		buttonMesh = nullptr;
-		normal_color = {255,255,255,255 };
-		highlighted_color = { 255,255,255,255 };
-		pressed_color = { 200,200,200,255 };
+		normal_color = {255,255,255,1 };
+		highlighted_color = { 255,255,255,1 };
+		pressed_color = { 200,200,200,1 };
 	}
 	~Button(){}
 

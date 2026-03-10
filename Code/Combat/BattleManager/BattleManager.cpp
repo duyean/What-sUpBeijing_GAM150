@@ -7,7 +7,6 @@
 void BattleManager::awake()
 {
 	enSystem = &EntityManager::getInstance();
-	ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
 }
 
 void BattleManager::init()
@@ -156,7 +155,7 @@ void BattleManager::update()
 		if (delay < 0)
 		{
 			ResetBattle();
-
+			ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
 			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
 			if (bt != BATTLE_TYPE::BOSS)
 			{
@@ -213,7 +212,7 @@ void BattleManager::update()
 	}
 	else
 	{
-		if (activeUnit->GetFaction() == Game::FACTION::ENEMY)
+		if (activeUnit->GetFaction() == Game::FACTION::ENEMY && !activeUnit->IsEndingTurn())
 		{
 			std::vector<Character*> playerTargets;
 			std::copy_if(battleUnits.begin(), battleUnits.end(),

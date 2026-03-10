@@ -62,21 +62,11 @@ void BattleScene::Load()
     enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
     enSystem->entities.push_back(std::move(r));
 
-    auto ts = std::make_unique<Entity>("TransitionScreen");
-    pos = { 0.f, 0.f };
-    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
-    ts->addComponent<Transform2D>(pos, scale, 0.f);
-    ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 101, MeshType::BOX_B);
-    ts->addComponent<TransitionScreen>(T_State::T_OUT);
-    enSystem->rootEntity->transform->AddChild(ts->transform);
-    enSystem->entities.push_back(std::move(ts));
-
     auto manager = std::make_unique<Entity>("Manager");
     manager->addComponent<Transform2D>(pos, scale, 0.f);
     manager->addComponent<CombatUIManager>();
     battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<AudioManager>();
-    manager->addComponent<MainHealthbar>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
 
@@ -88,7 +78,16 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
-    for (const auto str : RunManager::Instance().GetParty())
+    auto partyUI = std::make_unique<Entity>("PartyUISystem");
+    pos = { 0.f, 0.f };
+    scale = { 0.f, 0.f };
+    partyUI->addComponent<Transform2D>(pos, scale, 0.f);
+    auto pUI = partyUI->addComponent<PartyUI>();
+    enSystem->rootEntity->transform->AddChild(partyUI->transform);
+    enSystem->entities.push_back(std::move(partyUI));
+
+    int count = 0;
+    for (const auto& str : RunManager::Instance().GetParty())
     {
         character = std::make_unique<Entity>(str.c_str());
         pos = { -500.f, -150.f };
@@ -108,6 +107,18 @@ void BattleScene::Load()
         battleManager->LoadBattleUnit(ch);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
+
+        //Create the Party UI Icons
+        auto PartyUnitIcon1 = std::make_unique<Entity>("Icon");
+        pos = { 60.f + (count * 250), -AEGfxGetWindowHeight() * 0.7f * 0.5f};
+        scale = { 100, 100 };
+        PartyUnitIcon1->addComponent<Transform2D>(pos, scale, 0.f);
+        PartyUnitIcon1->addComponent<Mesh>("Box", ch->characterIconTexture.c_str(), Color(255, 255, 255, 1.f), 101, MeshType::BOX_T);
+        pUI->AddIcon(PartyUnitIcon1.get());
+        enSystem->rootEntity->transform->AddChild(PartyUnitIcon1->transform);
+        enSystem->entities.push_back(std::move(PartyUnitIcon1));
+
+        count++;
     }
 
     //Parameter is BOSS if player is in Boss Node
@@ -122,6 +133,23 @@ void BattleScene::Load()
     UI_MainHealthbar->addComponent<Mesh>("Box", "MainHP", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(UI_MainHealthbar->transform);
     enSystem->entities.push_back(std::move(UI_MainHealthbar));
+
+    auto mainUnitHealthBar = std::make_unique<Entity>("HealthBar");
+    pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
+    scale = { 300, 12 };
+    mainUnitHealthBar->addComponent<Transform2D>(pos, scale, 0.f);
+    mainUnitHealthBar->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_BL);
+    mainUnitHealthBar->addComponent<MainHealthbar>();
+    enSystem->rootEntity->transform->AddChild(mainUnitHealthBar->transform);
+    enSystem->entities.push_back(std::move(mainUnitHealthBar));
+
+    auto mainUnitHealthBarBG = std::make_unique<Entity>("HealthBarBG");
+    pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
+    scale = { 300, 12 };
+    mainUnitHealthBarBG->addComponent<Transform2D>(pos, scale, 0.f);
+    mainUnitHealthBarBG->addComponent<Mesh>("Box", Color(122, 0, 0, 1.f), 101, MeshType::BOX_BL);
+    enSystem->rootEntity->transform->AddChild(mainUnitHealthBarBG->transform);
+    enSystem->entities.push_back(std::move(mainUnitHealthBarBG));
 
     meshSystem->CreateTexture("Assets/UI/Bottom1.png", "Bottom1");
     auto UI_Bottom1 = std::make_unique<Entity>("Bottom1");
@@ -150,14 +178,6 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(UI_Bottom3->transform);
     enSystem->entities.push_back(std::move(UI_Bottom3));
 
-    auto partyUI = std::make_unique<Entity>("PartyUI");
-    pos = { 0.f, 0.f };
-    scale = {0.f, 0.f};
-    partyUI->addComponent<Transform2D>(pos, scale, 0.f);
-    partyUI->addComponent<PartyUI>();
-    enSystem->rootEntity->transform->AddChild(partyUI->transform);
-    enSystem->entities.push_back(std::move(partyUI));
-
     auto moveui = std::make_unique<Entity>("MovesUI");
     pos = { 0.f, 0.f };
     scale = { 0.f, 0.f };
@@ -165,6 +185,15 @@ void BattleScene::Load()
     moveui->addComponent<MovesUI>();
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
+
+    auto ts = std::make_unique<Entity>("TransitionScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    ts->addComponent<Transform2D>(pos, scale, 0.f);
+    ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 999, MeshType::BOX_B);
+    ts->addComponent<TransitionScreen>(T_State::T_OUT);
+    enSystem->rootEntity->transform->AddChild(ts->transform);
+    enSystem->entities.push_back(std::move(ts));
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
@@ -205,12 +234,9 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             {
                 character = std::make_unique<Entity>("Enemy");
                 AEVec2 pos = enemyPositions[i];
-                AEVec2 scale = { 50.f, 100.f };
+                AEVec2 scale = { 200.f, 200.f };
                 character->addComponent<Transform2D>(pos, scale, 0.f);
-                character->addComponent<Character>();
-                character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
-                character->addComponent<Healthbar1>();
-                Character* ch = character->getComponent<Character>();
+                Character* ch = character->addComponent<Character>();
                 //Use a switch case and edit the line below for different enemy types
                 /*
                 ENEMY_TYPE type = dist(0, MAX_ENEMY_TYPE - 1);
@@ -226,6 +252,13 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 }
                 */
                 ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+
+                std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
+                std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
+                meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
+                meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
+                character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+                character->addComponent<Healthbar1>();
                 battleManager->LoadBattleUnit(ch);
                 enSystem->rootEntity->transform->AddChild(character->transform);
                 enSystem->entities.push_back(std::move(character));

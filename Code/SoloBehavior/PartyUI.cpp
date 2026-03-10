@@ -1,6 +1,11 @@
 #include "PartyUI.hpp"
 #include "../Combat/BattleManager/BattleManager.hpp"
 
+void PartyUI::AddIcon(Entity* en)
+{
+	icons.push_back(en);
+}
+
 void PartyUI::awake()
 {
 
@@ -18,12 +23,19 @@ void PartyUI::update()
 		auto party = battleManager->GetPlayerParty();
 		for (int i = 0; i < party.size(); ++i)
 		{
-			float scale = 100;
+			AEVec2 scale = { 100, 100 };
 			if (party[i] == battleManager->GetActiveUnit())
 			{
-				scale = 150;
+				scale = { 150, 150 };
 			}
-			MeshGen::getInstance().DrawBoxTexture(iconPositions[i].x, iconPositions[i].y, scale, scale, Color(255, 255, 255, 255), 0, party[i]->characterIconTexture.c_str());
+			if (icons[i]->transform)
+			{
+				icons[i]->transform->setScale(scale);
+				//Debug to render the status icons
+				//AEVec2 debugPos = { icons[i]->transform->getPosition() };
+				//debugPos.y -= (icons[i]->transform->getScale().y * 0.5f + 50);
+				//MeshGen::getInstance().DrawBox(debugPos, { 20, 20 }, Color(255, 255, 255, 1.f), 0.f);
+			}
 		}
 	}
 }
@@ -35,5 +47,5 @@ void PartyUI::fixedUpdate()
 
 void PartyUI::destroy()
 {
-
+	icons.clear();
 }

@@ -265,7 +265,7 @@ void Character::AIAttack()
 			std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
 			Character* target = targets[randTarget(Game::gen)];
 			target->entity->getComponent<Mesh>()->isActive = true;
-			target->timer = 1.0f;
+			target->timer = 2.0f;
 			UseMove(slotSelected, target);
 		}
 	}
@@ -279,10 +279,6 @@ void Character::EndTurn(void)
 {
 	endingTurn = true;
 	timer = 2.0f;
-	if (faction == Game::ENEMY) //Remove this when Enemy has animations
-	{
-		turnFinished = true;
-	}
 }
 
 void Character::Death(void)
@@ -326,26 +322,25 @@ void Character::awake()
 
 void Character::update()
 {
-	if (faction == Game::PLAYER)
+	if (endingTurn)
 	{
-		if (endingTurn)
+		if (timer > 0.f)
 		{
-			if (timer > 0.f)
-			{
-				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
-				timer -= 1.0f * AEFrameRateControllerGetFrameTime();
-			}
+			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+			timer -= 1.0f * AEFrameRateControllerGetFrameTime();
+		}
 
-			if (timer <= 0.5f)
-			{
-				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+		if (timer <= 0.5f)
+		{
+			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
 
-				if (timer <= 0)
+			if (timer <= 0)
+			{
+				if (faction == Game::PLAYER)
 				{
 					entity->getComponent<Mesh>()->isActive = false;
-					turnFinished = true;
 				}
-
+				turnFinished = true;
 			}
 		}
 	}

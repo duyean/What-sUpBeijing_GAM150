@@ -24,7 +24,7 @@ public:
 	BASE_CAMP,
 	LEVEL_SCENE,
 	BATTLE_SCENE,
-	NUM_SCENES
+	NUM_SCENES,
 };
 
 private:

@@ -18,7 +18,8 @@ enum T_State
 {
 	T_IN,
 	T_OUT,
-	DONE
+	DONE,
+	T_NONE
 };
 
 class EntityManager;

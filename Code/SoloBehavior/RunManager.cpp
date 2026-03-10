@@ -16,6 +16,8 @@ RunManager::RunManager()
 	party.push_back("Guy");
 	party.push_back("Char2");
 	party.push_back("Char3");
+
+	SetMapType(MapType::CityStreets);
 }
 
 void RunManager::StartRun()
@@ -52,6 +54,36 @@ void RunManager::SetBattleType(BATTLE_TYPE type)
 BATTLE_TYPE RunManager::GetBattleType() const
 {
 	return bt;
+}
+
+void RunManager::SetMapType(MapType type)
+{
+	currMapType = type;
+	prevMapType = type;
+}
+
+void RunManager::IncrementMapType()
+{
+	if (currMapType < MapType::NUM_MAPTYPES)
+	{
+		prevMapType = currMapType;
+		currMapType = MapType(currMapType + 1);
+	}	
+}
+
+void RunManager::SetPrevMapType(MapType type)
+{
+	prevMapType = type;
+}
+
+MapType RunManager::GetMapType() const
+{
+	return currMapType;
+}
+
+MapType RunManager::GetPrevMapType() const
+{
+	return prevMapType;
 }
 
 const std::vector<std::unique_ptr<Blessing>>& RunManager::GetBlessings() const

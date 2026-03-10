@@ -20,7 +20,7 @@ bool EventSystem::pointOverlap(s32 m_x, s32 m_y, UIElement* ui)
 {	
 
 	float ui_x = ui->entity->transform->getPosition().x;
-	float ui_y = ui->entity->transform->getPosition().y;
+	float ui_y = -ui->entity->transform->getPosition().y;
 	float halfx = ui->entity->transform->getScale().x / 2;
 	float halfy = ui->entity->transform->getScale().y / 2;
 
@@ -71,11 +71,7 @@ void EventSystem::Update(double dt)
 	for (auto& uiElement : uiElements) {
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{
-			//set the last UI Object as this
-			if (!lastUIObject)
-				lastUIObject = uiElement;
-
-			lastUIObject->OnHover();
+			uiElement->OnHover();
 
 			//call the respective dispatchers to return event data
 			if (AEInputCheckTriggered(AEVK_LBUTTON))
@@ -85,11 +81,7 @@ void EventSystem::Update(double dt)
 		}
 		else
 		{
-			if (lastUIObject)
-			{
-				lastUIObject->OnHoverExit();
-				lastUIObject = nullptr;
-			}
+			uiElement->OnHoverExit();
 		}
 	}
 }

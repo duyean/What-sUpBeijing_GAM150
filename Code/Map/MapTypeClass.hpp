@@ -9,6 +9,7 @@ enum MapType
 	CityStreets,
 	OuterPalace,
 	InnerPalace,
+	NUM_MAPTYPES,
 
 	//fog overlay map 
 	OverlayFog = -1

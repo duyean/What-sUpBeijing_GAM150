@@ -60,6 +60,7 @@ void GameManager::Update(float _dt)
 	
 	stateManager->Update(_dt);
 
+
 	// Your own update logic goes here
 		//Update everything
 

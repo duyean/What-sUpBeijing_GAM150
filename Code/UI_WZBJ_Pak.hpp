@@ -14,3 +14,4 @@
 */
 #include "SoloBehavior/Button.hpp"
 #include "SoloBehavior/UIElement.hpp"
+#include "SoloBehavior/DecisionBoxManager.hpp"

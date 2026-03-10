@@ -13,6 +13,7 @@ This file contains the definitions for the collection of functions in GameStateM
 #include "../Code/Scenes/SplashScreen.hpp"
 #include "../Code/Scenes/LevelScene.hpp"
 #include "../Code/Scenes/BaseCamp.hpp"
+#include "../Code/Scenes/MainMenu.hpp"
 
 GameStateManager::GameStateManager() :
 	curGameState(nullptr),
@@ -99,7 +100,7 @@ void GameStateManager::NextScene(SCENES _scene)
 		nextGameState = new SplashScreen;
 		break;	
 	case MAIN_MENU:
-		//nextGameState = new MainMenu;
+		nextGameState = new MainMenu;
 		break;
 	case BASE_CAMP:
 		nextGameState = new BaseCamp;

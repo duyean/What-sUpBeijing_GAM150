@@ -1,0 +1,18 @@
+{
+  "name": "YeHuangRen Warlord",
+  "element": 2,
+  "baseHP": 100.0,
+  "baseATK": 100.0,
+  "baseDEF": 50.0,
+  "faction": 2,
+  "initiative": 1,
+  "texture": "YeHuangRenNoBall.png",
+  "texture2": "YeHuangRenBall.png",
+  "icontexture": "YeHuangRenNoBall.png",
+  "moves": {
+    "0": 0,
+    "1": 1,
+    "2": 0,
+    "3": 1
+  }
+}

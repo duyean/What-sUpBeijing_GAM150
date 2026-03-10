@@ -139,7 +139,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	traveller.push_back({ currentY, currentX, 0 });
 
 	printf("Printing Map Display pre-Exploration\n");
-	Map::DebugPrint(*this);
+	//Map::DebugPrint(*this);
 
 	printf("Exploring Nodes for generation.\n");
 	bool allNodesExplored = false;
@@ -227,7 +227,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 
 	//print debug map after exploration
 	printf("Printing Map Display post-Exploration\n");
-	Map::DebugPrint(travelPath);
+	//Map::DebugPrint(travelPath);
 
 	int largestIndex = 0;
 

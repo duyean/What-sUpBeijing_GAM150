@@ -27,7 +27,8 @@ public:
 
 	void SetOnClick(Callback cb)
 	{
-		onClick = std::move(cb);
+		//onClick = std::move(cb);
+		onClick = cb;
 	}
 
 	void awake() override;

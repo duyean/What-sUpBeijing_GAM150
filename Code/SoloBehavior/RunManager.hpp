@@ -27,7 +27,7 @@ enum struct BATTLE_TYPE
 class RunManager
 {
 	//Stores the current characters in the player's party
-	std::vector<Character*> party;
+	std::vector<std::string> party;
 
 	//Stores the current blessings obtained upon the current run
 	std::vector<std::unique_ptr<Blessing>> runBlessings;
@@ -35,6 +35,9 @@ class RunManager
 	//battle type to set when changing to the battle scene
 	BATTLE_TYPE bt;
 public:
+	RunManager();
+
+	const std::vector<std::string>& GetParty() const;
 
 	//Singleton accessor for this class
 	static RunManager& Instance();

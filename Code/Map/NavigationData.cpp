@@ -76,9 +76,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			//RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
-			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
-			
+			data.playMap.mapNodes[newY][newX].type = NodeType::Empty;
 			break;
 
 		case NodeType::RandomEvent:

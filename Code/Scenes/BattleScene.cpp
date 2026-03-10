@@ -110,7 +110,7 @@ void BattleScene::Load()
     }
 
     //Parameter is BOSS if player is in Boss Node
-    GenerateEnemies();
+    GenerateEnemies(RunManager::Instance().GetBattleType());
 
     // UI
     meshSystem->CreateTexture("Assets/UI/MainHP.png", "MainHP");

@@ -33,7 +33,7 @@ public:
 	~BattleScene();
 
 
-	void GenerateEnemies(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);
+	void GenerateEnemies(BATTLE_TYPE type);
 	/*!
 	@brief Initialize Splash Screen variables
 	@param void

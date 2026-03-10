@@ -6,6 +6,7 @@
 //mass include files
 #include "../Maps_WZBJ_Pak.hpp"
 #include "../JSONSerializer_WZBJ_Pak.hpp"
+#include "../Scenes/SceneHandler/GameStateManager.hpp"
 //All Map Related code by Dan (Day). Ask if anything is broken.
 
 void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
@@ -74,10 +75,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			//write function for trigger enemy encounter here 
-			
-			//StartBattleEncounter(data.playMap.mapType); 
-			//mapType data is used to decide what kind of enemies spawn
+			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 
 		case NodeType::RandomEvent:

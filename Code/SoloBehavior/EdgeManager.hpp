@@ -36,6 +36,8 @@ private:
 	SceneEdge* SE_W = nullptr;
 
 	Entity* player = nullptr;
+
+	void UpdateEdges();
 public:
 
 	EntityManager* enSystem = nullptr;

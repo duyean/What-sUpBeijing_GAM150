@@ -9,6 +9,7 @@
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
 #include "LevelScene.hpp"
+#include <fstream>
 
 LevelScene::LevelScene()
 {	
@@ -33,9 +34,14 @@ void LevelScene::Load()
 	meshSystem = &MeshGen::getInstance();
 
 	//map data info
-	//map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
-	JSONSerializer serializer{};
-	map.LoadNavigationData(serializer);
+	std::ifstream ifs("Assets/Map/NavData.json");
+	if (ifs.good())
+	{
+		JSONSerializer serializer{};
+		map.LoadNavigationData(serializer);
+	}
+	else
+		map.GenerateNavigationData(MapType::OuterPalace, 15, 15);
 	//map data get current location data
 	GetCurrentNodeInfo(map);
 	//map data info end

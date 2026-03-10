@@ -288,9 +288,6 @@
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Map\MapDisplay.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">

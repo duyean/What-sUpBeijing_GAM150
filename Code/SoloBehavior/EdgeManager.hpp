@@ -36,6 +36,9 @@ private:
 	SceneEdge* SE_W = nullptr;
 
 	Entity* player = nullptr;
+	TransitionScreen* ts = nullptr;
+
+	bool switch_BC = false;
 
 	void UpdateEdges();
 public:

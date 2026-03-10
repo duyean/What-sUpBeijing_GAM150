@@ -10,6 +10,7 @@
 #include "../BaseSystems/EaseFunctions/Math.hpp"
 #include "../BaseSystems/Engine/EntityManager.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
+#include "../Scenes/SceneHandler/GameStateManager.hpp"
 
 using namespace std;
 
@@ -26,7 +27,9 @@ class TransitionScreen: public SoloBehavior
 {
 private:
 	float transitionSpeed;
-	bool t_buffer;
+	bool t_buffer; // a trigger buffer for the transition screen when calling reset
+	bool scene_t_buffer; //scene transition buffer
+	GameStateManager::SCENES nextScene = GameStateManager::NUM_SCENES; //default value NUM_SCENES (not a valid scene)
 	T_State state;
 
 public:
@@ -39,6 +42,7 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 	void SetState(T_State _state) { state = _state; t_buffer = true; }
+	void TransitionToScene(GameStateManager::SCENES gs);
 	T_State GetState() const { return state; }
 
 	TransitionScreen() = default;

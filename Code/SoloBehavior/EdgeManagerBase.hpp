@@ -1,5 +1,5 @@
 #pragma once
-#ifndef SceneEdge
+#ifndef EdgeManager
 #include <iostream>
 #include <cstdint>
 #include <vector>
@@ -13,23 +13,23 @@
 #include "../Scenes/SceneHandler/GameStateManager.hpp"
 #include "../BaseSystems/Engine/BoxCollider2D.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
-#include "../Code/Map/NavigationData.hpp"
+#include "../Code/SoloBehavior/SceneEdge.hpp"
 
 using namespace std;
 
 class EntityManager;
 
-class SceneEdge: public SoloBehavior
+
+class EdgeManagerBase : public SoloBehavior
 {
 private:
-	BoxCollider2D* col;
-	TransitionScreen* t_screen;
-	bool changeBuffer;
 
-	void onHit(BoxCollider2D* other);
-	void onStay(BoxCollider2D* other);
-	void onExit(BoxCollider2D* other);
+	SceneEdge* base_exit = nullptr;
+	TransitionScreen* ts = nullptr;
 
+	bool switch_BC = false;
+
+	void UpdateEdges();
 public:
 
 	EntityManager* enSystem = nullptr;
@@ -40,10 +40,8 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	bool triggerBuffer = false;
-
-	SceneEdge() : col{nullptr}, t_screen{nullptr}, changeBuffer{false} {}
-	~SceneEdge(){}
+	EdgeManagerBase() : base_exit{ nullptr } {}
+	~EdgeManagerBase() {}
 
 };
 

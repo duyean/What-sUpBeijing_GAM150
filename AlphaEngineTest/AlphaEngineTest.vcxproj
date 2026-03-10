@@ -52,7 +52,9 @@
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\EdgeManagerBase.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
@@ -117,6 +119,8 @@
     <ClInclude Include="..\Code\Scenes\LevelScene.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />

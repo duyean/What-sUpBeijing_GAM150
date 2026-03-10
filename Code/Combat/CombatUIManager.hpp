@@ -7,6 +7,7 @@
 class CombatUIManager : public SoloBehavior
 {
 private:
+	std::unique_ptr<Entity> mainHP;
 	//Queue to store the pending text elements to prevent overlapping
 	std::queue<std::unique_ptr<Entity>> damageNumbers, messages;
 	float dnDelay, messDelay;

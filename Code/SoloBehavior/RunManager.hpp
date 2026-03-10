@@ -17,6 +17,13 @@ This file contains the interface for a Run Manager for our game.
 //Forward declare the character class
 class Character;
 
+//enum of the different battle types to be used in battle scene
+enum struct BATTLE_TYPE
+{
+	NORMAL,
+	BOSS
+};
+
 class RunManager
 {
 	//Stores the current characters in the player's party
@@ -24,6 +31,9 @@ class RunManager
 
 	//Stores the current blessings obtained upon the current run
 	std::vector<std::unique_ptr<Blessing>> runBlessings;
+
+	//battle type to set when changing to the battle scene
+	BATTLE_TYPE bt;
 public:
 
 	//Singleton accessor for this class
@@ -37,6 +47,10 @@ public:
 
 	//Add a blessing to the current run
 	void AddBlessing(std::unique_ptr<Blessing> blessing);
+
+	void SetBattleType(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);
+
+	BATTLE_TYPE GetBattleType() const;
 
 	//Get the current list of blessings
 	const std::vector<std::unique_ptr<Blessing>>& GetBlessings() const;

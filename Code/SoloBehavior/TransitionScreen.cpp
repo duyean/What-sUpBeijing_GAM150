@@ -50,9 +50,22 @@ void TransitionScreen::update()
 		if (pos.x <= -(float)AEGfxGetWindowWidth()) state = DONE;
 		break;
 	case DONE:
+		if (scene_t_buffer == true && nextScene != GameStateManager::NUM_SCENES)
+		{
+			GameStateManager::GetInstance()->NextScene(nextScene);
+			nextScene = GameStateManager::NUM_SCENES;
+			scene_t_buffer = false;
+		}
 		break;
 	}
 
+}
+
+void TransitionScreen::TransitionToScene(GameStateManager::SCENES gs)
+{
+	scene_t_buffer = true;
+	nextScene = gs;
+	SetState(T_IN);
 }
 
 void TransitionScreen::fixedUpdate()
@@ -64,3 +77,5 @@ void TransitionScreen::destroy()
 {
 
 }
+
+

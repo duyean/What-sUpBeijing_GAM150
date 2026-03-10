@@ -3,6 +3,8 @@
 #include "../../Engine_WZBJ_Pak.hpp"
 #include "../Character/Character.hpp"
 #include "../Code/Combat/EventHandler/CombatEventHandler.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
+
 
 class BattleManager : public SoloBehavior
 {
@@ -26,6 +28,7 @@ class BattleManager : public SoloBehavior
 
 	//Float for delayed executions
 	float delay;
+
 
 	enum BATTLE_OUTCOME
 	{

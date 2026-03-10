@@ -1,6 +1,7 @@
 #include "SceneEdge.hpp"
 
 
+
 //Do collision logic
 void SceneEdge::onHit(BoxCollider2D* other)
 {
@@ -17,7 +18,6 @@ void SceneEdge::onExit(BoxCollider2D* other)
 
 void SceneEdge::awake()
 {
-	enSystem = &EntityManager::getInstance();
 
 	col = entity->getComponent<BoxCollider2D>();
 	if (col) {

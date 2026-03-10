@@ -157,6 +157,11 @@ void BattleManager::update()
 			ResetBattle();
 
 			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
+
+			if (bt == BATTLE_TYPE::MINI_BOSS)
+			{
+				//unlock character goes here
+			}
 			if (bt != BATTLE_TYPE::BOSS)
 			{
 				//Change scene back to exploration
@@ -165,6 +170,7 @@ void BattleManager::update()
 			else
 			{
 				//Change scene back to base camp
+				RunManager::Instance().IncrementMapType();
 				ts->TransitionToScene(GameStateManager::BASE_CAMP);
 			}
 

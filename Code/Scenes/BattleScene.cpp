@@ -224,10 +224,10 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             }
             break;
         }
-        case (BATTLE_TYPE::BOSS):
+        case (BATTLE_TYPE::MINI_BOSS):
         {
             //To-do, Get Boss Type and load boss data
-            character = std::make_unique<Entity>("Melee_Boss");
+            character = std::make_unique<Entity>("MiniBoss");
             AEVec2 pos = enemyPositions[0];
             AEVec2 scale = { 50.f, 100.f };
             character->addComponent<Transform2D>(pos, scale, 0.f);
@@ -236,7 +236,25 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Healthbar1>();
             Character* ch = character->getComponent<Character>();
 
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Melee_Boss.json");
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+            battleManager->LoadBattleUnit(ch);
+            enSystem->rootEntity->transform->AddChild(character->transform);
+            enSystem->entities.push_back(std::move(character));
+            break;
+        }
+        case (BATTLE_TYPE::BOSS):
+        {
+            //To-do, Get Boss Type and load boss data
+            character = std::make_unique<Entity>("Boss");
+            AEVec2 pos = enemyPositions[0];
+            AEVec2 scale = { 50.f, 100.f };
+            character->addComponent<Transform2D>(pos, scale, 0.f);
+            character->addComponent<Character>();
+            character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+            character->addComponent<Healthbar1>();
+            Character* ch = character->getComponent<Character>();
+
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));

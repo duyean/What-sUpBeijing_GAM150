@@ -13,6 +13,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../SoloBehavior/Player.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/SoloBehavior/EdgeManager.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 LevelScene::LevelScene()
 {	
@@ -36,15 +37,35 @@ void LevelScene::Load()
 {
 	meshSystem = &MeshGen::getInstance();
 
-	//map data info
-	std::ifstream ifs("Assets/Map/NavData.json");
-	if (ifs.good())
+	//check if the current map is the same as the prev set map
+	if (RunManager::Instance().GetMapType() == RunManager::Instance().GetPrevMapType())
 	{
-		JSONSerializer serializer{};
-		map.LoadNavigationData(serializer);
+		//if there is a map already saved, load the map
+		std::ifstream ifs("Assets/Map/NavData.json");
+		if (ifs.good())
+		{
+			std::cout << "Loading map since map already exists and level did not change!" << "\n";
+			JSONSerializer serializer{};
+			map.LoadNavigationData(serializer);
+		}
+		else
+		{
+			//generate a new map	
+			map.GenerateNavigationData(RunManager::Instance().GetMapType(), 4, 4);
+			std::cout << "Generating a new map since we just started the run!" << "\n";
+		}		
 	}
 	else
-		map.GenerateNavigationData(MapType::OuterPalace, 4, 4);
+	{
+		//generate the new current map
+		map.GenerateNavigationData(RunManager::Instance().GetMapType(), 4, 4);
+		RunManager::Instance().SetPrevMapType(RunManager::Instance().GetMapType());
+
+		std::cout << "Generating a new map since we change level!" << "\n";
+	}
+	
+	std::cout << "Now on map: " << RunManager::Instance().GetMapType()<<"\n";
+		
 	//map data get current location data
 	//GetCurrentNodeInfo(map);
 	//map data info end

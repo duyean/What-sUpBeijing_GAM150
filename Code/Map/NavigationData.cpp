@@ -100,9 +100,6 @@ void TravelNode(NavigationData& data, int newX, int newY)
 
 			//StartBossBattle(data.playMap.mapType);
 			//mapType data is used to decide what kind of boss spawns
-
-			//RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
-			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 	}
 

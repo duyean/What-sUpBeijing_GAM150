@@ -12,6 +12,7 @@ This file contains the interface for a Run Manager for our game.
 #pragma once
 #include "../Code/Engine_WZBJ_Pak.hpp"
 #include "../Combat/Blessing/Blessing.hpp"
+#include "../Map/MapClass.hpp"
 #include <memory>
 
 //Forward declare the character class
@@ -21,7 +22,8 @@ class Character;
 enum struct BATTLE_TYPE
 {
 	NORMAL,
-	BOSS
+	BOSS,
+	MINI_BOSS,
 };
 
 class RunManager
@@ -34,6 +36,9 @@ class RunManager
 
 	//battle type to set when changing to the battle scene
 	BATTLE_TYPE bt;
+
+	MapType currMapType;
+	MapType prevMapType;
 public:
 	RunManager();
 
@@ -54,6 +59,16 @@ public:
 	void SetBattleType(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);
 
 	BATTLE_TYPE GetBattleType() const;
+
+	void SetMapType(MapType type);
+
+	void IncrementMapType();
+
+	void SetPrevMapType(MapType type);
+
+	MapType GetMapType() const;
+
+	MapType GetPrevMapType() const;
 
 	//Get the current list of blessings
 	const std::vector<std::unique_ptr<Blessing>>& GetBlessings() const;

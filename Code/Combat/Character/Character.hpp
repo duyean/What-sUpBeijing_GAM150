@@ -120,6 +120,7 @@ public:
 	inline float GetHealthPercentage(void) { return hp / maxHP; }
 	inline void SetTargets(std::vector<Character*> targets) { this->targets = targets; }
 	inline Game::WUXING_ELEMENT GetElement() const { return element; }
+	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 
 	void init() override;
 	void awake() override;

@@ -45,6 +45,77 @@
             "modifiers": [
               3, 4
             ]
+        },
+        {
+            "id": 4,
+            "name": "Flaming Strike",
+            "coefficient": 0.4,
+            "dot": 0.2,
+            "brief": "Slash an enemy with your fiery sword, burning them and dealing 40% ATK DMG",
+            "description": "",
+            "target": 2,
+            "modifiers": [
+              1
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Combustion",
+            "coefficient": 0.0,
+            "dot": 0.0,
+            "brief": "Gain a massive ATK buff for 2 turns",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+              5
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Cataclysm",
+            "coefficient": 0.65,
+            "dot": 0.9,
+            "brief": "Strike an enemy and decreases their DEF massively",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+              6
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Water Surge",
+            "coefficient": 0.30,
+            "dot": 0.0,
+            "brief": "Deals 30% ATK DMG to an enemy, weakening them, reducing their ATK.",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+              7
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Hydro Rush",
+            "coefficient": 0.50,
+            "dot": 0.0,
+            "brief": "Deals 50% ATK DMG to an enemy and making them vulnerable",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+              4
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Tidal Wave",
+            "coefficient": 0.80,
+            "dot": 0.0,
+            "brief": "Deals 80% ATK DMG to all enemies",
+            "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
+            "target": 2,
+            "modifiers": [
+            ]
         }
     ]
 }

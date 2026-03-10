@@ -1,9 +1,9 @@
 {
-    "name": "Xiaoming",
-    "element": 1,
-    "baseHP": 1000.0,
-    "baseATK": 5000.0,
-    "baseDEF": 100.0,
+    "name": "Shu Weiyang",
+    "element": 0,
+    "baseHP": 150.0,
+    "baseATK": 150.0,
+    "baseDEF": 75.0,
     "faction": 1,
     "initiative":7,
     "texture":"GuanShiYinBack.png",
@@ -11,8 +11,8 @@
     "icontexture":"GuanShiYinIcon.png",
     "moves": {
         "0": 0,
-        "1": 1,
-        "2": 2,
-        "3": 3
+        "1": 4,
+        "2": 5,
+        "3": 6
     }
 }

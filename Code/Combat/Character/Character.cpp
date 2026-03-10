@@ -92,6 +92,13 @@ void Character::Init(void)
 			blessing.get()->Apply(this);
 		}
 	}
+	//Scale enemy difficulty
+	else
+	{
+		baseMaxHP *= 1 + 0.5 * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.25 * RunManager::Instance().GetEnemyDifficulty();
+		baseDEF *= 1 + 0.15 * RunManager::Instance().GetEnemyDifficulty();
+	}
 	UpdateAttributes();
 	hp = maxHP;
 }

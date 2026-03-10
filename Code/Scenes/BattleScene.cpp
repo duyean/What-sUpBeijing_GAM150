@@ -24,6 +24,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/SoloBehavior/MainHealthbar.hpp"
 #include "../SoloBehavior/PartyUI.hpp"
+#include "../SoloBehavior/MovesUI.hpp"
 
 
 std::unique_ptr<Entity> character;
@@ -83,7 +84,7 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+    background->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
@@ -157,6 +158,13 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(partyUI->transform);
     enSystem->entities.push_back(std::move(partyUI));
 
+    auto moveui = std::make_unique<Entity>("MovesUI");
+    pos = { 0.f, 0.f };
+    scale = { 0.f, 0.f };
+    moveui->addComponent<Transform2D>(pos, scale, 0.f);
+    moveui->addComponent<MovesUI>();
+    enSystem->rootEntity->transform->AddChild(moveui->transform);
+    enSystem->entities.push_back(std::move(moveui));
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");

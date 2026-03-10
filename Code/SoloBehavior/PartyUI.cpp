@@ -18,8 +18,12 @@ void PartyUI::update()
 		auto party = battleManager->GetPlayerParty();
 		for (int i = 0; i < party.size(); ++i)
 		{
-			MeshGen::getInstance().DrawBoxTexture(iconPositions[i].x, iconPositions[i].y, 100, 100, Color(255, 255, 255, 255), 0, party[i]->characterIconTexture.c_str());
-			//MeshGen::getInstance().DrawBox(iconPositions[i], { 100, 100 }, Color(255, 255, 255, 255), 0);
+			float scale = 100;
+			if (party[i] == battleManager->GetActiveUnit())
+			{
+				scale = 150;
+			}
+			MeshGen::getInstance().DrawBoxTexture(iconPositions[i].x, iconPositions[i].y, scale, scale, Color(255, 255, 255, 255), 0, party[i]->characterIconTexture.c_str());
 		}
 	}
 }

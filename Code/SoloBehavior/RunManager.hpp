@@ -34,6 +34,12 @@ class RunManager
 	//Stores the current blessings obtained upon the current run
 	std::vector<std::unique_ptr<Blessing>> runBlessings;
 
+	//Determine the enemy's scaling over a run
+	int enemyDifficulty;
+
+	//Stores the shop currency over a run
+	int currency;
+
 	//battle type to set when changing to the battle scene
 	BATTLE_TYPE bt;
 
@@ -56,6 +62,10 @@ public:
 	//Add a blessing to the current run
 	void AddBlessing(std::unique_ptr<Blessing> blessing);
 
+	inline int GetEnemyDifficulty() const { return enemyDifficulty; }
+	inline void ModifyCurrency(int v) { currency += v; }
+	inline void ModifyEnemyDifficulty(int v) { enemyDifficulty += v; }
+	inline int GetCurrency() const { return currency; }
 	void SetBattleType(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);
 
 	BATTLE_TYPE GetBattleType() const;

@@ -64,9 +64,9 @@ void BaseCamp::Load()
 	auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
 	decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
-	Button* leftButton = decisionButtonLeft->addComponent<Button>();
-	leftButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
-	leftButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
+	Button* leftDecButton = decisionButtonLeft->addComponent<Button>();
+	leftDecButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
+	leftDecButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
 	//decisionButtonLeft->addComponent<TextMesh>(pos, 1.5, "Test", Color(255, 255, 255, 1.f));
 	decisionButtonLeft->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionButtonLeft->transform);
@@ -75,56 +75,20 @@ void BaseCamp::Load()
 	auto decisionButtonRight = std::make_unique<Entity>("DecisionButtonRight");
 	decisionButtonRight->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonRight->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
-	Button* rightButton = decisionButtonRight->addComponent<Button>();
-	rightButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
-	rightButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
+	Button* rightDecButton = decisionButtonRight->addComponent<Button>();
+	rightDecButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
+	rightDecButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
 	decisionButtonRight->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
+
 	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	bg->addComponent<Transform2D>(pos, scale, 0.f);
-	bg->addComponent<Mesh>("Box", "BC_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	bg->addComponent<Mesh>("Box", "BC_BG", Color(255, 255, 255, 1.f), 1, MeshType::BOX_T);
 	enSystem->rootEntity->transform->AddChild(bg->transform);
 	enSystem->entities.push_back(std::move(bg));
-
-
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	auto decisionBoxManager = std::make_unique<Entity>("DecisionBoxManager");
-	decisionBoxManager->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionBoxManager->addComponent<DecisionBoxManager>();
-	enSystem->rootEntity->transform->AddChild(decisionBoxManager->transform);
-	pos = { 0.f, 0.f };
-	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
-	auto decisionBox = std::make_unique<Entity>("DecisionBox");
-	decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionBox->addComponent<Mesh>("Box", Color(155, 155, 155, 0.5f), 200, MeshType::BOX_B);
-	decisionBox->addComponent<TextMesh>(pos, 1.5, "wehwehwehweh", Color(255, 255, 255, 1.f));
-	decisionBox->isActive = false;
-	decisionBoxManager->transform->AddChild(decisionBox->transform);
-	pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f};
-	scale = { AEGfxGetWindowWidth() * 0.3f, AEGfxGetWindowHeight() * 0.1f };
-	auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
-	decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
-	Button* leftButton = decisionButtonLeft->addComponent<Button>();
-	leftButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
-	leftButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
-	//decisionButtonLeft->addComponent<TextMesh>(pos, 1.5, "Test", Color(255, 255, 255, 1.f));
-	decisionButtonLeft->isActive = false;
-	decisionBoxManager->transform->AddChild(decisionButtonLeft->transform);
-	pos = { AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f };
-	scale = { AEGfxGetWindowWidth() * 0.3f, AEGfxGetWindowHeight() * 0.1f };
-	auto decisionButtonRight = std::make_unique<Entity>("DecisionButtonRight");
-	decisionButtonRight->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionButtonRight->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
-	Button* rightButton = decisionButtonRight->addComponent<Button>();
-	rightButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
-	rightButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
-	decisionButtonRight->isActive = false;
-	decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
 
 	meshSystem->CreateTexture("../../Assets/Images/barracks.png", "barracks");
 	auto PartyManager = std::make_unique<Entity>("PartyManager");
@@ -183,11 +147,12 @@ void BaseCamp::Load()
 	typeDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(typeDesc->transform);
 
+	meshSystem->CreateTexture("../../Assets/Images/shop.png", "shop");
 	auto shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
 	scale = { 200.f, 200.f };
 	shop->addComponent<Transform2D>(pos, scale, 0.f);
-	shop->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+	shop->addComponent<Mesh>("Box", "shop", Color(100, 100, 100, 1), 100, MeshType::BOX_T);
 	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	Shop* s = shop->addComponent<Shop>();
 	s->AddDisplayEntity(shopBackground.get());
@@ -201,26 +166,6 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(artifactsText));
 	enSystem->entities.push_back(std::move(nameText));
 	enSystem->entities.push_back(std::move(typeDesc));
-	enSystem->entities.push_back(std::move(shop));
-
-	meshSystem->CreateTexture("Assets/UI/shop-back.png", "ShopBGTexture");
-	auto shopBackground = std::make_unique<Entity>("ShopBG");
-	pos = { 0.f, 0.f };
-	scale = { static_cast<float>(AEGfxGetWindowWidth()), static_cast<float>(AEGfxGetWindowHeight()) };
-	shopBackground->addComponent<Transform2D>(pos, scale, 0.f);
-	shopBackground->addComponent<Mesh>("Box", "ShopBGTexture", Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
-	shopBackground->isActive = false;
-
-	meshSystem->CreateTexture("../../Assets/Images/shop.png", "shop");
-	auto shop = std::make_unique<Entity>("Shop");
-	pos = { -300.f, 100.f };
-	scale = { 200.f, 200.f };
-	shop->addComponent<Transform2D>(pos, scale, 0.f);
-	shop->addComponent<Mesh>("Box", "shop", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
-	shop->addComponent<Shop>(shopBackground.get());
-	enSystem->rootEntity->transform->AddChild(shop->transform);
-	enSystem->entities.push_back(std::move(shopBackground));
 	enSystem->entities.push_back(std::move(shop));
 
 	meshSystem->CreateTexture("../../Assets/Images/GuanShiYinBack.png", "player_sprite");

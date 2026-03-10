@@ -350,22 +350,58 @@ void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 	pFont.insert({ fileName, AEGfxCreateFont(filePath, pixelSize) });
 }
 
-void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName)
+void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align)
 {
 	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
 	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
 	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	f32 width, height;
-	AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
-	AEGfxPrint(pFont.at(fileName),
-		text,
-		Xpos - (width * 0.5f),
-		Ypos - (height * 0.5f),
-		scale,
-		red,
-		green,
-		blue,
-		color.A);
+	switch (align)
+	{
+		case TextAlignment::LEFT:
+		{
+			AEGfxPrint(pFont.at(fileName),
+				text,
+				Xpos,
+				Ypos,
+				scale,
+				red,
+				green,
+				blue,
+				color.A);
+			break;
+		}
+		case TextAlignment::CENTER:
+		{
+			f32 width, height;
+			AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
+			AEGfxPrint(pFont.at(fileName),
+				text,
+				Xpos - (width * 0.5f),
+				Ypos,
+				scale,
+				red,
+				green,
+				blue,
+				color.A);
+			break;
+		}
+		case TextAlignment::RIGHT:
+		{
+			f32 width, height;
+			AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
+
+			AEGfxPrint(pFont.at(fileName),
+				text,
+				Xpos - width,
+				Ypos,
+				scale,
+				red,
+				green,
+				blue,
+				color.A);
+			break;
+		}
+	}
 }
 
 void MeshGen::ClearFont(string name)

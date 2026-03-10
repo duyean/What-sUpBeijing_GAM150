@@ -59,7 +59,7 @@ void DamageNumbers::update()
 		return;
 	}
 	AEVec2 normalised = {this->entity->transform->getPosition().x / 800.f, this->entity->transform->getPosition().y / 450.f};
-	MeshGen::getInstance().DrawFont(normalised.x, normalised.y, size, textColor, text.c_str(), "liberi");
+	MeshGen::getInstance().DrawFont(normalised.x, normalised.y, size, textColor, text.c_str(), "liberi", MeshGen::TextAlignment::CENTER);
 	lifetime -= 1 / 60.f;
 	if (lifetime <= 0)
 	{

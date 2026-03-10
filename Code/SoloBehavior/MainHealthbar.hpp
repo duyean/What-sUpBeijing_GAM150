@@ -7,7 +7,7 @@
 class MainHealthbar : public SoloBehavior
 {
 private:
-	const AEVec2 currentTurnTextPos = {-0.9f, 0.9f};
+	const AEVec2 currentTurnTextPos = {-0.9f, 0.875f};
 	const AEVec2 activeUnitHPPos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2};
 public:
 	EntityManager* enSystem = nullptr;

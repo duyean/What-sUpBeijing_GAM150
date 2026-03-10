@@ -95,9 +95,9 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 0.5 * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.25 * RunManager::Instance().GetEnemyDifficulty();
-		baseDEF *= 1 + 0.15 * RunManager::Instance().GetEnemyDifficulty();
+		baseMaxHP *= 1 + 1 * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.35 * RunManager::Instance().GetEnemyDifficulty();
+		baseDEF *= 1 + 0.2 * RunManager::Instance().GetEnemyDifficulty();
 	}
 	UpdateAttributes();
 	hp = maxHP;

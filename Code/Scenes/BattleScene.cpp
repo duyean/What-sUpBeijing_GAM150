@@ -25,6 +25,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../Code/SoloBehavior/MainHealthbar.hpp"
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
+#include "../UI_WZBJ_Pak.hpp"
 
 
 std::unique_ptr<Entity> character;
@@ -165,6 +166,97 @@ void BattleScene::Load()
     moveui->addComponent<MovesUI>();
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
+
+    //load the button textures
+    meshSystem->CreateTexture("../../Assets/Images/Button.png", "Button");
+    ////////////////////////////////////////////////
+    // 
+    // MOVE BUTTON 1
+    //
+    ////////////////////////////////////////////////
+
+    auto mb1 = std::make_unique<Entity>("MOVE BUTTON 1");
+    pos = { 0.f,0.f };
+    scale = { 300.f, 30.f };
+    mb1->addComponent<Transform2D>(pos, scale, 0.f);
+    mb1->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+    Button* moveButton1 = mb1->addComponent<Button>();
+    moveButton1->SetOnClick([this]() {/*Function();*/ });
+    moveButton1->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
+    //mb1->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 0.6, "MOVE BUTTON 1", Color{ 1,1,1,1 });
+
+    enSystem->rootEntity->transform->AddChild(mb1->transform);
+    enSystem->entities.push_back(std::move(mb1));
+
+
+    ////////////////////////////////////////////////
+    // 
+    // MOVE BUTTON 2
+    //
+    ////////////////////////////////////////////////
+
+    auto mb2 = std::make_unique<Entity>("MOVE BUTTON 2");
+    pos = { 0.f,-100.f };
+    scale = { 200.f, 80.f };
+    mb2->addComponent<Transform2D>(pos, scale, 0.f);
+    mb2->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+    Button* moveButton2 = mb2->addComponent<Button>();
+    moveButton2->SetOnClick([this]() {/*Function();*/  });
+    moveButton1->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
+    //mb2->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 0.6, "MOVE BUTTON 2", Color{ 1,1,1,1 });
+
+    enSystem->rootEntity->transform->AddChild(mb2->transform);
+    enSystem->entities.push_back(std::move(mb2));
+
+
+    ////////////////////////////////////////////////
+    // 
+    // MOVE BUTTON 3
+    //
+    ////////////////////////////////////////////////
+
+    auto mb3 = std::make_unique<Entity>("MOVE BUTTON 3");
+    pos = { 0.f,-100.f };
+    scale = { 200.f, 80.f };
+    mb3->addComponent<Transform2D>(pos, scale, 0.f);
+    mb3->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+    Button* moveButton3 = mb3->addComponent<Button>();
+    moveButton3->SetOnClick([this]() {/*Function();*/  });
+    moveButton1->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
+    //mb3->addComponent<TextMesh>(AEVec2{ pos.x, pos.y }, 0.6, "MOVE BUTTON 3", Color{ 1,1,1,1 });
+
+    enSystem->rootEntity->transform->AddChild(mb3->transform);
+    enSystem->entities.push_back(std::move(mb3));
+
+
+    ////////////////////////////////////////////////
+    // 
+    // MOVE BUTTON 4
+    //
+    ////////////////////////////////////////////////
+
+    auto mb4 = std::make_unique<Entity>("MOVE BUTTON 4");
+    pos = { 0.f,-100.f };
+    scale = { 200.f, 80.f };
+    mb4->addComponent<Transform2D>(pos, scale, 0.f);
+    mb4->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+    Button* moveButton4 = mb4->addComponent<Button>();
+    moveButton4->SetOnClick([this]() {/*Function();*/  });
+    moveButton1->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
+    //mb4->addComponent<TextMesh>(AEVec2{ pos.x, pos.y }, 0.6, "MOVE BUTTON 4", Color{ 1,1,1,1 });
+
+    enSystem->rootEntity->transform->AddChild(mb4->transform);
+    enSystem->entities.push_back(std::move(mb4));
+
+
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");

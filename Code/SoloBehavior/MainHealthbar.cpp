@@ -31,10 +31,10 @@ void MainHealthbar::update()
 		{
 			color = Color(255, 0, 0, 1);
 		}
-		AEVec2 scale = { 300, 10 };
+		AEVec2 scale = { 300, 12 };
 		AEVec2 trueScale = { scale.x * hpperc, scale.y };
-		MeshGen::getInstance().DrawBoxLeft(activeUnitHPPos, scale, Color(155, 0, 0, 1), 0);
-		MeshGen::getInstance().DrawBoxLeft(activeUnitHPPos, trueScale, color, 0);
+		entity->transform->setScale(trueScale);
+		entity->getComponent<Mesh>()->color = color;
 		MeshGen::getInstance().DrawFont(-0.825f, 0.7f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi");
 	}
 }

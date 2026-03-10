@@ -37,6 +37,11 @@ Character* BattleManager::GetActiveUnit()
 	return battleUnits[currentActiveUnit];
 }
 
+Character* BattleManager::GetlastTargetedUnit()
+{
+	return lastTargetedUnit;
+}
+
 int BattleManager::GetCurrentTurn() const
 {
 	return currentTurn;

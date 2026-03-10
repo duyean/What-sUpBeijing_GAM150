@@ -180,24 +180,29 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(UI_Bottom3));
 
 
+    auto moveui = std::make_unique<Entity>("MovesUI");
+    pos = { 0.f, 0.f };
+    scale = { 0.f, 0.f };
+    moveui->addComponent<Transform2D>(pos, scale, 0.f);
+    moveui->addComponent<MovesUI>();
+    enSystem->rootEntity->transform->AddChild(moveui->transform);
+    enSystem->entities.push_back(std::move(moveui));
+
     //load the button textures
-    meshSystem->CreateTexture("../../Assets/UI/button_border.png", "moveButton");
+    meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
     ////////////////////////////////////////////////
     // 
     // MOVE BUTTON 1
     //
     ////////////////////////////////////////////////
 
-    auto mb1 = std::make_unique<Entity>("MOVE BUTTON 1");
+    auto mb1 = std::make_unique<Entity>("MOVEBUTTON1");
     pos = { -550.f,-200.f };
     scale = { 400.f, 50.f };
     mb1->addComponent<Transform2D>(pos, scale, 0.f);
     mb1->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 
     Button* moveButton1 = mb1->addComponent<Button>();
-    moveButton1->SetOnClick([this]() {/*Function();*/ });
-    //mb1->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 0.6, "MOVE BUTTON 1", Color{ 1,1,1,1 });
-
     enSystem->rootEntity->transform->AddChild(mb1->transform);
     enSystem->entities.push_back(std::move(mb1));
 
@@ -208,16 +213,12 @@ void BattleScene::Load()
     //
     ////////////////////////////////////////////////
 
-    auto mb2 = std::make_unique<Entity>("MOVE BUTTON 2");
+    auto mb2 = std::make_unique<Entity>("MOVEBUTTON2");
     pos = { -550.f,-260.f };
     scale = { 400.f, 50.f };
     mb2->addComponent<Transform2D>(pos, scale, 0.f);
     mb2->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-
     Button* moveButton2 = mb2->addComponent<Button>();
-    moveButton2->SetOnClick([this]() {/*Function();*/  });
-    //mb2->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 0.6, "MOVE BUTTON 2", Color{ 1,1,1,1 });
-
     enSystem->rootEntity->transform->AddChild(mb2->transform);
     enSystem->entities.push_back(std::move(mb2));
 
@@ -228,16 +229,12 @@ void BattleScene::Load()
     //
     ////////////////////////////////////////////////
 
-    auto mb3 = std::make_unique<Entity>("MOVE BUTTON 3");
+    auto mb3 = std::make_unique<Entity>("MOVEBUTTON3");
     pos = { -550.f,-320.f };
     scale = { 400.f, 50.f };
     mb3->addComponent<Transform2D>(pos, scale, 0.f);
     mb3->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-
     Button* moveButton3 = mb3->addComponent<Button>();
-    moveButton3->SetOnClick([this]() {/*Function();*/  });
-    //mb3->addComponent<TextMesh>(AEVec2{ pos.x, pos.y }, 0.6, "MOVE BUTTON 3", Color{ 1,1,1,1 });
-
     enSystem->rootEntity->transform->AddChild(mb3->transform);
     enSystem->entities.push_back(std::move(mb3));
 
@@ -248,16 +245,12 @@ void BattleScene::Load()
     //
     ////////////////////////////////////////////////
 
-    auto mb4 = std::make_unique<Entity>("MOVE BUTTON 4");
+    auto mb4 = std::make_unique<Entity>("MOVEBUTTON4");
     pos = { -550.f,-380.f };
     scale = { 400.f, 50.f };
     mb4->addComponent<Transform2D>(pos, scale, 0.f);
     mb4->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-
     Button* moveButton4 = mb4->addComponent<Button>();
-    moveButton4->SetOnClick([this]() {/*Function();*/  });
-    //mb4->addComponent<TextMesh>(AEVec2{ pos.x, pos.y }, 0.6, "MOVE BUTTON 4", Color{ 1,1,1,1 });
-
     enSystem->rootEntity->transform->AddChild(mb4->transform);
     enSystem->entities.push_back(std::move(mb4));
 

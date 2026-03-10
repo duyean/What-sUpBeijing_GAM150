@@ -86,6 +86,7 @@ public:
 	bool InBattle() const;
 	int GetCurrentTurn() const;
 	Character* GetActiveUnit();
+	Character* GetlastTargetedUnit();
 	std::vector<Character*> GetPlayerParty();
 
 

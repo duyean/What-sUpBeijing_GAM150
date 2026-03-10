@@ -84,6 +84,13 @@ using namespace std;
 
 		}
 	public:
+
+		enum struct TextAlignment
+		{
+			LEFT,
+			CENTER,
+			RIGHT
+		};
 		//Singleton functions
 
 		MeshGen(const MeshGen&) = delete;
@@ -133,7 +140,7 @@ using namespace std;
 
 		void SetFont(const char* filePath, const char* fileName, int pixelSize);
 
-		void DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName);
+		void DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align = TextAlignment::LEFT);
 
 		void ClearFont(string name);
 

@@ -34,7 +34,7 @@ void Healthbar1::update()
 	AEVec2 scale = { 300, 10 };
 	AEVec2 trueScale = { scale.x * hpperc, scale.y };
 	AEVec2 offset{ -scale.x * 0.5f, -100 };
-	MeshGen::getInstance().DrawFont(pos.x / 800.f, (pos.y - offset.y - 15) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
+	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y - 30) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
 	MeshGen::getInstance().DrawBoxLeft(pos + offset, scale, Color(55, 55, 55, 1), 0);
 	MeshGen::getInstance().DrawBoxLeft(pos + offset, trueScale, color, 0);
 }

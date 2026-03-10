@@ -3,11 +3,11 @@
 
 class BattleManager;
 
-class PartyUI : public SoloBehavior
+class MovesUI : public SoloBehavior
 {
-	const std::vector<AEVec2> iconPositions = { {60, -AEGfxGetWindowHeight() * 0.7f * 0.5f}, {300, -AEGfxGetWindowHeight() * 0.7f * 0.5f}, {550, -AEGfxGetWindowHeight() * 0.7f * 0.5f} };
+private:
 	BattleManager* battleManager = nullptr;
-
+	const AEVec2 movesUIPanelPos = {-AEGfxGetWindowWidth() * 0.90f * 0.5f, -AEGfxGetWindowHeight() * 0.6f * 0.5f};
 public:
 	void awake() override;
 	void init() override;

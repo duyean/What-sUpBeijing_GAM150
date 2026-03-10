@@ -139,3 +139,6 @@ public:
 		cooldown(0) {
 	}
 };
+
+extern std::unordered_map<BLESSING_ID, std::unique_ptr<Blessing>> blessingDatabase;
+extern void InitBlessingDatabase();

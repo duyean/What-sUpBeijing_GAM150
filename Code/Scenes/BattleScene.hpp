@@ -27,7 +27,6 @@ private:
 	MeshGen* meshSystem;
 	EntityManager* enSystem;
 	BattleManager* battleManager;
-
 public:
 	BattleScene();
 	~BattleScene();
@@ -47,4 +46,5 @@ public:
 	@return void
 	*//*______________________________________________________________*/
 	void Unload() override;
+
 };

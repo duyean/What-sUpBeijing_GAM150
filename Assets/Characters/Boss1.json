@@ -1,8 +1,8 @@
 {
   "name": "YeHuangRen Leader",
   "element": 2,
-  "baseHP": 100.0,
-  "baseATK": 100.0,
+  "baseHP": 500.0,
+  "baseATK": 150.0,
   "baseDEF": 50.0,
   "faction": 2,
   "initiative": 1,

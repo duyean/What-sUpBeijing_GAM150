@@ -5,6 +5,8 @@
 #include "../Code/Combat/EventHandler/CombatEventHandler.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 
+#include "../../BaseSystems/Engine/EntityManager.hpp"
+#include "../Code/SoloBehavior/TransitionScreen.hpp"
 
 class BattleManager : public SoloBehavior
 {
@@ -16,6 +18,9 @@ class BattleManager : public SoloBehavior
 
 	//Pointer to the last enemy the player targeted
 	Character* lastTargetedUnit;
+
+	//Get the current turn
+	int currentTurn;
 
 	//Boolean to indicate whether a battle is ongoing
 	bool inBattle;
@@ -40,6 +45,8 @@ class BattleManager : public SoloBehavior
 	//Enum to determine the outcome of the battle
 	BATTLE_OUTCOME outcome;
 
+	EntityManager* enSystem = nullptr;
+	TransitionScreen* ts = nullptr;
 public:
 	//Constructor
 	BattleManager();
@@ -75,6 +82,12 @@ public:
 	/// Helper function for target selection
 	/// </summary>
 	bool PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
+
+	bool InBattle() const;
+	int GetCurrentTurn() const;
+	Character* GetActiveUnit();
+	std::vector<Character*> GetPlayerParty();
+
 
 	void awake() override;
 	void init() override;

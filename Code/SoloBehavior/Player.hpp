@@ -16,6 +16,7 @@ class Player : public SoloBehavior
 public:
 
 	float health = 100.f;
+	bool canMove = true;
 
 	void awake() override;
 	void init() override;

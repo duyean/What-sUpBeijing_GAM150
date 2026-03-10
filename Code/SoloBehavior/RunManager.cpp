@@ -10,11 +10,21 @@ This file contains the implementation for a Run Manager for our game.
 *//*______________________________________________________________________*/
 #include "RunManager.hpp"
 
-
+RunManager::RunManager()
+{
+	party.reserve(2);
+	party.push_back("Guy");
+	party.push_back("Char2");
+}
 
 void RunManager::StartRun()
 {
 	//Set default values
+}
+
+const std::vector<std::string>& RunManager::GetParty() const
+{
+	return party;
 }
 
 void RunManager::ResetRun()

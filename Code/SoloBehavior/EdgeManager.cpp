@@ -1,5 +1,7 @@
 
 #include "EdgeManager.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/Player.hpp"
 
 void EdgeManager::awake()
 {
@@ -24,17 +26,40 @@ void EdgeManager::UpdateEdges()
 	N_path->isActive = !node.n;
 	E_path->isActive = !node.e;
 	S_path->isActive = !node.s;
-	W_path->isActive = !node.w;
+	W_path->isActive = !node.w;	
 
+	NodeType currentNodeType = node.type;
+
+	if (hasTraveled)
+	{
+		switch (currentNodeType)
+		{
+		case NodeType::EnemyEncounter:
+			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
+			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
+			break;
+		case NodeType::Exit:
+			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
+			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			break;
+		default:
+			break;
+		}
+	}
+
+	CheckNeighborNode(node);
+}
+
+void EdgeManager::CheckNeighborNode(const MapNode& node)
+{
 	//check east
 	if (!node.e)
 	{
-		if (map.playMap.mapNodes[map.yPos][map.xPos + 1].type == NodeType::Exit)
+		MapNode eastNode = map.playMap.mapNodes[map.yPos][map.xPos + 1];
+		if (eastNode.type == NodeType::Entry)
 		{
-			std::cout << "//////////////////////" << std::endl;
-			std::cout << "EAST NODE IS EXIT!!!!" << std::endl;
-			std::cout << "//////////////////////" << std::endl;
-
 			switch_BC = true;
 		}
 	}
@@ -42,25 +67,19 @@ void EdgeManager::UpdateEdges()
 	//check west
 	if (!node.w)
 	{
-		if (map.playMap.mapNodes[map.yPos][map.xPos - 1].type == NodeType::Exit)
+		MapNode westNode = map.playMap.mapNodes[map.yPos][map.xPos - 1];
+		if (westNode.type == NodeType::Entry)
 		{
-			std::cout << "//////////////////////" << std::endl;
-			std::cout << "WEST NODE IS Exit!!!!" << std::endl;
-			std::cout << "//////////////////////" << std::endl;
-
 			switch_BC = true;
 		}
 	}
-	
+
 	//check north
 	if (!node.n)
 	{
-		if (map.playMap.mapNodes[map.yPos - 1][map.xPos].type == NodeType::Exit)
+		MapNode northNode = map.playMap.mapNodes[map.yPos - 1][map.xPos];
+		if (northNode.type == NodeType::Entry)
 		{
-			std::cout << "//////////////////////" << std::endl;
-			std::cout << "NORTH NODE IS Exit!!!!" << std::endl;
-			std::cout << "//////////////////////" << std::endl;
-
 			switch_BC = true;
 		}
 	}
@@ -68,12 +87,9 @@ void EdgeManager::UpdateEdges()
 	//check south
 	if (!node.s)
 	{
-		if (map.playMap.mapNodes[map.yPos + 1][map.xPos].type == NodeType::Exit)
+		MapNode southNode = map.playMap.mapNodes[map.yPos + 1][map.xPos];
+		if (southNode.type == NodeType::Entry)
 		{
-			std::cout << "//////////////////////" << std::endl;
-			std::cout << "SOUTH NODE IS EXIT!!!!" << std::endl;
-			std::cout << "//////////////////////" << std::endl;
-
 			switch_BC = true;
 		}
 	}
@@ -89,64 +105,56 @@ void EdgeManager::update()
 	
 	if (SE_N && SE_N->triggerBuffer)
 	{
+		hasTraveled = true;
 		TravelNode(map, map.xPos, --map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
 		SE_N->triggerBuffer = false;
 
-		if (player)
-		{
-			AEVec2 playerpos = player->transform->getPosition();
-			playerpos.y = -200.f;
-			player->transform->setPosition(playerpos);
-		}
 
+		AEVec2 playerpos = player->transform->getPosition();
+		playerpos.y = -200.f;
+		player->transform->setPosition(playerpos);
 	}
 	if (SE_E && SE_E->triggerBuffer)
 	{
+		hasTraveled = true;
 		TravelNode(map, ++map.xPos, map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
 		SE_E->triggerBuffer = false;
 
-		if (player)
-		{
-			AEVec2 playerpos = player->transform->getPosition();
-			playerpos.x = -600.f;
-			player->transform->setPosition(playerpos);
-		}
+		AEVec2 playerpos = player->transform->getPosition();
+		playerpos.x = -600.f;
+		player->transform->setPosition(playerpos);
 	}
 	if (SE_S && SE_S->triggerBuffer)
 	{ 
+		hasTraveled = true;
 		TravelNode(map, map.xPos, ++map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
 		SE_S->triggerBuffer = false;
 
-		if (player)
-		{
-			AEVec2 playerpos = player->transform->getPosition();
-			playerpos.y = 200.f;
-			player->transform->setPosition(playerpos);
-		}
+		AEVec2 playerpos = player->transform->getPosition();
+		playerpos.y = 200.f;
+		player->transform->setPosition(playerpos);
 	}
 	if (SE_W && SE_W->triggerBuffer)
 	{ 
+		hasTraveled = true;
 		TravelNode(map, --map.xPos, map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
 		SE_W->triggerBuffer = false;
 
-		if (player)
-		{
-			AEVec2 playerpos = player->transform->getPosition();
-			playerpos.x = 600.f;
-			player->transform->setPosition(playerpos);
-		}
+		AEVec2 playerpos = player->transform->getPosition();
+		playerpos.x = 600.f;
+		player->transform->setPosition(playerpos);
 	}
 
 

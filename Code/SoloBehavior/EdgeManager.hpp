@@ -38,9 +38,11 @@ private:
 	Entity* player = nullptr;
 	TransitionScreen* ts = nullptr;
 
+	bool hasTraveled = false;
 	bool switch_BC = false;
 
 	void UpdateEdges();
+	void CheckNeighborNode(const MapNode& node);
 public:
 
 	EntityManager* enSystem = nullptr;

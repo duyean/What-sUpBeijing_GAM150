@@ -77,8 +77,8 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			//RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
-			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			data.playMap.mapNodes[newY][newX].type = NodeType::Empty;
 			break;
 
 		case NodeType::RandomEvent:
@@ -104,9 +104,8 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			//StartBossBattle(data.playMap.mapType);
 			//mapType data is used to decide what kind of boss spawns
 
-
-			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
-			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			//RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
+			//GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
 			break;
 	}
 

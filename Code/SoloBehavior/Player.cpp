@@ -38,26 +38,30 @@ void Player::update()
 	float dt = AEFrameRateControllerGetFrameTime();
 	AEVec2 pos = entity->transform->getPosition();
 
-	if (AEInputCheckCurr(AEVK_W))
+	if (canMove)
 	{
-		pos.y += moveSpeed * dt;
-		entity->transform->setPosition(pos);
+		if (AEInputCheckCurr(AEVK_W))
+		{
+			pos.y += moveSpeed * dt;
+			entity->transform->setPosition(pos);
+		}
+		if (AEInputCheckCurr(AEVK_S))
+		{
+			pos.y -= moveSpeed * dt;
+			entity->transform->setPosition(pos);
+		}
+		if (AEInputCheckCurr(AEVK_A))
+		{
+			pos.x -= moveSpeed * dt;
+			entity->transform->setPosition(pos);
+		}
+		if (AEInputCheckCurr(AEVK_D))
+		{
+			pos.x += moveSpeed * dt;
+			entity->transform->setPosition(pos);
+		}
 	}
-	if (AEInputCheckCurr(AEVK_S))
-	{
-		pos.y -= moveSpeed * dt;
-		entity->transform->setPosition(pos);
-	}
-	if (AEInputCheckCurr(AEVK_A))
-	{
-		pos.x -= moveSpeed * dt;
-		entity->transform->setPosition(pos);
-	}
-	if (AEInputCheckCurr(AEVK_D))
-	{
-		pos.x += moveSpeed * dt;
-		entity->transform->setPosition(pos);
-	}
+	
 
 	pos.y = AEClamp(pos.y, -AEGfxGetWindowHeight() / 2.f + (entity->transform->getScale().y / 2.f), AEGfxGetWindowHeight() / 2.f - (entity->transform->getScale().y / 2.f));
 	pos.x = AEClamp(pos.x, -AEGfxGetWindowWidth() / 2.f + (entity->transform->getScale().x / 2.f), AEGfxGetWindowWidth() / 2.f - (entity->transform->getScale().x / 2.f));

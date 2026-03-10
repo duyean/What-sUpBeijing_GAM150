@@ -2,9 +2,13 @@
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/DecisionBoxManager.hpp"
 
+#include <vector>
+
 class Shop : public SoloBehavior
 {
 public:
+	void AddDisplayEntity(Entity* ent);
+
 	void awake() override;
 	void init() override;
 	void update() override;
@@ -12,10 +16,9 @@ public:
 	void destroy() override;
 
 	Shop();
-	Shop(Entity* display);
 	~Shop();
 private:
-	Entity* shopDisplay;
+	std::vector<Entity*> display{};
 
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

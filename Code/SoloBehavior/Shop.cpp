@@ -3,14 +3,21 @@
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
 {
-	shopDisplay->isActive = true;
+	for (Entity* ent : display)
+		ent->isActive = true;
 }
 void Shop::onStay(BoxCollider2D* other)
 {
 }
 void Shop::onExit(BoxCollider2D* other)
 {
-	shopDisplay->isActive = false;
+	for (Entity* ent : display)
+		ent->isActive = false;
+}
+
+void Shop::AddDisplayEntity(Entity* ent)
+{
+	display.push_back(ent);
 }
 
 void Shop::awake()
@@ -41,12 +48,6 @@ void Shop::destroy()
 
 Shop::Shop()
 {
-	shopDisplay = nullptr;
-}
-
-Shop::Shop(Entity* display)
-{
-	shopDisplay = display;
 }
 
 Shop::~Shop()

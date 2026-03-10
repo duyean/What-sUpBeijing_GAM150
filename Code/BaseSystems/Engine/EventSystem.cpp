@@ -71,11 +71,7 @@ void EventSystem::Update(double dt)
 	for (auto& uiElement : uiElements) {
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{
-			//set the last UI Object as this
-			if (!lastUIObject)
-				lastUIObject = uiElement;
-
-			lastUIObject->OnHover();
+			uiElement->OnHover();
 
 			//call the respective dispatchers to return event data
 			if (AEInputCheckTriggered(AEVK_LBUTTON))
@@ -85,11 +81,7 @@ void EventSystem::Update(double dt)
 		}
 		else
 		{
-			if (lastUIObject)
-			{
-				lastUIObject->OnHoverExit();
-				lastUIObject = nullptr;
-			}
+			uiElement->OnHoverExit();
 		}
 	}
 }

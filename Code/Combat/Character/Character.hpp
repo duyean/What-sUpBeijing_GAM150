@@ -8,9 +8,18 @@
 #include <string>
 #include "../../Engine_WZBJ_Pak.hpp"
 
+class MeshGen;
+
 class Character : public SoloBehavior
 {
 private:
+	float timer = 2.f;
+
+	MeshGen* meshSystem;
+
+	//Whether the unit has chosen an action and is doing an animation
+	bool endingTurn;
+
 	//Name of the unit
 	std::string name;
 
@@ -46,6 +55,7 @@ private:
 
 	//Used by combat manager to determine this unit has finished acting
 	bool turnFinished;
+
 protected:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
@@ -57,6 +67,9 @@ protected:
 
 public:
 	using DeathCallback = std::function<void(Character*)>;
+	std::string characterModelTexture;
+	std::string characterModelTexture2;
+	std::string characterIconTexture;
 
 	//Load character data from JSON
 	virtual bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
@@ -107,6 +120,7 @@ public:
 	inline float GetHealthPercentage(void) { return hp / maxHP; }
 	inline void SetTargets(std::vector<Character*> targets) { this->targets = targets; }
 	inline Game::WUXING_ELEMENT GetElement() const { return element; }
+	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 
 	void init() override;
 	void awake() override;

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../EventHandler/CombatEventHandler.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/BaseSystems/Engine/MeshGen.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -58,6 +59,10 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 	this->baseATK = doc["baseATK"].GetFloat(); // base attack
 	this->baseDEF = doc["baseDEF"].GetFloat(); // base defense
 	this->faction = static_cast<Game::FACTION>(doc["faction"].GetInt()); // faction
+	this->initiative = doc["initiative"].GetInt();
+	this->characterModelTexture = doc["texture"].GetString();
+	this->characterModelTexture2 = doc["texture2"].GetString();
+	this->characterIconTexture = doc["icontexture"].GetString();
 	// move list
 	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
 	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
@@ -77,6 +82,7 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 
 void Character::Init(void)
 {
+	meshSystem = &MeshGen::getInstance();
 	printf("Init: %s\n", name.c_str());
 	//Load Blessings
 	if (faction == Game::PLAYER)
@@ -85,6 +91,13 @@ void Character::Init(void)
 		{
 			blessing.get()->Apply(this);
 		}
+	}
+	//Scale enemy difficulty
+	else
+	{
+		baseMaxHP *= 1 + 0.5 * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.25 * RunManager::Instance().GetEnemyDifficulty();
+		baseDEF *= 1 + 0.15 * RunManager::Instance().GetEnemyDifficulty();
 	}
 	UpdateAttributes();
 	hp = maxHP;
@@ -101,6 +114,10 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 	Move* move = &Move::moveDatabase[move_id];
 	if (move)
 	{
+		if (faction == Game::PLAYER)
+		{
+			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+		}
 		std::cout << name << " used " << move->name << " on " << target->name << std::endl;
 		if (move->moveModifiers.size() > 0)
 		{
@@ -129,7 +146,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
 		CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		DealDamage(target, move->coefficient);
-		turnFinished = true;
+		EndTurn();
 	}
 }
 
@@ -208,7 +225,7 @@ void Character::ProcessModifiers(void)
 		}
 		if (modifier)
 		{
-			modifier->duration--; //Tick down all effects
+			modifier->duration--; //Tick down all effectsq
 		}
 	}
 
@@ -226,6 +243,12 @@ void Character::StartTurn(void)
 	ProcessModifiers();
 	UpdateAttributes();
 	turnFinished = false;
+	endingTurn = false;
+	if (faction == Game::PLAYER)
+	{
+		entity->getComponent<Mesh>()->isActive = true;
+		entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+	}
 	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
 }
 
@@ -240,7 +263,10 @@ void Character::AIAttack()
 		if (!targets.empty())
 		{
 			std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
-			UseMove(slotSelected, targets[randTarget(Game::gen)]);
+			Character* target = targets[randTarget(Game::gen)];
+			target->entity->getComponent<Mesh>()->isActive = true;
+			target->timer = 1.0f;
+			UseMove(slotSelected, target);
 		}
 	}
 	else
@@ -251,7 +277,12 @@ void Character::AIAttack()
 
 void Character::EndTurn(void)
 {
-	turnFinished = true;
+	endingTurn = true;
+	timer = 2.0f;
+	if (faction == Game::ENEMY) //Remove this when Enemy has animations
+	{
+		turnFinished = true;
+	}
 }
 
 void Character::Death(void)
@@ -291,11 +322,33 @@ void Character::init()
 void Character::awake()
 {
 
-}
+} 
 
 void Character::update()
 {
+	if (faction == Game::PLAYER)
+	{
+		if (endingTurn)
+		{
+			if (timer > 0.f)
+			{
+				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+				timer -= 1.0f * AEFrameRateControllerGetFrameTime();
+			}
 
+			if (timer <= 0.5f)
+			{
+				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+
+				if (timer <= 0)
+				{
+					entity->getComponent<Mesh>()->isActive = false;
+					turnFinished = true;
+				}
+
+			}
+		}
+	}
 }
 
 void Character::fixedUpdate()

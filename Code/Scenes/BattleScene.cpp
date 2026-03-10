@@ -22,6 +22,10 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/MainHealthbar.hpp"
+#include "../SoloBehavior/PartyUI.hpp"
+#include "../SoloBehavior/MovesUI.hpp"
+
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
@@ -72,6 +76,7 @@ void BattleScene::Load()
     manager->addComponent<CombatUIManager>();
     battleManager = manager->addComponent<BattleManager>();
     manager->addComponent<AudioManager>();
+    manager->addComponent<MainHealthbar>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
 
@@ -79,33 +84,35 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", Color(100, 100, 100, 1), 100, MeshType::BOX_B);
+    background->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
-
-    meshSystem->CreateTexture("Assets/Images/GuanShiYinBack.png", "CharacterBack");
-    character = std::make_unique<Entity>("CharacterBack");
-    pos = { -500.f, -150.f };
-    scale = { static_cast<float>(AEGfxGetWindowWidth() / 2.f), static_cast<float>(AEGfxGetWindowHeight()) };
-    character->addComponent<Transform2D>(pos, scale, 0.f);
-    character->addComponent<Character>();
-    character->addComponent<Mesh>("Box", "CharacterBack", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-    character->getComponent<Character>()->LoadCharacter(jsonSerializer, "Assets/Characters/Guy.json");
-    character->addComponent<Healthbar1>();
-    enSystem->rootEntity->transform->AddChild(character->transform);
-    enSystem->entities.push_back(std::move(character));
-
-    /* To do, shift the above code block into a for loop
-    *     
-    for (Character* ch : RunManager::Instance().GetParty())
+ 
+    for (const auto str : RunManager::Instance().GetParty())
     {
-        battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("Guy")->getComponent<Character>());
+        character = std::make_unique<Entity>(str.c_str());
+        pos = { -500.f, -150.f };
+        scale = { static_cast<float>(AEGfxGetWindowWidth() / 2.f), static_cast<float>(AEGfxGetWindowHeight()) };
+        character->addComponent<Transform2D>(pos, scale, 0.f);
+        auto ch = character->addComponent<Character>();
+        std::string charDataPath = "Assets/Characters/" + str + ".json";
+        character->getComponent<Character>()->LoadCharacter(jsonSerializer, charDataPath.c_str());
+        std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
+        std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
+        std::string iconPath = "Assets/Images/" + ch->characterIconTexture;
+        meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
+        meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
+        meshSystem->CreateTexture(iconPath.c_str(), ch->characterIconTexture.c_str());
+        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+        character->getComponent<Mesh>()->isActive = false;
+        battleManager->LoadBattleUnit(ch);
+        enSystem->rootEntity->transform->AddChild(character->transform);
+        enSystem->entities.push_back(std::move(character));
     }
-    */
-
 
     //Parameter is BOSS if player is in Boss Node
-    GenerateEnemies();
+    GenerateEnemies(RunManager::Instance().GetBattleType());
+
     // UI
     meshSystem->CreateTexture("Assets/UI/MainHP.png", "MainHP");
     auto UI_MainHealthbar = std::make_unique<Entity>("MainHealthbar");
@@ -143,17 +150,26 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(UI_Bottom3->transform);
     enSystem->entities.push_back(std::move(UI_Bottom3));
 
-    // auto test = std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Test", "Test", BLESSING_RARITY::COMMON,
-    //     nullptr, Game::ATK, 90.15f);
-    // RunManager::Instance().AddBlessing(std::move(test));
-    // //Parameter is BOSS if player is in Boss Node
-    // GenerateEnemies(RunManager::Instance().GetBattleType());
+    auto partyUI = std::make_unique<Entity>("PartyUI");
+    pos = { 0.f, 0.f };
+    scale = {0.f, 0.f};
+    partyUI->addComponent<Transform2D>(pos, scale, 0.f);
+    partyUI->addComponent<PartyUI>();
+    enSystem->rootEntity->transform->AddChild(partyUI->transform);
+    enSystem->entities.push_back(std::move(partyUI));
+
+    auto moveui = std::make_unique<Entity>("MovesUI");
+    pos = { 0.f, 0.f };
+    scale = { 0.f, 0.f };
+    moveui->addComponent<Transform2D>(pos, scale, 0.f);
+    moveui->addComponent<MovesUI>();
+    enSystem->rootEntity->transform->AddChild(moveui->transform);
+    enSystem->entities.push_back(std::move(moveui));
 
     //ONLY CALL ONCE, TO-DO
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
-    battleManager->LoadBattleUnit(enSystem->FindByNameGLOBAL("CharacterBack")->getComponent<Character>());
     battleManager->StartBattle();
 }
 
@@ -216,10 +232,10 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             }
             break;
         }
-        case (BATTLE_TYPE::BOSS):
+        case (BATTLE_TYPE::MINI_BOSS):
         {
             //To-do, Get Boss Type and load boss data
-            character = std::make_unique<Entity>("Melee_Boss");
+            character = std::make_unique<Entity>("MiniBoss");
             AEVec2 pos = enemyPositions[0];
             AEVec2 scale = { 50.f, 100.f };
             character->addComponent<Transform2D>(pos, scale, 0.f);
@@ -228,7 +244,25 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Healthbar1>();
             Character* ch = character->getComponent<Character>();
 
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Melee_Boss.json");
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+            battleManager->LoadBattleUnit(ch);
+            enSystem->rootEntity->transform->AddChild(character->transform);
+            enSystem->entities.push_back(std::move(character));
+            break;
+        }
+        case (BATTLE_TYPE::BOSS):
+        {
+            //To-do, Get Boss Type and load boss data
+            character = std::make_unique<Entity>("Boss");
+            AEVec2 pos = enemyPositions[0];
+            AEVec2 scale = { 50.f, 100.f };
+            character->addComponent<Transform2D>(pos, scale, 0.f);
+            character->addComponent<Character>();
+            character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
+            character->addComponent<Healthbar1>();
+            Character* ch = character->getComponent<Character>();
+
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));

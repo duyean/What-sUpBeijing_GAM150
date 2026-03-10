@@ -16,7 +16,7 @@ void BattleManager::init()
 }
 
 BattleManager::BattleManager() : delay(0), wait(false),
-currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr)
+currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0)
 {
 
 }
@@ -33,6 +33,20 @@ bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Tran
 
 }
 
+Character* BattleManager::GetActiveUnit()
+{
+	return battleUnits[currentActiveUnit];
+}
+
+int BattleManager::GetCurrentTurn() const
+{
+	return currentTurn;
+}
+
+bool BattleManager::InBattle() const
+{
+	return inBattle;
+}
 
 void BattleManager::ProcessTargeting()
 {
@@ -65,6 +79,8 @@ void BattleManager::ProcessTargeting()
 
 void BattleManager::ResetBattle()
 {
+	inBattle = false;
+
 	//Delete the background
 	Destroy(EntityManager::getInstance().FindByNameGLOBAL("BattleBackgroundIMG"));
 	
@@ -80,11 +96,11 @@ void BattleManager::ResetBattle()
 	CombatUIManager::Instance().Reset();
 	battleUnits.clear();
 	lastTargetedUnit = nullptr;
-	inBattle = false;
 	currentActiveUnit = 0;
 	enemyCount = 0;
 	wait = false;
 
+	RunManager::Instance().ModifyEnemyDifficulty(1);
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -142,6 +158,11 @@ void BattleManager::update()
 			ResetBattle();
 
 			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
+
+			if (bt == BATTLE_TYPE::MINI_BOSS)
+			{
+				//unlock character goes here
+			}
 			if (bt != BATTLE_TYPE::BOSS)
 			{
 				//Change scene back to exploration
@@ -150,6 +171,7 @@ void BattleManager::update()
 			else
 			{
 				//Change scene back to base camp
+				RunManager::Instance().IncrementMapType();
 				ts->TransitionToScene(GameStateManager::BASE_CAMP);
 			}
 
@@ -160,8 +182,9 @@ void BattleManager::update()
 	Character* activeUnit = battleUnits[currentActiveUnit];
 	if (!wait)
 	{
+		currentTurn++;
 		activeUnit->StartTurn();
-		delay = 1.5f;
+		delay = 0.5f;
 		wait = true;
 	}
 
@@ -216,7 +239,7 @@ void BattleManager::update()
 			currentActiveUnit = 0;
 		}
 		wait = false;
-		delay = 1.5f;
+		delay = 0.5f;
 	}
 }
 
@@ -253,6 +276,13 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			delay = 1.5f;
 		}
 	}
+}
+
+std::vector<Character*> BattleManager::GetPlayerParty()
+{
+	std::vector<Character*> toReturn = {};
+	std::copy_if(battleUnits.begin(), battleUnits.end(), std::back_inserter(toReturn), [](Character* ch) {return ch && ch->GetFaction() == Game::PLAYER; });
+	return toReturn;
 }
 
 void BattleManager::destroy()

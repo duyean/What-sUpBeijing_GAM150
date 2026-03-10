@@ -108,14 +108,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	enSystem->entities.reserve(1000);
 
 	// Game Loop
-	while (gGameRunning)
+	while (gameManager->quitGame != true)
 	{
 		// Informing the system about the loop's start
 		AESysFrameStart();
 
 		// Close the window if press esacpe key
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;
+			gameManager->quitGame = true;
 
 	
 

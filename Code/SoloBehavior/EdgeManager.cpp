@@ -38,11 +38,19 @@ void EdgeManager::UpdateEdges()
 			player->getComponent<Player>()->canMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
+			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			break;
 		case NodeType::Exit:
 			player->getComponent<Player>()->canMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
-			GameStateManager::GetInstance()->NextScene(GameStateManager::BATTLE_SCENE);
+			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
+			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
+			break;
+		case NodeType::FixedEvent:
+			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().SetBattleType(BATTLE_TYPE::MINI_BOSS);
+			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
+			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			break;
 		default:
 			break;

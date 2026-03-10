@@ -37,6 +37,35 @@
             "value": -0.4,
             "behaviour": 1,
             "self":0
+        },
+        {
+            "id": 5,
+            "name": "Combustion",
+            "duration": 2,
+            "type": 0,
+            "attribute": 0,
+            "value": 0.70,
+            "behaviour": 1,
+            "self":1
+        },
+        {
+            "id": 6,
+            "name": "Superheated",
+            "duration": 3,
+            "type": 2,
+            "damage": 0.0,
+            "behaviour": 2,
+            "self":0
+        },
+        {
+            "id": 7,
+            "name": "Weaken",
+            "duration": 3,
+            "type": 0,
+            "attribute": 0,
+            "value": -0.25,
+            "behaviour": 1,
+            "self":0
         }
     ]
 }

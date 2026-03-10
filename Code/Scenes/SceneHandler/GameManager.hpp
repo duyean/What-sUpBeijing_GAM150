@@ -31,10 +31,13 @@ private:
 	PhysicSystem* phSystem;
 	RenderSystem* rSystem;
 	bool ShowDebug;
+	
 
 public:
 	GameManager();
 	~GameManager();
+
+	bool quitGame;
 
 	/*!
 	@brief Initialize game variables and settings

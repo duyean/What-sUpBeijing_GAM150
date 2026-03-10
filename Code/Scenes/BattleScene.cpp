@@ -222,6 +222,10 @@ void BattleScene::Unload()
 void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
+    Character* ch = nullptr;
+    AEVec2 pos = {}, scale = { 200, 200 };
+    character = std::make_unique<Entity>("Enemy");
+    ch = character->addComponent<Character>();
     switch (type)
     {
         case (BATTLE_TYPE::NORMAL):
@@ -232,11 +236,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 
             for (int i = 0; i < enemies; ++i)
             {
-                character = std::make_unique<Entity>("Enemy");
-                AEVec2 pos = enemyPositions[i];
-                AEVec2 scale = { 200.f, 200.f };
-                character->addComponent<Transform2D>(pos, scale, 0.f);
-                Character* ch = character->addComponent<Character>();
+                pos = enemyPositions[i];
                 //Use a switch case and edit the line below for different enemy types
                 /*
                 ENEMY_TYPE type = dist(0, MAX_ENEMY_TYPE - 1);
@@ -252,54 +252,33 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 }
                 */
                 ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
-
-                std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
-                std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
-                meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
-                meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
-                character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-                character->addComponent<Healthbar1>();
-                battleManager->LoadBattleUnit(ch);
-                enSystem->rootEntity->transform->AddChild(character->transform);
-                enSystem->entities.push_back(std::move(character));
             }
             break;
         }
         case (BATTLE_TYPE::MINI_BOSS):
         {
             //To-do, Get Boss Type and load boss data
-            character = std::make_unique<Entity>("MiniBoss");
-            AEVec2 pos = enemyPositions[0];
-            AEVec2 scale = { 50.f, 100.f };
-            character->addComponent<Transform2D>(pos, scale, 0.f);
-            character->addComponent<Character>();
-            character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
-            character->addComponent<Healthbar1>();
-            Character* ch = character->getComponent<Character>();
-
+            pos = enemyPositions[0];
             ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
-            battleManager->LoadBattleUnit(ch);
-            enSystem->rootEntity->transform->AddChild(character->transform);
-            enSystem->entities.push_back(std::move(character));
             break;
         }
         case (BATTLE_TYPE::BOSS):
         {
             //To-do, Get Boss Type and load boss data
-            character = std::make_unique<Entity>("Boss");
-            AEVec2 pos = enemyPositions[0];
-            AEVec2 scale = { 50.f, 100.f };
-            character->addComponent<Transform2D>(pos, scale, 0.f);
-            character->addComponent<Character>();
-            character->addComponent<Mesh>("Box", Color(255, 0, 0, 1), 100, MeshType::BOX_B);
-            character->addComponent<Healthbar1>();
-            Character* ch = character->getComponent<Character>();
-
+            pos = enemyPositions[0];
             ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
-            battleManager->LoadBattleUnit(ch);
-            enSystem->rootEntity->transform->AddChild(character->transform);
-            enSystem->entities.push_back(std::move(character));
             break;
         }
     }
+
+    std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
+    std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
+    meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
+    meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
+    character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    character->addComponent<Healthbar1>();
+    character->addComponent<Transform2D>(pos, scale, 0.f);
+    battleManager->LoadBattleUnit(ch);
+    enSystem->rootEntity->transform->AddChild(character->transform);
+    enSystem->entities.push_back(std::move(character));
 }

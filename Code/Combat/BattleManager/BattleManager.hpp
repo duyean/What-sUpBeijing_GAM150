@@ -16,6 +16,9 @@ class BattleManager : public SoloBehavior
 	//An integer to index the current acting unit
 	int currentActiveUnit;
 
+	//The pointer to the acting unit
+	Character* activeUnit;
+
 	//Pointer to the last enemy the player targeted
 	Character* lastTargetedUnit;
 

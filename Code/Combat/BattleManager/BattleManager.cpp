@@ -15,7 +15,7 @@ void BattleManager::init()
 }
 
 BattleManager::BattleManager() : delay(0), wait(false),
-currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0)
+currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0), activeUnit(nullptr)
 {
 
 }
@@ -34,7 +34,7 @@ bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Tran
 
 Character* BattleManager::GetActiveUnit()
 {
-	return battleUnits[currentActiveUnit];
+	return activeUnit;
 }
 
 int BattleManager::GetCurrentTurn() const
@@ -178,7 +178,7 @@ void BattleManager::update()
 		return;
 	}
 
-	Character* activeUnit = battleUnits[currentActiveUnit];
+	activeUnit = battleUnits[currentActiveUnit];
 	if (!wait)
 	{
 		currentTurn++;

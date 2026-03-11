@@ -24,9 +24,12 @@ void PartyUI::update()
 		for (int i = 0; i < party.size(); ++i)
 		{
 			AEVec2 scale = { 100, 100 };
-			if (party[i] == battleManager->GetActiveUnit())
+			if (battleManager->GetActiveUnit() && battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 			{
-				scale = { 150, 150 };
+				if (party[i] == battleManager->GetActiveUnit())
+				{
+					scale = { 150, 150 };
+				}
 			}
 			if (icons[i]->transform)
 			{

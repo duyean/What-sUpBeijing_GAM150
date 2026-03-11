@@ -113,7 +113,7 @@ void LevelScene::Load()
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	ts->addComponent<Transform2D>(pos, scale, 0.f);
-	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 101, MeshType::BOX_B);
+	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 999, MeshType::BOX_B);
 	ts->addComponent<TransitionScreen>(T_State::T_OUT);
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));

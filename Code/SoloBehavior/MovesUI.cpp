@@ -52,10 +52,10 @@ void MovesUI::update()
 		//Replace .description with .name and other fields for the OnHover tooltip
 
 		AEVec2 normalised = { this->entity->transform->getPosition().x / 800.f, this->entity->transform->getPosition().y / 450.f };
-		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.46f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_1)].name).c_str(), "liberi", MeshGen::TextAlignment::LEFT);
-		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.60f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_2)].name).c_str(), "liberi", MeshGen::TextAlignment::LEFT);
-		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.73f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_3)].name).c_str(), "liberi", MeshGen::TextAlignment::LEFT);
-		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.86f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str(), "liberi", MeshGen::TextAlignment::LEFT);
+		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.46f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_1)].name).c_str(), "liberi", TextAlignment::LEFT, 700);
+		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.60f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_2)].name).c_str(), "liberi", TextAlignment::LEFT, 700);
+		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.73f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_3)].name).c_str(), "liberi", TextAlignment::LEFT, 700);
+		MeshGen::getInstance().DrawFont(normalised.x - 0.87f, normalised.y - 0.86f, 0.5, Color{ 255,255,255,1 }, (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str(), "liberi", TextAlignment::LEFT, 700);
 	}
 }
 

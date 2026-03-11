@@ -46,9 +46,8 @@ void game_init(void)
 
 void game_update(void)
 {
-
-	gameManager->Render();
 	gameManager->Update(static_cast<float>(AEFrameRateControllerGetFrameTime()));
+	gameManager->Render();
 }
 
 void game_exit(void)

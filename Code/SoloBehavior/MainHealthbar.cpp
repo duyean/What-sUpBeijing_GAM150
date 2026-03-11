@@ -17,8 +17,8 @@ void MainHealthbar::update()
 		return;
 	}
 
-	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y, 0.8f, Color(255, 255, 255, 255), "Turn", "liberi", MeshGen::TextAlignment::CENTER);
-	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y - 0.1f, 0.8f, Color(255, 255, 255, 255), to_string(battleManager->GetCurrentTurn()).c_str(), "liberi", MeshGen::TextAlignment::CENTER);
+	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y, 0.8f, Color(255, 255, 255, 255), "Turn", "liberi", TextAlignment::CENTER, 700);
+	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y - 0.1f, 0.8f, Color(255, 255, 255, 255), to_string(battleManager->GetCurrentTurn()).c_str(), "liberi", TextAlignment::CENTER, 700);
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
 		Color color;
@@ -35,7 +35,7 @@ void MainHealthbar::update()
 		AEVec2 trueScale = { scale.x * hpperc, scale.y };
 		entity->transform->setScale(trueScale);
 		entity->getComponent<Mesh>()->color = color;
-		MeshGen::getInstance().DrawFont(-0.825f, 0.7f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi");
+		MeshGen::getInstance().DrawFont(-0.825f, 0.7f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi", TextAlignment::CENTER, 700);
 	}
 }
 

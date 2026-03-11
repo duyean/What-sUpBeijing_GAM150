@@ -12,6 +12,7 @@
 #include "Colors.hpp"
 #include "OOP.hpp"
 #include "Transform2D.hpp"
+#include "Renderable.hpp"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ enum MeshType{
 
 class MeshGen;
 
-class Mesh : public SoloBehavior
+class Mesh : public SoloBehavior, public IRenderable
 {
 public:
 
@@ -37,8 +38,6 @@ public:
 	AEGfxTexture* pTex = nullptr;
 	Color color;
 
-
-	int drawOrder = 100;
 private:
 	MeshGen* meshSystem = nullptr;
 

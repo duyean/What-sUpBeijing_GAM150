@@ -350,57 +350,63 @@ void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 	pFont.insert({ fileName, AEGfxCreateFont(filePath, pixelSize) });
 }
 
-void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align)
+void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align, int layer)
 {
-	float red = capToOne(static_cast<float>(color.R), 0.f, 255.f, 1.f, 0.f);
-	float green = capToOne(static_cast<float>(color.G), 0.f, 255.f, 1.f, 0.f);
-	float blue = capToOne(static_cast<float>(color.B), 0.f, 255.f, 1.f, 0.f);
-	switch (align)
-	{
-		case TextAlignment::LEFT:
-		{
-			AEGfxPrint(pFont.at(fileName),
-				text,
-				Xpos,
-				Ypos,
-				scale,
-				red,
-				green,
-				blue,
-				color.A);
-			break;
-		}
-		case TextAlignment::CENTER:
-		{
-			f32 width, height;
-			AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
-			AEGfxPrint(pFont.at(fileName),
-				text,
-				Xpos - (width * 0.5f),
-				Ypos,
-				scale,
-				red,
-				green,
-				blue,
-				color.A);
-			break;
-		}
-		case TextAlignment::RIGHT:
-		{
-			f32 width, height;
-			AEGfxGetPrintSize(pFont.at(fileName), text, 1.f, &width, &height);
+	auto txt = std::make_unique<Text>(Xpos, Ypos, scale, color, text, fileName, align, layer);
+	tempTexts.push_back(std::move(txt));
+}
 
-			AEGfxPrint(pFont.at(fileName),
-				text,
-				Xpos - width,
-				Ypos,
-				scale,
-				red,
-				green,
-				blue,
-				color.A);
-			break;
-		}
+void MeshGen::RenderFont(Text* const text)
+{
+	float red = capToOne(static_cast<float>(text->color.R), 0.f, 255.f, 1.f, 0.f);
+	float green = capToOne(static_cast<float>(text->color.G), 0.f, 255.f, 1.f, 0.f);
+	float blue = capToOne(static_cast<float>(text->color.B), 0.f, 255.f, 1.f, 0.f);
+	switch (text->align)
+	{
+	case TextAlignment::LEFT:
+	{
+		AEGfxPrint(pFont.at(text->fileName),
+			text->text.c_str(),
+			text->Xpos,
+			text->Ypos,
+			text->scale,
+			red,
+			green,
+			blue,
+			text->color.A);
+		break;
+	}
+	case TextAlignment::CENTER:
+	{
+		f32 width, height;
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
+		AEGfxPrint(pFont.at(text->fileName),
+			text->text.c_str(),
+			text->Xpos - (width * 0.5f),
+			text->Ypos,
+			text->scale,
+			red,
+			green,
+			blue,
+			text->color.A);
+		break;
+	}
+	case TextAlignment::RIGHT:
+	{
+		f32 width, height;
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
+
+		AEGfxPrint(pFont.at(text->fileName),
+			text->text.c_str(),
+			text->Xpos - width,
+			text->Ypos,
+			text->scale,
+			red,
+			green,
+			blue,
+			text->color.A);
+		break;
+	}
 	}
 }
 

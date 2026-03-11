@@ -10,6 +10,7 @@
 #include "AEEngine.h"
 #include "Colors.hpp"
 #include "Mesh.hpp"
+#include "Text.hpp"
 
 using namespace std;
 
@@ -21,11 +22,13 @@ public:
 
 	bool needsSort = false;
 	void Draw(const Mesh& mesh);
+	void Draw(Text* text) const;
 	void RenderObjects(const std::vector<std::unique_ptr<Entity>>& entities);
 	void init();
 
 private:
-	MeshGen* meshSystem;
+
+	MeshGen* meshSystem = nullptr;
 	RenderSystem()
 	{
 		

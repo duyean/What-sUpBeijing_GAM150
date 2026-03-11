@@ -7,11 +7,13 @@
 #include <mutex>
 #include <map>
 #include <memory>
+#include <utility>
 #include "AEEngine.h"
 #include "ECS.hpp"
 #include "Mesh.hpp"
 #include "Entity.hpp"
 #include "Colors.hpp"
+#include "Text.hpp"
 
 using namespace std;
 
@@ -85,16 +87,13 @@ using namespace std;
 		}
 	public:
 
-		enum struct TextAlignment
-		{
-			LEFT,
-			CENTER,
-			RIGHT
-		};
+	
 		//Singleton functions
 
 		MeshGen(const MeshGen&) = delete;
 		MeshGen& operator=(const MeshGen&) = delete;
+
+		std::vector<std::unique_ptr<IRenderable>> tempTexts;
 
 		static MeshGen& getInstance() {
 
@@ -140,7 +139,9 @@ using namespace std;
 
 		void SetFont(const char* filePath, const char* fileName, int pixelSize);
 
-		void DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align = TextAlignment::LEFT);
+		void DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align = TextAlignment::LEFT, int layer = 500);
+
+		void RenderFont(Text* const text);
 
 		void ClearFont(string name);
 

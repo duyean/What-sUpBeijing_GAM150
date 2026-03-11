@@ -42,10 +42,15 @@ void RenderSystem::Draw(const Mesh &mesh)
 
 }
 
+void RenderSystem::Draw(Text* text) const
+{
+	meshSystem->RenderFont(text);
+}
+
 void RenderSystem::RenderObjects(const std::vector<std::unique_ptr<Entity>>& entities)
 {
 
-    std::vector<Mesh*> queue;
+    std::vector<IRenderable*> queue;
 	for (int i = 0; i < entities.size(); i++)
 	{
         if (auto mesh = entities[i]->getComponent<Mesh>()) {
@@ -55,17 +60,33 @@ void RenderSystem::RenderObjects(const std::vector<std::unique_ptr<Entity>>& ent
             }
         }
     }
+	for (int j = 0; j < meshSystem->tempTexts.size(); j++)
+	{
+		queue.push_back(meshSystem->tempTexts[j].get());
+	}
 
-    std::stable_sort(queue.begin(), queue.end(), [](const Mesh* a, const Mesh* b) {
+    std::stable_sort(queue.begin(), queue.end(), [](const IRenderable* a, const IRenderable* b) {
         return a->drawOrder < b->drawOrder;
         });
 
 
-    for (const auto& cmd : queue) {
+    for (auto& cmd : queue) {
 		if (cmd != nullptr)
 		{
-			Draw(*cmd);
+			Mesh* mesh = dynamic_cast<Mesh*>(cmd);
+			if (mesh != nullptr)
+			{
+				Draw(*mesh);
+			}
+			Text* txt = dynamic_cast<Text*>(cmd);
+			if (txt != nullptr)
+			{
+				Draw(txt);
+			}
+			
 		}
        
     }
+
+	meshSystem->tempTexts.clear();
 }

@@ -89,10 +89,12 @@ void Transform2D::syncTransform()
             Deg = localDeg;
             scale = localScale;
         }
-
+       
         for (Transform2D* child : children) {
             child->syncTransform();
         }
+
+        dirty = false;
     }
 }
 

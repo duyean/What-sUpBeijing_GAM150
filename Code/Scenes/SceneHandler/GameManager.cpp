@@ -78,9 +78,22 @@ void GameManager::Update(float _dt)
 			{
 				enSystem->entities[i]->init();
 			}
+
 			if (enSystem->entities[i]->isActive == true)
 			{
 				enSystem->entities[i]->update();
+			}
+			else
+			{
+				//Add in parental Active control sometime in the future and make sure no bugs
+				// 
+				//if (enSystem->entities[i]->transform != nullptr && enSystem->entities[i]->transform->activeDirty == true)
+				//{
+				//	for (int j = 0; j < enSystem->entities[i]->transform->children.size(); j++)
+				//	{
+				//		enSystem->entities[i]->transform->children[j]->isActive == false;
+				//	}
+			    //}
 			}
 		}
 

@@ -9,7 +9,7 @@ void MapDisplay::awake()
 	enSystem = &EntityManager::getInstance();
 	meSystem = &MeshGen::getInstance();
 	int count = 0;
-	int depth = 2000;
+	int depth = 200;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
 

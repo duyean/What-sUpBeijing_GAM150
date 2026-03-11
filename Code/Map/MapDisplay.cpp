@@ -9,6 +9,7 @@ void MapDisplay::awake()
 	enSystem = &EntityManager::getInstance();
 	meSystem = &MeshGen::getInstance();
 	int count = 0;
+	int depth = 2000;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
 
@@ -23,22 +24,22 @@ void MapDisplay::awake()
 		switch (map.playMap.mapNodes[y][x].type)
 		{
 			case NodeType::EnemyEncounter:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 				break;
 			case NodeType::RandomEvent:	//both events have same sprite
 			case NodeType::FixedEvent:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 				break;
 			case NodeType::Entry:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 				break;
 			case NodeType::Exit:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 				break;
 			default:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 		}
-		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), 20, MeshType::BOX_T);
+		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;
 		if (map.viewMap.mapNodes[y][x].type == NodeType::VisionClear)
 		{

@@ -345,10 +345,30 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
     std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
     meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
     meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
-    character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-    character->addComponent<Healthbar1>();
     character->addComponent<Transform2D>(pos, scale, 0.f);
+    character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    auto hpBar = character->addComponent<Healthbar1>();
     battleManager->LoadBattleUnit(ch);
     enSystem->rootEntity->transform->AddChild(character->transform);
     enSystem->entities.push_back(std::move(character));
+
+    //Create enemy HPBar
+    auto enemyHP = std::make_unique<Entity>("EnemyHP");
+    scale = { 300, 10 };
+    pos = {0, 0}; //HealthBar1 will handle it
+    enemyHP->addComponent<Transform2D>(pos, scale, 0.f);
+    enemyHP->addComponent<Mesh>("Box", Color(0, 255, 0, 1.f), 103, MeshType::BOX_BL);
+    hpBar->en = enemyHP.get();
+    enSystem->rootEntity->transform->AddChild(enemyHP->transform);
+    enSystem->entities.push_back(std::move(enemyHP));
+
+    //Create enemy HPBarBG
+    auto enemyHPBG = std::make_unique<Entity>("EnemyHPBG");
+    scale = { 300, 10 };
+    pos = { 0, 0 }; //HealthBar1 will handle it
+    enemyHPBG->addComponent<Transform2D>(pos, scale, 0.f);
+    enemyHPBG->addComponent<Mesh>("Box", Color(50, 50, 50, 1.f), 102, MeshType::BOX_BL);
+    hpBar->hpBarBG = enemyHPBG.get();
+    enSystem->rootEntity->transform->AddChild(enemyHPBG->transform);
+    enSystem->entities.push_back(std::move(enemyHPBG));
 }

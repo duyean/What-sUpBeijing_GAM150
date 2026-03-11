@@ -19,6 +19,8 @@ private:
 	Color color;
 public:
 
+	Entity* en = nullptr;
+	Entity* hpBarBG = nullptr;
 	EntityManager* enSystem = nullptr;
 
 	void awake() override;

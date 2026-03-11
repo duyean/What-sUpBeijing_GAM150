@@ -33,6 +33,8 @@ class Transform2D : public SoloBehavior
 	bool dirty = false;
 
 public:
+	bool activeDirty = false;
+
 	Transform2D* parent = nullptr;
 	std::vector<Transform2D*> children;
 

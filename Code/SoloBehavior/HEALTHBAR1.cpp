@@ -54,5 +54,6 @@ void Healthbar1::fixedUpdate()
 
 void Healthbar1::destroy()
 {
-
+	Destroy(en);
+	Destroy(hpBarBG);
 }

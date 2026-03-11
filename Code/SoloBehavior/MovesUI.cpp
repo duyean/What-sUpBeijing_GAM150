@@ -3,7 +3,10 @@
 
 void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
-	ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+	if (!ch->IsEndingTurn())
+	{
+		ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+	}
 }
 
 void MovesUI::awake()

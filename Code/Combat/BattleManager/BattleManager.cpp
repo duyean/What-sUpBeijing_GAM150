@@ -200,7 +200,7 @@ void BattleManager::update()
 			//Placeholder to render targeting UI
 			MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), {100, 100}, Color(255, 0, 0, 0.3f));
 		}
-		if (!activeUnit->TurnFinished() && wait)
+		if (!activeUnit->IsEndingTurn() && wait)
 		{
 			//Register Inputs
 			if (AEInputCheckTriggered(AEVK_Z))

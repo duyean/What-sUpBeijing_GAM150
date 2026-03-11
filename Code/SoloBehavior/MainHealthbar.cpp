@@ -17,9 +17,10 @@ void MainHealthbar::update()
 		return;
 	}
 
+
 	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y, 0.8f, Color(255, 255, 255, 255), "Turn", "liberi", TextAlignment::CENTER, 700);
 	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y - 0.1f, 0.8f, Color(255, 255, 255, 255), to_string(battleManager->GetCurrentTurn()).c_str(), "liberi", TextAlignment::CENTER, 700);
-	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
+	if (battleManager->GetActiveUnit() && battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
 		Color color;
 		float hpperc = battleManager->GetActiveUnit()->GetHealthPercentage();

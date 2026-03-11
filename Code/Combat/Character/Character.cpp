@@ -31,7 +31,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	damageInfo.damage = finalDamageTaken;
 	hp -= finalDamageTaken;
 	hp = AEClamp(hp, 0, maxHP);
-	AEVec2 offset = { 0, 100 };
+	AEVec2 offset = { AERandFloat() * 20 - 10, 50};
 	CombatUIManager::Instance().CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
 
 	//Event Handler

@@ -84,7 +84,7 @@ void DamageNumbers::update()
 		float smoothing = 10.0f;
 		AEVec2 lerped{};
 		AEVec2 position = entity->transform->getPosition();
-		AEVec2 target = entity->transform->getPosition() + AEVec2(0, 5.f);
+		AEVec2 target = entity->transform->getPosition() + AEVec2(0, 3.f);
 		AEVec2Lerp(&lerped, &position, &target, 1.0f - static_cast<float>(exp(-smoothing * AEFrameRateControllerGetFrameTime())));
 		entity->transform->setPosition(lerped);
 	}

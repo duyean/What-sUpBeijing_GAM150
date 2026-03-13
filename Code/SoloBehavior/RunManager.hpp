@@ -59,6 +59,9 @@ public:
 	//Ends the current run
 	void ResetRun();
 
+	// Resets everything in the save
+	void ResetSave();
+
 	//Add a blessing to the current run
 	void AddBlessing(std::unique_ptr<Blessing> blessing);
 

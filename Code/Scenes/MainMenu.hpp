@@ -24,6 +24,7 @@ private:
 	MeshGen* meshSystem = nullptr;
 	TransitionScreen* ts_comp = nullptr;
 	void SwitchToGame();
+	void PlayNewSave();
 	void QuitGame();
 public:
 	MainMenu();

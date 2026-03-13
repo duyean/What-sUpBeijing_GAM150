@@ -9,7 +9,7 @@
 This file contains the definitions for the collection of functions in SplashScreen.h
 *//*______________________________________________________________________*/
 #include "MainMenu.hpp"
-
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -79,13 +79,38 @@ void MainMenu::Load()
 
 	////////////////////////////////////////////////
 	// 
+	// NEW GAME BUTTON
+	//
+	////////////////////////////////////////////////
+
+	auto ng = std::make_unique<Entity>("NEW GAME BUTTON");
+	Entity* ngb = ng.get();
+	pos = { 0.f,-100.f };
+	scale = { 300.f, 80.f };
+	ng->addComponent<Transform2D>(pos, scale, 0.f);
+	ng->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+
+	Button* newGameButton = ngb->addComponent<Button>();
+	newGameButton->SetOnClick([this]() {PlayNewSave(); });
+	newGameButton->SetNormalColor(Color{ 200,200,200,1 });
+	newGameButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	ng->addComponent<TextMesh>(AEVec2{ pos.x - 300.f, pos.y - 340.f }, 0.6, "NEW GAME", Color{ 255, 255, 255, 1.f });
+
+
+	enSystem->rootEntity->transform->AddChild(ngb->transform);
+	enSystem->entities.push_back(std::move(ng));
+
+
+	////////////////////////////////////////////////
+	// 
 	// QUIT BUTTON
 	//
 	////////////////////////////////////////////////
 
 	auto e = std::make_unique<Entity>("QUIT BUTTON");
 	Entity* qb = e.get();
-	pos = { 0.f,-100.f };
+	pos = { 0.f,-200.f };
 	scale = { 300.f, 80.f };
 	qb->addComponent<Transform2D>(pos, scale, 0.f);
 	qb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -95,7 +120,7 @@ void MainMenu::Load()
 	quitButton->SetOnClick([this]() {QuitGame(); });
 	quitButton->SetNormalColor(Color{ 200,200,200,1 });
 	quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	qb->addComponent<TextMesh>(AEVec2{ pos.x - 100.f, pos.y -340.f}, 0.6, "QUIT", Color{ 255, 255, 255, 1.f });
+	qb->addComponent<TextMesh>(AEVec2{ pos.x - 100.f, pos.y -640.f}, 0.6, "QUIT", Color{ 255, 255, 255, 1.f });
 
 
 	enSystem->rootEntity->transform->AddChild(qb->transform);
@@ -122,6 +147,12 @@ void MainMenu::Load()
 void MainMenu::SwitchToGame()
 {
 	ts_comp->TransitionToScene(GameStateManager::BASE_CAMP);
+}
+
+void MainMenu::PlayNewSave()
+{
+	RunManager::Instance().ResetSave();
+	SwitchToGame();
 }
 
 void MainMenu::QuitGame()

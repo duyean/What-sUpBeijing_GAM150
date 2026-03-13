@@ -40,6 +40,16 @@ void RunManager::ResetRun()
 	runBlessings.clear();
 }
 
+void RunManager::ResetSave()
+{
+	if (std::remove("Assets/Map/PlayMap.json") != 0)
+		std::cout << "PlayMap.json was unable to be removed.\n";
+	if (std::remove("Assets/Map/ViewMap.json") != 0)
+		std::cout << "ViewMap.json was unable to be removed.\n";
+	if (std::remove("Assets/Map/NavData.json") != 0)
+		std::cout << "NavData.json was unable to be removed.\n";
+}
+
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 {
 	//Add a new blessing, the original blessing from the database is cloned

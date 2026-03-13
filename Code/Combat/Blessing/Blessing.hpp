@@ -23,7 +23,16 @@ enum struct BLESSING_ID
 	NONE,
 	MINOR_ATK_BUFF,
 	MINOR_DEF_BUFF,
-	MINOR_HP_BUFF
+	MINOR_HP_BUFF,
+	MINOR_CRITRATE_BUFF,
+	MINOR_CRITDMG_BUFF,
+	MAJOR_ATK_BUFF,
+	MAJOR_DEF_BUFF,
+	MAJOR_HP_BUFF,
+	MAJOR_CRITRATE_BUFF,
+	MAJOR_CRITDMG_BUFF,
+	GAIN_ATK_ON_DAMAGE_TAKEN,
+	GAIN_CRIT_DMG_ON_CRIT_HIT
 };
 
 //Enum to determine what kind of blessing
@@ -66,6 +75,8 @@ public:
 	Blessing();
 	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*);
 
+	virtual std::unique_ptr<Blessing> Clone() const = 0;
+
 	//Virtual function to apply this blessing effect
 	virtual void Apply(Character* target) = 0;
 
@@ -100,6 +111,8 @@ public:
 		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo),
 		attType(type),
 		value(val) {}
+
+	std::unique_ptr<Blessing> Clone() const override;
 
 };
 
@@ -138,6 +151,8 @@ public:
 		blessingCooldown(cd),
 		cooldown(0) {
 	}
+
+	std::unique_ptr<Blessing> Clone() const override;
 };
 
 extern std::unordered_map<BLESSING_ID, std::unique_ptr<Blessing>> blessingDatabase;

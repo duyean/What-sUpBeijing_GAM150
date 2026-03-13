@@ -278,6 +278,13 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			AEVec2 pos = { 0.f, 225 };
 			CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
 			delay = 1.5f;
+
+			//DEBUG to add a random blessing after every battle victory
+			std::uniform_int_distribution<int> dist(0, blessingDatabase.size() - 1);
+			auto it = blessingDatabase.begin();
+			std::advance(it, dist(Game::gen));
+			auto randomBlessing = it->second->Clone();
+			RunManager::Instance().AddBlessing(std::move(randomBlessing));
 		}
 	}
 }

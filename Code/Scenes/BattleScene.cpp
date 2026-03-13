@@ -265,7 +265,7 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(ts->transform);
     enSystem->entities.push_back(std::move(ts));
 
-    //ONLY CALL ONCE, TO-DO
+    //Can call this every battle since the function clears the databases 
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 

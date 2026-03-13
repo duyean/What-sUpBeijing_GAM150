@@ -31,6 +31,8 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void MainMenu::Load()
 {
+	InitBlessingDatabase();
+
 	meshSystem = &MeshGen::getInstance();
 	meshSystem->CreateTexture("../../Assets/UI/button_border.png", "Button");
 

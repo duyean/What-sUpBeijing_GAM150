@@ -12,6 +12,11 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/EdgeManagerBase.hpp"
 #include "../Code/SoloBehavior/Shop.hpp"
 #include "../Code/SoloBehavior/PartyManagerObject.hpp"
+#include "../Code/SoloBehavior/ShopBlessing.hpp"
+
+void BaseCamp::PurchaseBlessing(BLESSING_ID id)
+{
+}
 
 BaseCamp::BaseCamp()
 {	
@@ -34,6 +39,19 @@ This function loads splash screen image
 void BaseCamp::Load()
 {
 	meshSystem = &MeshGen::getInstance();
+
+	// Load Meshes for BLESSINGS
+	meshSystem->CreateTexture("Assets/UI/Blessings/ATK_Minor.png", "ATK_Minor_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/ATK_Major.png", "ATK_Major_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/DEF_Minor.png", "DEF_Minor_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/DEF_Major.png", "DEF_Major_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/HP_Minor.png", "HP_Minor_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/HP_Major.png", "HP_Major_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/CRITRATE_Minor.png", "CRITRATE_Minor_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/CRITRATE_Major.png", "CRITRATE_Major_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/CRITDMG_Minor.png", "CRITDMG_Minor_Texture");
+	meshSystem->CreateTexture("Assets/UI/Blessings/CRITDMG_Major.png", "CRITDMG_Major_Texture");
+	meshSystem->CreateTexture("Assets/UI/Helm.png", "Temp_Texture");
 
 	float collidersize = 100.f;
 
@@ -114,6 +132,58 @@ void BaseCamp::Load()
 	shopBackground->isActive = false;
 	enSystem->rootEntity->transform->AddChild(shopBackground->transform);
 
+	auto blessing1 = std::make_unique<Entity>("Blessing1");
+	pos = { -AEGfxGetWindowWidth() * 0.275f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f};
+	blessing1->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB1 = blessing1->addComponent<ShopBlessing>();
+	blessing1->addComponent<Mesh>("Box", shopB1->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
+	Button* blessing1Button = blessing1->addComponent<Button>();
+	blessing1Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing1Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing1Button->SetOnClick([this, shopB1]() {PurchaseBlessing(shopB1->GetBlessingId()); });
+	blessing1->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing1->transform);
+
+	auto blessing2 = std::make_unique<Entity>("Blessing2");
+	pos = { -AEGfxGetWindowWidth() * 0.175f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing2->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB2 = blessing2->addComponent<ShopBlessing>();
+	blessing2->addComponent<Mesh>("Box", shopB2->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
+	Button* blessing2Button = blessing2->addComponent<Button>();
+	blessing2Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing2Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing2Button->SetOnClick([this, shopB2]() {PurchaseBlessing(shopB2->GetBlessingId()); });
+	blessing2->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing2->transform);
+
+	auto blessing3 = std::make_unique<Entity>("Blessing3");
+	pos = { -AEGfxGetWindowWidth() * 0.075f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing3->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB3 = blessing3->addComponent<ShopBlessing>();
+	blessing3->addComponent<Mesh>("Box", shopB3->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
+	Button* blessing3Button = blessing3->addComponent<Button>();
+	blessing3Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing3Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing3Button->SetOnClick([this, shopB3]() {PurchaseBlessing(shopB3->GetBlessingId()); });
+	blessing3->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing3->transform);
+
+	auto blessing4 = std::make_unique<Entity>("Blessing4");
+	pos = { AEGfxGetWindowWidth() * 0.025f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing4->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB4 = blessing4->addComponent<ShopBlessing>();
+	blessing4->addComponent<Mesh>("Box", shopB4->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 200, MeshType::BOX_T);
+	Button* blessing4Button = blessing4->addComponent<Button>();
+	blessing4Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing4Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing4Button->SetOnClick([this, shopB4]() {PurchaseBlessing(shopB4->GetBlessingId()); });
+	blessing4->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing4->transform);
+
 	auto blessingsText = std::make_unique<Entity>("BlessingsText");
 	pos = { -AEGfxGetWindowWidth() * 0.9f, AEGfxGetWindowHeight() * 0.7f};
 	scale = { 1.f, 1.f };
@@ -122,6 +192,7 @@ void BaseCamp::Load()
 	blessingsText->addComponent<TextMesh>(pos, 1, "Blessings:", Color(255, 255, 255, 1.f));
 	blessingsText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessingsText->transform);
+
 	auto artifactsText = std::make_unique<Entity>("ArtifactsText");
 	pos = { -AEGfxGetWindowWidth() * 0.9f, -AEGfxGetWindowHeight() * 0.4f };
 	scale = { 1.f, 1.f };
@@ -156,12 +227,20 @@ void BaseCamp::Load()
 	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	Shop* s = shop->addComponent<Shop>();
 	s->AddDisplayEntity(shopBackground.get());
+	s->AddDisplayEntity(blessing1.get());
+	s->AddDisplayEntity(blessing2.get());
+	s->AddDisplayEntity(blessing3.get());
+	s->AddDisplayEntity(blessing4.get());
 	s->AddDisplayEntity(blessingsText.get());
 	s->AddDisplayEntity(artifactsText.get());
 	s->AddDisplayEntity(nameText.get());
 	s->AddDisplayEntity(typeDesc.get());
 	enSystem->rootEntity->transform->AddChild(shop->transform);
 	enSystem->entities.push_back(std::move(shopBackground));
+	enSystem->entities.push_back(std::move(blessing1));
+	enSystem->entities.push_back(std::move(blessing2));
+	enSystem->entities.push_back(std::move(blessing3));
+	enSystem->entities.push_back(std::move(blessing4));
 	enSystem->entities.push_back(std::move(blessingsText));
 	enSystem->entities.push_back(std::move(artifactsText));
 	enSystem->entities.push_back(std::move(nameText));

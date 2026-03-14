@@ -18,12 +18,15 @@ This file contains the declarations of functions for splash screen
 #include "../Map/MapClass.hpp"
 #include "../SoloBehavior/TransitionScreen.hpp"
 #include "../SoloBehavior/SceneEdge.hpp"
+#include "../Code/Combat/Blessing/Blessing.hpp"
 
 class BaseCamp : public GameState
 {
 private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
+
+	void PurchaseBlessing(BLESSING_ID id);
 	//Map* map = nullptr;
 public:
 	BaseCamp();

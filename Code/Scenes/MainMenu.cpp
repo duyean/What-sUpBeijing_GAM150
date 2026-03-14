@@ -10,6 +10,7 @@ This file contains the definitions for the collection of functions in SplashScre
 *//*______________________________________________________________________*/
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/Player.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -47,10 +48,10 @@ void MainMenu::Load()
 
 	auto title_en = std::make_unique<Entity>("TITLE");
 	Entity* te = title_en.get();
-	pos = { -1400.f,800.f };
+	pos = { 0.f ,300.f };
 	scale = { 1525.f, 445.f };
 	te->addComponent<Transform2D>(pos, scale, 0.f);
-	te->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 1.5, "THE HEAVENS MOVE", Color{ 255,255,255,1 });
+	te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(te->transform);
 	enSystem->entities.push_back(std::move(title_en));
 
@@ -73,8 +74,7 @@ void MainMenu::Load()
 	startButton->SetOnClick([this]() {SwitchToGame(); });
 	startButton->SetNormalColor(Color{ 200,200,200,1 });
 	startButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	sb->addComponent<TextMesh>(AEVec2{ pos.x - 100.f, pos.y - 40.f }, 0.6, "PLAY", Color{ 255, 255, 255, 1.f });
-
+	sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(sb->transform);
 	enSystem->entities.push_back(std::move(b));
 
@@ -97,8 +97,7 @@ void MainMenu::Load()
 	newGameButton->SetOnClick([this]() {PlayNewSave(); });
 	newGameButton->SetNormalColor(Color{ 200,200,200,1 });
 	newGameButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	ng->addComponent<TextMesh>(AEVec2{ pos.x - 300.f, pos.y - 340.f }, 0.6, "NEW GAME", Color{ 255, 255, 255, 1.f });
-
+	ng->addComponent<TextBox>("NEW GAME", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 
 	enSystem->rootEntity->transform->AddChild(ngb->transform);
 	enSystem->entities.push_back(std::move(ng));
@@ -122,12 +121,36 @@ void MainMenu::Load()
 	quitButton->SetOnClick([this]() {QuitGame(); });
 	quitButton->SetNormalColor(Color{ 200,200,200,1 });
 	quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	qb->addComponent<TextMesh>(AEVec2{ pos.x - 100.f, pos.y -640.f}, 0.6, "QUIT", Color{ 255, 255, 255, 1.f });
+	qb->addComponent<TextBox>("QUIT", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 
 
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
 
+	/*auto test = std::make_unique<Entity>("Text");
+	pos = { 0.f, 0.f };
+	scale = { 300.f, 300.f };
+	test->addComponent<Transform2D>(pos, scale, 0.f);
+	test->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	test->addComponent<TextBox>("This is the first line\nthis is the second line\nthis is the third line", 0.4f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	enSystem->rootEntity->transform->AddChild(test->transform);
+	enSystem->entities.push_back(std::move(test));
+
+	auto t = std::make_unique<Entity>("lineH");
+	pos = { 0.f, 0.f };
+	scale = { 2, (float)AEGfxGetWindowHeight() };
+	t->addComponent<Transform2D>(pos, scale, 0.f);
+	t->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	enSystem->rootEntity->transform->AddChild(t->transform);
+	enSystem->entities.push_back(std::move(t));
+
+	auto l = std::make_unique<Entity>("LineV");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), 2 };
+	l->addComponent<Transform2D>(pos, scale, 0.f);
+	l->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	enSystem->rootEntity->transform->AddChild(l->transform);
+	enSystem->entities.push_back(std::move(l));*/
 
 	////////////////////////////////////////////////
 	// 

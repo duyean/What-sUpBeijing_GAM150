@@ -20,5 +20,4 @@
 #include "BaseSystems/Engine/PhysicSystem.hpp"
 #include "BaseSystems/Engine/RenderSystem.hpp"
 #include "BaseSystems/Engine/EventSystem.hpp"
-#include "BaseSystems/Engine/TextMesh.hpp"
 #include "BaseSystems/EaseFunctions/AEVEC2OVERLOAD.hpp"

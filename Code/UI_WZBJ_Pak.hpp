@@ -15,3 +15,5 @@
 #include "SoloBehavior/Button.hpp"
 #include "SoloBehavior/UIElement.hpp"
 #include "SoloBehavior/DecisionBoxManager.hpp"
+#include "BaseSystems/Engine/TextMesh.hpp"
+#include "BaseSystems/Engine/TextBox.hpp"

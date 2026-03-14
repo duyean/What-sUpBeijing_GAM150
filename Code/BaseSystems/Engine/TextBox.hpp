@@ -11,18 +11,27 @@
 #include "OOP.hpp"
 #include "Transform2D.hpp"
 #include "MeshGen.hpp"
+#include "TextMesh.hpp"
 
-enum class TextLineAllignment
+enum struct TextBoxVAllign
 {
 	TOP,
 	CENTER,
 	BOTTOM
 };
 
-class TextMesh : public SoloBehavior
+enum struct TextBoxHAllign
+{
+	LEFT,
+	CENTER,
+	RIGHT
+};
+
+
+class TextBox : public SoloBehavior
 {
 private:
-	std::vector < std::string > lines;
+	TextMesh* textMesh = nullptr;
 public:
 	void awake() override;
 	void init() override;
@@ -30,22 +39,20 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Color color;
-	AEVec2 pos;
-	TextAlignment t_allign;
-	TextLineAllignment tl_allign;
-
-	float padding;
-	float size;
+	TextBoxVAllign v_allign;
+	TextBoxHAllign h_allign;
+	TextAlignment text_allign;
 	const char* text;
-	const char* font;
-	
 
-	TextMesh();
-	TextMesh(AEVec2 _pos, float _size, const char* _text, TextAlignment _allign = TextAlignment::LEFT);
-	TextMesh(AEVec2 _pos, float _size, const char* _text, Color _color, TextAlignment _allign = TextAlignment::LEFT);
-	~TextMesh(){}
+	float text_size;
+	float line_padding;
 
+	float padding_h;
+	float padding_v;
+
+	TextBox();
+	TextBox(const char* _text, float _size, TextBoxVAllign _allign_v = TextBoxVAllign::TOP, TextBoxHAllign _allign_h = TextBoxHAllign::LEFT);
+	~TextBox(){}
 };
 
 #endif

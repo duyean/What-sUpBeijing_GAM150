@@ -80,19 +80,27 @@ bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
         EFFECT_TYPE type = static_cast<EFFECT_TYPE>((*p)["type"].GetInt());
         STACK_BEHAVIOUR behaviour = static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt());
         bool self = static_cast<bool>((*p)["self"].GetInt());
+        std::string filePath = (*p)["texture"].GetString();
+        std::string texture = "Assets/Images/StatusEffectIcons/";
+        if (filePath != "")
+        {
+            texture += filePath;
+            MeshGen::getInstance().CreateTexture(texture.c_str(), texture.c_str());
+            std::cout << "Loaded modifier texture: " << filePath << std::endl;
+        }
 
         if (type == EFFECT_TYPE::ATTRIBUTE_MODIFIER)
         {
             float value = (*p)["value"].GetFloat();
             Game::ATTRIBUTE_TYPE attType = static_cast<Game::ATTRIBUTE_TYPE>((*p)["attribute"].GetInt());
             modifierDatabase.emplace(id,
-                std::make_unique<AttributeModifier>(name, duration, type, nullptr, id, value, attType, behaviour, self));
+                std::make_unique<AttributeModifier>(name, duration, type, texture, id, value, attType, behaviour, self));
         }
         else
         {
             float damage = (*p)["damage"].GetFloat();
             modifierDatabase.emplace(id,
-                std::make_unique<StatusEffect>(name, duration, type, nullptr, id, damage, behaviour, 1, self));
+                std::make_unique<StatusEffect>(name, duration, type, texture, id, damage, behaviour, 1, self));
         }
     }
     return true;

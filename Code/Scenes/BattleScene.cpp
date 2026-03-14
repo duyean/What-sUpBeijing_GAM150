@@ -371,4 +371,18 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
     hpBar->hpBarBG = enemyHPBG.get();
     enSystem->rootEntity->transform->AddChild(enemyHPBG->transform);
     enSystem->entities.push_back(std::move(enemyHPBG));
+
+    //Create enemy status icons
+    for (int i = 0; i < 3; ++i)
+    {
+        auto enemyIcon = std::make_unique<Entity>("StatusIcon");
+        scale = { 30, 30 };
+        pos = { 0, 0 };
+        enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+        enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
+        hpBar->statusIcons.push_back(enemyIcon.get());
+        enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
+        enSystem->entities.push_back(std::move(enemyIcon));
+    }
+
 }

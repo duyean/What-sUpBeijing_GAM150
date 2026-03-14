@@ -71,9 +71,9 @@ public:
 	BLESSING_RARITY blessingRarity;
 
 	//The icon of the blessing
-	AEGfxTexture* logo;
+	std::string logo;
 	Blessing();
-	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*);
+	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, std::string);
 
 	virtual std::unique_ptr<Blessing> Clone() const = 0;
 
@@ -105,7 +105,7 @@ public:
 		std::string name,
 		std::string desc,
 		BLESSING_RARITY rarity,
-		AEGfxTexture* logo,
+		std::string logo,
 		Game::ATTRIBUTE_TYPE type,
 		float val)
 		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo),
@@ -141,7 +141,7 @@ public:
 		std::string name,
 		std::string desc,
 		BLESSING_RARITY rarity,
-		AEGfxTexture* logo,
+		std::string logo,
 		EventType trigger,
 		std::function<void(const EventData&)> effect,
 		int cd)

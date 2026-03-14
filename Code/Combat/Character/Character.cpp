@@ -258,6 +258,11 @@ void Character::ProcessModifiers(void)
 	//No need call UpdateAttributes as StartTurn does it.
 }
 
+std::vector<std::unique_ptr<Modifier>> const& Character::GetModifierList() const
+{
+	return effectList;
+}
+
 void Character::StartTurn(void)
 {
 	ProcessModifiers();

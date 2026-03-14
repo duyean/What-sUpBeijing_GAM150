@@ -95,6 +95,9 @@ public:
 	//Process any modifiers, usually used for damage over time effects
 	virtual void ProcessModifiers(void);
 
+	//Get the modifiers of this unit
+	virtual std::vector<std::unique_ptr<Modifier>> const& GetModifierList() const;
+
 	//End this unit's turn. If extra turns are implemented, edit here
 	virtual void EndTurn(void);
 

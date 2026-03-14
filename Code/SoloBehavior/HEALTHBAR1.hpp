@@ -22,6 +22,7 @@ public:
 	Entity* en = nullptr;
 	Entity* hpBarBG = nullptr;
 	EntityManager* enSystem = nullptr;
+	std::vector<Entity*> statusIcons = {};
 
 	void awake() override;
 	void init() override;

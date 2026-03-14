@@ -3,11 +3,6 @@
 #include "Player.hpp"
 #include "../Combat/Character/Character.hpp"
 
-float newRange(double oldV, double oldMin, double oldMax, double newMin, double newMax)
-{
-	return (float)(((oldV - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + (float)newMin;
-}
-
 void Healthbar1::awake()
 {
 
@@ -36,14 +31,60 @@ void Healthbar1::update()
 	AEVec2 trueScale = { scale.x * hpperc, scale.y };
 	AEVec2 offset{ -scale.x * 0.5f, -100 };
 	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y - 30) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
-	//MeshGen::getInstance().DrawBoxLeft(pos + offset, scale, Color(55, 55, 55, 1), 0);
-	//MeshGen::getInstance().DrawBoxLeft(pos + offset, trueScale, color, 0);
 	hpBarBG->transform->setPosition(pos + offset);
 	hpBarBG->transform->setScale(scale);
 
 	en->transform->setPosition(pos + offset);
 	en->transform->setScale(trueScale);
 	en->getComponent<Mesh>()->color = color;
+
+	//Render status icons
+	for (auto& Entity : statusIcons)
+	{
+		Entity->mesh->isActive = false;
+	}
+
+	auto& modifiers = this->entity->getComponent<Character>()->GetModifierList();
+	int count = 0;
+	for (auto& mod : modifiers)
+	{
+		if (mod->ID != GENERIC_ && mod->icon != "")
+		{
+			AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
+			if (tex != nullptr)
+			{
+				statusIcons[count]->getComponent<Mesh>()->isActive = true;
+				statusIcons[count]->getComponent<Mesh>()->pTex = tex;
+				count++;
+			}
+
+			if (count >= 3)
+			{
+				break;
+			}
+		}
+	}
+
+	if (count <= 0)
+	{
+		return;
+	}
+
+	AEVec2 offset2 = { 0, offset.x * 1.1 };
+	float x_offset = 30 + 10;
+
+	AEVec2 centerPos = pos + offset2;
+	float spacing = x_offset; // horizontal spacing between icons
+
+	int total = std::min(count, 3); // only show up to 3 icons
+	for (int i = 0; i < total; ++i)
+	{
+		// Compute offset so icons are centered as a group
+		float offsetX = (i - (total - 1) / 2.0f) * spacing;
+		AEVec2 iconPos = { centerPos.x + offsetX, centerPos.y };
+
+		statusIcons[i]->transform->setPosition(iconPos);
+	}
 }
 
 void Healthbar1::fixedUpdate()
@@ -55,4 +96,8 @@ void Healthbar1::destroy()
 {
 	Destroy(en);
 	Destroy(hpBarBG);
+	for (auto& entity : statusIcons)
+	{
+		Destroy(entity);
+	}
 }

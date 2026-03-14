@@ -56,7 +56,7 @@ void BaseCamp::Load()
 	auto decisionBox = std::make_unique<Entity>("DecisionBox");
 	decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionBox->addComponent<Mesh>("Box", Color(155, 155, 155, 0.5f), 200, MeshType::BOX_B);
-	decisionBox->addComponent<TextMesh>(pos, 1.5, "wehwehwehweh", Color(255, 255, 255, 1.f));
+	//decisionBox->addComponent<TextMesh>(pos, 1.5, "wehwehwehweh", Color(255, 255, 255, 1.f));
 	decisionBox->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionBox->transform);
 	pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f};
@@ -116,7 +116,7 @@ void BaseCamp::Load()
 
 	auto blessingsText = std::make_unique<Entity>("BlessingsText");
 	pos = { -AEGfxGetWindowWidth() * 0.9f, AEGfxGetWindowHeight() * 0.7f};
-	scale = { 1.f, 1.f };
+	scale = { 300.f, 1.f };
 	blessingsText->addComponent<Transform2D>(pos, scale, 0.f);
 	blessingsText->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
 	blessingsText->addComponent<TextMesh>(pos, 1, "Blessings:", Color(255, 255, 255, 1.f));
@@ -124,7 +124,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(blessingsText->transform);
 	auto artifactsText = std::make_unique<Entity>("ArtifactsText");
 	pos = { -AEGfxGetWindowWidth() * 0.9f, -AEGfxGetWindowHeight() * 0.4f };
-	scale = { 1.f, 1.f };
+	scale = { 300.f, 1.f };
 	artifactsText->addComponent<Transform2D>(pos, scale, 0.f);
 	artifactsText->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
 	artifactsText->addComponent<TextMesh>(pos, 1, "Artifacts:", Color(255, 255, 255, 1.f));
@@ -132,7 +132,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(artifactsText->transform);
 	auto nameText = std::make_unique<Entity>("NameText");
 	pos = { AEGfxGetWindowWidth() * 0.6f, AEGfxGetWindowHeight() * 0.5f };
-	scale = { 1.f, 1.f };
+	scale = { 300.f, 1.f };
 	nameText->addComponent<Transform2D>(pos, scale, 0.f);
 	nameText->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
 	nameText->addComponent<TextMesh>(pos, 0.5f, "Name:", Color(255, 255, 255, 1.f));
@@ -140,7 +140,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(nameText->transform);
 	auto typeDesc = std::make_unique<Entity>("TypeDesc");
 	pos = { AEGfxGetWindowWidth() * 0.6f, AEGfxGetWindowHeight() * 0.4f };
-	scale = { 1.f, 1.f };
+	scale = { 300.f, 1.f };
 	typeDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	typeDesc->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
 	typeDesc->addComponent<TextMesh>(pos, 0.5f, "(Blessings are buffs\nthat only last for\n1 level)", Color(255, 255, 255, 1.f));

@@ -29,7 +29,7 @@ void TextBox::init()
 {
 	textMesh->text = text;
 	textMesh->size = text_size;
-	//textMesh->t_allign = text_allign;
+	textMesh->t_allign = text_allign;
 	textMesh->padding = line_padding;
 	
 
@@ -70,8 +70,11 @@ void TextBox::init()
 	}
 }
 
+
+
 void TextBox::update()
 {
+	textMesh->text = text;
 }
 
 void TextBox::fixedUpdate()

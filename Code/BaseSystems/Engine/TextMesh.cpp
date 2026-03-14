@@ -28,14 +28,13 @@ TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, Color _color, Te
 	tl_allign = TextLineAllignment::TOP;
 }
 
-void TextMesh::awake()
-{
-	
-}
 
-void TextMesh::init()
+void TextMesh::ReadText(const char* _text)
 {
-	std::string copy = text;
+	if (!lines.empty())
+		lines.clear();
+
+	std::string copy = _text;
 	int start = 0;
 
 	for (int i = 0; i < copy.size(); ++i)
@@ -48,11 +47,21 @@ void TextMesh::init()
 		}
 	}
 	lines.push_back(copy.substr(start));
+}
 
+void TextMesh::awake()
+{
+	
+}
+
+void TextMesh::init()
+{	
+	ReadText(text);
 }
 
 void TextMesh::update()
 {
+	ReadText(text);
 	AEVec2 normalised = { pos.x / (AEGfxGetWindowWidth() / 2.f), pos.y / (AEGfxGetWindowHeight() / 2.f) };
 	for (size_t i = 0; i < lines.size(); i++)
 	{

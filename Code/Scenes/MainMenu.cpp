@@ -49,7 +49,6 @@ void MainMenu::Load()
 	pos = { 0.f ,300.f };
 	scale = { 1525.f, 445.f };
 	te->addComponent<Transform2D>(pos, scale, 0.f);
-	//te->addComponent<TextMesh>(AEVec2{ pos.x , pos.y }, 1.5, "THE HEAVENS MOVE", Color{ 255,255,255,1 }, TextAlignment::CENTER);
 	te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(te->transform);
 	enSystem->entities.push_back(std::move(title_en));

@@ -23,6 +23,8 @@ class TextMesh : public SoloBehavior
 {
 private:
 	std::vector < std::string > lines;
+	void ReadText(const char* _text);
+	bool textChanged = false;
 public:
 	void awake() override;
 	void init() override;

@@ -25,15 +25,17 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
+	Transform2D* parent = nullptr;
 	Color color;
 	AEVec2 pos;
+	TextAlignment allign;
 	double size;
 	const char* text;
 	const char* font;
 
 	TextMesh();
-	TextMesh(AEVec2 _pos, double _size, const char* _text);
-	TextMesh(AEVec2 _pos, double _size, const char* _text, Color _color);
+	TextMesh(AEVec2 _pos, double _size, const char* _text, TextAlignment _allign = TextAlignment::LEFT);
+	TextMesh(AEVec2 _pos, double _size, const char* _text, Color _color, TextAlignment _allign = TextAlignment::LEFT);
 	~TextMesh(){}
 
 };

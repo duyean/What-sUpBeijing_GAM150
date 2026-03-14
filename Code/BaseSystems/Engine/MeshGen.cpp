@@ -365,10 +365,12 @@ void MeshGen::RenderFont(Text* const text)
 	{
 	case TextAlignment::LEFT:
 	{
+		f32 width, height;
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
 			text->Xpos,
-			text->Ypos,
+			text->Ypos - (height * 0.2f),
 			text->scale,
 			red,
 			green,
@@ -382,8 +384,8 @@ void MeshGen::RenderFont(Text* const text)
 		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
-			text->Xpos - (width * 0.5f),
-			text->Ypos,
+			text->Xpos - (width * 0.3f),
+			text->Ypos - (height * 0.2f),
 			text->scale,
 			red,
 			green,
@@ -398,8 +400,8 @@ void MeshGen::RenderFont(Text* const text)
 
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
-			text->Xpos - width,
-			text->Ypos,
+			text->Xpos - (width * 0.6f),
+			text->Ypos - (height * 0.2f),
 			text->scale,
 			red,
 			green,

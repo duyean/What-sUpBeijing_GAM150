@@ -6,7 +6,7 @@ class ShopBlessing : public SoloBehavior
 {
 public:
 	std::string GetTextureName();
-	BLESSING_ID GetBlessingId();
+	std::unique_ptr<Blessing>& GetBlessing();
 
 	void awake() override;
 	void init() override;
@@ -17,7 +17,6 @@ public:
 	ShopBlessing();
 	~ShopBlessing();
 private:
-	BLESSING_ID blessingId;
-	std::string texture;
+	std::unique_ptr<Blessing> blessing;
 };
 

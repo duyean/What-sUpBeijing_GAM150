@@ -2,12 +2,12 @@
 
 std::string ShopBlessing::GetTextureName()
 {
-	return texture;
+	return blessing.get()->textureName;
 }
 
-BLESSING_ID ShopBlessing::GetBlessingId()
+std::unique_ptr<Blessing>& ShopBlessing::GetBlessing()
 {
-	return blessingId;
+	return blessing;
 }
 
 void ShopBlessing::awake()
@@ -35,9 +35,7 @@ ShopBlessing::ShopBlessing()
 	std::uniform_int_distribution<int> rand(0, blessingDatabase.size() - 1);
 	auto it = blessingDatabase.begin();
 	std::advance(it, rand(Game::gen));
-	auto randBlessing = it->second->Clone();
-	blessingId = randBlessing.get()->id;
-	texture = randBlessing.get()->textureName;
+	blessing = it->second->Clone();
 }
 
 ShopBlessing::~ShopBlessing()

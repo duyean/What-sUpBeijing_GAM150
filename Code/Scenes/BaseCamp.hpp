@@ -26,7 +26,7 @@ private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
 
-	void PurchaseBlessing(BLESSING_ID id);
+	void DisplayBlessing(std::unique_ptr<Blessing>& b);
 	//Map* map = nullptr;
 public:
 	BaseCamp();

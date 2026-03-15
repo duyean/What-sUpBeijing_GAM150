@@ -252,7 +252,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 
 	//designate map-specific fixed-event node on one of the remaining end nodes
 	printf("Generating Map-Specific Event Node.\n");
-	int eventNodeIndex = std::uniform_int_distribution<>(0, endNodes.size() >= 0 ? static_cast<int>(endNodes.size()) - 1 : 1)(gen);
+	int eventNodeIndex = std::uniform_int_distribution<>(0, endNodes.size() > 0 ? static_cast<int>(endNodes.size()) - 1 : 1)(gen);
 	
 	switch (type)
 	{

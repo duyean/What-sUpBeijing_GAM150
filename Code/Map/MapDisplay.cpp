@@ -64,6 +64,8 @@ void MapDisplay::update()
 			{
 				mapNodesReal[count]->isActive = true;
 				mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
+				if (map.playMap.mapNodes[y][x].type == NodeType::Empty)
+					mapNodesReal[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 			}
 			count++;
 		}	}

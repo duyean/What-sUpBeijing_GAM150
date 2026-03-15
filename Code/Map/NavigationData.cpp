@@ -34,7 +34,7 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 			this->viewMap.mapNodes[y][x].type = NodeType::VisionClear; 
 
 			//reveal any node movable to from entry node
-      			if (!this->viewMap.mapNodes[y][x].e)	this->viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
+      		if (!this->viewMap.mapNodes[y][x].e)	this->viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
 			if (!this->viewMap.mapNodes[y][x].w)	this->viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
 			if (!this->viewMap.mapNodes[y][x].n)	this->viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
 			if (!this->viewMap.mapNodes[y][x].s)	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
@@ -77,7 +77,6 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			break;
 
 		case NodeType::EnemyEncounter:
-			data.playMap.mapNodes[newY][newX].type = NodeType::Empty;
 			break;
 
 		case NodeType::RandomEvent:

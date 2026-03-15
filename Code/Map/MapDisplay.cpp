@@ -35,7 +35,10 @@ void MapDisplay::awake()
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::Exit:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);				
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				break;
+			default:
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 		}
 		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depthBack, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;

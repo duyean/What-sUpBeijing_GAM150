@@ -87,7 +87,7 @@ void LevelScene::Load()
 	for (int x = map.playMap.mapNodes[0].size(); x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size(); y >= 0 ; y--) {
 		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
 		auto mapFog = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
-		pos = { minimapOffX - (float)x * NODE_SIZE, minimapOffY + (float)y * NODE_SIZE };
+		pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE };
 		scale = { NODE_SIZE, NODE_SIZE };
 		mapNode->addComponent<Transform2D>(pos, scale, 0.f);
 		mapFog->addComponent<Transform2D>(pos, scale, 0.f);

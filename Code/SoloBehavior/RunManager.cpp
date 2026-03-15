@@ -53,6 +53,7 @@ void RunManager::ResetSave()
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 {
 	//Add a new blessing, the original blessing from the database is cloned
+	std::cout << "Obtained Blessing: " << bless->blessingName << std::endl;
 	runBlessings.push_back(std::move(bless));
 }
 

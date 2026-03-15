@@ -43,7 +43,6 @@ void Healthbar1::update()
 
 	en->transform->setPosition(pos + offset);
 	en->transform->setScale(trueScale);
-	std::cout << trueScale.x << std::endl;
 	en->getComponent<Mesh>()->color = color;
 }
 

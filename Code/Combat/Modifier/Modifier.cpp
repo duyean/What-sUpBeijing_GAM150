@@ -63,6 +63,7 @@ std::unordered_map<MODIFIER_ID, std::unique_ptr<Modifier>> modifierDatabase;
 
 bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
 {
+    modifierDatabase.clear();
     rapidjson::Document doc = serializer.ReadDocument(fileName);
     if (doc.IsNull())
     {

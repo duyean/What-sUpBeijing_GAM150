@@ -25,6 +25,7 @@ enum struct EventType
 	ReceivedHealing,
 	OnCriticalHP,
 	ModifierAdded,
+	DealtCriticalHit,
 };
 
 //A struct that stores the event data

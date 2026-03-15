@@ -20,6 +20,13 @@ void Shop::AddDisplayEntity(Entity* ent)
 	display.push_back(ent);
 }
 
+void Shop::ChooseSelection(int id)
+{
+	for (std::pair<int, bool> p : selection)
+		p.second = false;
+	selection.find(id)->second = true;
+}
+
 void Shop::awake()
 {
 	BoxCollider2D* col = entity->getComponent<BoxCollider2D>();
@@ -32,6 +39,14 @@ void Shop::awake()
 
 void Shop::init()
 {
+	selection.insert(std::make_pair<int, bool>(0, false));
+	selection.insert(std::make_pair<int, bool>(1, false));
+	selection.insert(std::make_pair<int, bool>(2, false));
+	selection.insert(std::make_pair<int, bool>(3, false));
+	selection.insert(std::make_pair<int, bool>(4, false));
+	selection.insert(std::make_pair<int, bool>(5, false));
+	selection.insert(std::make_pair<int, bool>(6, false));
+	selection.insert(std::make_pair<int, bool>(7, false));
 }
 
 void Shop::update()

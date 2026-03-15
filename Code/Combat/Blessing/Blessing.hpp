@@ -23,7 +23,16 @@ enum struct BLESSING_ID
 	NONE,
 	MINOR_ATK_BUFF,
 	MINOR_DEF_BUFF,
-	MINOR_HP_BUFF
+	MINOR_HP_BUFF,
+	MINOR_CRITRATE_BUFF,
+	MINOR_CRITDMG_BUFF,
+	MAJOR_ATK_BUFF,
+	MAJOR_DEF_BUFF,
+	MAJOR_HP_BUFF,
+	MAJOR_CRITRATE_BUFF,
+	MAJOR_CRITDMG_BUFF,
+	GAIN_ATK_ON_DAMAGE_TAKEN,
+	GAIN_CRIT_DMG_ON_CRIT_HIT
 };
 
 //Enum to determine what kind of blessing
@@ -61,10 +70,15 @@ public:
 	//The rarity of the blessing. Used for the RNG weightage
 	BLESSING_RARITY blessingRarity;
 
+	// The texture of the blessing. Used for rendering in shop
+	std::string textureName;
+
 	//The icon of the blessing
 	AEGfxTexture* logo;
 	Blessing();
-	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*);
+	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*, std::string);
+
+	virtual std::unique_ptr<Blessing> Clone() const = 0;
 
 	//Virtual function to apply this blessing effect
 	virtual void Apply(Character* target) = 0;
@@ -96,10 +110,13 @@ public:
 		BLESSING_RARITY rarity,
 		AEGfxTexture* logo,
 		Game::ATTRIBUTE_TYPE type,
-		float val)
-		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo),
+		float val,
+		std::string texture = "Temp_Texture")
+		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo, texture),
 		attType(type),
 		value(val) {}
+
+	std::unique_ptr<Blessing> Clone() const override;
 
 };
 
@@ -131,13 +148,16 @@ public:
 		AEGfxTexture* logo,
 		EventType trigger,
 		std::function<void(const EventData&)> effect,
-		int cd)
-		: Blessing(id, name, desc, BLESSING_TYPE::TRIGGERED_BLESSING, rarity, logo),
+		int cd,
+		std::string texture = "Temp_Texture")
+		: Blessing(id, name, desc, BLESSING_TYPE::TRIGGERED_BLESSING, rarity, logo, texture),
 		triggerType(trigger),
 		triggerEffect(effect),
 		blessingCooldown(cd),
 		cooldown(0) {
 	}
+
+	std::unique_ptr<Blessing> Clone() const override;
 };
 
 extern std::unordered_map<BLESSING_ID, std::unique_ptr<Blessing>> blessingDatabase;

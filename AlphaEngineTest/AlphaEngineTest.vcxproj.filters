@@ -318,7 +318,7 @@
     <ClCompile Include="..\Code\SoloBehavior\Shop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
+    <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -578,7 +578,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Text.hpp">
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp">
+    <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

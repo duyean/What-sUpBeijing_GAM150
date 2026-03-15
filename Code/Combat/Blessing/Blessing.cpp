@@ -17,7 +17,7 @@ blessingType(BLESSING_TYPE::ATTRIBUTE_BOOST), blessingRarity(BLESSING_RARITY::CO
 {
 }
 
-Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, AEGfxTexture* icon, std::string texture = "Temp_Texture") : id(id),
+Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, std::string icon, std::string texture = "Temp_Texture") : id(id),
 blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarity), logo(icon), textureName(texture)
 {
 }

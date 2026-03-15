@@ -76,7 +76,7 @@ public:
 	//The icon of the blessing
 	std::string logo;
 	Blessing();
-	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*, std::string);
+	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, std::string, std::string);
 
 	virtual std::unique_ptr<Blessing> Clone() const = 0;
 

@@ -13,11 +13,11 @@ This file contains the implementation for a Blessing object for our game.
 #include "../Character/Character.hpp"
 
 Blessing::Blessing() : id(BLESSING_ID::NONE), blessingName("name"), blessingDesc("desc"),
-blessingType(BLESSING_TYPE::ATTRIBUTE_BOOST), blessingRarity(BLESSING_RARITY::COMMON), logo(nullptr) 
+blessingType(BLESSING_TYPE::ATTRIBUTE_BOOST), blessingRarity(BLESSING_RARITY::COMMON), logo("")
 {
 }
 
-Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, AEGfxTexture* icon) : id(id), 
+Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, std::string icon) : id(id), 
 blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarity), logo(icon)
 {
 }
@@ -25,7 +25,7 @@ blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarit
 void AttributeBlessing::Apply(Character* target)
 {
 	//Create a new modifier based on the attribute type and add it to the player
-	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, UNIQUE, true);
+	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, STACK, true, true);
 	target->AddModifier(std::move(mod));
 }
 
@@ -81,51 +81,51 @@ void InitBlessingDatabase()
 	blessingDatabase.clear();
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_ATK_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Minor ATK Boost", "ATK +15%", BLESSING_RARITY::COMMON, nullptr, Game::ATK, 0.15f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Minor ATK Boost", "ATK +15%", BLESSING_RARITY::COMMON, "", Game::ATK, 0.15f));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_DEF_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_DEF_BUFF, "Minor DEF Boost", "DEF +10%", BLESSING_RARITY::COMMON, nullptr, Game::DEF, 0.10f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_DEF_BUFF, "Minor DEF Boost", "DEF +10%", BLESSING_RARITY::COMMON, "", Game::DEF, 0.10f));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_HP_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_HP_BUFF, "Minor HP Boost", "HP +25%", BLESSING_RARITY::COMMON, nullptr, Game::HP, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_HP_BUFF, "Minor HP Boost", "HP +25%", BLESSING_RARITY::COMMON, "", Game::HP, 0.25f));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_CRITRATE_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITRATE_BUFF, "CRIT Rate Boost", "CRIT Rate +10%", BLESSING_RARITY::COMMON, nullptr, Game::CRIT_RATE, 0.10f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITRATE_BUFF, "CRIT Rate Boost", "CRIT Rate +10%", BLESSING_RARITY::COMMON, "", Game::CRIT_RATE, 0.10f));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_CRITDMG_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITDMG_BUFF, "CRIT DMG Boost", "CRIT DMG +20% ", BLESSING_RARITY::COMMON, nullptr, Game::CRIT_DAMAGE, 0.20f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITDMG_BUFF, "CRIT DMG Boost", "CRIT DMG +20% ", BLESSING_RARITY::COMMON, "", Game::CRIT_DAMAGE, 0.20f));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_ATK_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_ATK_BUFF, "Major ATK Boost", "ATK +50%", BLESSING_RARITY::LEGENDARY, nullptr, Game::ATK, 0.50f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_ATK_BUFF, "Major ATK Boost", "ATK +50%", BLESSING_RARITY::LEGENDARY, "", Game::ATK, 0.50f));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_DEF_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_DEF_BUFF, "Major DEF Boost", "DEF +25%", BLESSING_RARITY::LEGENDARY, nullptr, Game::DEF, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_DEF_BUFF, "Major DEF Boost", "DEF +25%", BLESSING_RARITY::LEGENDARY, "", Game::DEF, 0.25f));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_HP_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_HP_BUFF, "Major HP Boost", "HP +75%", BLESSING_RARITY::LEGENDARY, nullptr, Game::HP, 0.75f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_HP_BUFF, "Major HP Boost", "HP +75%", BLESSING_RARITY::LEGENDARY, "", Game::HP, 0.75f));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_CRITRATE_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITRATE_BUFF, "Precision Strike", "CRIT RATE +25%", BLESSING_RARITY::LEGENDARY, nullptr, Game::CRIT_RATE, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITRATE_BUFF, "Precision Strike", "CRIT RATE +25%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_RATE, 0.25f));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_CRITDMG_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITDMG_BUFF, "Ferocity", "CRIT DMG +50%", BLESSING_RARITY::LEGENDARY, nullptr, Game::CRIT_DAMAGE, 0.50f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITDMG_BUFF, "Ferocity", "CRIT DMG +50%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_DAMAGE, 0.50f));
 
 	blessingDatabase.emplace(BLESSING_ID::GAIN_ATK_ON_DAMAGE_TAKEN,
 		std::make_unique<TriggerBlessing>(BLESSING_ID::GAIN_ATK_ON_DAMAGE_TAKEN, "Berserker", "Gain 10% ATK every time you take DMG.", BLESSING_RARITY::MYTHICAL,
-			nullptr, EventType::TookDamage,
+			"", EventType::TookDamage,
 			[](const EventData& data)
 			{
-				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, nullptr, GENERIC_, 0.25f,
+				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.25f,
 					Game::ATK, STACK, true);
 				data.target->AddModifier(std::move(mod));
 			}, -1));
 
 	blessingDatabase.emplace(BLESSING_ID::GAIN_CRIT_DMG_ON_CRIT_HIT,
 		std::make_unique<TriggerBlessing>(BLESSING_ID::GAIN_CRIT_DMG_ON_CRIT_HIT, "Snowball", "Gain 20% CRIT DMG when landing a critical hit.", BLESSING_RARITY::MYTHICAL,
-			nullptr, EventType::DealtCriticalHit,
+			"", EventType::DealtCriticalHit,
 			[](const EventData& data)
 			{
-				auto mod = std::make_unique<AttributeModifier>("Snowball", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, nullptr, GENERIC_, 0.20f,
+				auto mod = std::make_unique<AttributeModifier>("Snowball", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.20f,
 					Game::CRIT_DAMAGE, STACK, true);
 				data.target->AddModifier(std::move(mod));
 			}, -1));

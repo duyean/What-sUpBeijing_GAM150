@@ -6,6 +6,15 @@ void PartyUI::AddIcon(Entity* en)
 	icons.push_back(en);
 }
 
+void PartyUI::AddModifierIcon(int index, Entity* en)
+{
+	if (index < 0 || index >= modifierIcons.size())
+	{
+		throw std::out_of_range("Index out of range");
+	}
+	modifierIcons[index].push_back(en);
+}
+
 void PartyUI::awake()
 {
 
@@ -24,20 +33,77 @@ void PartyUI::update()
 		for (int i = 0; i < party.size(); ++i)
 		{
 			AEVec2 scale = { 100, 100 };
-			if (battleManager->GetActiveUnit() && battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
+			if (battleManager->GetActiveUnit())
 			{
 				if (party[i] == battleManager->GetActiveUnit())
 				{
 					scale = { 150, 150 };
 				}
 			}
+
 			if (icons[i]->transform)
 			{
 				icons[i]->transform->setScale(scale);
-				//Debug to render the status icons
-				//AEVec2 debugPos = { icons[i]->transform->getPosition() };
-				//debugPos.y -= (icons[i]->transform->getScale().y * 0.5f + 50);
-				//MeshGen::getInstance().DrawBox(debugPos, { 20, 20 }, Color(255, 255, 255, 1.f), 0.f);
+			}
+		}
+
+		//Render status icons
+		for (auto& vec : modifierIcons)
+		{
+			for (auto& Entity : vec)
+			{
+				Entity->mesh->isActive = false;
+			}
+		}
+
+		for (int i = 0; i < party.size(); ++i)
+		{
+			auto& modifiers = party[i]->GetModifierList();
+			int modCount = 0;
+			for (auto& mod : modifiers)
+			{
+				std::cout << "Party[" << i << "] Modifier: " << mod->name
+					<< " Icon: " << mod->icon
+					<< " Hidden: " << mod->hidden
+					<< std::endl;
+
+				if (!mod->hidden)
+				{
+					AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
+					if (tex != nullptr)
+					{
+						modifierIcons[i][modCount]->getComponent<Mesh>()->isActive = true;
+						modifierIcons[i][modCount]->getComponent<Mesh>()->pTex = tex;
+						modCount++;
+					}
+
+					if (modCount >= 3)
+					{
+						break;
+					}
+				}
+			}
+
+			if (modCount <= 0)
+			{
+				continue;
+			}
+
+			AEVec2 pos = icons[i]->transform->getPosition();
+			AEVec2 offset2 = { 0, -icons[i]->transform->getScale().y * 0.5f - 20};
+			float x_offset = 30 + 10;
+
+			AEVec2 centerPos = pos + offset2;
+			float spacing = x_offset; // horizontal spacing between icons
+
+			int total = std::min(modCount, 3); // only show up to 3 icons
+			for (int j = 0; j < total; ++j)
+			{
+				// Compute offset so icons are centered as a group
+				float offsetX = (j - (total - 1) / 2.0f) * spacing;
+				AEVec2 iconPos = { centerPos.x + offsetX, centerPos.y };
+
+				modifierIcons[i][j]->transform->setPosition(iconPos);
 			}
 		}
 	}

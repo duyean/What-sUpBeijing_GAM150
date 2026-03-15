@@ -119,6 +119,19 @@ void BattleScene::Load()
         enSystem->rootEntity->transform->AddChild(PartyUnitIcon1->transform);
         enSystem->entities.push_back(std::move(PartyUnitIcon1));
 
+        //Create 3 modifier icons for each party
+            //Create enemy status icons
+        for (int i = 0; i < 3; ++i)
+        {
+            auto characterIcon = std::make_unique<Entity>("StatusIcon");
+            scale = { 30, 30 };
+            pos = { 0, 0 };
+            characterIcon->addComponent<Transform2D>(pos, scale, 0);
+            characterIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
+            pUI->AddModifierIcon(count, characterIcon.get());
+            enSystem->rootEntity->transform->AddChild(characterIcon->transform);
+            enSystem->entities.push_back(std::move(characterIcon));
+        }
         count++;
     }
 

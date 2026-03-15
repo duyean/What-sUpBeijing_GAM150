@@ -178,7 +178,7 @@ void Character::UpdateAttributes(void)
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
-	bool renderText = true;
+	bool renderText = !modifier->hidden;
 	std::string modifierName = modifier->name;
 	AEVec2 offset = { 0, -150 };
 	auto modExists = std::find_if(
@@ -186,11 +186,6 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 		effectList.end(),
 		[&](const std::unique_ptr<Modifier>& m) { return m->ID == modifier->ID; }
 	);
-
-	if (modifier->ID == GENERIC_)
-	{
-		renderText = false;
-	}
 
 	if (modExists != effectList.end()) //Player already has an existing modifier
 	{

@@ -289,7 +289,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 	}
 }
 
-std::vector<Character*> BattleManager::GetPlayerParty()
+std::vector<Character*> BattleManager::GetPlayerParty() const
 {
 	std::vector<Character*> toReturn = {};
 	std::copy_if(battleUnits.begin(), battleUnits.end(), std::back_inserter(toReturn), [](Character* ch) {return ch && ch->GetFaction() == Game::PLAYER; });

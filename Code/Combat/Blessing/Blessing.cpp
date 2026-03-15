@@ -25,7 +25,7 @@ blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarit
 void AttributeBlessing::Apply(Character* target)
 {
 	//Create a new modifier based on the attribute type and add it to the player
-	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, UNIQUE, true);
+	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, STACK, true, true);
 	target->AddModifier(std::move(mod));
 }
 

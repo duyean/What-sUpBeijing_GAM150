@@ -48,7 +48,7 @@ void Healthbar1::update()
 	int count = 0;
 	for (auto& mod : modifiers)
 	{
-		if (mod->ID != GENERIC_ && mod->icon != "")
+		if (!mod->hidden)
 		{
 			AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
 			if (tex != nullptr)

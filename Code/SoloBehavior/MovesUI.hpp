@@ -13,7 +13,12 @@ private:
 	Button* moveButton2 = nullptr;
 	Button* moveButton3 = nullptr;
 	Button* moveButton4 = nullptr;
-	const AEVec2 movesUIPanelPos = {-AEGfxGetWindowWidth() * 0.90f * 0.5f, -AEGfxGetWindowHeight() * 0.6f * 0.5f};
+
+	TextBox* tb1 = nullptr;
+	TextBox* tb2 = nullptr;
+	TextBox* tb3 = nullptr;
+	TextBox* tb4 = nullptr;
+
 
 	void UseCurrMove(MOVE_SLOT ms, Character* ch);
 public:

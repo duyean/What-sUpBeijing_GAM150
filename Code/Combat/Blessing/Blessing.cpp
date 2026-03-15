@@ -12,13 +12,13 @@ This file contains the implementation for a Blessing object for our game.
 #include "Blessing.hpp"
 #include "../Character/Character.hpp"
 
-Blessing::Blessing() : id(BLESSING_ID::NONE), blessingName("name"), blessingDesc("desc"),
-blessingType(BLESSING_TYPE::ATTRIBUTE_BOOST), blessingRarity(BLESSING_RARITY::COMMON), logo("")
+Blessing::Blessing() : id(BLESSING_ID::NONE), blessingName("name"), blessingDesc("desc"), textureName("Temp_Texture"),
+blessingType(BLESSING_TYPE::ATTRIBUTE_BOOST), blessingRarity(BLESSING_RARITY::COMMON), logo("") 
 {
 }
 
-Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, std::string icon) : id(id), 
-blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarity), logo(icon)
+Blessing::Blessing(BLESSING_ID id, std::string name, std::string desc, BLESSING_TYPE type, BLESSING_RARITY rarity, AEGfxTexture* icon, std::string texture = "Temp_Texture") : id(id),
+blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarity), logo(icon), textureName(texture)
 {
 }
 
@@ -81,34 +81,34 @@ void InitBlessingDatabase()
 	blessingDatabase.clear();
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_ATK_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Minor ATK Boost", "ATK +15%", BLESSING_RARITY::COMMON, "", Game::ATK, 0.15f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_ATK_BUFF, "Minor ATK Boost", "ATK +15%", BLESSING_RARITY::COMMON, "", Game::ATK, 0.15f, "ATK_Minor_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_DEF_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_DEF_BUFF, "Minor DEF Boost", "DEF +10%", BLESSING_RARITY::COMMON, "", Game::DEF, 0.10f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_DEF_BUFF, "Minor DEF Boost", "DEF +10%", BLESSING_RARITY::COMMON, "", Game::DEF, 0.10f, "DEF_Minor_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_HP_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_HP_BUFF, "Minor HP Boost", "HP +25%", BLESSING_RARITY::COMMON, "", Game::HP, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_HP_BUFF, "Minor HP Boost", "HP +25%", BLESSING_RARITY::COMMON, "", Game::HP, 0.25f, "HP_Minor_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_CRITRATE_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITRATE_BUFF, "CRIT Rate Boost", "CRIT Rate +10%", BLESSING_RARITY::COMMON, "", Game::CRIT_RATE, 0.10f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITRATE_BUFF, "CRIT Rate Boost", "CRIT Rate +10%", BLESSING_RARITY::COMMON, "", Game::CRIT_RATE, 0.10f, "CRITRATE_Minor_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MINOR_CRITDMG_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITDMG_BUFF, "CRIT DMG Boost", "CRIT DMG +20% ", BLESSING_RARITY::COMMON, "", Game::CRIT_DAMAGE, 0.20f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MINOR_CRITDMG_BUFF, "CRIT DMG Boost", "CRIT DMG +20% ", BLESSING_RARITY::COMMON, "", Game::CRIT_DAMAGE, 0.20f, "CRITDMG_Minor_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_ATK_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_ATK_BUFF, "Major ATK Boost", "ATK +50%", BLESSING_RARITY::LEGENDARY, "", Game::ATK, 0.50f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_ATK_BUFF, "Major ATK Boost", "ATK +50%", BLESSING_RARITY::LEGENDARY, "", Game::ATK, 0.50f, "ATK_Major_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_DEF_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_DEF_BUFF, "Major DEF Boost", "DEF +25%", BLESSING_RARITY::LEGENDARY, "", Game::DEF, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_DEF_BUFF, "Major DEF Boost", "DEF +25%", BLESSING_RARITY::LEGENDARY, "", Game::DEF, 0.25f, "DEF_Major_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_HP_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_HP_BUFF, "Major HP Boost", "HP +75%", BLESSING_RARITY::LEGENDARY, "", Game::HP, 0.75f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_HP_BUFF, "Major HP Boost", "HP +75%", BLESSING_RARITY::LEGENDARY, "", Game::HP, 0.75f, "HP_Major_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_CRITRATE_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITRATE_BUFF, "Precision Strike", "CRIT RATE +25%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_RATE, 0.25f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITRATE_BUFF, "Precision Strike", "CRIT RATE +25%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_RATE, 0.25f, "CRITRATE_Major_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::MAJOR_CRITDMG_BUFF,
-		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITDMG_BUFF, "Ferocity", "CRIT DMG +50%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_DAMAGE, 0.50f));
+		std::make_unique<AttributeBlessing>(BLESSING_ID::MAJOR_CRITDMG_BUFF, "Ferocity", "CRIT DMG +50%", BLESSING_RARITY::LEGENDARY, "", Game::CRIT_DAMAGE, 0.50f, "CRITDMG_Major_Texture"));
 
 	blessingDatabase.emplace(BLESSING_ID::GAIN_ATK_ON_DAMAGE_TAKEN,
 		std::make_unique<TriggerBlessing>(BLESSING_ID::GAIN_ATK_ON_DAMAGE_TAKEN, "Berserker", "Gain 10% ATK every time you take DMG.", BLESSING_RARITY::MYTHICAL,

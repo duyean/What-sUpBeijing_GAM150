@@ -139,6 +139,8 @@ using namespace std;
 
 		void SetFont(const char* filePath, const char* fileName, int pixelSize);
 
+		s8 GetFontID(const char* fontFile);
+
 		void DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align = TextAlignment::LEFT, int layer = 500);
 
 		void RenderFont(Text* const text);

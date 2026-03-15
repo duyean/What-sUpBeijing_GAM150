@@ -20,6 +20,7 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\EventSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
@@ -65,6 +66,7 @@
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Shop.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
@@ -91,6 +93,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Renderable.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\RenderSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Text.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
@@ -138,6 +141,7 @@
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\Shop.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />

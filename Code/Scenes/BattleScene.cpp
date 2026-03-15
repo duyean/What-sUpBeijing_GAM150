@@ -214,8 +214,10 @@ void BattleScene::Load()
     scale = { 400.f, 50.f };
     mb1->addComponent<Transform2D>(pos, scale, 0.f);
     mb1->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-
+    mb1->addComponent<TextBox>("move", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
     Button* moveButton1 = mb1->addComponent<Button>();
+    moveButton1->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb1->transform);
     enSystem->entities.push_back(std::move(mb1));
 
@@ -231,7 +233,10 @@ void BattleScene::Load()
     scale = { 400.f, 50.f };
     mb2->addComponent<Transform2D>(pos, scale, 0.f);
     mb2->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    mb2->addComponent<TextBox>("move", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
     Button* moveButton2 = mb2->addComponent<Button>();
+    moveButton2->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton2->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb2->transform);
     enSystem->entities.push_back(std::move(mb2));
 
@@ -247,7 +252,10 @@ void BattleScene::Load()
     scale = { 400.f, 50.f };
     mb3->addComponent<Transform2D>(pos, scale, 0.f);
     mb3->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    mb3->addComponent<TextBox>("move", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
     Button* moveButton3 = mb3->addComponent<Button>();
+    moveButton3->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton3->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb3->transform);
     enSystem->entities.push_back(std::move(mb3));
 
@@ -263,7 +271,10 @@ void BattleScene::Load()
     scale = { 400.f, 50.f };
     mb4->addComponent<Transform2D>(pos, scale, 0.f);
     mb4->addComponent<Mesh>("Box", "moveButton", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    mb4->addComponent<TextBox>("move", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
     Button* moveButton4 = mb4->addComponent<Button>();
+    moveButton4->SetNormalColor(Color{ 200,200,200,1 });
+    moveButton4->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb4->transform);
     enSystem->entities.push_back(std::move(mb4));
 

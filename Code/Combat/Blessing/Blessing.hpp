@@ -70,10 +70,13 @@ public:
 	//The rarity of the blessing. Used for the RNG weightage
 	BLESSING_RARITY blessingRarity;
 
+	// The texture of the blessing. Used for rendering in shop
+	std::string textureName;
+
 	//The icon of the blessing
 	std::string logo;
 	Blessing();
-	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, std::string);
+	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, AEGfxTexture*, std::string);
 
 	virtual std::unique_ptr<Blessing> Clone() const = 0;
 
@@ -107,8 +110,9 @@ public:
 		BLESSING_RARITY rarity,
 		std::string logo,
 		Game::ATTRIBUTE_TYPE type,
-		float val)
-		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo),
+		float val,
+		std::string texture = "Temp_Texture")
+		: Blessing(id, name, desc, BLESSING_TYPE::ATTRIBUTE_BOOST, rarity, logo, texture),
 		attType(type),
 		value(val) {}
 
@@ -144,8 +148,9 @@ public:
 		std::string logo,
 		EventType trigger,
 		std::function<void(const EventData&)> effect,
-		int cd)
-		: Blessing(id, name, desc, BLESSING_TYPE::TRIGGERED_BLESSING, rarity, logo),
+		int cd,
+		std::string texture = "Temp_Texture")
+		: Blessing(id, name, desc, BLESSING_TYPE::TRIGGERED_BLESSING, rarity, logo, texture),
 		triggerType(trigger),
 		triggerEffect(effect),
 		blessingCooldown(cd),

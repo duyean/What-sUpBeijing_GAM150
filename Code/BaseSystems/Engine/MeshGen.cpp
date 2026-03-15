@@ -350,6 +350,11 @@ void MeshGen::SetFont(const char* filePath, const char* fileName, int pixelSize)
 	pFont.insert({ fileName, AEGfxCreateFont(filePath, pixelSize) });
 }
 
+s8 MeshGen::GetFontID(const char* fontFile)
+{
+	return pFont.at(fontFile);
+}
+
 void MeshGen::DrawFont(float Xpos, float Ypos, float scale, Color color, const char* text, const char* fileName, TextAlignment align, int layer)
 {
 	auto txt = std::make_unique<Text>(Xpos, Ypos, scale, color, text, fileName, align, layer);
@@ -365,10 +370,12 @@ void MeshGen::RenderFont(Text* const text)
 	{
 	case TextAlignment::LEFT:
 	{
+		f32 width, height;
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), text->scale, &width, &height);
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
 			text->Xpos,
-			text->Ypos,
+			text->Ypos - (height),
 			text->scale,
 			red,
 			green,
@@ -379,11 +386,11 @@ void MeshGen::RenderFont(Text* const text)
 	case TextAlignment::CENTER:
 	{
 		f32 width, height;
-		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), text->scale, &width, &height);
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
 			text->Xpos - (width * 0.5f),
-			text->Ypos,
+			text->Ypos - (height),
 			text->scale,
 			red,
 			green,
@@ -394,12 +401,12 @@ void MeshGen::RenderFont(Text* const text)
 	case TextAlignment::RIGHT:
 	{
 		f32 width, height;
-		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), 1.f, &width, &height);
+		AEGfxGetPrintSize(pFont.at(text->fileName), text->text.c_str(), text->scale, &width, &height);
 
 		AEGfxPrint(pFont.at(text->fileName),
 			text->text.c_str(),
 			text->Xpos - width,
-			text->Ypos,
+			text->Ypos - (height),
 			text->scale,
 			red,
 			green,

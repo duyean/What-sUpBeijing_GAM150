@@ -15,7 +15,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/ShopBlessing.hpp"
 #include "../Code/UI_WZBJ_Pak.hpp"
 
-void BaseCamp::DisplayBlessing(std::string nameStr, std::string typeDesc, std::string longDescStr, int shopId)
+void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
 	// Get the three text boxes
 	Entity* name = enSystem->rootEntity->FindByName("NameText");

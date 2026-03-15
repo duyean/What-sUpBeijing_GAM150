@@ -15,16 +15,20 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/ShopBlessing.hpp"
 #include "../Code/UI_WZBJ_Pak.hpp"
 
-void BaseCamp::DisplayBlessing(std::unique_ptr<Blessing>& b)
+void BaseCamp::DisplayBlessing(std::string nameStr, std::string typeDesc, std::string longDescStr, int shopId)
 {
 	// Get the three text boxes
 	Entity* name = enSystem->rootEntity->FindByName("NameText");
 	Entity* type = enSystem->rootEntity->FindByName("TypeDesc");
 	Entity* longDesc = enSystem->rootEntity->FindByName("LongDesc");
 
-	name->getComponent<TextBox>()->text = b.get()->blessingName.c_str();
-	type->getComponent<TextBox>()->text = "(Blessings are buffs that only\nlast for 1 level)";
-	longDesc->getComponent<TextBox>()->text = b.get()->blessingDesc.c_str();
+	name->getComponent<TextBox>()->text = nameStr.c_str();
+	type->getComponent<TextBox>()->text = typeDesc.c_str();
+	longDesc->getComponent<TextBox>()->text = longDescStr.c_str();
+
+	// Shop selection
+	Entity* shop = enSystem->rootEntity->FindByName("Shop");
+	shop->getComponent<Shop>()->ChooseSelection(shopId);
 }
 
 BaseCamp::BaseCamp()
@@ -47,6 +51,8 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void BaseCamp::Load()
 {
+	std::string blessingDesc("(Blessings are buffs that only last for 1 level)");
+
 	meshSystem = &MeshGen::getInstance();
 
 	// Load Meshes for BLESSINGS
@@ -61,6 +67,7 @@ void BaseCamp::Load()
 	meshSystem->CreateTexture("Assets/UI/Blessings/CRITDMG_Minor.png", "CRITDMG_Minor_Texture");
 	meshSystem->CreateTexture("Assets/UI/Blessings/CRITDMG_Major.png", "CRITDMG_Major_Texture");
 	meshSystem->CreateTexture("Assets/UI/Helm.png", "Temp_Texture");
+	meshSystem->CreateTexture("Assets/UI/button_border.png", "Button");
 
 	float collidersize = 100.f;
 
@@ -145,7 +152,7 @@ void BaseCamp::Load()
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	nameText->addComponent<Transform2D>(pos, scale, 0.f);
 	nameText->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
-	nameText->addComponent<TextBox>("Name:", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	nameText->addComponent<TextBox>("Click to view items", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
 	nameText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(nameText->transform);
 	auto typeDesc = std::make_unique<Entity>("TypeDesc");
@@ -153,7 +160,7 @@ void BaseCamp::Load()
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	typeDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	typeDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
-	typeDesc->addComponent<TextBox>("(Blessings are buffs that only\nlast for 1 level)", 0.35f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+	typeDesc->addComponent<TextBox>("", 0.35f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
 	typeDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(typeDesc->transform);
 	auto longDesc = std::make_unique<Entity>("LongDesc");
@@ -161,9 +168,20 @@ void BaseCamp::Load()
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.25f };
 	longDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	longDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
-	longDesc->addComponent<TextBox>("This is a LOOOOONG\ndescription", 0.5f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+	longDesc->addComponent<TextBox>("", 0.5f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
 	longDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(longDesc->transform);
+	auto buyButton = std::make_unique<Entity>("BuyButton");
+	pos = { AEGfxGetWindowWidth() * 0.21f, -AEGfxGetWindowHeight() * 0.25f };
+	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.1f };
+	buyButton->addComponent<Transform2D>(pos, scale, 0.f);
+	buyButton->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 201, MeshType::BOX_T);
+	buyButton->addComponent<TextBox>("BUY", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	Button* actualBuyButton = buyButton->addComponent<Button>();
+	actualBuyButton->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	actualBuyButton->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	buyButton->isActive = false;
+	enSystem->rootEntity->transform->AddChild(buyButton->transform);
 
 	auto blessing1 = std::make_unique<Entity>("Blessing1");
 	pos = { -AEGfxGetWindowWidth() * 0.275f, AEGfxGetWindowHeight() * 0.05f };
@@ -174,7 +192,8 @@ void BaseCamp::Load()
 	Button* blessing1Button = blessing1->addComponent<Button>();
 	blessing1Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
 	blessing1Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
-	blessing1Button->SetOnClick([this, shopB1]() {DisplayBlessing(shopB1->GetBlessing()); });
+	blessing1Button->SetOnClick([this, shopB1, blessingDesc]() {DisplayBlessing(shopB1->GetBlessing().get()->blessingName,
+		blessingDesc, shopB1->GetBlessing().get()->blessingDesc, 0); });
 	blessing1->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessing1->transform);
 
@@ -187,7 +206,8 @@ void BaseCamp::Load()
 	Button* blessing2Button = blessing2->addComponent<Button>();
 	blessing2Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
 	blessing2Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
-	blessing2Button->SetOnClick([this, shopB2]() {DisplayBlessing(shopB2->GetBlessing()); });
+	blessing2Button->SetOnClick([this, shopB2, blessingDesc]() {DisplayBlessing(shopB2->GetBlessing().get()->blessingName,
+		blessingDesc, shopB2->GetBlessing().get()->blessingDesc, 1); });
 	blessing2->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessing2->transform);
 
@@ -200,7 +220,8 @@ void BaseCamp::Load()
 	Button* blessing3Button = blessing3->addComponent<Button>();
 	blessing3Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
 	blessing3Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
-	blessing3Button->SetOnClick([this, shopB3]() {DisplayBlessing(shopB3->GetBlessing()); });
+	blessing3Button->SetOnClick([this, shopB3, blessingDesc]() {DisplayBlessing(shopB3->GetBlessing().get()->blessingName,
+		blessingDesc, shopB3->GetBlessing().get()->blessingDesc, 2); });
 	blessing3->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessing3->transform);
 
@@ -213,7 +234,8 @@ void BaseCamp::Load()
 	Button* blessing4Button = blessing4->addComponent<Button>();
 	blessing4Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
 	blessing4Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
-	blessing4Button->SetOnClick([this, shopB4]() {DisplayBlessing(shopB4->GetBlessing()); });
+	blessing4Button->SetOnClick([this, shopB4, blessingDesc]() {DisplayBlessing(shopB4->GetBlessing().get()->blessingName,
+		blessingDesc, shopB4->GetBlessing().get()->blessingDesc, 3); });
 	blessing4->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessing4->transform);
 
@@ -234,7 +256,7 @@ void BaseCamp::Load()
 	artifactsText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(artifactsText->transform);
 
-	meshSystem->CreateTexture("../../Assets/Images/shop.png", "shop");
+	meshSystem->CreateTexture("Assets/Images/shop.png", "shop");
 	auto shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
 	scale = { 200.f, 200.f };
@@ -263,6 +285,7 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(nameText));
 	enSystem->entities.push_back(std::move(typeDesc));
 	enSystem->entities.push_back(std::move(longDesc));
+	enSystem->entities.push_back(std::move(buyButton));
 	enSystem->entities.push_back(std::move(shop));
 
 	meshSystem->CreateTexture("../../Assets/Images/GuanShiYinBack.png", "player_sprite");

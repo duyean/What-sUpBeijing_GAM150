@@ -9,7 +9,8 @@ void MapDisplay::awake()
 	enSystem = &EntityManager::getInstance();
 	meSystem = &MeshGen::getInstance();
 	int count = 0;
-	int depth = 200;
+	int depthFront	= 201;
+	int depthBack	= 200;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
 
@@ -24,27 +25,24 @@ void MapDisplay::awake()
 		switch (map.playMap.mapNodes[y][x].type)
 		{
 			case NodeType::EnemyEncounter:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::RandomEvent:	//both events have same sprite
 			case NodeType::FixedEvent:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::Entry:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::Exit:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
-				break;
-			default:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);				
 		}
-		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depth, MeshType::BOX_T);
+		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depthBack, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;
 		if (map.viewMap.mapNodes[y][x].type == NodeType::VisionClear)
 		{
 			mapNodesReal[count]->isActive = true;
-			mapNodesFog[count]->isActive = false;
+			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 		}
 		count++;
 	}	}
@@ -61,11 +59,11 @@ void MapDisplay::update()
 	if (x != map.xPos || y != map.yPos)	//check if map updates
 	{
 		int count = 0;
-		for (int j = 0; j < map.playMap.mapNodes[0].size(); j++) { for (int k = 0; k < map.playMap.mapNodes.size(); k++) {
-			if (map.viewMap.mapNodes[k][j].type != NodeType::VisionFog)
+		for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
+			if (map.viewMap.mapNodes[y][x].type != NodeType::VisionFog)
 			{
 				mapNodesReal[count]->isActive = true;
-				mapNodesFog[count]->isActive = false;
+				mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 			}
 			count++;
 		}	}
@@ -73,7 +71,7 @@ void MapDisplay::update()
 		y = map.yPos;
 	}
 }
-
+ 
 void MapDisplay::fixedUpdate()
 {
 }

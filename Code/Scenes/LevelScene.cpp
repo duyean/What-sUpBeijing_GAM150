@@ -63,6 +63,7 @@ void LevelScene::Load()
 
 		std::cout << "Generating a new map since we change level!" << "\n";
 	}
+
 	
 	std::cout << "Now on map: " << RunManager::Instance().GetMapType()<<"\n";
 		

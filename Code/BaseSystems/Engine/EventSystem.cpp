@@ -10,6 +10,7 @@ void EventSystem::addUIElement(UIElement* ui)
 
 void EventSystem::removeUIElement(UIElement* ui)
 {
+	lastObject = nullptr;
 	uiElements.erase(
 		std::remove(uiElements.begin(), uiElements.end(), ui),
 		uiElements.end()
@@ -81,6 +82,7 @@ void EventSystem::Update(double dt)
 	//handle on hover events
 	UIElement* currentHovered = nullptr;
 
+	//if(GameStateManager::GetInstance()->GetCurrentLevel)
 	for (auto& uiElement : uiElements)
 	{
 		//check if current mouse over any UI element
@@ -97,7 +99,7 @@ void EventSystem::Update(double dt)
 	if (currentHovered != lastObject)
 	{
 		//If changed, set last object to call ExitHover
-		if (lastObject)
+		if (lastObject && lastObject->isActive)
 			lastObject->OnHoverExit();
 
 		//set the current hovered object OnHover
@@ -122,6 +124,11 @@ EventSystem::EventSystem()
 EventSystem::~EventSystem()
 {
 
+}
+
+void EventSystem::ClearLastHoverObject()
+{
+	lastObject = nullptr;
 }
 
 

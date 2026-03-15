@@ -9,6 +9,7 @@
 This file contains the definitions for the collection of functions in GameStateManager.h
 *//*______________________________________________________________________*/
 #include "../../SceneHandler_WZBJ_Pak.hpp"
+#include "../../BaseSystems/Engine/EventSystem.hpp"
 #include "../Code/Scenes/BattleScene.hpp"
 #include "../Code/Scenes/SplashScreen.hpp"
 #include "../Code/Scenes/LevelScene.hpp"

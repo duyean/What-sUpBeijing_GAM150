@@ -2,6 +2,7 @@
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/DecisionBoxManager.hpp"
 #include "../Code/Combat/Blessing/Blessing.hpp"
+#include "../Code/SoloBehavior/ShopBlessing.hpp"
 
 #include <vector>
 
@@ -10,6 +11,9 @@ class Shop : public SoloBehavior
 public:
 	void AddDisplayEntity(Entity* ent);
 	void ChooseSelection(int id);
+	void SetBuyButton(Entity* ent);
+	void PurchaseSelection();
+	void AddShopBlessings(ShopBlessing* b, int id);
 
 	void awake() override;
 	void init() override;
@@ -22,6 +26,9 @@ public:
 private:
 	std::vector<Entity*> display{};
 	std::map<int, bool> selection{};
+	int currSelection{ -1 };
+	Entity* buyButton;
+	ShopBlessing* shopBlessings[4];
 	
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

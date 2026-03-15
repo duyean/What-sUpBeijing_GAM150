@@ -15,7 +15,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/ShopBlessing.hpp"
 #include "../Code/UI_WZBJ_Pak.hpp"
 
-void BaseCamp::DisplayBlessing(std::string nameStr, std::string typeDesc, std::string longDescStr, int shopId)
+void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
 	// Get the three text boxes
 	Entity* name = enSystem->rootEntity->FindByName("NameText");
@@ -29,6 +29,12 @@ void BaseCamp::DisplayBlessing(std::string nameStr, std::string typeDesc, std::s
 	// Shop selection
 	Entity* shop = enSystem->rootEntity->FindByName("Shop");
 	shop->getComponent<Shop>()->ChooseSelection(shopId);
+}
+
+void BaseCamp::Purchase()
+{
+	Entity* shop = enSystem->rootEntity->FindByName("Shop");
+	shop->getComponent<Shop>()->PurchaseSelection();
 }
 
 BaseCamp::BaseCamp()
@@ -180,6 +186,7 @@ void BaseCamp::Load()
 	Button* actualBuyButton = buyButton->addComponent<Button>();
 	actualBuyButton->SetNormalColor(Color{ 255, 255, 255, 1.f });
 	actualBuyButton->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	actualBuyButton->SetOnClick([this]() {Purchase(); });
 	buyButton->isActive = false;
 	enSystem->rootEntity->transform->AddChild(buyButton->transform);
 
@@ -274,6 +281,11 @@ void BaseCamp::Load()
 	s->AddDisplayEntity(nameText.get());
 	s->AddDisplayEntity(typeDesc.get());
 	s->AddDisplayEntity(longDesc.get());
+	s->SetBuyButton(buyButton.get());
+	s->AddShopBlessings(shopB1, 0);
+	s->AddShopBlessings(shopB2, 1);
+	s->AddShopBlessings(shopB3, 2);
+	s->AddShopBlessings(shopB4, 3);
 	enSystem->rootEntity->transform->AddChild(shop->transform);
 	enSystem->entities.push_back(std::move(shopBackground));
 	enSystem->entities.push_back(std::move(blessing1));

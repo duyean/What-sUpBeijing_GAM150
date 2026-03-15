@@ -1,4 +1,5 @@
 #include "Shop.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
@@ -22,9 +23,39 @@ void Shop::AddDisplayEntity(Entity* ent)
 
 void Shop::ChooseSelection(int id)
 {
+	currSelection = id;
+	if (selection.find(currSelection)->second != true)
+		buyButton->isActive = true;
+	else
+		buyButton->isActive = false;
+}
+
+void Shop::SetBuyButton(Entity* ent)
+{
+	buyButton = ent;
+}
+
+void Shop::PurchaseSelection()
+{
+	// Purchase logic
+	selection.find(currSelection)->second = true;
+
+	// Selection is Blessing
+	if (currSelection <= 3)
+	{
+		auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
+		RunManager::Instance().AddBlessing(std::move(b));
+	}
+
+	// UI elements
 	for (std::pair<int, bool> p : selection)
 		p.second = false;
-	selection.find(id)->second = true;
+	buyButton->isActive = false;
+}
+
+void Shop::AddShopBlessings(ShopBlessing* b, int id)
+{
+	shopBlessings[id] = b;
 }
 
 void Shop::awake()

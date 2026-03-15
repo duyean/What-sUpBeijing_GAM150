@@ -34,7 +34,7 @@ public:
 
 private:	
 	bool p_overObject = false;
-
+	UIElement* lastObject = nullptr;
 public:
 
 	PointerEventData eventData;

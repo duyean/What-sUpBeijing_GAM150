@@ -20,11 +20,11 @@ private:
 	TextBox* tb4 = nullptr;
 
 	Entity* tooltip = nullptr;
-	bool displayTT;
 
 
 	void UseCurrMove(MOVE_SLOT ms, Character* ch);
-	void DisplayToolTip();
+	void DisplayToolTip(MOVE_SLOT ms);
+	void HideToolTip();
 public:
 	void awake() override;
 	void init() override;

@@ -54,9 +54,13 @@ void Button::OnPointerTriggered(const PointerEventData& event)
 void Button::OnHover()
 {
 	buttonMesh->color = highlighted_color;
+	if (onHover)
+		onHover();
 }
 
 void Button::OnHoverExit()
 {
 	buttonMesh->color = normal_color;
+	if (onHoverExit)
+		onHoverExit();
 }

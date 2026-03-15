@@ -69,20 +69,45 @@ void EventSystem::Update(double dt)
 	//check for each ui element whether it is colliding with it
 	for (auto& uiElement : uiElements) {
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
-		{
-			uiElement->OnHover();
-
+		{			
 			//call the respective dispatchers to return event data
 			if (AEInputCheckTriggered(AEVK_LBUTTON))
 			{
 				DispatchPointerTriggered(uiElement, eventData);
 			}			
 		}
-		else
+	}
+
+	//handle on hover events
+	UIElement* currentHovered = nullptr;
+
+	for (auto& uiElement : uiElements)
+	{
+		//check if current mouse over any UI element
+		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{
-			uiElement->OnHoverExit();
+			//set the current hovered
+			currentHovered = uiElement;
+			//break to skip any other elements
+			break; 
 		}
 	}
+
+	//Check if the current hovered got changed
+	if (currentHovered != lastObject)
+	{
+		//If changed, set last object to call ExitHover
+		if (lastObject)
+			lastObject->OnHoverExit();
+
+		//set the current hovered object OnHover
+		if (currentHovered)
+			currentHovered->OnHover();
+		
+		//reset the new object
+		lastObject = currentHovered;
+	}
+	
 }
 
 bool EventSystem::IsPointerOverObject()

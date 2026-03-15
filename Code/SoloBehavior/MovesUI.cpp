@@ -1,5 +1,6 @@
 #include "MovesUI.hpp"
 #include "../Combat/BattleManager/BattleManager.hpp"
+#include "../BaseSystems/Engine/EventSystem.hpp"
 
 void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
@@ -27,6 +28,8 @@ void MovesUI::init()
 	tb3 = moveButton3->entity->getComponent<TextBox>();
 	tb4 = moveButton4->entity->getComponent<TextBox>();
 
+	tooltip = EntityManager::getInstance().FindByNameGLOBAL("ToolTipUI");
+
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
 		moveButton1->SetOnClick([this]() {UseCurrMove(MOVE_SLOT_1, battleManager->GetActiveUnit()); });
@@ -49,8 +52,10 @@ void MovesUI::update()
 		tb2->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_2)].name).c_str();
 		tb3->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_3)].name).c_str();
 		tb4->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str();
-
 	}
+	AEVec2 ttbox_scale = tb1->entity->transform->getScale();
+	AEVec2 mouseCoord = { EventSystem::getInstance().eventData.x , EventSystem::getInstance().eventData.y };
+	tooltip->transform->setPosition({ mouseCoord.x + (ttbox_scale.x / 2), mouseCoord.y + (ttbox_scale.y) });
 }
 
 void MovesUI::fixedUpdate()

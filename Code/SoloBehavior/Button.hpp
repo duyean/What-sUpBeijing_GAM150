@@ -51,6 +51,7 @@ public:
 
 private:
 	Callback onClick;
+	Callback onHover;
 };
 
 

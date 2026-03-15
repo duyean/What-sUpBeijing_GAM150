@@ -32,14 +32,12 @@ public:
 	EventSystem();
 	~EventSystem();
 
-private:
-
-	PointerEventData eventData;
+private:	
 	bool p_overObject = false;
 
 public:
 
-
+	PointerEventData eventData;
 	EventSystem(const EventSystem&) = delete;
 	EventSystem& operator=(const EventSystem&) = delete;
 

@@ -58,10 +58,9 @@ void EventSystem::Update(double dt)
 	s32 screen_x_offset = AEGfxGetWindowWidth() / 2;
 	s32 screen_y_offset = AEGfxGetWindowHeight() / 2;
 
-
 	// Mouse poition in world space (center being middle of the screen):
 	eventData.x = m_x - screen_x_offset;
-	eventData.y = m_y - screen_y_offset;
+	eventData.y = -m_y + screen_y_offset;
 
 	// Mouse position in screen space (center being top left of the screen):
 	eventData.delta_x = m_x;

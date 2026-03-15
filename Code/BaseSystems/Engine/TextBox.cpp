@@ -31,7 +31,7 @@ void TextBox::init()
 	textMesh->size = text_size;
 	textMesh->t_allign = text_allign;
 	textMesh->padding = line_padding;
-	
+
 
 	switch (v_allign)
 	{
@@ -50,7 +50,7 @@ void TextBox::init()
 	default:
 		break;
 	}
-	
+
 	switch (h_allign)
 	{
 	case TextBoxHAllign::LEFT:
@@ -69,8 +69,6 @@ void TextBox::init()
 		break;
 	}
 }
-
-
 
 void TextBox::update()
 {

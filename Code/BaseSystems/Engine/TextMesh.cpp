@@ -2,8 +2,8 @@
 
 TextMesh::TextMesh()
 {
-	color = {0,0,0,255};
-	pos = {0, 0};
+	color = { 0,0,0,255 };
+	pos = { 0, 0 };
 	size = 1;
 	text = "text";
 	font = "liberi";
@@ -14,7 +14,7 @@ TextMesh::TextMesh()
 
 TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, TextAlignment _allign)
 	: pos(_pos), size(_size), text(_text), t_allign(_allign)
-{	
+{
 	font = "liberi";
 	padding = 1.f;
 	tl_allign = TextLineAllignment::TOP;
@@ -34,28 +34,63 @@ void TextMesh::ReadText(const char* _text)
 	if (!lines.empty())
 		lines.clear();
 
+	f32 width, height;
+	AEGfxGetPrintSize(MeshGen::getInstance().GetFontID(font), "a", size, &width, &height);
+	int maxChars = int(entity->transform->getScale().x / (width * AEGfxGetWindowWidth() / 2));
+
 	std::string copy = _text;
 	int start = 0;
+	int lastSpace = -1;
 
 	for (int i = 0; i < copy.size(); ++i)
 	{
 		if (copy[i] == '\n')
 		{
-			std::string newStr = copy.substr(start, i - start);
-			lines.push_back(newStr);
+			lines.push_back(copy.substr(start, i - start));
+			lines.push_back("");
 			start = i + 1;
+			lastSpace = -1;
+			continue;
 		}
+
+		if (entity->transform->getScale().x > (width * AEGfxGetWindowWidth() / 2))
+		{
+			if (std::isspace(copy[i]))
+				lastSpace = i;
+
+			if (i - start >= maxChars)
+			{
+				if (lastSpace > start)
+				{
+					lines.push_back(copy.substr(start, lastSpace - start));
+					start = lastSpace + 1;
+				}
+				else
+				{
+					lines.push_back(copy.substr(start, maxChars));
+					start += maxChars;
+				}
+
+				lastSpace = -1;
+				i = start - 1;
+			}
+		}
+		
 	}
-	lines.push_back(copy.substr(start));
+
+	if (start < copy.size())
+	{
+		lines.push_back(copy.substr(start));
+	}
 }
 
 void TextMesh::awake()
 {
-	
+
 }
 
 void TextMesh::init()
-{	
+{
 	ReadText(text);
 }
 
@@ -82,21 +117,16 @@ void TextMesh::update()
 		default:
 			break;
 		}
-		
+
 	}
 }
 
 void TextMesh::fixedUpdate()
 {
-	
+
 }
 
 void TextMesh::destroy()
 {
-	
+
 }
-
-
-
-
-

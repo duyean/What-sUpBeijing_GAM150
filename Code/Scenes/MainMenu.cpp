@@ -129,10 +129,10 @@ void MainMenu::Load()
 
 	/*auto test = std::make_unique<Entity>("Text");
 	pos = { 0.f, 0.f };
-	scale = { 300.f, 300.f };
+	scale = { 200.f, 200.f };
 	test->addComponent<Transform2D>(pos, scale, 0.f);
 	test->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	test->addComponent<TextBox>("This is the first line\nthis is the second line\nthis is the third line", 0.4f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	test->addComponent<TextBox>("This is the first line this is the second line this is the third line", 0.4f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
 	enSystem->rootEntity->transform->AddChild(test->transform);
 	enSystem->entities.push_back(std::move(test));
 
@@ -198,7 +198,7 @@ This function frees splash screen image used.
 void MainMenu::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;
-	for (auto& e : enSystem->entities) {
-		e->toDestroy = true;
-	}
+    for (auto& e : enSystem->entities) {
+        e->toDestroy = true;
+    }
 }

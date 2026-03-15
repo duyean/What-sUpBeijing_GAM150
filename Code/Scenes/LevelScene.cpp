@@ -130,45 +130,83 @@ void LevelScene::Load()
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 
+
+	meshSystem->CreateTexture("Assets/UI/PathArrow.png", "path_arrow_sprite");
+
 	auto n_path = std::make_unique<Entity>("N_Path");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, (float)AEGfxGetWindowHeight() / 2 - scale.y/2};
 	n_path->addComponent<Transform2D>(pos, scale, 0.f);
-	n_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
+	//n_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	n_path->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
 	n_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(n_path->transform);
+	
+	auto n_path_sprite = std::make_unique<Entity>("N_Path_sprite");
+	scale = { 0.05f, 0.5f }; pos = { 0.f, 0.f };
+	n_path_sprite->addComponent<Transform2D>(pos, scale, 0.f);
+	n_path_sprite->addComponent<Mesh>("Box", "path_arrow_sprite", Color(50, 50, 50, 1.f), 102, MeshType::BOX_T);
+	n_path->transform->AddChild(n_path_sprite->transform);
+
 	enSystem->entities.push_back(std::move(n_path));
+	enSystem->entities.push_back(std::move(n_path_sprite));
+	
 
 	auto e_path = std::make_unique<Entity>("E_Path");	
 	scale = { collidersize, (float)AEGfxGetWindowHeight() };
 	pos = { (float)AEGfxGetWindowWidth()/2 - scale.x/2, 0.f };
 	e_path->addComponent<Transform2D>(pos, scale, 0.f);
-	e_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
+	//e_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	e_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	e_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(e_path->transform);
+
+	auto e_path_sprite = std::make_unique<Entity>("E_Path_sprite");
+	scale = {0.6f, 0.05f }; pos = { 0.f, 0.f };
+	e_path_sprite->addComponent<Transform2D>(pos, scale, -90.f);
+	e_path_sprite->addComponent<Mesh>("Box", "path_arrow_sprite", Color(50, 50, 50, 1.f), 102, MeshType::BOX_T);
+	e_path->transform->AddChild(e_path_sprite->transform);
+
 	enSystem->entities.push_back(std::move(e_path));
+	enSystem->entities.push_back(std::move(e_path_sprite));
+
 
 	auto s_path = std::make_unique<Entity>("S_Path");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, scale.y/2 - (float)AEGfxGetWindowHeight()/2};
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
-	s_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
+	//s_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	s_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	s_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
+
+	auto s_path_sprite = std::make_unique<Entity>("S_Path_sprite");
+	scale = { 0.05f, 0.5f }; pos = { 0.f, 0.f };
+	s_path_sprite->addComponent<Transform2D>(pos, scale, 180.f);
+	s_path_sprite->addComponent<Mesh>("Box", "path_arrow_sprite", Color(50, 50, 50, 1.f), 102, MeshType::BOX_T);
+	s_path->transform->AddChild(s_path_sprite->transform);
+
 	enSystem->entities.push_back(std::move(s_path));
+	enSystem->entities.push_back(std::move(s_path_sprite));
+
 
 	auto w_path = std::make_unique<Entity>("W_Path");
 	scale = { collidersize, (float)AEGfxGetWindowHeight() };
 	pos = { scale.x/2 - (float)AEGfxGetWindowWidth() / 2, 0.f };
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
-	w_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
+	//w_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	w_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	w_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
+
+	auto w_path_sprite = std::make_unique<Entity>("W_Path_sprite");
+	scale = { 0.6f, 0.05f }; pos = { 0.f, 0.f };
+	w_path_sprite->addComponent<Transform2D>(pos, scale, 90.f);
+	w_path_sprite->addComponent<Mesh>("Box", "path_arrow_sprite", Color(50, 50, 50, 1.f), 102, MeshType::BOX_T);
+	w_path->transform->AddChild(w_path_sprite->transform);
+
 	enSystem->entities.push_back(std::move(w_path));
+	enSystem->entities.push_back(std::move(w_path_sprite));
 
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
 	SE_Manager->addComponent<Transform2D>();

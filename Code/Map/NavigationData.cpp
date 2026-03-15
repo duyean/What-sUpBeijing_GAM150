@@ -69,7 +69,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 	//used for easier parsing
 	NodeType currentNodeType = data.playMap.mapNodes[newY][newX].type;
 
-	//trigger node if something is present
+	//trigger node if something is present (content moved to EdgeManager.cpp for some reason)
 	switch (currentNodeType)
 	{
 		case NodeType::Empty:
@@ -103,7 +103,6 @@ void TravelNode(NavigationData& data, int newX, int newY)
 			//mapType data is used to decide what kind of boss spawns
 			break;
 	}
-
 }
 
 void GetCurrentNodeInfo(NavigationData data)

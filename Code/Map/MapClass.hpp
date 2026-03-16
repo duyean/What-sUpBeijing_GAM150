@@ -18,6 +18,7 @@ public:
 	bool LoadMap(JSONSerializer& serializer, std::string fileName);
 
 	Map();
+	~Map();
 
 	Map& operator=(const Map & other)
 	{

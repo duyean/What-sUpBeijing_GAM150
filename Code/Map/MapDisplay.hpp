@@ -14,11 +14,12 @@ private:
 
 public:
 	NavigationData& map;
+	Entity* mapCharIcon = {};
 	std::vector<Entity*> mapNodesReal = {};
 	std::vector<Entity*> mapNodesFog = {};
 	int x, y;
 
-	#define TEXTURE_COUNT 6
+	#define TEXTURE_COUNT 8
 
 	string textureDir[TEXTURE_COUNT] =
 	{
@@ -27,7 +28,9 @@ public:
 	"../../Assets/Images/MapIcons/Exclamation.png",		//enemy encounter
 	"../../Assets/Images/MapIcons/Question.png",		//random encounter
 	"../../Assets/Images/MapIcons/Entrance.png",		//map start
-	"../../Assets/Images/MapIcons/Exit.png"				//boss fight
+	"../../Assets/Images/MapIcons/Exit.png",			//boss fight
+	"../../Assets/Images/MapIcons/Wall.png",			//shop (TEMPORARY PLS REPLACE)
+	"../../Assets/Images/MapIcons/Sprite.png"			//player sprite 
 	};
 
 	string textureName[TEXTURE_COUNT] =
@@ -37,7 +40,9 @@ public:
 	"EncounterTile",	//enemy encounter
 	"EventTile",		//random encounter
 	"EntranceTile",		//map start
-	"ExitTile"			//boss fight
+	"ExitTile",			//boss fight
+	"ShopTile",			//shop
+	"PlayerIcon"		//player sprite 
 	};
 
 	EntityManager* enSystem = nullptr;

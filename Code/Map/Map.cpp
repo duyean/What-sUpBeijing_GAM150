@@ -226,8 +226,12 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	printf("All Nodes Explored!\n");
 
 	//print debug map after exploration
+	/*
 	printf("Printing Map Display post-Exploration\n");
-	//Map::DebugPrint(travelPath);
+	Map::DebugPrint(travelPath);
+	*/
+
+	printf("Listing All Travellled Nodes: %d\n", endNodes.size());
 
 	int largestIndex = 0;
 
@@ -477,4 +481,11 @@ Map::Map()
 {
 	Map::mapType = MapType::Debug;
 	//bruh
+}
+
+Map::~Map()
+{
+	for (std::vector<MapNode> v : mapNodes)
+		v.clear();
+	mapNodes.clear();
 }

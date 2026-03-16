@@ -321,6 +321,15 @@
     <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Slider.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SettingsScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -580,6 +589,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Slider.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SettingsScreen.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

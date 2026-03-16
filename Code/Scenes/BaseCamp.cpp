@@ -320,18 +320,30 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 
+	meshSystem->CreateTexture("Assets/UI/PathArrow.png", "path_arrow_sprite");
 	auto baseExit = std::make_unique<Entity>("baseExit");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, scale.y / 2 - (float)AEGfxGetWindowHeight() / 2 };
 	baseExit->addComponent<Transform2D>(pos, scale, 0.f);
-	baseExit->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
+	//baseExit->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	baseExit->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	baseExit->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(baseExit->transform);
-	enSystem->entities.push_back(std::move(baseExit));
 
+	auto baseExit_sprite = std::make_unique<Entity>("S_Path_sprite");
+	scale = { 0.05f, 0.5f }; pos = { 0.f, 0.f };
+	baseExit_sprite->addComponent<Transform2D>(pos, scale, 180.f);
+	baseExit_sprite->addComponent<Mesh>("Box", "path_arrow_sprite", Color(50, 50, 50, 1.f), 102, MeshType::BOX_T);
+	baseExit->transform->AddChild(baseExit_sprite->transform);
+
+	enSystem->entities.push_back(std::move(baseExit));
+	enSystem->entities.push_back(std::move(baseExit_sprite));
+
+	
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
 	SE_Manager->addComponent<EdgeManagerBase>();
+	pos = { 0.f, 0.f }; scale = { 1.f, 1.f };
+	SE_Manager->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(SE_Manager));
 }
 

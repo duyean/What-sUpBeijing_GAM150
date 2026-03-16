@@ -26,6 +26,7 @@ private:
 
 	SceneEdge* base_exit = nullptr;
 	TransitionScreen* ts = nullptr;
+	Entity* player = nullptr;
 
 	bool switch_BC = false;
 

@@ -15,7 +15,8 @@ void BattleManager::init()
 }
 
 BattleManager::BattleManager() : delay(0), wait(false),
-currentActiveUnit(0), enemyCount(0), inBattle(false), outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0), activeUnit(nullptr)
+currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false), 
+outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0), activeUnit(nullptr)
 {
 
 }
@@ -195,13 +196,15 @@ void BattleManager::update()
 	if (activeUnit->GetFaction() == Game::PLAYER) //Player's turn
 	{
 		ProcessTargeting();
-		if (lastTargetedUnit)
+		if (!activeUnit->IsEndingTurn() && wait && !activeUnit->IsDead())
 		{
-			//Placeholder to render targeting UI
-			MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), {100, 100}, Color(255, 0, 0, 0.3f));
-		}
-		if (!activeUnit->IsEndingTurn() && wait)
-		{
+
+			if (lastTargetedUnit)
+			{
+				//Placeholder to render targeting UI
+				MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), { 100, 100 }, Color(255, 0, 0, 0.3f));
+			}
+
 			//Register Inputs
 			if (AEInputCheckTriggered(AEVK_Z))
 			{
@@ -285,6 +288,17 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			std::advance(it, dist(Game::gen));
 			auto randomBlessing = it->second->Clone();
 			RunManager::Instance().AddBlessing(std::move(randomBlessing));
+		}
+	}
+	else if (dead->GetFaction() == Game::FACTION::PLAYER)
+	{
+		--playerCount;
+		if (playerCount <= 0)
+		{
+			outcome = DEFEAT;
+			AEVec2 pos = { 0.f, 225 };
+			CombatUIManager::Instance().CreateMessageText(pos, "Game Over!");
+			delay = 1.5f;
 		}
 	}
 }

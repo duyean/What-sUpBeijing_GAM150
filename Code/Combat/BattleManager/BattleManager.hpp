@@ -31,6 +31,9 @@ class BattleManager : public SoloBehavior
 	//Number of enemies in battle
 	int enemyCount;
 
+	//Number of player characters in battle
+	int playerCount;
+
 	//Boolean to wait for input
 	bool wait;
 

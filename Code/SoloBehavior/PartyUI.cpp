@@ -15,6 +15,11 @@ void PartyUI::AddModifierIcon(int index, Entity* en)
 	modifierIcons[index].push_back(en);
 }
 
+void PartyUI::AddHealthBarEntity(Entity* en)
+{
+	healthBars.push_back(en);
+}
+
 void PartyUI::awake()
 {
 
@@ -45,6 +50,15 @@ void PartyUI::update()
 			{
 				icons[i]->transform->setScale(scale);
 			}
+
+			if (party[i]->IsDead())
+			{
+				icons[i]->mesh->color = Color(255, 0, 0, 1.0f);
+			}
+
+			float hpperc = party[i]->GetHealthPercentage();
+			AEVec2 trueScale = { 230 * hpperc, 40 };
+			healthBars[i]->transform->setScale(trueScale);
 		}
 
 		//Render status icons

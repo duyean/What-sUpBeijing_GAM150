@@ -114,10 +114,37 @@ void BattleScene::Load()
         pos = { 60.f + (count * 250), -AEGfxGetWindowHeight() * 0.7f * 0.5f};
         scale = { 100, 100 };
         PartyUnitIcon1->addComponent<Transform2D>(pos, scale, 0.f);
-        PartyUnitIcon1->addComponent<Mesh>("Box", ch->characterIconTexture.c_str(), Color(255, 255, 255, 1.f), 101, MeshType::BOX_T);
+        PartyUnitIcon1->addComponent<Mesh>("Box", ch->characterIconTexture.c_str(), Color(255, 255, 255, 1.f), 103, MeshType::BOX_T);
         pUI->AddIcon(PartyUnitIcon1.get());
         enSystem->rootEntity->transform->AddChild(PartyUnitIcon1->transform);
         enSystem->entities.push_back(std::move(PartyUnitIcon1));
+
+        //Create Party UI Health
+        auto partyUIHealthBar = std::make_unique<Entity>("PartyUIHealth");
+        float angle = 0;
+        float posX = 0;
+        switch (count)
+        {
+        case 0:
+            angle = 9.5;
+            posX = -40;
+            break;
+        case 1:
+            angle = -15.0f;
+            posX = 260;
+            break;
+        case 2:
+            angle = 11.5f;
+            posX = 440;
+            break;
+        }
+        pos = { posX, (-AEGfxGetWindowHeight() * 0.5f) - ((count == 2) ? 5.f : 0.f)};
+        scale = { 210, 210 };
+        partyUIHealthBar->addComponent<Transform2D>(pos, scale, 90 - angle);
+        partyUIHealthBar->addComponent<Mesh>("Box", Color(0, 255, 255, 1.f), 101, MeshType::BOX_BL);
+        pUI->AddHealthBarEntity(partyUIHealthBar.get());
+        enSystem->rootEntity->transform->AddChild(partyUIHealthBar->transform);
+        enSystem->entities.push_back(std::move(partyUIHealthBar));
 
         //Create 3 modifier icons for each party
             //Create enemy status icons
@@ -127,7 +154,7 @@ void BattleScene::Load()
             scale = { 30, 30 };
             pos = { 0, 0 };
             characterIcon->addComponent<Transform2D>(pos, scale, 0);
-            characterIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
+            characterIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 103, MeshType::BOX_T);
             pUI->AddModifierIcon(count, characterIcon.get());
             enSystem->rootEntity->transform->AddChild(characterIcon->transform);
             enSystem->entities.push_back(std::move(characterIcon));
@@ -179,7 +206,7 @@ void BattleScene::Load()
     pos = { 0.f, 0.f };
     scale = { static_cast<float>(AEGfxGetWindowWidth()), static_cast<float>(AEGfxGetWindowHeight()) };
     UI_Bottom2->addComponent<Transform2D>(pos, scale, 0.f);
-    UI_Bottom2->addComponent<Mesh>("Box", "Bottom2", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    UI_Bottom2->addComponent<Mesh>("Box", "Bottom2", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(UI_Bottom2->transform);
     enSystem->entities.push_back(std::move(UI_Bottom2));
 
@@ -188,7 +215,7 @@ void BattleScene::Load()
     pos = { 0.f, 0.f };
     scale = { static_cast<float>(AEGfxGetWindowWidth()), static_cast<float>(AEGfxGetWindowHeight()) };
     UI_Bottom3->addComponent<Transform2D>(pos, scale, 0.f);
-    UI_Bottom3->addComponent<Mesh>("Box", "Bottom3", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+    UI_Bottom3->addComponent<Mesh>("Box", "Bottom3", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(UI_Bottom3->transform);
     enSystem->entities.push_back(std::move(UI_Bottom3));
 

@@ -116,7 +116,7 @@ void InitBlessingDatabase()
 			[](const EventData& data)
 			{
 				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.25f,
-					Game::ATK, STACK, true);
+					Game::ATK, STACK, true, true);
 				data.target->AddModifier(std::move(mod));
 			}, -1));
 
@@ -126,7 +126,7 @@ void InitBlessingDatabase()
 			[](const EventData& data)
 			{
 				auto mod = std::make_unique<AttributeModifier>("Snowball", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.20f,
-					Game::CRIT_DAMAGE, STACK, true);
+					Game::CRIT_DAMAGE, STACK, true, true);
 				data.target->AddModifier(std::move(mod));
 			}, -1));
 }

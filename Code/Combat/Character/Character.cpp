@@ -260,6 +260,12 @@ std::vector<std::unique_ptr<Modifier>> const& Character::GetModifierList() const
 
 void Character::StartTurn(void)
 {
+	if (isDead)
+	{
+		turnFinished = true;
+		endingTurn = true;
+		return;
+	}
 	ProcessModifiers();
 	UpdateAttributes();
 	turnFinished = false;
@@ -274,6 +280,10 @@ void Character::StartTurn(void)
 
 void Character::AIAttack()
 {
+	if (isDead)
+	{
+		return;
+	}
 	std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
 	MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
 	auto& moveToUse = moveList[slotSelected];
@@ -305,7 +315,9 @@ void Character::Death(void)
 {
 	if (onDeath)
 	{
+		effectList.clear();
 		std::cout << name << " has died!\n";
+		isDead = true;
 		onDeath(this);
 	}
 }

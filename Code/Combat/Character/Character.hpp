@@ -56,6 +56,9 @@ private:
 	//Used by combat manager to determine this unit has finished acting
 	bool turnFinished;
 
+	//Whether this unit is dead
+	bool isDead;
+
 protected:
 	//Whether this unit is an enemy or the player's party
 	Game::FACTION faction;
@@ -125,6 +128,7 @@ public:
 	inline Game::WUXING_ELEMENT GetElement() const { return element; }
 	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 	inline bool IsEndingTurn() const { return endingTurn; }
+	inline bool IsDead() const { return isDead; }
 
 	void init() override;
 	void awake() override;

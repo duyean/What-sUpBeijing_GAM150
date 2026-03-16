@@ -39,8 +39,6 @@ void Player::update()
 	float dt = AEFrameRateControllerGetFrameTime();
 	AEVec2 pos = entity->transform->getPosition();
 
-	std::cout << RunManager::Instance().game_paused << std::endl;
-
 	if (canMove && !RunManager::Instance().game_paused)
 	{
 		if (AEInputCheckCurr(AEVK_W))

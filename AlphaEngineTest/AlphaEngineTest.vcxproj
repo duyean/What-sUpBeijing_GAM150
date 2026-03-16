@@ -62,6 +62,7 @@
     <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SettingsScreen.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\Shop.hpp" />

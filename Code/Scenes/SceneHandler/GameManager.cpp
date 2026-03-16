@@ -39,7 +39,7 @@ void GameManager::Init()
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
+	stateManager->NextScene(GameStateManager::MAIN_MENU); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)
@@ -64,8 +64,6 @@ void GameManager::Update(float _dt)
 
 	if (AEInputCheckTriggered(AEVK_ESCAPE))
 		RunManager::Instance().game_paused = !RunManager::Instance().game_paused;
-
-	//
 
 	for (int i = 0; i < enSystem->entities.size(); i++)
 	{

@@ -19,7 +19,6 @@
 
 #include "../Engine/Editor/Editor.hpp"
 
-#include "vld.h"
 
 
 #ifdef ALPHA_EDITOR

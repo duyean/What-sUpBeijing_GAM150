@@ -57,6 +57,9 @@ void EdgeManager::UpdateEdges()
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			break;
+		case NodeType::RandomEvent:
+			
+			break;
 		default:
 			break;
 		}

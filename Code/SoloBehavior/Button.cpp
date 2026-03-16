@@ -11,7 +11,8 @@ void Button::awake()
 
 void Button::init()
 {
-	buttonMesh->color = normal_color;
+	if(buttonMesh)
+		buttonMesh->color = normal_color;
 }
 
 void Button::update()
@@ -46,21 +47,24 @@ void Button::SetPressedColor(Color color)
 
 void Button::OnPointerTriggered(const PointerEventData& event)
 {
-	buttonMesh->color = pressed_color;
+	if(buttonMesh)
+		buttonMesh->color = pressed_color;
 	if (onClick)
 		onClick();
 }
 
 void Button::OnHover()
 {
-	buttonMesh->color = highlighted_color;
+	if(buttonMesh)
+		buttonMesh->color = highlighted_color;
 	if (onHover)
 		onHover();
 }
 
 void Button::OnHoverExit()
 {
-	buttonMesh->color = normal_color;
+	if(buttonMesh)
+		buttonMesh->color = normal_color;
 	if (onHoverExit)
 		onHoverExit();
 }

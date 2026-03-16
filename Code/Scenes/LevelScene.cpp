@@ -237,7 +237,6 @@ void LevelScene::Load()
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, scale.y/2 - (float)AEGfxGetWindowHeight()/2};
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
-	//s_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	s_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	s_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
@@ -256,7 +255,6 @@ void LevelScene::Load()
 	scale = { collidersize, (float)AEGfxGetWindowHeight() };
 	pos = { scale.x/2 - (float)AEGfxGetWindowWidth() / 2, 0.f };
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
-	//w_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
 	w_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	w_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
@@ -274,6 +272,8 @@ void LevelScene::Load()
 	SE_Manager->addComponent<Transform2D>();
 	SE_Manager->addComponent<EdgeManager>(map);
 	enSystem->entities.push_back(std::move(SE_Manager));
+
+	RunManager::Instance().game_paused = false;
 }
 
 

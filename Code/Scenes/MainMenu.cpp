@@ -11,6 +11,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../Code/SoloBehavior/Slider.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -123,20 +124,30 @@ void MainMenu::Load()
 	quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
 	qb->addComponent<TextBox>("QUIT", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 
-
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
 
+
+
+	//auto slider = std::make_unique<Entity>("Slider");
+	//pos = { 0.f, 0.f };
+	//scale = { 1.f, 1.f };
+	//slider->addComponent<Transform2D>(pos, scale, 0.f);
+	//slider->addComponent<Slider>();
+	////slider->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	//enSystem->entities.push_back(std::move(slider));
+
 	/*auto test = std::make_unique<Entity>("Text");
 	pos = { 0.f, 0.f };
-	scale = { 200.f, 200.f };
+	scale = { 400, 200 };
 	test->addComponent<Transform2D>(pos, scale, 0.f);
 	test->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	test->addComponent<TextBox>("This is the first line this is the second line this is the third line", 0.4f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	test->addComponent<TextBox>("Strike an enemy and decreases their DEF, while increasing your ATK", 0.4f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
 	enSystem->rootEntity->transform->AddChild(test->transform);
-	enSystem->entities.push_back(std::move(test));
+	enSystem->entities.push_back(std::move(test));*/
 
-	auto t = std::make_unique<Entity>("lineH");
+
+	/*auto t = std::make_unique<Entity>("lineH");
 	pos = { 0.f, 0.f };
 	scale = { 2, (float)AEGfxGetWindowHeight() };
 	t->addComponent<Transform2D>(pos, scale, 0.f);

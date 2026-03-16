@@ -62,11 +62,14 @@
     <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\RunManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\SettingsScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Shop.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\Slider.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
@@ -139,9 +142,12 @@
     <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SceneEdge.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\SettingsScreen.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\Shop.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\Slider.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />

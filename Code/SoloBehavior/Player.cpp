@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "../BaseSystems/Engine/EntityManager.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 BoxCollider2D* col;
 
@@ -38,7 +39,7 @@ void Player::update()
 	float dt = AEFrameRateControllerGetFrameTime();
 	AEVec2 pos = entity->transform->getPosition();
 
-	if (canMove)
+	if (canMove && !RunManager::Instance().game_paused)
 	{
 		if (AEInputCheckCurr(AEVK_W))
 		{

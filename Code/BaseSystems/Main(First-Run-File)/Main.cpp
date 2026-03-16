@@ -114,7 +114,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		AESysFrameStart();
 
 		// Close the window if press esacpe key
-		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
+		if (AEInputCheckTriggered(AEVK_0) || 0 == AESysDoesWindowExist())
 			gameManager->quitGame = true;
 
 	

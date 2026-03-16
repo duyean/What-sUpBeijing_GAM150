@@ -51,6 +51,9 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void BattleScene::Load()
 {
+    //FOR DEBUG, TO REMOVE LATER!!!!
+    //InitBlessingDatabase();
+
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
     meshSystem = &MeshGen::getInstance();
@@ -319,6 +322,7 @@ void BattleScene::Load()
     tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8), 501, MeshType::BOX_B);
     TextBox* tt_tb = tt->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
     tt_tb->text_layer = 502;
+    tt_tb->line_padding = 2.f;
     enSystem->rootEntity->transform->AddChild(tt->transform);
     enSystem->entities.push_back(std::move(tt));
 

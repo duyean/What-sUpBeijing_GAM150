@@ -6,6 +6,7 @@ void Shop::onHit(BoxCollider2D* other)
 {
 	for (Entity* ent : display)
 		ent->isActive = true;
+	buyButton->isActive = true;
 }
 void Shop::onStay(BoxCollider2D* other)
 {
@@ -14,6 +15,7 @@ void Shop::onExit(BoxCollider2D* other)
 {
 	for (Entity* ent : display)
 		ent->isActive = false;
+	buyButton->isActive = false;
 }
 
 void Shop::AddDisplayEntity(Entity* ent)

@@ -83,6 +83,8 @@ public:
 
 	MapType GetPrevMapType() const;
 
+	bool game_paused = false;
+
 	//Get the current list of blessings
 	const std::vector<std::unique_ptr<Blessing>>& GetBlessings() const;
 };

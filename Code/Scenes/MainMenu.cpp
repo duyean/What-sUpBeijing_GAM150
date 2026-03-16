@@ -47,86 +47,86 @@ void MainMenu::Load()
 	enSystem->entities.push_back(std::move(r));
 
 
-	//auto title_en = std::make_unique<Entity>("TITLE");
-	//Entity* te = title_en.get();
-	//pos = { 0.f ,300.f };
-	//scale = { 1525.f, 445.f };
-	//te->addComponent<Transform2D>(pos, scale, 0.f);
-	//te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	//enSystem->rootEntity->transform->AddChild(te->transform);
-	//enSystem->entities.push_back(std::move(title_en));
+	auto title_en = std::make_unique<Entity>("TITLE");
+	Entity* te = title_en.get();
+	pos = { 0.f ,300.f };
+	scale = { 1525.f, 445.f };
+	te->addComponent<Transform2D>(pos, scale, 0.f);
+	te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(te->transform);
+	enSystem->entities.push_back(std::move(title_en));
 
 
-	//////////////////////////////////////////////////
-	//// 
-	//// START BUTTON
-	////
-	//////////////////////////////////////////////////
+	////////////////////////////////////////////////
+	// 
+	// START BUTTON
+	//
+	////////////////////////////////////////////////
 
-	//auto b = std::make_unique<Entity>("START BUTTON");
-	//Entity* sb = b.get();
-	//pos = { 0.f,0.f };
-	//scale = { 300.f, 80.f };
-	//sb->addComponent<Transform2D>(pos, scale, 0.f);
-	//sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-
-
-	//Button* startButton = sb->addComponent<Button>();
-	//startButton->SetOnClick([this]() {SwitchToGame(); });
-	//startButton->SetNormalColor(Color{ 200,200,200,1 });
-	//startButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	//sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	//enSystem->rootEntity->transform->AddChild(sb->transform);
-	//enSystem->entities.push_back(std::move(b));
+	auto b = std::make_unique<Entity>("START BUTTON");
+	Entity* sb = b.get();
+	pos = { 0.f,0.f };
+	scale = { 300.f, 80.f };
+	sb->addComponent<Transform2D>(pos, scale, 0.f);
+	sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 
 
-	//////////////////////////////////////////////////
-	//// 
-	//// NEW GAME BUTTON
-	////
-	//////////////////////////////////////////////////
-
-	//auto ng = std::make_unique<Entity>("NEW GAME BUTTON");
-	//Entity* ngb = ng.get();
-	//pos = { 0.f,-100.f };
-	//scale = { 300.f, 80.f };
-	//ng->addComponent<Transform2D>(pos, scale, 0.f);
-	//ng->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	Button* startButton = sb->addComponent<Button>();
+	startButton->SetOnClick([this]() {SwitchToGame(); });
+	startButton->SetNormalColor(Color{ 200,200,200,1 });
+	startButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(sb->transform);
+	enSystem->entities.push_back(std::move(b));
 
 
-	//Button* newGameButton = ngb->addComponent<Button>();
-	//newGameButton->SetOnClick([this]() {PlayNewSave(); });
-	//newGameButton->SetNormalColor(Color{ 200,200,200,1 });
-	//newGameButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	//ng->addComponent<TextBox>("NEW GAME", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	////////////////////////////////////////////////
+	// 
+	// NEW GAME BUTTON
+	//
+	////////////////////////////////////////////////
 
-	//enSystem->rootEntity->transform->AddChild(ngb->transform);
-	//enSystem->entities.push_back(std::move(ng));
-
-
-	//////////////////////////////////////////////////
-	//// 
-	//// QUIT BUTTON
-	////
-	//////////////////////////////////////////////////
-
-	//auto e = std::make_unique<Entity>("QUIT BUTTON");
-	//Entity* qb = e.get();
-	//pos = { 0.f,-200.f };
-	//scale = { 300.f, 80.f };
-	//qb->addComponent<Transform2D>(pos, scale, 0.f);
-	//qb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	auto ng = std::make_unique<Entity>("NEW GAME BUTTON");
+	Entity* ngb = ng.get();
+	pos = { 0.f,-100.f };
+	scale = { 300.f, 80.f };
+	ng->addComponent<Transform2D>(pos, scale, 0.f);
+	ng->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 
 
-	//Button* quitButton = qb->addComponent<Button>();
-	//quitButton->SetOnClick([this]() {QuitGame(); });
-	//quitButton->SetNormalColor(Color{ 200,200,200,1 });
-	//quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	//qb->addComponent<TextBox>("QUIT", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	Button* newGameButton = ngb->addComponent<Button>();
+	newGameButton->SetOnClick([this]() {PlayNewSave(); });
+	newGameButton->SetNormalColor(Color{ 200,200,200,1 });
+	newGameButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	ng->addComponent<TextBox>("NEW GAME", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+
+	enSystem->rootEntity->transform->AddChild(ngb->transform);
+	enSystem->entities.push_back(std::move(ng));
 
 
-	//enSystem->rootEntity->transform->AddChild(qb->transform);
-	//enSystem->entities.push_back(std::move(e));
+	////////////////////////////////////////////////
+	// 
+	// QUIT BUTTON
+	//
+	////////////////////////////////////////////////
+
+	auto e = std::make_unique<Entity>("QUIT BUTTON");
+	Entity* qb = e.get();
+	pos = { 0.f,-200.f };
+	scale = { 300.f, 80.f };
+	qb->addComponent<Transform2D>(pos, scale, 0.f);
+	qb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+
+	Button* quitButton = qb->addComponent<Button>();
+	quitButton->SetOnClick([this]() {QuitGame(); });
+	quitButton->SetNormalColor(Color{ 200,200,200,1 });
+	quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	qb->addComponent<TextBox>("QUIT", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+
+
+	enSystem->rootEntity->transform->AddChild(qb->transform);
+	enSystem->entities.push_back(std::move(e));
 
 	/*auto test = std::make_unique<Entity>("Text");
 	pos = { 0.f, 0.f };
@@ -137,29 +137,29 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(test->transform);
 	enSystem->entities.push_back(std::move(test));*/
 
-	auto slider = std::make_unique<Entity>("Slider");
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	slider->addComponent<Transform2D>(pos, scale, 0.f);
-	slider->addComponent<Slider>();
-	//slider->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	enSystem->entities.push_back(std::move(slider));
+	//auto slider = std::make_unique<Entity>("Slider");
+	//pos = { 0.f, 0.f };
+	//scale = { 1.f, 1.f };
+	//slider->addComponent<Transform2D>(pos, scale, 0.f);
+	//slider->addComponent<Slider>();
+	////slider->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	//enSystem->entities.push_back(std::move(slider));
 
-	auto t = std::make_unique<Entity>("lineH");
-	pos = { 0.f, 0.f };
-	scale = { 2, (float)AEGfxGetWindowHeight() };
-	t->addComponent<Transform2D>(pos, scale, 0.f);
-	t->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	enSystem->rootEntity->transform->AddChild(t->transform);
-	enSystem->entities.push_back(std::move(t));
+	//auto t = std::make_unique<Entity>("lineH");
+	//pos = { 0.f, 0.f };
+	//scale = { 2, (float)AEGfxGetWindowHeight() };
+	//t->addComponent<Transform2D>(pos, scale, 0.f);
+	//t->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	//enSystem->rootEntity->transform->AddChild(t->transform);
+	//enSystem->entities.push_back(std::move(t));
 
-	auto l = std::make_unique<Entity>("LineV");
-	pos = { 0.f, 0.f };
-	scale = { (float)AEGfxGetWindowWidth(), 2 };
-	l->addComponent<Transform2D>(pos, scale, 0.f);
-	l->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	enSystem->rootEntity->transform->AddChild(l->transform);
-	enSystem->entities.push_back(std::move(l));
+	//auto l = std::make_unique<Entity>("LineV");
+	//pos = { 0.f, 0.f };
+	//scale = { (float)AEGfxGetWindowWidth(), 2 };
+	//l->addComponent<Transform2D>(pos, scale, 0.f);
+	//l->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
+	//enSystem->rootEntity->transform->AddChild(l->transform);
+	//enSystem->entities.push_back(std::move(l));
 
 	////////////////////////////////////////////////
 	// 

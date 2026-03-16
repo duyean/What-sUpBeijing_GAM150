@@ -210,6 +210,8 @@ void LevelScene::Load()
 	SE_Manager->addComponent<Transform2D>();
 	SE_Manager->addComponent<EdgeManager>(map);
 	enSystem->entities.push_back(std::move(SE_Manager));
+
+	RunManager::Instance().game_paused = false;
 }
 
 

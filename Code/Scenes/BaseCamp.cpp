@@ -14,6 +14,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PartyManagerObject.hpp"
 #include "../Code/SoloBehavior/ShopBlessing.hpp"
 #include "../Code/UI_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -345,6 +346,8 @@ void BaseCamp::Load()
 	pos = { 0.f, 0.f }; scale = { 1.f, 1.f };
 	SE_Manager->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(SE_Manager));
+
+	RunManager::Instance().game_paused = false;
 }
 
 

@@ -17,7 +17,7 @@ void SplashLogo::update()
 	float dt = AEFrameRateControllerGetFrameTime();
 	curSplashTimer -= dt;
 
-	if ((curSplashTimer < 0 || AEInputCheckTriggered(AEVK_SPACE)) && transition) {
+	if ((curSplashTimer < 0 || AEInputCheckTriggered(AEVK_SPACE) || AEInputCheckTriggered(AEVK_ESCAPE)) && transition) {
 		GameStateManager::GetInstance()->NextScene(GameStateManager::MAIN_MENU);
 		transition = false;
 		return;

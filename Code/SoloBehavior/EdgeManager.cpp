@@ -122,7 +122,7 @@ void EdgeManager::update()
 	if (SE_N && SE_N->triggerBuffer)
 	{
 		hasTraveled = true;
-		TravelNode(map, map.xPos, --map.yPos);
+		TravelNode(map, map.xPos, map.yPos - 1);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
@@ -136,7 +136,7 @@ void EdgeManager::update()
 	if (SE_E && SE_E->triggerBuffer)
 	{
 		hasTraveled = true;
-		TravelNode(map, ++map.xPos, map.yPos);
+		TravelNode(map, map.xPos + 1, map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
@@ -149,7 +149,7 @@ void EdgeManager::update()
 	if (SE_S && SE_S->triggerBuffer)
 	{ 
 		hasTraveled = true;
-		TravelNode(map, map.xPos, ++map.yPos);
+		TravelNode(map, map.xPos, map.yPos + 1);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 
@@ -162,7 +162,7 @@ void EdgeManager::update()
 	if (SE_W && SE_W->triggerBuffer)
 	{ 
 		hasTraveled = true;
-		TravelNode(map, --map.xPos, map.yPos);
+		TravelNode(map, map.xPos - 1, map.yPos);
 		GetCurrentNodeInfo(map);
 		UpdateEdges();
 

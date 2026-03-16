@@ -359,96 +359,128 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
     Character* ch = nullptr;
+    int enemies = 1;
     AEVec2 pos = {}, scale = { 200, 200 };
-    character = std::make_unique<Entity>("Enemy");
-    ch = character->addComponent<Character>();
-    switch (type)
+    AEVec2 hpBarScale = {};
+    if (type == BATTLE_TYPE::NORMAL)
     {
-        case (BATTLE_TYPE::NORMAL):
+        std::uniform_int_distribution<int> dist(1, 3);
+        int enemies = dist(Game::gen);
+        for (int i = 0; i < enemies; ++i)
         {
-            //Generate between 1 to 3 enemies
-            std::uniform_int_distribution<int> dist(1, 3);
-            int enemies = dist(Game::gen);
+            character = std::make_unique<Entity>("Enemy");
+            ch = character->addComponent<Character>();
+            hpBarScale = { 200, 10 };
+            scale = { 200, 200 };
+            pos = enemyPositions[i];
+            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
 
-            for (int i = 0; i < enemies; ++i)
+            //Create the enemy entity
+            std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
+            std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
+            meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
+            meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
+            character->addComponent<Transform2D>(pos, scale, 0.f);
+            character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+            auto hpBar = character->addComponent<Healthbar1>();
+            battleManager->LoadBattleUnit(ch);
+            enSystem->rootEntity->transform->AddChild(character->transform);
+            enSystem->entities.push_back(std::move(character));
+
+            //Create enemy HPBar
+            auto enemyHP = std::make_unique<Entity>("EnemyHP");
+            pos = { 0, 0 }; //HealthBar1 will handle it
+            enemyHP->addComponent<Transform2D>(pos, hpBarScale, 0.f);
+            enemyHP->addComponent<Mesh>("Box", Color(0, 255, 0, 1.f), 103, MeshType::BOX_BL);
+            hpBar->en = enemyHP.get();
+            enSystem->rootEntity->transform->AddChild(enemyHP->transform);
+            enSystem->entities.push_back(std::move(enemyHP));
+
+            //Create enemy HPBarBG
+            auto enemyHPBG = std::make_unique<Entity>("EnemyHPBG");
+            pos = { 0, 0 }; //HealthBar1 will handle it
+            enemyHPBG->addComponent<Transform2D>(pos, hpBarScale, 0.f);
+            enemyHPBG->addComponent<Mesh>("Box", Color(50, 50, 50, 1.f), 102, MeshType::BOX_BL);
+            hpBar->hpBarBG = enemyHPBG.get();
+            enSystem->rootEntity->transform->AddChild(enemyHPBG->transform);
+            enSystem->entities.push_back(std::move(enemyHPBG));
+
+            //Create enemy status icons
+            for (int i = 0; i < 3; ++i)
             {
-                pos = enemyPositions[i];
-                //Use a switch case and edit the line below for different enemy types
-                /*
-                ENEMY_TYPE type = dist(0, MAX_ENEMY_TYPE - 1);
-                switch (type)
-                {
-                    ...
-                    case (ENEMY_TYPE::MELEE)
-                    {
-                        ch->LoadCharacter(jsonSerializer, "Assets/Characters/EnemyMelee.json);
-                        break;
-                    }
-                    ...
-                }
-                */
-                ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                auto enemyIcon = std::make_unique<Entity>("StatusIcon");
+                scale = { 30, 30 };
+                pos = { 0, 0 };
+                enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+                enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
+                hpBar->statusIcons.push_back(enemyIcon.get());
+                enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
+                enSystem->entities.push_back(std::move(enemyIcon));
             }
-            break;
-        }
-        case (BATTLE_TYPE::MINI_BOSS):
-        {
-            //To-do, Get Boss Type and load boss data
-            pos = enemyPositions[0];
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
-            break;
-        }
-        case (BATTLE_TYPE::BOSS):
-        {
-            //To-do, Get Boss Type and load boss data
-            pos = enemyPositions[0];
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
-            break;
         }
     }
-
-    std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
-    std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
-    meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
-    meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
-    character->addComponent<Transform2D>(pos, scale, 0.f);
-    character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-    auto hpBar = character->addComponent<Healthbar1>();
-    battleManager->LoadBattleUnit(ch);
-    enSystem->rootEntity->transform->AddChild(character->transform);
-    enSystem->entities.push_back(std::move(character));
-
-    //Create enemy HPBar
-    auto enemyHP = std::make_unique<Entity>("EnemyHP");
-    scale = { 300, 10 };
-    pos = {0, 0}; //HealthBar1 will handle it
-    enemyHP->addComponent<Transform2D>(pos, scale, 0.f);
-    enemyHP->addComponent<Mesh>("Box", Color(0, 255, 0, 1.f), 103, MeshType::BOX_BL);
-    hpBar->en = enemyHP.get();
-    enSystem->rootEntity->transform->AddChild(enemyHP->transform);
-    enSystem->entities.push_back(std::move(enemyHP));
-
-    //Create enemy HPBarBG
-    auto enemyHPBG = std::make_unique<Entity>("EnemyHPBG");
-    scale = { 300, 10 };
-    pos = { 0, 0 }; //HealthBar1 will handle it
-    enemyHPBG->addComponent<Transform2D>(pos, scale, 0.f);
-    enemyHPBG->addComponent<Mesh>("Box", Color(50, 50, 50, 1.f), 102, MeshType::BOX_BL);
-    hpBar->hpBarBG = enemyHPBG.get();
-    enSystem->rootEntity->transform->AddChild(enemyHPBG->transform);
-    enSystem->entities.push_back(std::move(enemyHPBG));
-
-    //Create enemy status icons
-    for (int i = 0; i < 3; ++i)
+    else
     {
-        auto enemyIcon = std::make_unique<Entity>("StatusIcon");
-        scale = { 30, 30 };
-        pos = { 0, 0 };
-        enemyIcon->addComponent<Transform2D>(pos, scale, 0);
-        enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
-        hpBar->statusIcons.push_back(enemyIcon.get());
-        enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
-        enSystem->entities.push_back(std::move(enemyIcon));
-    }
+        character = std::make_unique<Entity>("Enemy");
+        ch = character->addComponent<Character>();
+        switch (type)
+        {
+            case (BATTLE_TYPE::MINI_BOSS):
+            {
+                hpBarScale = { 250, 10 };
+                pos = enemyPositions[0];
+                ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+                break;
+            }
+            case (BATTLE_TYPE::BOSS):
+            {
+                hpBarScale = { 350, 10 };
+                pos = enemyPositions[0];
+                ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
+                break;
+            }
+        }
+        //Create the enemy entity
+        std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
+        std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
+        meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
+        meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
+        character->addComponent<Transform2D>(pos, scale, 0.f);
+        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+        auto hpBar = character->addComponent<Healthbar1>();
+        battleManager->LoadBattleUnit(ch);
+        enSystem->rootEntity->transform->AddChild(character->transform);
+        enSystem->entities.push_back(std::move(character));
 
+        //Create enemy HPBar
+        auto enemyHP = std::make_unique<Entity>("EnemyHP");
+        pos = { 0, 0 }; //HealthBar1 will handle it
+        enemyHP->addComponent<Transform2D>(pos, hpBarScale, 0.f);
+        enemyHP->addComponent<Mesh>("Box", Color(0, 255, 0, 1.f), 103, MeshType::BOX_BL);
+        hpBar->en = enemyHP.get();
+        enSystem->rootEntity->transform->AddChild(enemyHP->transform);
+        enSystem->entities.push_back(std::move(enemyHP));
+
+        //Create enemy HPBarBG
+        auto enemyHPBG = std::make_unique<Entity>("EnemyHPBG");
+        pos = { 0, 0 }; //HealthBar1 will handle it
+        enemyHPBG->addComponent<Transform2D>(pos, hpBarScale, 0.f);
+        enemyHPBG->addComponent<Mesh>("Box", Color(50, 50, 50, 1.f), 102, MeshType::BOX_BL);
+        hpBar->hpBarBG = enemyHPBG.get();
+        enSystem->rootEntity->transform->AddChild(enemyHPBG->transform);
+        enSystem->entities.push_back(std::move(enemyHPBG));
+
+        //Create enemy status icons
+        for (int i = 0; i < 3; ++i)
+        {
+            auto enemyIcon = std::make_unique<Entity>("StatusIcon");
+            scale = { 30, 30 };
+            pos = { 0, 0 };
+            enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+            enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
+            hpBar->statusIcons.push_back(enemyIcon.get());
+            enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
+            enSystem->entities.push_back(std::move(enemyIcon));
+        }
+    }
 }

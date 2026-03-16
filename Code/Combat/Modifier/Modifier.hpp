@@ -27,14 +27,15 @@ enum STACK_BEHAVIOUR
 //This enum will be used for handling same buff situations and used to query from the effect database.
 enum MODIFIER_ID
 {
-	NONE,
-	GENERIC_,
-	GENERIC_DOT_BURN,
-	GENERIC_DOT_POISON,
-	GENERIC_STUN,
-	GENERIC_MODIFIER,
-	GENERIC_EMPOWER_BUFF,
-	SUPERHEAT_DOT,
+	GENERIC_ = -1,
+	NONE = 0,
+	GENERIC_DOT_BURN = 1,
+	GENERIC_DOT_POISON = 2,
+	GENERIC_EMPOWER_BUFF = 3,
+	GENERIC_EXPOSED_DEBUFF = 4,
+	CHAR1_COMBUST_BUFF = 5,
+	SUPERHEAT_DOT = 6,
+	GENERIC_WEAKEN_DEBUFF = 7
 	//Custom Modifiers
 };
 
@@ -71,7 +72,7 @@ public:
 	//Whether to show this modifier when it is added
 	bool hidden;
 
-	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(""), ID(GENERIC_MODIFIER), duration(3), stackBehaviour(REFRESH), stackCount(1), source(nullptr), selfCast(false), hidden(false) {};
+	inline Modifier() :name("Modifier"), effectType(ATTRIBUTE_MODIFIER), icon(""), ID(NONE), duration(3), stackBehaviour(REFRESH), stackCount(1), source(nullptr), selfCast(false), hidden(false) {};
 	inline Modifier(std::string name, int duration, EFFECT_TYPE type, std::string icon, MODIFIER_ID id, STACK_BEHAVIOUR stackBeh, int stackCount = 1, bool selfCast = false, bool hide = false) :
 		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount), source(nullptr), selfCast(selfCast), hidden(hide) {
 	};

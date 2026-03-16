@@ -100,6 +100,7 @@ void BattleManager::ResetBattle()
 
 	CombatUIManager::Instance().Reset();
 	battleUnits.clear();
+	playerUnits.clear();
 	lastTargetedUnit = nullptr;
 	currentActiveUnit = 0;
 	enemyCount = 0;
@@ -117,6 +118,10 @@ void BattleManager::LoadBattleUnit(Character* unit)
 	}
 	unit->Init();
 	battleUnits.push_back(unit);
+	if (unit->GetFaction() == Game::FACTION::PLAYER)
+	{
+		playerUnits.push_back(unit);
+	}
 }
 
 void BattleManager::StartBattle()
@@ -134,6 +139,10 @@ void BattleManager::StartBattle()
 			{
 				lastTargetedUnit = unit;
 			}
+		}
+		else
+		{
+			playerCount++;
 		}
 	}
 	currentActiveUnit = 0;
@@ -188,8 +197,8 @@ void BattleManager::update()
 	if (!wait)
 	{
 		currentTurn++;
+		delay = activeUnit->GetFaction() == Game::PLAYER ? 0.25f : 0.75f;
 		activeUnit->StartTurn();
-		delay = 0.5f;
 		wait = true;
 	}
 
@@ -246,7 +255,6 @@ void BattleManager::update()
 			currentActiveUnit = 0;
 		}
 		wait = false;
-		delay = 0.5f;
 	}
 }
 
@@ -305,9 +313,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 
 std::vector<Character*> BattleManager::GetPlayerParty() const
 {
-	std::vector<Character*> toReturn = {};
-	std::copy_if(battleUnits.begin(), battleUnits.end(), std::back_inserter(toReturn), [](Character* ch) {return ch && ch->GetFaction() == Game::PLAYER; });
-	return toReturn;
+	return playerUnits;
 }
 
 void BattleManager::destroy()

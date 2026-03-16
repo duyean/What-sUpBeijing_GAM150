@@ -13,6 +13,9 @@ class BattleManager : public SoloBehavior
 	//A vector of all the current units in battle
 	std::vector<Character*> battleUnits;
 
+	//The original unsorted player units for the Party UI
+	std::vector<Character*> playerUnits;
+
 	//An integer to index the current acting unit
 	int currentActiveUnit;
 

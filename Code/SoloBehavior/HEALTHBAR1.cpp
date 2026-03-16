@@ -27,12 +27,13 @@ void Healthbar1::update()
 	{
 		color = Color(255, 0, 0, 1);
 	}
-	AEVec2 scale = { 300, 10 };
-	AEVec2 trueScale = { scale.x * hpperc, scale.y };
-	AEVec2 offset{ -scale.x * 0.5f, -100 };
-	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y - 30) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
+	AEVec2 hpBarScale = hpBarBG->transform->getScale();
+	AEVec2 entityScale = entity->transform->getScale();
+	AEVec2 trueScale = { hpBarScale.x * hpperc, hpBarScale.y };
+	AEVec2 offset{ -entityScale.x * 0.5f, -entityScale.y * 0.5f - 40};
+	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y + 35) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
 	hpBarBG->transform->setPosition(pos + offset);
-	hpBarBG->transform->setScale(scale);
+	hpBarBG->transform->setScale(hpBarScale);
 
 	en->transform->setPosition(pos + offset);
 	en->transform->setScale(trueScale);
@@ -70,10 +71,10 @@ void Healthbar1::update()
 		return;
 	}
 
-	AEVec2 offset2 = { 0, offset.x * 1.1 };
+	AEVec2 offset2 = {hpBarBG->transform->getScale().x * 0.5f, -20};
 	float x_offset = 30 + 10;
 
-	AEVec2 centerPos = pos + offset2;
+	AEVec2 centerPos = hpBarBG->transform->getPosition() + offset2;
 	float spacing = x_offset; // horizontal spacing between icons
 
 	int total = std::min(count, 3); // only show up to 3 icons

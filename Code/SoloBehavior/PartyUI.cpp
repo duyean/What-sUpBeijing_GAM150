@@ -76,25 +76,22 @@ void PartyUI::update()
 			int modCount = 0;
 			for (auto& mod : modifiers)
 			{
-				std::cout << "Party[" << i << "] Modifier: " << mod->name
-					<< " Icon: " << mod->icon
-					<< " Hidden: " << mod->hidden
-					<< std::endl;
-
-				if (!mod->hidden)
+				if (mod->hidden)
 				{
-					AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
-					if (tex != nullptr)
-					{
-						modifierIcons[i][modCount]->getComponent<Mesh>()->isActive = true;
-						modifierIcons[i][modCount]->getComponent<Mesh>()->pTex = tex;
-						modCount++;
-					}
+					continue;
+				}
 
-					if (modCount >= 3)
-					{
-						break;
-					}
+				AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
+				if (tex != nullptr)
+				{
+					modifierIcons[i][modCount]->getComponent<Mesh>()->isActive = true;
+					modifierIcons[i][modCount]->getComponent<Mesh>()->pTex = tex;
+					++modCount;
+				}
+
+				if (modCount >= 3)
+				{
+					break;
 				}
 			}
 

@@ -184,7 +184,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
-		[&](const std::unique_ptr<Modifier>& m) { return m->ID == modifier->ID; }
+		[&](const std::unique_ptr<Modifier>& m) { return m->ID == modifier->ID && m->hidden == modifier->hidden; }
 	);
 
 	if (modExists != effectList.end()) //Player already has an existing modifier
@@ -238,6 +238,12 @@ void Character::ProcessModifiers(void)
 		{
 			modifier->Apply(this); //Apply DOT Effects
 		}
+
+		if (isDead)
+		{
+			break;
+		}
+
 		if (modifier)
 		{
 			modifier->duration--; //Tick down all effectsq
@@ -260,13 +266,13 @@ std::vector<std::unique_ptr<Modifier>> const& Character::GetModifierList() const
 
 void Character::StartTurn(void)
 {
+	ProcessModifiers();
 	if (isDead)
 	{
 		turnFinished = true;
 		endingTurn = true;
 		return;
 	}
-	ProcessModifiers();
 	UpdateAttributes();
 	turnFinished = false;
 	endingTurn = false;

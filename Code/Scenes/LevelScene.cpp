@@ -83,9 +83,11 @@ void LevelScene::Load()
 	float NODE_SIZE = 23.f;
 	float minimapOffX =  300.f;
 	float minimapOffY = -150.f;
+	int depthWall = 202;
+	float thickWall = 2.f;
 
 	//map entities
-	for (int x = map.playMap.mapNodes[0].size(); x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size(); y >= 0 ; y--) {
+	for (int x = map.playMap.mapNodes[0].size() - 1; x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size() - 1; y >= 0 ; y--) {
 		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
 		auto mapFog = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
 		pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE };
@@ -96,7 +98,67 @@ void LevelScene::Load()
 		enSystem->entities.push_back(std::move(mapNode));
 		enSystem->rootEntity->transform->AddChild(mapFog->transform);
 		enSystem->entities.push_back(std::move(mapFog));
-	}	}
+		//map walls
+		for (int wallVal = 0; wallVal < 4; wallVal++)
+		{
+			switch (wallVal)
+			{
+				case 0:
+					if (map.playMap.mapNodes[y][x].n)
+					{
+						auto wall = std::make_unique<Entity>("Wall_N_" + std::to_string(x) + "_" + std::to_string(y));
+						pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE + NODE_SIZE/2 };
+						scale = { NODE_SIZE, thickWall };
+						wall->addComponent<Transform2D>(pos, scale, 0.f);
+						wall->addComponent<Mesh>("Box", Color(0, 0, 0, 1.f), depthWall, MeshType::BOX_B);
+						enSystem->rootEntity->transform->AddChild(wall->transform);
+						enSystem->entities.push_back(std::move(wall));
+					}
+					break;
+				case 1:
+					if (map.playMap.mapNodes[y][x].e)
+					{
+						auto wall = std::make_unique<Entity>("Wall_E_" + std::to_string(x) + "_" + std::to_string(y));
+						pos = { minimapOffX + (float)x * NODE_SIZE + NODE_SIZE/2, minimapOffY - (float)y * NODE_SIZE };
+						scale = { thickWall, NODE_SIZE };
+						wall->addComponent<Transform2D>(pos, scale, 0.f);
+						wall->addComponent<Mesh>("Box", Color(0, 0, 0, 1.f), depthWall, MeshType::BOX_B);
+						enSystem->rootEntity->transform->AddChild(wall->transform);
+						enSystem->entities.push_back(std::move(wall));
+					}
+					break;
+				case 2:
+					if (map.playMap.mapNodes[y][x].s)
+					{
+						auto wall = std::make_unique<Entity>("Wall_S_" + std::to_string(x) + "_" + std::to_string(y));
+						pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE - NODE_SIZE / 2 };
+						scale = { NODE_SIZE, thickWall };
+						wall->addComponent<Transform2D>(pos, scale, 0.f);
+						wall->addComponent<Mesh>("Box", Color(0, 0, 0, 1.f), depthWall, MeshType::BOX_B);
+						enSystem->rootEntity->transform->AddChild(wall->transform);
+						enSystem->entities.push_back(std::move(wall));
+					}
+					break;
+				case 3:
+					if (map.playMap.mapNodes[y][x].w)
+					{
+						auto wall = std::make_unique<Entity>("Wall_W_" + std::to_string(x) + "_" + std::to_string(y));
+						pos = { minimapOffX + (float)x * NODE_SIZE - NODE_SIZE / 2, minimapOffY - (float)y * NODE_SIZE };
+						scale = { thickWall, NODE_SIZE };
+						wall->addComponent<Transform2D>(pos, scale, 0.f);
+						wall->addComponent<Mesh>("Box", Color(0, 0, 0, 1.f), depthWall, MeshType::BOX_B);
+						enSystem->rootEntity->transform->AddChild(wall->transform);
+						enSystem->entities.push_back(std::move(wall));
+		}	}
+	}	}	}
+
+	//player character
+	auto playerCharacter = std::make_unique<Entity>("MapDisplayCharacter");
+	pos = { minimapOffX + (float)map.xPos * NODE_SIZE, minimapOffY - (float)map.yPos * NODE_SIZE };
+	scale = { NODE_SIZE - 2, NODE_SIZE - 2};
+	playerCharacter->addComponent<Transform2D>(pos, scale, 0.f);
+	enSystem->rootEntity->transform->AddChild(playerCharacter->transform);
+	enSystem->entities.push_back(std::move(playerCharacter));
 
 	auto MD_Manager = std::make_unique<Entity>("MapDisplayManager");
 	MD_Manager->addComponent<MapDisplay>(map);

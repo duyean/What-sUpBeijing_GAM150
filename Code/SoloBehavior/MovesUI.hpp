@@ -19,8 +19,12 @@ private:
 	TextBox* tb3 = nullptr;
 	TextBox* tb4 = nullptr;
 
+	Entity* tooltip = nullptr;
+
 
 	void UseCurrMove(MOVE_SLOT ms, Character* ch);
+	void DisplayToolTip(MOVE_SLOT ms);
+	void HideToolTip();
 public:
 	void awake() override;
 	void init() override;

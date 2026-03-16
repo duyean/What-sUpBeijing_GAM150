@@ -279,6 +279,21 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(mb4));
 
 
+    ////////////////////////////////////////////////
+    // 
+    // TOOLTIP UI
+    //
+    ////////////////////////////////////////////////
+
+    auto tt = std::make_unique<Entity>("ToolTipUI");
+    pos = { 0.f, 0.f };
+    scale = { 400, 200};
+    tt->addComponent<Transform2D>(pos, scale, 0.f);
+    tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8), 501, MeshType::BOX_B);
+    TextBox* tt_tb = tt->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+    tt_tb->text_layer = 502;
+    enSystem->rootEntity->transform->AddChild(tt->transform);
+    enSystem->entities.push_back(std::move(tt));
 
     auto ts = std::make_unique<Entity>("TransitionScreen");
     pos = { 0.f, 0.f };

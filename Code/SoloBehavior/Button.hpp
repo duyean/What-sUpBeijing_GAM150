@@ -31,6 +31,16 @@ public:
 		onClick = cb;
 	}
 
+	void SetOnHover(Callback cb)
+	{
+		onHover = cb;
+	}
+
+	void SetOnHoverExit(Callback cb)
+	{
+		onHoverExit = cb;
+	}
+
 	void awake() override;
 	void init() override;
 	void update() override;
@@ -51,6 +61,8 @@ public:
 
 private:
 	Callback onClick;
+	Callback onHover;
+	Callback onHoverExit;
 };
 
 

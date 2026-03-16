@@ -5,13 +5,15 @@
 
 struct PointerEventData
 {
+    //mouse world space x coordinates
     s32 x;
+    //mouse world space y coordinates
     s32 y;
 
+    //mouse screen space x coordinates
     s32 delta_x;
+    //mouse screen space y coordinates
     s32 delta_y;
-
-    //UIElement* currentUIObject;
 };
 
 struct IPointerDown

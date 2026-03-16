@@ -10,6 +10,7 @@ TextMesh::TextMesh()
 	padding = 1.f;
 	t_allign = TextAlignment::LEFT;
 	tl_allign = TextLineAllignment::TOP;
+	layer = 500;
 }
 
 TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, TextAlignment _allign)
@@ -18,6 +19,7 @@ TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, TextAlignment _a
 	font = "liberi";
 	padding = 1.f;
 	tl_allign = TextLineAllignment::TOP;
+	layer = 500;
 }
 
 TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, Color _color, TextAlignment _allign)
@@ -26,6 +28,7 @@ TextMesh::TextMesh(AEVec2 _pos, float _size, const char* _text, Color _color, Te
 	font = "liberi";
 	padding = 1.f;
 	tl_allign = TextLineAllignment::TOP;
+	layer = 500;
 }
 
 
@@ -106,13 +109,13 @@ void TextMesh::update()
 		switch (tl_allign)
 		{
 		case TextLineAllignment::TOP:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::CENTER:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::BOTTOM:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
 			break;
 		default:
 			break;

@@ -28,6 +28,11 @@ void EdgeManager::UpdateEdges()
 	S_path->isActive = !node.s;
 	W_path->isActive = !node.w;	
 
+	N_path->transform->children[0]->entity->isActive = !node.n;
+	E_path->transform->children[0]->entity->isActive = !node.e;
+	S_path->transform->children[0]->entity->isActive = !node.s;
+	W_path->transform->children[0]->entity->isActive = !node.w;
+
 	NodeType currentNodeType = node.type;
 
 	if (hasTraveled)

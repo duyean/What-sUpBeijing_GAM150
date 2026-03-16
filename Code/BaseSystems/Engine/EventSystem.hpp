@@ -32,14 +32,13 @@ public:
 	EventSystem();
 	~EventSystem();
 
-private:
-
-	PointerEventData eventData;
+private:	
 	bool p_overObject = false;
-
+	UIElement* lastObject = nullptr;
 public:
-
-
+	
+	PointerEventData eventData;
+	void ClearLastHoverObject();
 	EventSystem(const EventSystem&) = delete;
 	EventSystem& operator=(const EventSystem&) = delete;
 

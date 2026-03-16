@@ -10,6 +10,7 @@ void EventSystem::addUIElement(UIElement* ui)
 
 void EventSystem::removeUIElement(UIElement* ui)
 {
+	lastObject = nullptr;
 	uiElements.erase(
 		std::remove(uiElements.begin(), uiElements.end(), ui),
 		uiElements.end()
@@ -58,10 +59,9 @@ void EventSystem::Update(double dt)
 	s32 screen_x_offset = AEGfxGetWindowWidth() / 2;
 	s32 screen_y_offset = AEGfxGetWindowHeight() / 2;
 
-
 	// Mouse poition in world space (center being middle of the screen):
 	eventData.x = m_x - screen_x_offset;
-	eventData.y = m_y - screen_y_offset;
+	eventData.y = -m_y + screen_y_offset;
 
 	// Mouse position in screen space (center being top left of the screen):
 	eventData.delta_x = m_x;
@@ -70,20 +70,46 @@ void EventSystem::Update(double dt)
 	//check for each ui element whether it is colliding with it
 	for (auto& uiElement : uiElements) {
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
-		{
-			uiElement->OnHover();
-
+		{			
 			//call the respective dispatchers to return event data
 			if (AEInputCheckTriggered(AEVK_LBUTTON))
 			{
 				DispatchPointerTriggered(uiElement, eventData);
 			}			
 		}
-		else
+	}
+
+	//handle on hover events
+	UIElement* currentHovered = nullptr;
+
+	//if(GameStateManager::GetInstance()->GetCurrentLevel)
+	for (auto& uiElement : uiElements)
+	{
+		//check if current mouse over any UI element
+		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{
-			uiElement->OnHoverExit();
+			//set the current hovered
+			currentHovered = uiElement;
+			//break to skip any other elements
+			break; 
 		}
 	}
+
+	//Check if the current hovered got changed
+	if (currentHovered != lastObject)
+	{
+		//If changed, set last object to call ExitHover
+		if (lastObject && lastObject->isActive)
+			lastObject->OnHoverExit();
+
+		//set the current hovered object OnHover
+		if (currentHovered)
+			currentHovered->OnHover();
+		
+		//reset the new object
+		lastObject = currentHovered;
+	}
+	
 }
 
 bool EventSystem::IsPointerOverObject()
@@ -98,6 +124,11 @@ EventSystem::EventSystem()
 EventSystem::~EventSystem()
 {
 
+}
+
+void EventSystem::ClearLastHoverObject()
+{
+	lastObject = nullptr;
 }
 
 

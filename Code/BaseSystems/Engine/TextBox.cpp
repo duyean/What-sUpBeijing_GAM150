@@ -10,6 +10,7 @@ TextBox::TextBox()
 
 	line_padding = 1.f;
 	padding_h = padding_v = 5.f;
+	text_layer = 500;
 }
 
 TextBox::TextBox(const char* _text, float _size, TextBoxVAllign _allign_v, TextBoxHAllign _allign_h)
@@ -17,6 +18,7 @@ TextBox::TextBox(const char* _text, float _size, TextBoxVAllign _allign_v, TextB
 {
 	line_padding = 1.f;
 	padding_h = padding_v = 5.f;
+	text_layer = 500;
 }
 
 void TextBox::awake()
@@ -26,12 +28,16 @@ void TextBox::awake()
 }
 
 void TextBox::init()
+{	
+	textMesh->layer = text_layer;
+	textMesh->size = text_size;
+}
+
+void TextBox::update()
 {
 	textMesh->text = text;
-	textMesh->size = text_size;
 	textMesh->t_allign = text_allign;
 	textMesh->padding = line_padding;
-
 
 	switch (v_allign)
 	{
@@ -68,11 +74,6 @@ void TextBox::init()
 	default:
 		break;
 	}
-}
-
-void TextBox::update()
-{
-	textMesh->text = text;
 }
 
 void TextBox::fixedUpdate()

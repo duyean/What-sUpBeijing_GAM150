@@ -39,6 +39,7 @@ public:
 
 	float padding;
 	float size;
+	int layer;
 	const char* text;
 	const char* font;
 	

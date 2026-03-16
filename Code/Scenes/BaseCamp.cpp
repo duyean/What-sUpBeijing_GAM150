@@ -268,7 +268,7 @@ void BaseCamp::Load()
 	pos = { -300.f, 100.f };
 	scale = { 200.f, 200.f };
 	shop->addComponent<Transform2D>(pos, scale, 0.f);
-	shop->addComponent<Mesh>("Box", "shop", Color(100, 100, 100, 1), 100, MeshType::BOX_T);
+	shop->addComponent<Mesh>("Box", "shop", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
 	shop->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	Shop* s = shop->addComponent<Shop>();
 	s->AddDisplayEntity(shopBackground.get());

@@ -6,9 +6,9 @@
     "baseDEF": 125.0,
     "faction": 1,
     "initiative":9,
-    "texture":"GuanShiYinBack.png",
-    "texture2":"GuanShiYinFront.png",
-    "icontexture":"GuanShiYinIcon.png",
+    "texture":"YuHaiBack.png",
+    "texture2":"YuHaiFront.png",
+    "icontexture":"YuHaiIcon.png",
     "moves": {
         "0": 0,
         "1": 7,

@@ -7,8 +7,8 @@
 class NavigationData
 {
 public:
-	Map viewMap;
-	Map playMap;
+	Map viewMap{};
+	Map playMap{};
 	int xPos, yPos; //x, y position on playMap (set to 0 on default)
 
 	void GenerateNavigationData(MapType type, int xLen, int yLen);

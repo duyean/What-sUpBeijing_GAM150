@@ -478,3 +478,10 @@ Map::Map()
 	Map::mapType = MapType::Debug;
 	//bruh
 }
+
+Map::~Map()
+{
+	for (std::vector<MapNode> v : mapNodes)
+		v.clear();
+	mapNodes.clear();
+}

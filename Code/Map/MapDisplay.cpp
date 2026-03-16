@@ -9,15 +9,20 @@ void MapDisplay::awake()
 	enSystem = &EntityManager::getInstance();
 	meSystem = &MeshGen::getInstance();
 	int count = 0;
-	int depthFront	= 201;
 	int depthBack	= 200;
+	int depthFront	= 201;
+	int depthPlayer = 202;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
+
+	mapCharIcon = enSystem->FindByNameGLOBAL("MapDisplayCharacter");
 
 	for (int textureIndex = 0; textureIndex < TEXTURE_COUNT; textureIndex++)
 	{
 		meSystem->CreateTexture(textureDir[textureIndex].c_str(), textureName[textureIndex].c_str());
 	}
+
+	mapCharIcon->addComponent<Mesh>("Box", textureName[7].c_str(), Color(255, 255, 255, 1.0f), depthPlayer, MeshType::BOX_T);
 
 	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
 		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(x) + "_" + std::to_string(y)));
@@ -46,6 +51,8 @@ void MapDisplay::awake()
 		{
 			mapNodesReal[count]->isActive = true;
 			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
+			if (map.playMap.mapNodes[y][x].type == NodeType::Entry)
+				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 		}
 		count++;
 	}	}
@@ -69,6 +76,10 @@ void MapDisplay::update()
 				mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 				if (map.playMap.mapNodes[y][x].type == NodeType::Empty)
 					mapNodesReal[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
+			}
+			if (map.xPos == x && map.yPos == y)
+			{
+				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 			}
 			count++;
 		}	}

@@ -105,7 +105,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 	}
 }
 
-void GetCurrentNodeInfo(NavigationData data)
+void GetCurrentNodeInfo(NavigationData& data)
 {
 	//used for easier parsing
 	NodeType currentNodeType = data.playMap.mapNodes[data.yPos][data.xPos].type;
@@ -168,8 +168,6 @@ bool NavigationData::LoadNavigationData(JSONSerializer& serializer)
 
 NavigationData::NavigationData()
 {
-	viewMap = Map();
-	playMap = Map();
 	xPos = yPos = 0;
 }
 

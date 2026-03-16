@@ -300,7 +300,7 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(buyButton));
 	enSystem->entities.push_back(std::move(shop));
 
-	meshSystem->CreateTexture("../../Assets/Images/GuanShiYinBack.png", "player_sprite");
+	meshSystem->CreateTexture("../../Assets/Images/SPRITE.png", "player_sprite");
 	auto e = std::make_unique<Entity>("Player");
 	pos = { 0.f, -200.f };
 	scale = { 100.f, 100.f };

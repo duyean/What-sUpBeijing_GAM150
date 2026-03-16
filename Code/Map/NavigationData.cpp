@@ -19,11 +19,15 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 
 	//set up view map based on play map
 	this->viewMap.mapType = MapType::OverlayFog; //for debug purposes if needed
+
 	for (int x = 0; x < xLen; x++) for (int y = 0; y < yLen; y++)
 	{
 		//default all view map nodes to fog
-		this->viewMap.mapNodes[y][x].type = NodeType::VisionFog; 
+		this->viewMap.mapNodes[y][x].type = NodeType::VisionFog;
+	}
 
+	for (int x = 0; x < xLen; x++) for (int y = 0; y < yLen; y++)
+	{
 		//find entry node position
 		if (this->playMap.mapNodes[y][x].type == NodeType::Entry)
 		{
@@ -34,10 +38,10 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 			this->viewMap.mapNodes[y][x].type = NodeType::VisionClear; 
 
 			//reveal any node movable to from entry node
-      		if (!this->viewMap.mapNodes[y][x].e)	this->viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
-			if (!this->viewMap.mapNodes[y][x].w)	this->viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
-			if (!this->viewMap.mapNodes[y][x].n)	this->viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
-			if (!this->viewMap.mapNodes[y][x].s)	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
+      		if (!(this->viewMap.mapNodes[y][x].e))	this->viewMap.mapNodes[y][x + 1].type = NodeType::VisionClear;
+			if (!(this->viewMap.mapNodes[y][x].w))	this->viewMap.mapNodes[y][x - 1].type = NodeType::VisionClear;
+			if (!(this->viewMap.mapNodes[y][x].n))	this->viewMap.mapNodes[y - 1][x].type = NodeType::VisionClear;
+			if (!(this->viewMap.mapNodes[y][x].s))	this->viewMap.mapNodes[y + 1][x].type = NodeType::VisionClear;
 			break;
 		}
 	}
@@ -53,18 +57,18 @@ void NavigationData::GenerateNavigationData(MapType type, int xLen, int yLen)
 
 void TravelNode(NavigationData& data, int newX, int newY)
 {
-	//set current node to clear vision
-	data.viewMap.mapNodes[newY][newX].type = NodeType::VisionClear;
-
-	//reveal any node movable to from current node
-	if (!data.viewMap.mapNodes[newY][newX].e)	data.viewMap.mapNodes[newY][newX + 1].type = NodeType::VisionClear;
-	if (!data.viewMap.mapNodes[newY][newX].w)	data.viewMap.mapNodes[newY][newX - 1].type = NodeType::VisionClear;
-	if (!data.viewMap.mapNodes[newY][newX].n)	data.viewMap.mapNodes[newY - 1][newX].type = NodeType::VisionClear;
-	if (!data.viewMap.mapNodes[newY][newX].s)	data.viewMap.mapNodes[newY + 1][newX].type = NodeType::VisionClear;
-
 	//set new player position
 	data.xPos = newX;
 	data.yPos = newY;
+
+	//set current node to clear vision if not already cleared
+	//data.viewMap.mapNodes[newY][newX].type = NodeType::VisionClear;
+
+	//reveal any node movable to from current node
+	if (!(data.viewMap.mapNodes[newY][newX].e))	data.viewMap.mapNodes[newY][newX + 1].type = NodeType::VisionClear;
+	if (!(data.viewMap.mapNodes[newY][newX].w))	data.viewMap.mapNodes[newY][newX - 1].type = NodeType::VisionClear;
+	if (!(data.viewMap.mapNodes[newY][newX].n))	data.viewMap.mapNodes[newY - 1][newX].type = NodeType::VisionClear;
+	if (!(data.viewMap.mapNodes[newY][newX].s))	data.viewMap.mapNodes[newY + 1][newX].type = NodeType::VisionClear;
 
 	//used for easier parsing
 	NodeType currentNodeType = data.playMap.mapNodes[newY][newX].type;

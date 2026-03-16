@@ -19,6 +19,8 @@
 
 #include "../Engine/Editor/Editor.hpp"
 
+#include "vld.h"
+
 
 #ifdef ALPHA_EDITOR
 LRESULT CALLBACK EditorWndProc(HWND, UINT, WPARAM, LPARAM);

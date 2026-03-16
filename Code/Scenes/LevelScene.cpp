@@ -232,4 +232,5 @@ void LevelScene::Unload()
 	for (auto& e : enSystem->entities) {
 		e->toDestroy = true;
 	}
+	map.~NavigationData();
 }

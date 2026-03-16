@@ -72,7 +72,7 @@ void EventSystem::Update(double dt)
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{			
 			//call the respective dispatchers to return event data
-			if (AEInputCheckTriggered(AEVK_LBUTTON))
+			if (AEInputCheckTriggered(AEVK_LBUTTON) && uiElement->entity->isActive == true)
 			{
 				DispatchPointerTriggered(uiElement, eventData);
 			}			
@@ -99,7 +99,7 @@ void EventSystem::Update(double dt)
 	if (currentHovered != lastObject)
 	{
 		//If changed, set last object to call ExitHover
-		if (lastObject && lastObject->isActive)
+		if (lastObject && lastObject->entity->isActive == true)
 			lastObject->OnHoverExit();
 
 		//set the current hovered object OnHover

@@ -280,7 +280,7 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			delay = 1.5f;
 
 			//DEBUG to add a random blessing after every battle victory
-			std::uniform_int_distribution<int> dist(0, blessingDatabase.size() - 1);
+			std::uniform_int_distribution<int> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
 			auto it = blessingDatabase.begin();
 			std::advance(it, dist(Game::gen));
 			auto randomBlessing = it->second->Clone();

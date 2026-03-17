@@ -6,6 +6,7 @@ std::unordered_map<MOVE_ID, Move> Move::moveDatabase;
 
 void Move::InitMoveDatabase(JSONSerializer& serializer, std::string fileName)
 {
+	moveDatabase.clear();
 	rapidjson::Document doc = serializer.ReadDocument(fileName);
 	if (doc.IsNull())
 	{

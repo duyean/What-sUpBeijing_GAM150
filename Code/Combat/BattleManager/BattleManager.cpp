@@ -147,7 +147,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	CombatUIManager::Instance().CreateMessageText({0.f, 225}, "Battle Start");
+	CombatUIManager::Instance().CreateMessageText({ 0.f, 225 }, "Battle Start");
 }
 
 void BattleManager::update()
@@ -157,7 +157,7 @@ void BattleManager::update()
 	{
 		return;
 	}
-	
+
 	//To allow delay between unit actions
 	if (delay > 0.0f)
 	{

@@ -321,6 +321,12 @@
     <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -579,6 +585,12 @@
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

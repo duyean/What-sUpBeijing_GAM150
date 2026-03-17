@@ -46,11 +46,11 @@ public:
 
 	float text_size;
 	float line_padding;
-
 	float padding_h;
 	float padding_v;
-
 	int text_layer;
+
+	Color text_color;
 
 	TextBox();
 	TextBox(const char* _text, float _size, TextBoxVAllign _allign_v = TextBoxVAllign::TOP, TextBoxHAllign _allign_h = TextBoxHAllign::LEFT);

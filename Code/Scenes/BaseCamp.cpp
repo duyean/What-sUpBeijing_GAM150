@@ -15,6 +15,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/ShopBlessing.hpp"
 #include "../Code/UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/PauseMenu.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -311,6 +312,14 @@ void BaseCamp::Load()
 	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
+
+	auto ps = std::make_unique<Entity>("PauseScreen");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	ps->addComponent<Transform2D>(pos, scale, 0.f);
+	ps->addComponent<PauseMenu>();
+	enSystem->rootEntity->transform->AddChild(ps->transform);
+	enSystem->entities.push_back(std::move(ps));
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };

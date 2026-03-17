@@ -11,20 +11,23 @@ TextBox::TextBox()
 	line_padding = 1.f;
 	padding_h = padding_v = 5.f;
 	text_layer = 500;
+	text_color = Color{ 255, 255, 255, 1.f };
 }
 
 TextBox::TextBox(const char* _text, float _size, TextBoxVAllign _allign_v, TextBoxHAllign _allign_h)
 	:text(_text), text_size(_size), v_allign(_allign_v), h_allign(_allign_h)
 {
+	text_allign = TextAlignment::LEFT;
 	line_padding = 1.f;
 	padding_h = padding_v = 5.f;
 	text_layer = 500;
+	text_color = Color{ 255, 255, 255, 1.f };
 }
 
 void TextBox::awake()
 {
 	textMesh = entity->addComponent<TextMesh>(AEVec2{ entity->transform->getPosition().x - (entity->transform->getScale().x/2),
-		entity->transform->getPosition().y + (entity->transform->getScale().y / 2) }, text_size, "text", Color{ 255, 255, 255, 1.f }, text_allign);
+		entity->transform->getPosition().y + (entity->transform->getScale().y / 2) }, text_size, "text", text_color, text_allign);
 }
 
 void TextBox::init()
@@ -38,6 +41,7 @@ void TextBox::update()
 	textMesh->text = text;
 	textMesh->t_allign = text_allign;
 	textMesh->padding = line_padding;
+	textMesh->color = text_color;
 
 	switch (v_allign)
 	{

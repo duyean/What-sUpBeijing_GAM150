@@ -12,6 +12,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
 #include "../Code/SoloBehavior/Slider.hpp"
+#include "../Code/SoloBehavior/PauseMenu.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -163,6 +164,7 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(l->transform);
 	enSystem->entities.push_back(std::move(l));*/
 
+
 	////////////////////////////////////////////////
 	// 
 	// TRANSITION SCREEN
@@ -174,7 +176,7 @@ void MainMenu::Load()
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	ts->addComponent<Transform2D>(pos, scale, 0.f);
 	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 999, MeshType::BOX_B);
-	ts_comp = ts->addComponent<TransitionScreen>(T_NONE);
+	ts_comp = ts->addComponent<TransitionScreen>(T_OUT);
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 

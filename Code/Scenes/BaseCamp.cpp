@@ -68,6 +68,7 @@ This function loads splash screen image
 void BaseCamp::Load()
 {
 	std::string blessingDesc("(Blessings are buffs that only last for 1 level)");
+	std::string artifactDesc("(Artifacts are powerful buffs that last forever)");
 
 	meshSystem = &MeshGen::getInstance();
 
@@ -115,8 +116,7 @@ void BaseCamp::Load()
 	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
 	auto decisionBox = std::make_unique<Entity>("DecisionBox");
 	decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionBox->addComponent<Mesh>("Box", Color(155, 155, 155, 0.5f), 200, MeshType::BOX_B);
-	decisionBox->addComponent<TextBox>("Weh", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionBox->addComponent<Mesh>("Box", Color(0, 0, 0, 0.5f), 200, MeshType::BOX_B);
 	decisionBox->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionBox->transform);
 	pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f};
@@ -124,6 +124,7 @@ void BaseCamp::Load()
 	auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
 	decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
+	decisionButtonLeft->addComponent<TextBox>("Not Shiny...", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	Button* leftDecButton = decisionButtonLeft->addComponent<Button>();
 	leftDecButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
 	leftDecButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
@@ -134,11 +135,29 @@ void BaseCamp::Load()
 	auto decisionButtonRight = std::make_unique<Entity>("DecisionButtonRight");
 	decisionButtonRight->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonRight->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
+	decisionButtonRight->addComponent<TextBox>("Shiny!!!", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	Button* rightDecButton = decisionButtonRight->addComponent<Button>();
 	rightDecButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
 	rightDecButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
 	decisionButtonRight->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
+	pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.35f };
+	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.1f };
+	auto decisionTitle = std::make_unique<Entity>("DecisionTitle");
+	decisionTitle->addComponent<Transform2D>(pos, scale, 0.f);
+	decisionTitle->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	decisionTitle->addComponent<TextBox>("Title", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionTitle->isActive = false;
+	decisionBoxManager->transform->AddChild(decisionTitle->transform);
+	pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.5f };
+	auto decisionTitle2 = std::make_unique<Entity>("DecisionTitle2");
+	decisionTitle2->addComponent<Transform2D>(pos, scale, 0.f);
+	decisionTitle2->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	decisionTitle2->addComponent<TextBox>("This is a long description for a decision, do you want to click the left button or the right button hmmm... One of them is green and the other is red I prefer the red one it's more shiny..."
+		, 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionTitle2->isActive = false;
+	decisionBoxManager->transform->AddChild(decisionTitle2->transform);
 
 	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");
@@ -163,6 +182,8 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(decisionBoxManager));
 	enSystem->entities.push_back(std::move(decisionButtonLeft));
 	enSystem->entities.push_back(std::move(decisionButtonRight));
+	enSystem->entities.push_back(std::move(decisionTitle));
+	enSystem->entities.push_back(std::move(decisionTitle2));
 
 	meshSystem->CreateTexture("Assets/UI/shop-back.png", "ShopBGTexture");
 	auto shopBackground = std::make_unique<Entity>("ShopBG");

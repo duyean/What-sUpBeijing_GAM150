@@ -28,6 +28,7 @@ private:
 
 	void DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId);
 	void Purchase();
+	void CloseShop();
 	//Map* map = nullptr;
 public:
 	BaseCamp();

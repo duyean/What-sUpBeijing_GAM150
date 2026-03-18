@@ -52,7 +52,6 @@ This function loads splash screen image
 void BattleScene::Load()
 {
     //FOR DEBUG, TO REMOVE LATER!!!!
-    //InitBlessingDatabase();
 
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
@@ -72,6 +71,8 @@ void BattleScene::Load()
     battleManager = manager->addComponent<BattleManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
+
+    //The Image for the battle background @dan
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };

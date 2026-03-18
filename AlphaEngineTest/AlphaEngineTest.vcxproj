@@ -56,6 +56,7 @@
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\DecisionBoxManager.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\DisplayBox.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\EdgeManagerBase.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\DisplayBox.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp" />

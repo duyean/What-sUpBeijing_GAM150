@@ -36,7 +36,7 @@ void MainHealthbar::update()
 		AEVec2 trueScale = { scale.x * hpperc, scale.y };
 		entity->transform->setScale(trueScale);
 		entity->getComponent<Mesh>()->color = color;
-		MeshGen::getInstance().DrawFont(-0.825f, 0.7f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi", TextAlignment::LEFT, 700);
+		MeshGen::getInstance().DrawFont(-0.825f, 0.725f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi", TextAlignment::LEFT, 700);
 	}
 }
 

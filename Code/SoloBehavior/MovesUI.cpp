@@ -6,7 +6,15 @@ void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
 	if (!ch->IsEndingTurn())
 	{
-		ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+		bool isAOE = Move::moveDatabase[ch->GetMoveList().at(ms)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+		if (isAOE)
+		{
+			ch->UseMove(ms, battleManager->GetAllEnemies());
+		}
+		else
+		{
+			ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+		}
 	}
 }
 

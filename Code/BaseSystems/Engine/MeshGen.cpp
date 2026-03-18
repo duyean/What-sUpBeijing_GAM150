@@ -434,7 +434,7 @@ void MeshGen::ClearAllFont()
 
 void MeshGen::CreateTexture(const char* filePath, const char* fileName)
 {
-	if (pTex.find(filePath) == pTex.end())
+	if (pTex.find(fileName) == pTex.end())
 	{
 		pTex.insert({ fileName, AEGfxTextureLoad(filePath) });
 	}

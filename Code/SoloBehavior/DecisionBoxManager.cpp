@@ -20,8 +20,8 @@ void DecisionBoxManager::init()
 
 void DecisionBoxManager::update()
 {
-	leftButton->SetOnClick([this]() { ToggleDecisionBox(false); });
-	rightButton->SetOnClick([this]() { ToggleDecisionBox(false); });
+	//leftButton->SetOnClick([this]() { ToggleDecisionBox(false); });
+	//rightButton->SetOnClick([this]() { ToggleDecisionBox(false); });
 }
 
 void DecisionBoxManager::fixedUpdate()

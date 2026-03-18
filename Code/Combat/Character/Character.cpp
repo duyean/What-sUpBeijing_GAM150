@@ -112,7 +112,17 @@ void Character::Init(void)
 	hp = maxHP;
 }
 
-void Character::UseMove(MOVE_SLOT slot, Character* target)
+void Character::UseMove(MOVE_SLOT slot, std::vector<Character*> targets)
+{
+	bool renderMove = true;
+	for (auto ch : targets)
+	{
+		UseMove(slot, ch, renderMove);
+		renderMove = false;
+	}
+}
+
+void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 {
 	if (target == nullptr) //If no target is specified, assume self-cast
 	{
@@ -152,8 +162,12 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 				}
 			}
 		}
-		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
-		CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
+
+		if (renderMoveName)
+		{
+			AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
+			CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
+		}
 		DealDamage(target, move->coefficient);
 		EndTurn();
 	}
@@ -340,6 +354,12 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 		break;
 	case Game::HP:
 		maxHPBonus += value;
+		break;
+	case Game::CRIT_RATE:
+		critRate += value;
+		break;
+	case Game::CRIT_DAMAGE:
+		critDMG += value;
 		break;
 	}
 }

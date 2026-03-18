@@ -250,6 +250,16 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	printf("Erasing Exploration Debug Map.\n");
 	travelPath.mapNodes.clear();
 
+	if (endNodes.size() <= 2)
+	{
+		printf("Not enough end nodes generated to designate event node. No Map-Specific Event Node will be generated.\n");
+		if (endNodes.size() < 2)
+		{
+			printf("broken map, please generate a new one\n");
+			return;
+		}
+	}
+
 	//remove entry and exit nodes from endNode list
 	endNodes.erase(endNodes.begin() + largestIndex);
 	endNodes.erase(endNodes.begin());
@@ -291,18 +301,32 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	//designate remaining nodes as random event or enemy encounter at a chance
 	printf("Designating Remaining Nodes as Random Events or Enemy Encounters.\n");
 
-	for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) {
-		if (this->mapNodes[y][x].type == NodeType::Empty)
-		{
-			int rollPanel = randPercent(gen);
-			if (rollPanel <= 70) //30% chance of random event
-			{
-				int rollType = randPercent(gen);
+	int nodeTotal = 0;
+	for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) { nodeTotal++; } }
 
-				if (rollType <= 65) //65% chance of encounter 
-					this->mapNodes[y][x].type = NodeType::EnemyEncounter;
-				else	
-					this->mapNodes[y][x].type = NodeType::RandomEvent;
+	int eventNodePercent  = 20;	//20% chance of event node, 
+	int combatNodePercent = 40; //40% chance of encounter node
+
+	int combatNodeCount = 0, eventNodeCount = 0;
+	int combatNodeLimit = nodeTotal * combatNodePercent / 100, eventNodeLimit = nodeTotal * eventNodePercent / 100;
+
+	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit)
+	{
+		for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) {
+				if (this->mapNodes[y][x].type == NodeType::Empty)
+				{
+					int rollType = randPercent(gen);
+
+					if (combatNodeCount < combatNodeLimit && rollType <= combatNodePercent)
+					{
+						this->mapNodes[y][x].type = NodeType::EnemyEncounter;
+						combatNodeCount++;
+					}
+					else if (eventNodeCount < eventNodeLimit)
+					{
+						this->mapNodes[y][x].type = NodeType::RandomEvent;
+						eventNodeCount++;
+					}
 	}	}	}	}
 }
 

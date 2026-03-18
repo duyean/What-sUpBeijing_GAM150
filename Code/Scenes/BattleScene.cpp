@@ -355,6 +355,8 @@ void BattleScene::Unload()
     for (auto& e : enSystem->entities) {
         e->toDestroy = true;
     }
+    enemyPositions.~vector();
+    allyPositions.~vector();
 }
 
 void BattleScene::GenerateEnemies(BATTLE_TYPE type)

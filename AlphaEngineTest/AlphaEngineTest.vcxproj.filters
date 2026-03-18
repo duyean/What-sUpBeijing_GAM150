@@ -345,6 +345,9 @@
     <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp">
       <Filter>Source Files\Base Systems\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\DisplayBox.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -622,6 +625,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Audio\SFXTrack.hpp">
       <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\DisplayBox.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

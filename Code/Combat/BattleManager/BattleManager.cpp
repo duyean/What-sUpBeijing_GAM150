@@ -43,6 +43,13 @@ Character* BattleManager::GetlastTargetedUnit()
 	return lastTargetedUnit;
 }
 
+std::vector<Character*> BattleManager::GetAllEnemies()
+{
+	std::vector<Character*> enemies;
+	std::copy_if(battleUnits.begin(), battleUnits.end(), std::back_inserter(enemies), [](Character* ch) {return ch->GetFaction() == Game::ENEMY && !ch->IsDead(); });
+	return enemies;
+}
+
 int BattleManager::GetCurrentTurn() const
 {
 	return currentTurn;
@@ -227,19 +234,51 @@ void BattleManager::update()
 			//Register Inputs
 			if (AEInputCheckTriggered(AEVK_Z))
 			{
-				activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_1)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_1, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_X))
 			{
-				activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_2)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_2, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_C))
 			{
-				activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_3)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_3, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_V))
 			{
-				activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_4)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_4, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+				}
 			}
 		}
 	}

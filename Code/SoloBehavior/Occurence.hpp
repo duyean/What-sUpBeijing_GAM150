@@ -12,15 +12,15 @@ class Occurence
 {
 	public:
 	//The name of the occurence
-	std::string name;
+	const char* name;
 
 	//The description of the event
-	std::string desc;
+	const char* desc;
 
 	//Text shown for option 1
-	std::string option1Text;
+	const char* option1Text;
 
-	std::string option2Text;
+	const char* option2Text;
 
 	//The effect of picking the first option
 	std::function<void(RunManager*)> option1;
@@ -29,7 +29,7 @@ class Occurence
 	std::function<void(RunManager*)> option2;
 
 	Occurence();
-	Occurence(std::string name, std::string desc, std::string op1Text, std::string op2Text, std::function<void(RunManager*)> fn1, std::function<void(RunManager*)> fn2);
+	Occurence(const char* name, const char* desc, const char* op1Text, const char* op2Text, std::function<void(RunManager*)> fn1, std::function<void(RunManager*)> fn2);
 };
 
 extern std::unordered_map<OCCURENCE_ID, Occurence> eventsDatabase;

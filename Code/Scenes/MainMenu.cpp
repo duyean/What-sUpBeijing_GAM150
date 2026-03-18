@@ -11,6 +11,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../SoloBehavior/Occurence.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -33,6 +34,7 @@ This function loads splash screen image
 void MainMenu::Load()
 {
 	InitBlessingDatabase();
+	InitEventsDatabase();
 
 	meshSystem = &MeshGen::getInstance();
 	meshSystem->CreateTexture("../../Assets/UI/button_border.png", "Button");

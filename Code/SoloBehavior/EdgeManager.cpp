@@ -2,6 +2,7 @@
 #include "EdgeManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../SoloBehavior/Occurence.hpp"
 
 void EdgeManager::awake()
 {
@@ -58,8 +59,18 @@ void EdgeManager::UpdateEdges()
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			break;
 		case NodeType::RandomEvent:
-			
+		{
+			if (eventsDatabase.empty())
+			{
+				std::cout << "No events available!" << std::endl;
+				break;
+			}
+			std::uniform_int_distribution<int> dist(0, eventsDatabase.size() - 1);
+			auto& randomBlessing = eventsDatabase.at(static_cast<OCCURENCE_ID>(dist(Game::gen)));
+			std::cout << "Triggering Random Event: " << randomBlessing.name << std::endl;
+			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			break;
+		}
 		default:
 			break;
 		}

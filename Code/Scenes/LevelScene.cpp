@@ -14,6 +14,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/SoloBehavior/EdgeManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 LevelScene::LevelScene()
 {	
@@ -274,6 +275,23 @@ void LevelScene::Load()
 	enSystem->entities.push_back(std::move(SE_Manager));
 
 	RunManager::Instance().game_paused = false;
+
+	MapType mapType = RunManager::Instance().GetMapType();
+	switch (mapType)
+	{
+	case CityStreets:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL1_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL1_BGM, true);
+		break;
+	case OuterPalace:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL2_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL2_BGM, true);
+		break;
+	case InnerPalace:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL3_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL3_BGM, true);
+		break;
+	}
 }
 
 

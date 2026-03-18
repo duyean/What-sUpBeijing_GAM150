@@ -16,6 +16,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -403,6 +404,9 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(SE_Manager));
 
 	RunManager::Instance().game_paused = false;
+
+	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BASECAMP_BGM);
+	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BASECAMP_BGM, true);
 }
 
 

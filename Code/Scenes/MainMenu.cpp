@@ -14,6 +14,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/Slider.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../SoloBehavior/Occurence.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -182,6 +183,8 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 
+	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_MAINMENU_BGM);
+	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_MAINMENU_BGM, true);
 }
 
 void MainMenu::SwitchToGame()

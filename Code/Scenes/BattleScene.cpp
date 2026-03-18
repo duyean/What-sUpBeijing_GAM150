@@ -66,6 +66,12 @@ void BattleScene::Load()
     enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
     enSystem->entities.push_back(std::move(r));
 
+    auto manager = std::make_unique<Entity>("Manager");
+    manager->addComponent<Transform2D>(pos, scale, 0.f);
+    manager->addComponent<CombatUIManager>();
+    battleManager = manager->addComponent<BattleManager>();
+    enSystem->rootEntity->transform->AddChild(manager->transform);
+    enSystem->entities.push_back(std::move(manager));
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };

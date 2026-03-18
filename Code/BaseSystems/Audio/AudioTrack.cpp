@@ -60,7 +60,10 @@ bool& AudioTrack::FadeOut()
 
 void AudioTrack::PlayTrack(bool loop) const
 {
-	AEAudioPlay(audio, audioGroup, 1.f, 1.f, loop);
+	if (loop)
+		AEAudioPlay(audio, audioGroup, 1.f, 1.f, -1);
+	else
+		AEAudioPlay(audio, audioGroup, 1.f, 1.f, 0);
 }
 
 void AudioTrack::StopTrack() const

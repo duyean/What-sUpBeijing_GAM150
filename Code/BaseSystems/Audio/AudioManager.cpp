@@ -4,12 +4,19 @@
 
 AudioManager::AudioManager()
 {
+	sfxGroup = AEAudioCreateGroup();
 }
 
-bool AudioManager::AddTrack(AUDIO_TYPE type, std::string fileName)
+AudioManager::~AudioManager()
+{
+	for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
+		delete pair.second;
+	AEAudioUnloadAudioGroup(sfxGroup);
+}
+
+void AudioManager::AddTrack(AUDIO_TYPE type, std::string fileName)
 {
 	tracks.insert(std::pair<AUDIO_TYPE, AudioTrack*>{type, new AudioTrack(fileName)});
-	return true;
 }
 
 bool AudioManager::PlayTrack(AUDIO_TYPE id, bool fade = false) const
@@ -45,57 +52,13 @@ void AudioManager::StopTrack(AUDIO_TYPE id, bool fade = false) const
 		track->StopTrack();
 }
 
-void AudioManager::awake()
+void AudioManager::AddSFX(SFX_TYPE type, std::string fileName)
 {
-	AddTrack(AUDIO_TEST, "Assets/BGM/test.mp3");
+	sfxs.insert(std::pair<SFX_TYPE, SFXTrack*>{type, new SFXTrack(fileName, sfxGroup)});
 }
 
-void AudioManager::init()
+void AudioManager::PlaySFX(SFX_TYPE id) const
 {
+	sfxs.find(id)->second->PlayTrack();
 }
 
-void AudioManager::update()
-{
-	if (AEInputCheckTriggered(AEVK_1))
-	{
-		PlayTrack(AUDIO_TEST, true);
-	}
-	else if (AEInputCheckTriggered(AEVK_2))
-	{
-		StopTrack(AUDIO_TEST, true);
-	}
-
-	for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
-	{
-		if (pair.second->FadeIn())
-		{
-			float newVol = AEClamp(pair.second->GetVolume() + float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			std::cout << "volume = " << newVol << std::endl;
-			pair.second->SetVolume(newVol);
-			if (newVol == 1.f) pair.second->FadeIn() = false;
-		}
-		else if (pair.second->FadeOut())
-		{
-			float newVol = AEClamp(pair.second->GetVolume() - float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			std::cout << "volume = " << newVol << std::endl;
-			pair.second->SetVolume(newVol);
-			if (newVol == 0.f)
-			{
-				pair.second->FadeOut() = false;
-				pair.second->StopTrack();
-			}
-		}
-	}
-}
-
-void AudioManager::fixedUpdate()
-{
-}
-
-void AudioManager::destroy()
-{
-	for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
-	{
-		delete pair.second;
-	}
-}

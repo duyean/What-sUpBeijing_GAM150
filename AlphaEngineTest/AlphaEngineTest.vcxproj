@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp" />
@@ -85,6 +87,7 @@
     <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Audio\SFXTrack.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
@@ -140,6 +143,7 @@
     <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp" />

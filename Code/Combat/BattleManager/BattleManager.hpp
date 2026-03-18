@@ -43,7 +43,6 @@ class BattleManager : public SoloBehavior
 	//Float for delayed executions
 	float delay;
 
-
 	enum BATTLE_OUTCOME
 	{
 		NONE,

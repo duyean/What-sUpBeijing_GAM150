@@ -76,6 +76,7 @@ void EventSystem::Update(double dt)
 			if (AEInputCheckTriggered(AEVK_LBUTTON) && uiElement->entity->isActive == true)
 			{
 				DispatchPointerTriggered(uiElement, eventData);
+				uiElement->reset = true;
 			}			
 		}
 	}

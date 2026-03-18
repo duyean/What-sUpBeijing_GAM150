@@ -16,7 +16,8 @@ class UIElement : public SoloBehavior
 public:
 	virtual void OnHover() = 0;
 	virtual void OnHoverExit() = 0;
-	UIElement(){}
+	bool reset;
+	UIElement():reset(false){}
 	~UIElement(){};
 };
 

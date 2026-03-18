@@ -21,7 +21,6 @@ private:
 	Color normal_color;
 	Color highlighted_color;
 	Color pressed_color;
-
 public:
 	using Callback = std::function<void()>;
 

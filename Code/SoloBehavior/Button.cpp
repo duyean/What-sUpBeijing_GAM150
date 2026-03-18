@@ -17,7 +17,11 @@ void Button::init()
 
 void Button::update()
 {
-
+	if (reset)
+	{
+		buttonMesh->color = normal_color;
+		reset = false;
+	}
 }
 
 void Button::fixedUpdate()

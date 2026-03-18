@@ -10,6 +10,7 @@ This file contains the definition of functions for GameManager.h
 #include "GameManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/Engine_WZBJ_Pak.hpp"
+#include "../Code/Audio_WZBJ_Pak.hpp"
 
 GameManager::GameManager()
 {
@@ -97,6 +98,8 @@ void GameManager::Update(float _dt)
 		}
 
 	}
+
+	AudioManager::GetInstance()->Update();
 }
 
 void GameManager::FixedUpdate(double _fixedDt, double accumulator)

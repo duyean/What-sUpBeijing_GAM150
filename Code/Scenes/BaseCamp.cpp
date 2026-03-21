@@ -197,7 +197,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(shopBackground->transform);
 
 	auto nameText = std::make_unique<Entity>("NameText");
-	pos = { AEGfxGetWindowWidth() * 0.225f, AEGfxGetWindowHeight() * 0.115f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, AEGfxGetWindowHeight() * 0.115f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	nameText->addComponent<Transform2D>(pos, scale, 0.f);
 	nameText->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -205,7 +205,7 @@ void BaseCamp::Load()
 	nameText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(nameText->transform);
 	auto typeDesc = std::make_unique<Entity>("TypeDesc");
-	pos = { AEGfxGetWindowWidth() * 0.225f, AEGfxGetWindowHeight() * 0.065f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, AEGfxGetWindowHeight() * 0.065f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	typeDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	typeDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -213,7 +213,7 @@ void BaseCamp::Load()
 	typeDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(typeDesc->transform);
 	auto longDesc = std::make_unique<Entity>("LongDesc");
-	pos = { AEGfxGetWindowWidth() * 0.225f, -AEGfxGetWindowHeight() * 0.085f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, -AEGfxGetWindowHeight() * 0.085f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.25f };
 	longDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	longDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -221,8 +221,8 @@ void BaseCamp::Load()
 	longDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(longDesc->transform);
 	auto buyButton = std::make_unique<Entity>("BuyButton");
-	pos = { AEGfxGetWindowWidth() * 0.225f, -AEGfxGetWindowHeight() * 0.25f };
-	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.1f };
+	pos = { AEGfxGetWindowWidth() * 0.250f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowWidth() * 0.13f, AEGfxGetWindowHeight() * 0.07f };
 	buyButton->addComponent<Transform2D>(pos, scale, 0.f);
 	buyButton->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 201, MeshType::BOX_T);
 	buyButton->addComponent<TextBox>("BUY", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);

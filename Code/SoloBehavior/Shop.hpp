@@ -26,6 +26,7 @@ public:
 	Shop();
 	~Shop();
 private:
+	bool canShow = false;
 	std::vector<Entity*> display{};
 	std::map<int, bool> selection{};
 	int currSelection{ -1 };

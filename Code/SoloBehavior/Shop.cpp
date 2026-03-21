@@ -5,26 +5,11 @@
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
 {
-	for (Entity* ent : display)
-		ent->isActive = true;
-	if (currSelection != -1 && selection.find(currSelection)->second != true)
-		buyButton->isActive = true;
+	canShow = true;
 	player->getComponent<Player>()->canMove = false;
 }
 void Shop::onStay(BoxCollider2D* other)
 {
-	if (RunManager::Instance().game_paused)
-	{
-		for (Entity* ent : display)
-			ent->isActive = false;
-		buyButton->isActive = false;
-	}
-	else
-	{
-		for (Entity* ent : display)
-			ent->isActive = true;
-		buyButton->isActive = true;
-	}
 }
 void Shop::onExit(BoxCollider2D* other)
 {
@@ -74,9 +59,7 @@ void Shop::AddShopBlessings(ShopBlessing* b, int id)
 
 void Shop::CloseShopUI()
 {
-	for (Entity* ent : display)
-		ent->isActive = false;
-	buyButton->isActive = false;
+	canShow = false;
 }
 
 void Shop::SetPlayer(Entity* p)
@@ -108,6 +91,19 @@ void Shop::init()
 
 void Shop::update()
 {
+	if (canShow && !RunManager::Instance().game_paused)
+	{
+		for (Entity* ent : display)
+			ent->isActive = true;
+		if (currSelection != -1 && selection.find(currSelection)->second != true)
+			buyButton->isActive = true;
+	}
+	else
+	{
+		for (Entity* ent : display)
+			ent->isActive = false;
+		buyButton->isActive = false;
+	}
 }
 
 void Shop::fixedUpdate()

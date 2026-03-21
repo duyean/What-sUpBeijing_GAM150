@@ -5,19 +5,34 @@
 class Slider : public SoloBehavior
 {
 private:
-	Button* inc_button;
-	Button* dec_button;
-	TextBox* display;
+	Button* button_inc = nullptr;
+	Button* button_dec = nullptr;
+
+	int max_value = 10;
+	int value = 0;
 
 	EntityManager* enSystem = nullptr;
 	MeshGen* meSystem = nullptr;
+
 public:
+	using Callback = std::function<void()>;
+	TextBox* text = nullptr;
+	Color slider_color;
+	Color background_color;
+
 	void awake() override;
 	void init() override;
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Slider() = default;
+	void Increase();
+	void Decrease();
+
+	Slider() {}
 	~Slider() {}
+
+private:
+	Callback onIncrease;
+	Callback onDecrease;
 };

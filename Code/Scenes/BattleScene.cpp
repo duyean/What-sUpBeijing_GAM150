@@ -52,7 +52,7 @@ This function loads splash screen image
 void BattleScene::Load()
 {
     //FOR DEBUG, TO REMOVE LATER!!!!
-    //InitBlessingDatabase();
+    InitBlessingDatabase();
 
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();

@@ -70,6 +70,7 @@ void MovesUI::update()
 		return;
 	}
 	bool endingTurn = battleManager->GetActiveUnit()->IsEndingTurn();
+	
 	moveButton1->entity->isActive = !endingTurn;
 	moveButton2->entity->isActive = !endingTurn;
 	moveButton3->entity->isActive = !endingTurn;
@@ -84,6 +85,7 @@ void MovesUI::update()
 	else
 	{
 		tooltip->isActive = false;
+		canDisplay = false;
 	}
 
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)

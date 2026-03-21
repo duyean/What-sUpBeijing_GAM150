@@ -10,6 +10,18 @@ void Shop::onHit(BoxCollider2D* other)
 }
 void Shop::onStay(BoxCollider2D* other)
 {
+	if (RunManager::Instance().game_paused)
+	{
+		for (Entity* ent : display)
+			ent->isActive = false;
+		buyButton->isActive = false;
+	}
+	else
+	{
+		for (Entity* ent : display)
+			ent->isActive = true;
+		buyButton->isActive = true;
+	}
 }
 void Shop::onExit(BoxCollider2D* other)
 {

@@ -14,6 +14,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/SoloBehavior/EdgeManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/PauseMenu.hpp"
 
 LevelScene::LevelScene()
 {	
@@ -267,6 +268,14 @@ void LevelScene::Load()
 
 	enSystem->entities.push_back(std::move(w_path));
 	enSystem->entities.push_back(std::move(w_path_sprite));
+
+	auto ps = std::make_unique<Entity>("PauseScreen");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	ps->addComponent<Transform2D>(pos, scale, 0.f);
+	ps->addComponent<PauseMenu>();
+	enSystem->rootEntity->transform->AddChild(ps->transform);
+	enSystem->entities.push_back(std::move(ps));
 
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
 	SE_Manager->addComponent<Transform2D>();

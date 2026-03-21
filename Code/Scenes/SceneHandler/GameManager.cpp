@@ -10,6 +10,7 @@ This file contains the definition of functions for GameManager.h
 #include "GameManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/Engine_WZBJ_Pak.hpp"
+#include "../Code/Audio_WZBJ_Pak.hpp"
 
 GameManager::GameManager()
 {
@@ -39,7 +40,7 @@ void GameManager::Init()
 	meshSystem->initialize();
 
 	//Set the starting game scene
-	stateManager->NextScene(GameStateManager::MAIN_MENU); //GAME_SCREEN SPLASHSCREEN
+	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
 
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)
@@ -97,6 +98,8 @@ void GameManager::Update(float _dt)
 		}
 
 	}
+
+	AudioManager::GetInstance()->Update();
 }
 
 void GameManager::FixedUpdate(double _fixedDt, double accumulator)

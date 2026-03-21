@@ -26,7 +26,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-
+#include "../Audio_WZBJ_Pak.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
@@ -52,7 +52,6 @@ This function loads splash screen image
 void BattleScene::Load()
 {
     //FOR DEBUG, TO REMOVE LATER!!!!
-    InitBlessingDatabase();
 
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
@@ -70,10 +69,10 @@ void BattleScene::Load()
     manager->addComponent<Transform2D>(pos, scale, 0.f);
     manager->addComponent<CombatUIManager>();
     battleManager = manager->addComponent<BattleManager>();
-    manager->addComponent<AudioManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
 
+    //The Image for the battle background @dan
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
@@ -340,6 +339,27 @@ void BattleScene::Load()
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     battleManager->StartBattle();
+
+    if (RunManager::Instance().GetBattleType() == BATTLE_TYPE::BOSS)
+    {
+        AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLEBOSS_BGM);
+        AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLEBOSS_BGM, true);
+    }
+    else
+    {
+        std::uniform_int_distribution<int> trackRand(0, 1);
+        int trackNo = trackRand(Game::gen);
+        if (trackNo)
+        {
+            AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLE1_BGM);
+            AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE1_BGM, true);
+        }
+        else
+        {
+            AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLE2_BGM);
+            AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
+        }
+    }
 }
 
 /*!

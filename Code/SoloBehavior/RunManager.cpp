@@ -9,6 +9,7 @@
 This file contains the implementation for a Run Manager for our game.
 *//*______________________________________________________________________*/
 #include "RunManager.hpp"
+#include "../UI_WZBJ_Pak.hpp"
 
 RunManager::RunManager()
 {
@@ -55,9 +56,20 @@ void RunManager::ResetSave()
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 {
+	AEVec2 pos = { 0, 0 };
+	AEVec2 scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
+
+	auto displayBox = std::make_unique<Entity>("DisplayBox");
+	displayBox->addComponent<Transform2D>(pos, scale, 0.f);
+	displayBox->addComponent<Mesh>("Box", Color(50, 50, 50, 0.9f), 1002, MeshType::BOX_B);
+	const char* blessName = bless->blessingName.c_str();
+	const char* blessDesc = bless->blessingDesc.c_str();
+	displayBox->addComponent<DisplayBox>("New Blessing Obtained", blessName, blessDesc, "-- Click To Continue --");
+
 	//Add a new blessing, the original blessing from the database is cloned
-	std::cout << "Obtained Blessing: " << bless->blessingName << std::endl;
 	runBlessings.push_back(std::move(bless));
+	EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
+	EntityManager::getInstance().entities.push_back(std::move(displayBox));
 }
 
 void RunManager::SetBattleType(BATTLE_TYPE type)

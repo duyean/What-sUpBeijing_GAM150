@@ -113,7 +113,7 @@
             "dot": 0.0,
             "brief": "Deals 80% ATK DMG to all enemies",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
-            "target": 2,
+            "target": 3,
             "modifiers": [
             ]
         }

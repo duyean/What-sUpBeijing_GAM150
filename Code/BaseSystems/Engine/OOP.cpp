@@ -20,4 +20,11 @@ void SoloBehavior::Destroy(Entity* entity)
 	//set destroy flag
 	EntityManager::getInstance().needsCleanup = true;
 	entity->toDestroy = true;
+	if (entity->transform->children.size() != 0)
+	{
+		for (int i = 0; i < entity->transform->children.size(); ++i)
+		{
+			Destroy(entity->transform->children[i]->entity);
+		}
+	}
 }

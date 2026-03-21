@@ -4,6 +4,7 @@
 #include "../EventHandler/CombatEventHandler.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/BaseSystems/Engine/MeshGen.hpp"
+#include "../Code/Audio_WZBJ_Pak.hpp"
 
 void Character::DealDamage(Character* target, float coefficient)
 {
@@ -50,7 +51,15 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	if (hp <= 0)
 	{
 		Death();
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_DEATH);
+		return;
 	}
+	std::uniform_int_distribution<int> trackRand(0, 1);
+	int trackNo = trackRand(Game::gen);
+	if (trackNo)
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_HURT);
+	else
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_HURT2);
 }
 
 bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
@@ -112,7 +121,17 @@ void Character::Init(void)
 	hp = maxHP;
 }
 
-void Character::UseMove(MOVE_SLOT slot, Character* target)
+void Character::UseMove(MOVE_SLOT slot, std::vector<Character*> targets)
+{
+	bool renderMove = true;
+	for (auto ch : targets)
+	{
+		UseMove(slot, ch, renderMove);
+		renderMove = false;
+	}
+}
+
+void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 {
 	if (target == nullptr) //If no target is specified, assume self-cast
 	{
@@ -152,10 +171,48 @@ void Character::UseMove(MOVE_SLOT slot, Character* target)
 				}
 			}
 		}
-		AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
-		CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
+
+		if (renderMoveName)
+		{
+			AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
+			CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
+		}
 		DealDamage(target, move->coefficient);
 		EndTurn();
+
+		switch (move_id)
+		{
+		case 0:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_BASIC);
+			break;
+		case 1:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_SCORCH);
+			break;
+		case 2:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_EMPOWER);
+			break;
+		case 3:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_APS);
+			break;
+		case 4:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_FLAMESTRIKE);
+			break;
+		case 5:
+			//AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_COMBUST);
+			break;
+		case 6:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_CATACLYSM);
+			break;
+		case 7:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_WATERSURGE);
+			break;
+		case 8:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_HYDRORUSH);
+			break;
+		case 9:
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_TIDALWAVE);
+			break;
+		}
 	}
 }
 
@@ -340,6 +397,12 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 		break;
 	case Game::HP:
 		maxHPBonus += value;
+		break;
+	case Game::CRIT_RATE:
+		critRate += value;
+		break;
+	case Game::CRIT_DAMAGE:
+		critDMG += value;
 		break;
 	}
 }

@@ -51,8 +51,7 @@ void MapDisplay::awake()
 		{
 			mapNodesReal[count]->isActive = true;
 			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-			if (map.playMap.mapNodes[y][x].type == NodeType::Entry)
-				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
+			if (x == map.xPos && y == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 		}
 		count++;
 	}	}

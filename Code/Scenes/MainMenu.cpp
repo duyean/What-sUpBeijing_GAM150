@@ -13,6 +13,8 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/Player.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Code/SoloBehavior/SettingsScreen.hpp"
+#include "../SoloBehavior/Occurence.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -35,6 +37,7 @@ This function loads splash screen image
 void MainMenu::Load()
 {
 	InitBlessingDatabase();
+	InitEventsDatabase();
 
 	meshSystem = &MeshGen::getInstance();
 	meshSystem->CreateTexture("../../Assets/UI/button_border.png", "Button");
@@ -225,10 +228,12 @@ void MainMenu::Load()
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	ts->addComponent<Transform2D>(pos, scale, 0.f);
 	ts->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 999, MeshType::BOX_B);
-	ts_comp = ts->addComponent<TransitionScreen>(T_NONE);
+	ts_comp = ts->addComponent<TransitionScreen>(T_OUT);
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
-	
+
+	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_MAINMENU_BGM);
+	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_MAINMENU_BGM, true);
 }
 
 void MainMenu::SwitchToGame()

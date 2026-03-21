@@ -16,3 +16,4 @@
 
 #include "./BaseSystems/Audio/AudioManager.hpp"
 #include "./BaseSystems/Audio/AudioTrack.hpp"
+#include "./BaseSystems/Audio/SFXTrack.hpp"

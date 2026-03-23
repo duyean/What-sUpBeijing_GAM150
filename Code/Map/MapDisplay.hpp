@@ -19,7 +19,7 @@ public:
 	std::vector<Entity*> mapNodesFog = {};
 	int x, y;
 
-	#define TEXTURE_COUNT 8
+	#define TEXTURE_COUNT 9
 
 	string textureDir[TEXTURE_COUNT] =
 	{
@@ -30,7 +30,8 @@ public:
 	"../../Assets/Images/MapIcons/Entrance.png",		//map start
 	"../../Assets/Images/MapIcons/Exit.png",			//boss fight
 	"../../Assets/Images/MapIcons/Wall.png",			//shop (TEMPORARY PLS REPLACE)
-	"../../Assets/Images/MapIcons/Sprite.png"			//player sprite 
+	"../../Assets/Images/MapIcons/Sprite.png",			//player sprite 
+	"../../Assets/Images/MapIcons/FixedEvent.png"		//fixed encounter
 	};
 
 	string textureName[TEXTURE_COUNT] =
@@ -42,7 +43,8 @@ public:
 	"EntranceTile",		//map start
 	"ExitTile",			//boss fight
 	"ShopTile",			//shop
-	"PlayerIcon"		//player sprite 
+	"PlayerIcon",		//player sprite 
+	"FixedEventTile"	//fixed encounter
 	};
 
 	EntityManager* enSystem = nullptr;

@@ -198,7 +198,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_FLAMESTRIKE);
 			break;
 		case 5:
-			//AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_COMBUST);
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_COMBUST);
 			break;
 		case 6:
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_CATACLYSM);

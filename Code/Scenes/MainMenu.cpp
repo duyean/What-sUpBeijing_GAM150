@@ -249,6 +249,7 @@ void MainMenu::Load()
 void MainMenu::SwitchToGame()
 {
 	ts_comp->TransitionToScene(GameStateManager::BASE_CAMP);
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_GAME_START);
 }
 
 void MainMenu::PlayNewSave()

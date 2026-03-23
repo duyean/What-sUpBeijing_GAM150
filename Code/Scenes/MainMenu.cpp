@@ -50,6 +50,16 @@ void MainMenu::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
+	meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "MenuImage");
+	auto menuScreen = std::make_unique<Entity>("MENU_IMAGE");
+	Entity* ms = menuScreen.get();
+	pos = { 0.f ,0.f };
+	scale = { 1800.f, 1280.f };
+	ms->addComponent<Transform2D>(pos, scale, 0.f);
+	ms->addComponent<Mesh>("Box", "MenuImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
+	enSystem->rootEntity->transform->AddChild(ms->transform);
+	enSystem->entities.push_back(std::move(menuScreen));
+	mainMenuDisplay.push_back(ms);
 	
 
 
@@ -166,7 +176,7 @@ void MainMenu::Load()
 	auto ss = std::make_unique<Entity>("SettingsScreen");
 	pos = { 0.f, 0.f };
 	scale = { 1.f, 1.f };
-	ss->addComponent<Transform2D>(pos, scale, 0.f);
+	ss->addComponent<Transform2D>(pos, scale, 0.f);\
 	SettingsScreen* settings = ss->addComponent<SettingsScreen>(mainMenuDisplay);
 	enSystem->rootEntity->transform->AddChild(ss->transform);
 	enSystem->entities.push_back(std::move(ss));

@@ -127,7 +127,7 @@
     <Filter Include="Source Files\Base Systems\Audio">
       <UniqueIdentifier>{58bf33ab-b55b-4805-9d55-bed29d5c9548}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Entities\UIObjects\Scenes">
+    <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{2b3348a6-92dd-4083-b098-1e7992949a44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -142,7 +142,7 @@
       <Filter>Source Files\Base Systems\Scene Handler</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp">
       <Filter>Source Files\Base Systems\Scene Handler</Filter>
@@ -265,7 +265,7 @@
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Scenes\BaseCamp.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
@@ -304,10 +304,10 @@
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Scenes\BattleScene.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Scenes\LevelScene.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp">
       <Filter>Source Files\Manager</Filter>
@@ -316,13 +316,13 @@
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Scenes\MainMenu.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\Shop.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
@@ -334,7 +334,7 @@
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
-      <Filter>Header Files\Entities\UIObjects\Scenes</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>

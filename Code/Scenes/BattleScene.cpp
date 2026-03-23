@@ -78,7 +78,7 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
+    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  

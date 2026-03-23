@@ -237,7 +237,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
 	bool renderText = !modifier->hidden;
 	std::string modifierName = modifier->name;
-	AEVec2 offset = { 0, entity->transform->getScale().y * 0.5f};
+	AEVec2 offset = { 0, entity->transform->getScale().y * -0.25f};
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
@@ -281,7 +281,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 
 	if (renderText)
 	{
-		CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifierName, Color(255, 255, 255, 1.0f), 0.5f);
+		CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifierName, Color(255, 255, 255, 1.0f), 0.75f);
 	}
 
 	UpdateAttributes();

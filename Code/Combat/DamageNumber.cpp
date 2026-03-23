@@ -32,7 +32,7 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 		}
 		case (Game::WATER):
 		{
-			return Color(79, 129, 255, 1);
+			return Color(18, 97, 255, 1);
 		}
 		case (Game::WOOD):
 		{

@@ -11,6 +11,9 @@ This file contains the implementation for a Run Manager for our game.
 #include "RunManager.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 
+#include <iostream>
+#include <fstream>
+
 RunManager::RunManager()
 {
 	party.reserve(3);
@@ -18,18 +21,26 @@ RunManager::RunManager()
 	party.push_back("Char2");
 	party.push_back("Char3");
 
-	SetMapType(MapType::CityStreets);
+	StartRun();
+}
+
+RunManager::~RunManager()
+{
+	SaveRun();
 }
 
 void RunManager::StartRun()
 {
-	//Set default values
-	enemyDifficulty = 1;
+	if (!LoadRun())
+	{
+		//Set default values
+		enemyDifficulty = 1;
 
-	//Can change this if the player owns an artifact
-	currency = 50;
+		//Can change this if the player owns an artifact
+		currency = 50;
 
-	currMapType = OuterPalace;
+		SetMapType(MapType::CityStreets);
+	}
 }
 
 const std::vector<std::string>& RunManager::GetParty() const
@@ -112,6 +123,47 @@ MapType RunManager::GetMapType() const
 MapType RunManager::GetPrevMapType() const
 {
 	return prevMapType;
+}
+
+void RunManager::SaveRun() const
+{
+	JSONSerializer serializer;
+	std::ofstream ofs("Assets/SaveFile.json");
+	if (!ofs.is_open())
+	{
+		std::cout << "Cannot open Assets/SaveFile.json" << std::endl;
+		return;
+	}
+
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
+	
+	writer.StartObject();
+		writer.Key("enemyDifficulty");
+		writer.Int(enemyDifficulty);
+		writer.Key("currency");
+		writer.Int(currency);
+		writer.Key("currMapType");
+		writer.Int(static_cast<int>(currMapType));
+		writer.Key("prevMapType");
+		writer.Int(static_cast<int>(prevMapType));
+	writer.EndObject();
+}
+
+bool RunManager::LoadRun()
+{
+	JSONSerializer serializer;
+	rapidjson::Document doc = serializer.ReadDocument("Assets/SaveFile.json");
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load RunManager as Document is nullptr" << std::endl;
+		return false;
+	}
+	enemyDifficulty = doc["enemyDifficulty"].GetInt();
+	currency = doc["currency"].GetInt();
+	currMapType = static_cast<MapType>(doc["currMapType"].GetInt());
+	prevMapType = static_cast<MapType>(doc["prevMapType"].GetInt());
+	return true;
 }
 
 const std::vector<std::unique_ptr<Blessing>>& RunManager::GetBlessings() const

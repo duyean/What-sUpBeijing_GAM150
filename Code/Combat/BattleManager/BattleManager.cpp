@@ -204,6 +204,7 @@ void BattleManager::update()
 			else
 			{
 				//Change scene back to base camp
+				// Need check if win game or not
 				RunManager::Instance().IncrementMapType();
 				ts->TransitionToScene(GameStateManager::BASE_CAMP);
 			}

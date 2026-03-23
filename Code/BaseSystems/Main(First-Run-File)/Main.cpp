@@ -10,7 +10,7 @@
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
 #include "../Engine/RenderSystem.hpp"
-
+#include "../Audio/AudioManager.hpp"
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 
@@ -31,6 +31,7 @@ GameManager* gameManager = nullptr;
 
 
 #define CAPSPEED 60.0
+
 EntityManager* enSystem = &EntityManager::getInstance();
 
 PhysicSystem* phSystem = &PhysicSystem::getInstance();
@@ -40,12 +41,12 @@ RenderSystem* rSystem = &RenderSystem::getInstance();
 MeshGen* meshSystem = &MeshGen::getInstance();
 
 
+
 void game_init(void)
 {
 	gameManager = GameManager::GetInstance();
 	gameManager->Init();
 	rSystem->init();
-
 }
 
 void game_update(void)
@@ -59,6 +60,7 @@ void game_exit(void)
 	gameManager->Exit();
 	enSystem->forceClearAllDestroyed();
 	GameManager::DestroyInstance();
+	AudioManager::DestroyInstance();
 }
 
 constexpr double FIXED_DT = 1.0 / CAPSPEED;
@@ -77,7 +79,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	int gGameRunning = 1;
-
 
 
 	LRESULT(CALLBACK * wndProc)(
@@ -106,7 +107,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	//Game Initialization
 	game_init();
-
 	//FixedUpdate
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	double accumulator = 0.0;
@@ -114,6 +114,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//Move all of these into a GameSceneManager/GameStateManager
    //Root
 	enSystem->entities.reserve(1000);
+
 
 	// Game Loop
 	while (gameManager->quitGame != true)
@@ -136,7 +137,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			frameTime = std::chrono::duration<double>(0.25);
 		}
 		accumulator += frameTime.count();
-
 
 	 	// Your own update logic goes here
 		// Game Update 
@@ -169,4 +169,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// free the system
 	game_exit();
 	AESysExit();
+
 }

@@ -37,11 +37,11 @@ This function sets game window size and intializes all other managers.
 void GameManager::Init()
 {
 	//Initialize our singleton classes here...
+
 	meshSystem->initialize();
 
 	//Set the starting game scene
 	stateManager->NextScene(GameStateManager::SPLASHSCREEN); //GAME_SCREEN SPLASHSCREEN
-
 	//initialize all entities
 	for (int i = 0; i < enSystem->entities.size(); i++)
 	{
@@ -59,7 +59,7 @@ This function updates managers per frame
 *//*______________________________________________________________*/
 void GameManager::Update(float _dt)
 {
-	
+
 	stateManager->Update(_dt);
 	eventSystem->Update(_dt);
 
@@ -76,7 +76,9 @@ void GameManager::Update(float _dt)
 			}
 			if (enSystem->entities[i]->allComponentsInit == false)
 			{
+
 				enSystem->entities[i]->init();
+
 			}
 
 			if (enSystem->entities[i]->isActive == true)
@@ -96,7 +98,6 @@ void GameManager::Update(float _dt)
 			    //}
 			}
 		}
-
 	}
 
 	AudioManager::GetInstance()->Update();

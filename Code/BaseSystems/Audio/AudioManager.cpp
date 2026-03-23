@@ -53,8 +53,13 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-	for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
+ 	for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
 		delete pair.second;
+
+
+	for (std::pair<SFX_TYPE, SFXTrack*> pair : sfxs)
+		delete pair.second;
+	
 	AEAudioUnloadAudioGroup(sfxGroup);
 }
 

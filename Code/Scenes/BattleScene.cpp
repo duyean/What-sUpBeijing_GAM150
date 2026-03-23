@@ -319,7 +319,7 @@ void BattleScene::Load()
     pos = { 0.f, 0.f };
     scale = { 400, 200};
     tt->addComponent<Transform2D>(pos, scale, 0.f);
-    tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8), 501, MeshType::BOX_B);
+    tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 501, MeshType::BOX_B);
     TextBox* tt_tb = tt->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
     tt_tb->text_layer = 502;
     tt_tb->line_padding = 2.f;
@@ -384,7 +384,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
     Character* ch = nullptr;
-    int enemies = 1;
+    //int enemies = 1;
     AEVec2 pos = {}, scale = { 200, 200 };
     AEVec2 hpBarScale = {};
     if (type == BATTLE_TYPE::NORMAL)
@@ -431,7 +431,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             enSystem->entities.push_back(std::move(enemyHPBG));
 
             //Create enemy status icons
-            for (int i = 0; i < 3; ++i)
+            for (i = 0; i < 3; ++i)
             {
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };

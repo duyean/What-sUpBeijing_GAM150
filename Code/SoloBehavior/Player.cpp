@@ -36,7 +36,7 @@ void Player::init()
 
 void Player::update()
 {
-	float dt = AEFrameRateControllerGetFrameTime();
+	float dt = (float)AEFrameRateControllerGetFrameTime();
 	AEVec2 pos = entity->transform->getPosition();
 
 	if (canMove && !RunManager::Instance().game_paused)

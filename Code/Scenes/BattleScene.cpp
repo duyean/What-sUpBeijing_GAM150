@@ -73,11 +73,12 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(manager));
 
     //The Image for the battle background @dan
+    meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "BattleImage");
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
+    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  

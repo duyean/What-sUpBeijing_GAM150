@@ -104,7 +104,7 @@ void MovesUI::update()
 		tb4->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str();
 	}
 	AEVec2 ttbox_scale = tb1->entity->transform->getScale();
-	AEVec2 mouseCoord = { EventSystem::getInstance().eventData.x , EventSystem::getInstance().eventData.y };
+	AEVec2 mouseCoord = { (f32)EventSystem::getInstance().eventData.x , (f32)EventSystem::getInstance().eventData.y };
 	tooltip->transform->setPosition({ mouseCoord.x + (ttbox_scale.x / 2), mouseCoord.y + (ttbox_scale.y) });
 }
 

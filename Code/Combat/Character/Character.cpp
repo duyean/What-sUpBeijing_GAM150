@@ -174,7 +174,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 
 		if (renderMoveName)
 		{
-			AEVec2 pos{ 0.0, AEGfxGetWindowHeight() * 0.25 };
+			AEVec2 pos{ 0, (f32)(AEGfxGetWindowHeight() * 0.25) };
 			CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		}
 		DealDamage(target, move->coefficient);

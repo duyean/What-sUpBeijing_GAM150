@@ -27,7 +27,7 @@ void TransitionScreen::init()
 
 void TransitionScreen::update()
 {
-	float dt = AEFrameRateControllerGetFrameTime();
+	f64 dt = AEFrameRateControllerGetFrameTime();
 
 	AEVec2 pos = entity->transform->getPosition();
 	
@@ -35,7 +35,7 @@ void TransitionScreen::update()
 	switch (state)
 	{
 	case T_IN:
-		pos.x -= transitionSpeed * dt;
+		pos.x -= (f32)(transitionSpeed * dt);
 		entity->transform->setPosition(pos);
 		if (t_buffer)
 		{
@@ -49,7 +49,7 @@ void TransitionScreen::update()
 		}
 		break;
 	case T_OUT:
-		pos.x -= transitionSpeed * dt;
+		pos.x -= (f32)(transitionSpeed * dt);
 		entity->transform->setPosition(pos);
 		if (pos.x <= -(float)AEGfxGetWindowWidth()) state = DONE;
 		break;

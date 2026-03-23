@@ -71,7 +71,7 @@ void DisplayBox::update()
 {
 	if (onClickDestroyTimer > 0)
 	{
-		onClickDestroyTimer -= AEFrameRateControllerGetFrameTime();
+		onClickDestroyTimer -= (float)AEFrameRateControllerGetFrameTime();
 	}
 
 	if (AEInputCheckTriggered(AEVK_LBUTTON))

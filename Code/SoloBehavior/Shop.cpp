@@ -119,10 +119,6 @@ void Shop::destroy()
 {
 }
 
-Shop::Shop()
-{
-}
-
 Shop::~Shop()
 {
 }

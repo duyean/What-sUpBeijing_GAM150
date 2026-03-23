@@ -23,7 +23,7 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Shop();
+	Shop() = default;
 	~Shop();
 private:
 	bool canShow = false;

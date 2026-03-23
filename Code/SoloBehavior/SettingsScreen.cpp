@@ -45,7 +45,7 @@ void SettingsScreen::awake()
 	pos = { 0.f , 150.f};
 	scale = { 1.f, 1.f };
 	title_sfx->addComponent<Transform2D>(pos, scale, 0.f);
-	TextBox* sfxtb = title_sfx->addComponent<TextBox>("SFX VOLUME", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	title_sfx->addComponent<TextBox>("SFX VOLUME", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	entity->transform->AddChild(title_sfx->transform);
 
 	auto sfx_slider = std::make_unique<Entity>("SFX Slider");

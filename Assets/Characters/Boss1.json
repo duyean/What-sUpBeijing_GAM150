@@ -1,9 +1,9 @@
 {
   "name": "YeHuangRen Leader",
   "element": 2,
-  "baseHP": 500.0,
-  "baseATK": 150.0,
-  "baseDEF": 50.0,
+  "baseHP": 5000.0,
+  "baseATK": 1250.0,
+  "baseDEF": 500.0,
   "faction": 2,
   "initiative": 1,
   "texture": "YeHuangRenNoBall.png",
@@ -11,8 +11,8 @@
   "icontexture": "YeHuangRenNoBall.png",
   "moves": {
     "0": 0,
-    "1": 1,
-    "2": 0,
-    "3": 1
+    "1": 13,
+    "2": 14,
+    "3": 0
   }
 }

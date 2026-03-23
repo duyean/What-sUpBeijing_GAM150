@@ -398,7 +398,32 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             hpBarScale = { 200, 10 };
             scale = { 200, 200 };
             pos = enemyPositions[i];
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+            std::uniform_int_distribution<int> enemyDist(0, static_cast<int>(NORMAL_ENEMY_TYPE::TOTAL) - 1);
+            NORMAL_ENEMY_TYPE enemyType = static_cast<NORMAL_ENEMY_TYPE>(enemyDist(Game::gen));
+            switch (enemyType)
+            {
+                case NORMAL_ENEMY_TYPE::INFANTRY:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+                case NORMAL_ENEMY_TYPE::SLIME:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Slime.json");
+                    break;
+                }
+                {
+                case NORMAL_ENEMY_TYPE::DRAGON:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Dragon.json");
+                    break;
+                }
+                default:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+            }
+
 
             //Create the enemy entity
             std::string texturePath = "Assets/Images/" + ch->characterModelTexture;

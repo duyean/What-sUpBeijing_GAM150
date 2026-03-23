@@ -41,7 +41,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	damageInfo.damage = finalDamageTaken;
 	hp -= finalDamageTaken;
 	hp = AEClamp(hp, 0, maxHP);
-	AEVec2 offset = { AERandFloat() * 20 - 10, 50};
+	AEVec2 offset = { AERandFloat() * 20 - 10, entity->transform->getScale().y * 0.5f};
 	CombatUIManager::Instance().CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
 
 	//Event Handler
@@ -113,9 +113,9 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 1 * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.35 * RunManager::Instance().GetEnemyDifficulty();
-		baseDEF *= 1 + 0.2 * RunManager::Instance().GetEnemyDifficulty();
+		baseMaxHP *= 1 + 1.2 * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.25 * RunManager::Instance().GetEnemyDifficulty();
+		baseDEF *= 1 + 0.15 * RunManager::Instance().GetEnemyDifficulty();
 	}
 	UpdateAttributes();
 	hp = maxHP;
@@ -237,7 +237,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 {
 	bool renderText = !modifier->hidden;
 	std::string modifierName = modifier->name;
-	AEVec2 offset = { 0, -150 };
+	AEVec2 offset = { 0, entity->transform->getScale().y * 0.5f};
 	auto modExists = std::find_if(
 		effectList.begin(),
 		effectList.end(),
@@ -281,7 +281,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 
 	if (renderText)
 	{
-		CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifierName);
+		CombatUIManager::Instance().CreateMessageText(this->entity->transform->getPosition() + offset, modifierName, Color(255, 255, 255, 1.0f), 0.5f);
 	}
 
 	UpdateAttributes();
@@ -361,6 +361,15 @@ void Character::AIAttack()
 			target->timer = 2.0f;
 			UseMove(slotSelected, target);
 		}
+	}
+	else if (move->targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE)
+	{
+		for (auto& target : targets)
+		{
+			target->entity->getComponent<Mesh>()->isActive = true;
+			target->timer = 2.0f;
+		}
+		UseMove(slotSelected, targets);
 	}
 	else
 	{

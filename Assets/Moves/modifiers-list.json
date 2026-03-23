@@ -45,7 +45,7 @@
         {
             "id": 5,
             "name": "Combustion",
-            "duration": 2,
+            "duration": 3,
             "type": 0,
             "attribute": 0,
             "value": 0.70,

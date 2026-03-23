@@ -32,7 +32,7 @@ Color DamageNumbers::GetElementColor(Game::WUXING_ELEMENT element)
 		}
 		case (Game::WATER):
 		{
-			return Color(0, 76, 255, 1);
+			return Color(79, 129, 255, 1);
 		}
 		case (Game::WOOD):
 		{
@@ -67,11 +67,7 @@ void DamageNumbers::update()
 	}
 	else
 	{
-		if (lifetime > 0.7f && size < 1.f)
-		{
-			size += 25.f * static_cast<float>(AEFrameRateControllerGetFrameTime());
-		}
-		else if (lifetime < 0.7f && size > 0.f)
+		if (lifetime < 0.7f && size > 0.f)
 		{
 			size -= 0.3f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 			if (textColor.A >= 0.f) {

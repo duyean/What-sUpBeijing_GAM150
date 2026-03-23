@@ -16,6 +16,13 @@ This file contains the declarations of functions for the main menu
 
 class BattleManager;
 
+enum struct NORMAL_ENEMY_TYPE
+{
+	INFANTRY,
+	SLIME,
+	DRAGON,
+	TOTAL
+};
 
 class BattleScene : public GameState
 {

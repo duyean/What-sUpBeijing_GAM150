@@ -270,6 +270,14 @@ void LevelScene::Load()
 	enSystem->entities.push_back(std::move(w_path));
 	enSystem->entities.push_back(std::move(w_path_sprite));
 
+	auto notif = std::make_unique<Entity>("Notification");
+	pos = { 0,  0 + ((float)AEGfxGetWindowHeight()/2.f - 200.f)};
+	scale = {1.f, 1.f };
+	notif->addComponent<Transform2D>(pos, scale, 0.f);
+	notif->addComponent<TextBox>("PRESS SPACE TO GO BACK TO BASE!", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(notif->transform);
+	enSystem->entities.push_back(std::move(notif));
+
 	auto ps = std::make_unique<Entity>("PauseScreen");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };

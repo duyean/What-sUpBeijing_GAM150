@@ -49,7 +49,7 @@ public:
 	TransitionScreen() = default;
 
 	TransitionScreen(T_State _state) {
-		transitionSpeed = 2000.f;
+		transitionSpeed = 1500.f;
 		t_buffer = false;
 		state = _state;
 	}

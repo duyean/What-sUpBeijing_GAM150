@@ -78,7 +78,7 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
+    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
@@ -398,7 +398,32 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             hpBarScale = { 200, 10 };
             scale = { 200, 200 };
             pos = enemyPositions[i];
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+            std::uniform_int_distribution<int> enemyDist(0, static_cast<int>(NORMAL_ENEMY_TYPE::TOTAL) - 1);
+            NORMAL_ENEMY_TYPE enemyType = static_cast<NORMAL_ENEMY_TYPE>(enemyDist(Game::gen));
+            switch (enemyType)
+            {
+                case NORMAL_ENEMY_TYPE::INFANTRY:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+                case NORMAL_ENEMY_TYPE::SLIME:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Slime.json");
+                    break;
+                }
+                {
+                case NORMAL_ENEMY_TYPE::DRAGON:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Dragon.json");
+                    break;
+                }
+                default:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+            }
+
 
             //Create the enemy entity
             std::string texturePath = "Assets/Images/" + ch->characterModelTexture;

@@ -34,11 +34,11 @@ void CombatUIManager::CreateDamageNumber(AEVec2 pos, Game::DamageInfo info)
 	di->lifetime = 1.f;
 	di->text = std::to_string((int)info.damage);
 	di->textColor = DamageNumbers::GetElementColor(info.elementType);
-	di->size = info.isCritical ? 2.1f : 0.7f;
+	di->size = info.isCritical ? 2.1f : 1.0f;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	damageNumbers.push(std::move(e));
 }
-void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color)
+void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color color, float size)
 {
 	auto e = std::make_unique<Entity>("Message");
 	AEVec2 scale = { 150, 50 };
@@ -48,6 +48,7 @@ void CombatUIManager::CreateMessageText(AEVec2 position, std::string text, Color
 	di->lifetime = 1.5f;
 	di->text = text;
 	di->textColor = color;
+	di->size = size;
 	EntityManager::getInstance().rootEntity->transform->AddChild(e->transform);
 	messages.push(std::move(e));
 }

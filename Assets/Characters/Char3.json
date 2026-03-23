@@ -1,9 +1,9 @@
 {
     "name": "Yu Hai",
     "element": 3,
-    "baseHP": 200.0,
-    "baseATK": 125.0,
-    "baseDEF": 125.0,
+    "baseHP": 2000.0,
+    "baseATK": 1250.0,
+    "baseDEF": 1250.0,
     "faction": 1,
     "initiative":9,
     "texture":"YuHaiBack.png",

@@ -1,9 +1,9 @@
 {
     "name": "Guan Shi Yin",
     "element": 1,
-    "baseHP": 200.0,
-    "baseATK": 100.0,
-    "baseDEF": 100.0,
+    "baseHP": 2000.0,
+    "baseATK": 1000.0,
+    "baseDEF": 1000.0,
     "faction": 1,
     "initiative":4,
     "texture":"GuanShiYinBack.png",

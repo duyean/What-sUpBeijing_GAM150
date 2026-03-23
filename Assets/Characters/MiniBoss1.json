@@ -1,9 +1,9 @@
 {
   "name": "YeHuangRen Warlord",
   "element": 2,
-  "baseHP": 250.0,
-  "baseATK": 150.0,
-  "baseDEF": 50.0,
+  "baseHP": 2500.0,
+  "baseATK": 1500.0,
+  "baseDEF": 500.0,
   "faction": 2,
   "initiative": 1,
   "texture": "YeHuangRenNoBall.png",

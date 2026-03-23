@@ -25,7 +25,7 @@ blessingName(name), blessingDesc(desc), blessingType(type), blessingRarity(rarit
 void AttributeBlessing::Apply(Character* target)
 {
 	//Create a new modifier based on the attribute type and add it to the player
-	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, STACK, true, true);
+	auto mod = std::make_unique<AttributeModifier>("Blessing Buff", 99, EFFECT_TYPE::ATTRIBUTE_MODIFIER, logo, GENERIC_, value, attType, UNIQUE, true, true);
 	target->AddModifier(std::move(mod));
 }
 
@@ -115,8 +115,8 @@ void InitBlessingDatabase()
 			"", EventType::TookDamage,
 			[](const EventData& data)
 			{
-				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.25f,
-					Game::ATK, STACK, true, true);
+				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "Assets/Images/StatusEffectIcons/empowered.png", BLESSING_ENRAGED_BUFF, 0.10,
+					Game::ATK, STACK, true, false);
 				data.target->AddModifier(std::move(mod));
 			}, -1));
 
@@ -125,8 +125,8 @@ void InitBlessingDatabase()
 			"", EventType::DealtCriticalHit,
 			[](const EventData& data)
 			{
-				auto mod = std::make_unique<AttributeModifier>("Snowball", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "", GENERIC_, 0.20f,
-					Game::CRIT_DAMAGE, STACK, true, true);
+				auto mod = std::make_unique<AttributeModifier>("Crit DMG Increase", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "Assets/Images/StatusEffectIcons/empowered.png", BLESSING_CRIT_DMG_BUFF, 0.20f,
+					Game::CRIT_DAMAGE, STACK, true, false);
 				data.target->AddModifier(std::move(mod));
 			}, -1));
 }

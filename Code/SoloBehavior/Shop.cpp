@@ -1,6 +1,7 @@
 #include "Shop.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
@@ -27,6 +28,7 @@ void Shop::ChooseSelection(int id)
 		buyButton->isActive = true;
 	else
 		buyButton->isActive = false;
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_SELECT_SHOP);
 }
 
 void Shop::SetBuyButton(Entity* ent)
@@ -50,6 +52,7 @@ void Shop::PurchaseSelection()
 	for (std::pair<int, bool> p : selection)
 		p.second = false;
 	buyButton->isActive = false;
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
 }
 
 void Shop::AddShopBlessings(ShopBlessing* b, int id)

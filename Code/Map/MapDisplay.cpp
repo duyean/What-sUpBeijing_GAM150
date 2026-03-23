@@ -32,9 +32,11 @@ void MapDisplay::awake()
 			case NodeType::EnemyEncounter:
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
-			case NodeType::RandomEvent:	//both events have same sprite
-			case NodeType::FixedEvent:
+			case NodeType::RandomEvent:	
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				break;
+			case NodeType::FixedEvent:
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[8].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::Entry:
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);

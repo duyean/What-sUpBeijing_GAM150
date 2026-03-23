@@ -17,16 +17,17 @@ AudioManager::AudioManager()
 	AddTrack(AUDIO_BATTLE2_BGM, "Assets/BGM/StandardBattle2.mp3");
 	AddTrack(AUDIO_BATTLEBOSS_BGM, "Assets/BGM/BossBattle1.mp3");
 	
-	//AddSFX(SFX_BUTTON_PRESS, "Assets/SFX/BasicAttack.mp3");
-	//AddSFX(SFX_GAME_START, "Assets/SFX/BasicAttack.mp3");
-	//AddSFX(SFX_PURCHASE_SHOP, "Assets/SFX/BasicAttack.mp3");
+	AddSFX(SFX_BUTTON_PRESS, "Assets/SFX/ClickSound.mp3");
+	AddSFX(SFX_GAME_START, "Assets/SFX/GameStart.mp3");
+	AddSFX(SFX_PURCHASE_SHOP, "Assets/SFX/PurchaseComplete.mp3");
+	AddSFX(SFX_SELECT_SHOP, "Assets/SFX/SelectItem.mp3");
 	//AddSFX(SFX_START_LEVEL, "Assets/SFX/BasicAttack.mp3");
 	AddSFX(SFX_ATTACK_BASIC, "Assets/SFX/BasicAttack.mp3");
 	AddSFX(SFX_ATTACK_SCORCH, "Assets/SFX/ScorchAttack.mp3");
 	AddSFX(SFX_ATTACK_EMPOWER, "Assets/SFX/EmpowerAttack.mp3");
 	AddSFX(SFX_ATTACK_APS, "Assets/SFX/ArmorPierceStrike.mp3");
 	AddSFX(SFX_ATTACK_FLAMESTRIKE, "Assets/SFX/FlamestrikeAttack.mp3");
-	//AddSFX(SFX_ATTACK_COMBUST, "Assets/SFX/FlamestrikeAttack.mp3");
+	AddSFX(SFX_ATTACK_COMBUST, "Assets/SFX/CombustAttack.mp3");
 	AddSFX(SFX_ATTACK_CATACLYSM, "Assets/SFX/CataclysmAttack.mp3");
 	AddSFX(SFX_ATTACK_WATERSURGE, "Assets/SFX/WatersurgeAttack.mp3");
 	AddSFX(SFX_ATTACK_HYDRORUSH, "Assets/SFX/HydrorushAttack.mp3");
@@ -124,14 +125,12 @@ void AudioManager::Update()
 		if (pair.second->FadeIn())
 		{
 			float newVol = AEClamp(pair.second->GetVolume() + float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			std::cout << "volume = " << newVol << std::endl;
 			pair.second->SetVolume(newVol);
 			if (newVol == 1.f) pair.second->FadeIn() = false;
 		}
 		else if (pair.second->FadeOut())
 		{
 			float newVol = AEClamp(pair.second->GetVolume() - float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			std::cout << "volume = " << newVol << std::endl;
 			pair.second->SetVolume(newVol);
 			if (newVol == 0.f)
 			{

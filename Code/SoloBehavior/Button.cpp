@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 EventSystem* eventSystem = &EventSystem::getInstance();
 
@@ -54,7 +55,10 @@ void Button::OnPointerTriggered(const PointerEventData& event)
 	if(buttonMesh)
 		buttonMesh->color = pressed_color;
 	if (onClick)
+	{
 		onClick();
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BUTTON_PRESS);
+	}
 }
 
 void Button::OnHover()

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../CombatUIManager.hpp"
 #include "../../Scenes/SceneHandler/GameStateManager.hpp"
+#include "../Code/Audio_WZBJ_Pak.hpp"
 
 void BattleManager::awake()
 {
@@ -188,6 +189,7 @@ void BattleManager::update()
 			else if (outcome == BATTLE_OUTCOME::VICTORY)
 			{
 				CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
+				AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_WIN);
 			}
 
 			if (bt == BATTLE_TYPE::MINI_BOSS)

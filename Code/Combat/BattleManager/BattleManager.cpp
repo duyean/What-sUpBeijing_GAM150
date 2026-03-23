@@ -73,8 +73,8 @@ void BattleManager::ProcessTargeting()
 		AEInputGetCursorPosition(&mouseX, &mouseY);
 
 		//Convert to world space
-		mouseX = mouseX - (AEGfxGetWindowWidth() * 0.5f);
-		mouseY = (AEGfxGetWindowHeight() * 0.5f) - mouseY;
+		mouseX = mouseX - (s32)(AEGfxGetWindowWidth() * 0.5f);
+		mouseY = (s32)(AEGfxGetWindowHeight() * 0.5f) - mouseY;
 		//End of conversion
 
 		if (PointInMesh(mouseX, mouseY, unit->entity->transform))

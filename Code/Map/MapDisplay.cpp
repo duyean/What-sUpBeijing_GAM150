@@ -14,7 +14,7 @@ void MapDisplay::awake()
 	int depthPlayer = 202;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
-
+	
 	mapCharIcon = enSystem->FindByNameGLOBAL("MapDisplayCharacter");
 
 	for (int textureIndex = 0; textureIndex < TEXTURE_COUNT; textureIndex++)

@@ -14,6 +14,8 @@ public:
 	void SetBuyButton(Entity* ent);
 	void PurchaseSelection();
 	void AddShopBlessings(ShopBlessing* b, int id);
+	void CloseShopUI();
+	void SetPlayer(Entity* p);
 
 	void awake() override;
 	void init() override;
@@ -24,10 +26,12 @@ public:
 	Shop();
 	~Shop();
 private:
+	bool canShow = false;
 	std::vector<Entity*> display{};
 	std::map<int, bool> selection{};
 	int currSelection{ -1 };
 	Entity* buyButton;
+	Entity* player;
 	ShopBlessing* shopBlessings[4];
 	
 	void onHit(BoxCollider2D* other);

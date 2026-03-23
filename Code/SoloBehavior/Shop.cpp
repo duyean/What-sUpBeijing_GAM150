@@ -1,21 +1,18 @@
 #include "Shop.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/Player.hpp"
 
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
 {
-	for (Entity* ent : display)
-		ent->isActive = true;
-	buyButton->isActive = true;
+	canShow = true;
+	player->getComponent<Player>()->canMove = false;
 }
 void Shop::onStay(BoxCollider2D* other)
 {
 }
 void Shop::onExit(BoxCollider2D* other)
 {
-	for (Entity* ent : display)
-		ent->isActive = false;
-	buyButton->isActive = false;
 }
 
 void Shop::AddDisplayEntity(Entity* ent)
@@ -60,6 +57,16 @@ void Shop::AddShopBlessings(ShopBlessing* b, int id)
 	shopBlessings[id] = b;
 }
 
+void Shop::CloseShopUI()
+{
+	canShow = false;
+}
+
+void Shop::SetPlayer(Entity* p)
+{
+	player = p;
+}
+
 void Shop::awake()
 {
 	BoxCollider2D* col = entity->getComponent<BoxCollider2D>();
@@ -84,6 +91,19 @@ void Shop::init()
 
 void Shop::update()
 {
+	if (canShow && !RunManager::Instance().game_paused)
+	{
+		for (Entity* ent : display)
+			ent->isActive = true;
+		if (currSelection != -1 && selection.find(currSelection)->second != true)
+			buyButton->isActive = true;
+	}
+	else
+	{
+		for (Entity* ent : display)
+			ent->isActive = false;
+		buyButton->isActive = false;
+	}
 }
 
 void Shop::fixedUpdate()

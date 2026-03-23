@@ -19,7 +19,9 @@
 
 #include "../Engine/Editor/Editor.hpp"
 
-
+#ifdef _DEBUG
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 #ifdef ALPHA_EDITOR
 LRESULT CALLBACK EditorWndProc(HWND, UINT, WPARAM, LPARAM);
@@ -35,6 +37,7 @@ PhysicSystem* phSystem = &PhysicSystem::getInstance();
 
 RenderSystem* rSystem = &RenderSystem::getInstance();
 
+MeshGen* meshSystem = &MeshGen::getInstance();
 
 
 void game_init(void)
@@ -85,6 +88,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     #ifdef ALPHA_EDITOR
 	wndProc = EditorWndProc;
     #endif
+
+	//_CrtSetBreakAlloc(111815);
+	//_CrtSetBreakAlloc(111814);
+	//_CrtSetBreakAlloc(111813);
+	//_CrtSetBreakAlloc(111812);
 
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, wndProc);

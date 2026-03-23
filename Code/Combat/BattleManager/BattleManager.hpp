@@ -43,7 +43,6 @@ class BattleManager : public SoloBehavior
 	//Float for delayed executions
 	float delay;
 
-
 	enum BATTLE_OUTCOME
 	{
 		NONE,
@@ -96,6 +95,7 @@ public:
 	int GetCurrentTurn() const;
 	Character* GetActiveUnit();
 	Character* GetlastTargetedUnit();
+	std::vector<Character*> GetAllEnemies();
 	std::vector<Character*> GetPlayerParty() const;
 
 

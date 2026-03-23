@@ -43,6 +43,13 @@ Character* BattleManager::GetlastTargetedUnit()
 	return lastTargetedUnit;
 }
 
+std::vector<Character*> BattleManager::GetAllEnemies()
+{
+	std::vector<Character*> enemies;
+	std::copy_if(battleUnits.begin(), battleUnits.end(), std::back_inserter(enemies), [](Character* ch) {return ch->GetFaction() == Game::ENEMY && !ch->IsDead(); });
+	return enemies;
+}
+
 int BattleManager::GetCurrentTurn() const
 {
 	return currentTurn;
@@ -147,7 +154,7 @@ void BattleManager::StartBattle()
 	}
 	currentActiveUnit = 0;
 	inBattle = true;
-	CombatUIManager::Instance().CreateMessageText({0.f, 225}, "Battle Start");
+	CombatUIManager::Instance().CreateMessageText({ 0.f, 225 }, "Battle Start");
 }
 
 void BattleManager::update()
@@ -157,7 +164,7 @@ void BattleManager::update()
 	{
 		return;
 	}
-	
+
 	//To allow delay between unit actions
 	if (delay > 0.0f)
 	{
@@ -172,6 +179,16 @@ void BattleManager::update()
 			ResetBattle();
 			ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
 			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
+			AEVec2 pos = { 0.f, 225 };
+
+			if (outcome == BATTLE_OUTCOME::DEFEAT)
+			{
+				CombatUIManager::Instance().CreateMessageText(pos, "Game Over!");
+			}
+			else if (outcome == BATTLE_OUTCOME::VICTORY)
+			{
+				CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
+			}
 
 			if (bt == BATTLE_TYPE::MINI_BOSS)
 			{
@@ -217,19 +234,51 @@ void BattleManager::update()
 			//Register Inputs
 			if (AEInputCheckTriggered(AEVK_Z))
 			{
-				activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_1)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_1, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_X))
 			{
-				activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_2)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_2, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_C))
 			{
-				activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_3)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_3, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
+				}
 			}
 			else if (AEInputCheckTriggered(AEVK_V))
 			{
-				activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_4)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+				if (isAOE)
+				{
+					activeUnit->UseMove(MOVE_SLOT_4, GetAllEnemies());
+				}
+				else
+				{
+					activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+				}
 			}
 		}
 	}
@@ -240,7 +289,7 @@ void BattleManager::update()
 			std::vector<Character*> playerTargets;
 			std::copy_if(battleUnits.begin(), battleUnits.end(),
 				std::back_inserter(playerTargets), [](Character* ch)
-				{ return ch->GetFaction() == Game::FACTION::PLAYER; }
+				{ return ch->GetFaction() == Game::FACTION::PLAYER && !ch->IsDead(); }
 			);
 			activeUnit->SetTargets(playerTargets);
 			activeUnit->AIAttack();
@@ -249,12 +298,16 @@ void BattleManager::update()
 
 	if (activeUnit->TurnFinished() && wait)
 	{
-		currentActiveUnit++;
-		if (currentActiveUnit >= battleUnits.size())
+		do
 		{
-			currentActiveUnit = 0;
-		}
-		wait = false;
+			currentActiveUnit++;
+			if (currentActiveUnit >= battleUnits.size())
+			{
+				currentActiveUnit = 0;
+			}
+			wait = false;
+
+		} while (battleUnits[currentActiveUnit]->IsDead());
 	}
 }
 
@@ -286,8 +339,6 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 		if (enemyCount <= 0)
 		{
 			outcome = VICTORY;
-			AEVec2 pos = { 0.f, 225 };
-			CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
 			delay = 1.5f;
 
 			//DEBUG to add a random blessing after every battle victory
@@ -300,12 +351,17 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 	}
 	else if (dead->GetFaction() == Game::FACTION::PLAYER)
 	{
+		//auto it = std::find(battleUnits.begin(), battleUnits.end(), dead);
+		//if (it != battleUnits.end())
+		//{
+		//	battleUnits.erase(it);
+		//}
+		//Cannot destroy player entity as Party UI is still referencing it
+
 		--playerCount;
 		if (playerCount <= 0)
 		{
 			outcome = DEFEAT;
-			AEVec2 pos = { 0.f, 225 };
-			CombatUIManager::Instance().CreateMessageText(pos, "Game Over!");
 			delay = 1.5f;
 		}
 	}

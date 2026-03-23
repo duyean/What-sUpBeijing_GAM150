@@ -15,6 +15,7 @@ This file contains the declarations of functions for splash screen
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/SettingsScreen.hpp"
 
 class MainMenu : public GameState
 {
@@ -23,6 +24,9 @@ private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
 	TransitionScreen* ts_comp = nullptr;
+
+	std::vector<Entity*>mainMenuDisplay;
+
 	void SwitchToGame();
 	void PlayNewSave();
 	void QuitGame();

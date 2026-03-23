@@ -5,20 +5,26 @@
 class Slider : public SoloBehavior
 {
 private:
-	Button* button_inc = nullptr;
-	Button* button_dec = nullptr;
+	//Button* button_inc = nullptr;
+	//Button* button_dec = nullptr;
+	Entity* slider = nullptr;
 
-	int max_value = 10;
-	int value = 0;
+	float max_value;
+	float value;
+	float changeFactor;
 
 	EntityManager* enSystem = nullptr;
 	MeshGen* meSystem = nullptr;
 
+	void Increase(float& val, float const& max_val);
+	void Decrease(float& val);
+
+	std::vector<Entity*>sliderComp;
 public:
-	using Callback = std::function<void()>;
+	
 	TextBox* text = nullptr;
-	Color slider_color;
-	Color background_color;
+	Color slider_color = Color{ 100, 100, 100, 1.f };
+	Color background_color = Color{ 200, 200, 200, 1.f };
 
 	void awake() override;
 	void init() override;
@@ -26,13 +32,10 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	void Increase();
-	void Decrease();
+	void SliderSetActive(bool active);
 
-	Slider() {}
+	Slider(float& val, float const& max_val, float _changeFactor) :
+		value(val), max_value(max_val), changeFactor(_changeFactor) { }
 	~Slider() {}
-
-private:
-	Callback onIncrease;
-	Callback onDecrease;
+	
 };

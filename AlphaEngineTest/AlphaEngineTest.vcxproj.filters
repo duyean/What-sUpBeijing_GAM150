@@ -124,6 +124,12 @@
     <Filter Include="Source Files\Manager">
       <UniqueIdentifier>{1bb23150-1b23-45fe-94f2-52a679090927}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Base Systems\Audio">
+      <UniqueIdentifier>{61451190-a409-4343-bc75-fa294597b5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Base Systems\Audio">
+      <UniqueIdentifier>{58bf33ab-b55b-4805-9d55-bed29d5c9548}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp">
@@ -270,12 +276,6 @@
     <ClCompile Include="..\Code\SoloBehavior\SceneEdge.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
     </ClCompile>
@@ -328,6 +328,24 @@
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\SettingsScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
+      <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\AudioTrack.cpp">
+      <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp">
+      <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\DisplayBox.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -533,12 +551,6 @@
     <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
@@ -597,6 +609,24 @@
       <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\SettingsScreen.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\AudioTrack.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Audio\SFXTrack.hpp">
+      <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\DisplayBox.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>

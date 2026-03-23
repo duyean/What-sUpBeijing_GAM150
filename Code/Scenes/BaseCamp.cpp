@@ -16,6 +16,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -39,6 +40,15 @@ void BaseCamp::Purchase()
 	shop->getComponent<Shop>()->PurchaseSelection();
 }
 
+void BaseCamp::CloseShop()
+{
+	Entity* shop = enSystem->rootEntity->FindByName("Shop");
+	Entity* player = enSystem->rootEntity->FindByName("Player");
+	
+	shop->getComponent<Shop>()->CloseShopUI();
+	player->getComponent<Player>()->canMove = true;
+}
+
 BaseCamp::BaseCamp()
 {	
 }
@@ -60,6 +70,7 @@ This function loads splash screen image
 void BaseCamp::Load()
 {
 	std::string blessingDesc("(Blessings are buffs that only last for 1 level)");
+	std::string artifactDesc("(Artifacts are powerful buffs that last forever)");
 
 	meshSystem = &MeshGen::getInstance();
 
@@ -87,6 +98,16 @@ void BaseCamp::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
+	meshSystem->CreateTexture("../../Assets/Images/SPRITE.png", "player_sprite");
+	auto e = std::make_unique<Entity>("Player");
+	pos = { 0.f, -200.f };
+	scale = { 100.f, 100.f };
+	e->addComponent<Transform2D>(pos, scale, 0.f);
+	e->addComponent<Player>();
+	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	enSystem->rootEntity->transform->AddChild(e->transform);
+
 	pos = { 0.f, 0.f };
 	scale = { 1.f, 1.f };
 	auto decisionBoxManager = std::make_unique<Entity>("DecisionBoxManager");
@@ -97,8 +118,7 @@ void BaseCamp::Load()
 	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
 	auto decisionBox = std::make_unique<Entity>("DecisionBox");
 	decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
-	decisionBox->addComponent<Mesh>("Box", Color(155, 155, 155, 0.5f), 200, MeshType::BOX_B);
-	decisionBox->addComponent<TextBox>("Weh", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionBox->addComponent<Mesh>("Box", Color(0, 0, 0, 0.5f), 200, MeshType::BOX_B);
 	decisionBox->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionBox->transform);
 	pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f};
@@ -106,6 +126,7 @@ void BaseCamp::Load()
 	auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
 	decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
+	decisionButtonLeft->addComponent<TextBox>("Not Shiny...", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	Button* leftDecButton = decisionButtonLeft->addComponent<Button>();
 	leftDecButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
 	leftDecButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
@@ -116,11 +137,29 @@ void BaseCamp::Load()
 	auto decisionButtonRight = std::make_unique<Entity>("DecisionButtonRight");
 	decisionButtonRight->addComponent<Transform2D>(pos, scale, 0.f);
 	decisionButtonRight->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
+	decisionButtonRight->addComponent<TextBox>("Shiny!!!", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	Button* rightDecButton = decisionButtonRight->addComponent<Button>();
 	rightDecButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
 	rightDecButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
 	decisionButtonRight->isActive = false;
 	decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
+	pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.35f };
+	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.1f };
+	auto decisionTitle = std::make_unique<Entity>("DecisionTitle");
+	decisionTitle->addComponent<Transform2D>(pos, scale, 0.f);
+	decisionTitle->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	decisionTitle->addComponent<TextBox>("Title", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionTitle->isActive = false;
+	decisionBoxManager->transform->AddChild(decisionTitle->transform);
+	pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.05f };
+	scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.5f };
+	auto decisionTitle2 = std::make_unique<Entity>("DecisionTitle2");
+	decisionTitle2->addComponent<Transform2D>(pos, scale, 0.f);
+	decisionTitle2->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	decisionTitle2->addComponent<TextBox>("This is a long description for a decision, do you want to click the left button or the right button hmmm... One of them is green and the other is red I prefer the red one it's more shiny..."
+		, 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	decisionTitle2->isActive = false;
+	decisionBoxManager->transform->AddChild(decisionTitle2->transform);
 
 	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");
@@ -145,6 +184,8 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(decisionBoxManager));
 	enSystem->entities.push_back(std::move(decisionButtonLeft));
 	enSystem->entities.push_back(std::move(decisionButtonRight));
+	enSystem->entities.push_back(std::move(decisionTitle));
+	enSystem->entities.push_back(std::move(decisionTitle2));
 
 	meshSystem->CreateTexture("Assets/UI/shop-back.png", "ShopBGTexture");
 	auto shopBackground = std::make_unique<Entity>("ShopBG");
@@ -156,7 +197,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(shopBackground->transform);
 
 	auto nameText = std::make_unique<Entity>("NameText");
-	pos = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.115f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, AEGfxGetWindowHeight() * 0.115f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	nameText->addComponent<Transform2D>(pos, scale, 0.f);
 	nameText->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -164,7 +205,7 @@ void BaseCamp::Load()
 	nameText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(nameText->transform);
 	auto typeDesc = std::make_unique<Entity>("TypeDesc");
-	pos = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.065f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, AEGfxGetWindowHeight() * 0.065f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	typeDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	typeDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -172,7 +213,7 @@ void BaseCamp::Load()
 	typeDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(typeDesc->transform);
 	auto longDesc = std::make_unique<Entity>("LongDesc");
-	pos = { AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.085f };
+	pos = { AEGfxGetWindowWidth() * 0.26f, -AEGfxGetWindowHeight() * 0.085f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.25f };
 	longDesc->addComponent<Transform2D>(pos, scale, 0.f);
 	longDesc->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
@@ -180,8 +221,8 @@ void BaseCamp::Load()
 	longDesc->isActive = false;
 	enSystem->rootEntity->transform->AddChild(longDesc->transform);
 	auto buyButton = std::make_unique<Entity>("BuyButton");
-	pos = { AEGfxGetWindowWidth() * 0.21f, -AEGfxGetWindowHeight() * 0.25f };
-	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.1f };
+	pos = { AEGfxGetWindowWidth() * 0.250f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowWidth() * 0.13f, AEGfxGetWindowHeight() * 0.07f };
 	buyButton->addComponent<Transform2D>(pos, scale, 0.f);
 	buyButton->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 201, MeshType::BOX_T);
 	buyButton->addComponent<TextBox>("BUY", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
@@ -257,13 +298,26 @@ void BaseCamp::Load()
 	blessingsText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessingsText->transform);
 	auto artifactsText = std::make_unique<Entity>("ArtifactsText");
-	pos = { -AEGfxGetWindowWidth() * 0.225f, -AEGfxGetWindowHeight() * 0.1f };
+	pos = { -AEGfxGetWindowWidth() * 0.225f, -AEGfxGetWindowHeight() * 0.075f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
 	artifactsText->addComponent<Transform2D>(pos, scale, 0.f);
 	artifactsText->addComponent<Mesh>("Box", Color(0, 0, 0, 0.f), 201, MeshType::BOX_B);
 	artifactsText->addComponent<TextBox>("Artifacts:", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
 	artifactsText->isActive = false;
 	enSystem->rootEntity->transform->AddChild(artifactsText->transform);
+
+	auto shopCloseButton = std::make_unique<Entity>("ShopCloseButton");
+	pos = { AEGfxGetWindowWidth() * 0.325f, AEGfxGetWindowHeight() * 0.25f };
+	scale = { AEGfxGetWindowWidth() * 0.05f, AEGfxGetWindowHeight() * 0.05f };
+	shopCloseButton->addComponent<Transform2D>(pos, scale, 0.f);
+	shopCloseButton->addComponent<Mesh>("Box", Color(255, 0, 0, 1.f), 201, MeshType::BOX_B);
+	shopCloseButton->addComponent<TextBox>("X", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	Button* closeButton = shopCloseButton->addComponent<Button>();
+	closeButton->SetNormalColor(Color{ 255, 0, 0, 1.f });
+	closeButton->SetHighlightedColor(Color{ 155, 0, 0, 1.f });
+	closeButton->SetOnClick([this]() {CloseShop(); });
+	shopCloseButton->isActive = false;
+	enSystem->rootEntity->transform->AddChild(shopCloseButton->transform);
 
 	meshSystem->CreateTexture("Assets/Images/shop.png", "shop");
 	auto shop = std::make_unique<Entity>("Shop");
@@ -283,11 +337,13 @@ void BaseCamp::Load()
 	s->AddDisplayEntity(nameText.get());
 	s->AddDisplayEntity(typeDesc.get());
 	s->AddDisplayEntity(longDesc.get());
+	s->AddDisplayEntity(shopCloseButton.get());
 	s->SetBuyButton(buyButton.get());
 	s->AddShopBlessings(shopB1, 0);
 	s->AddShopBlessings(shopB2, 1);
 	s->AddShopBlessings(shopB3, 2);
 	s->AddShopBlessings(shopB4, 3);
+	s->SetPlayer(e.get());
 	enSystem->rootEntity->transform->AddChild(shop->transform);
 	enSystem->entities.push_back(std::move(shopBackground));
 	enSystem->entities.push_back(std::move(blessing1));
@@ -300,17 +356,8 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(typeDesc));
 	enSystem->entities.push_back(std::move(longDesc));
 	enSystem->entities.push_back(std::move(buyButton));
+	enSystem->entities.push_back(std::move(shopCloseButton));
 	enSystem->entities.push_back(std::move(shop));
-
-	meshSystem->CreateTexture("../../Assets/Images/SPRITE.png", "player_sprite");
-	auto e = std::make_unique<Entity>("Player");
-	pos = { 0.f, -200.f };
-	scale = { 100.f, 100.f };
-	e->addComponent<Transform2D>(pos, scale, 0.f);
-	e->addComponent<Player>();
-	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-	e->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
-	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 
 	auto ps = std::make_unique<Entity>("PauseScreen");
@@ -357,6 +404,9 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(SE_Manager));
 
 	RunManager::Instance().game_paused = false;
+
+	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BASECAMP_BGM);
+	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BASECAMP_BGM, true);
 }
 
 

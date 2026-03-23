@@ -37,6 +37,7 @@ private:
 
 	Entity* player = nullptr;
 	TransitionScreen* ts = nullptr;
+	Entity* notif = nullptr;
 
 	bool hasTraveled = false;
 	bool switch_BC = false;

@@ -75,6 +75,8 @@ void Shop::awake()
 		col->onCollisionStay([this](BoxCollider2D* other) { onStay(other); });
 		col->onCollisionExit([this](BoxCollider2D* other) { onExit(other); });
 	}
+
+	CloseShopUI();
 }
 
 void Shop::init()

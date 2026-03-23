@@ -28,6 +28,8 @@ void RunManager::StartRun()
 
 	//Can change this if the player owns an artifact
 	currency = 50;
+
+	currMapType = OuterPalace;
 }
 
 const std::vector<std::string>& RunManager::GetParty() const

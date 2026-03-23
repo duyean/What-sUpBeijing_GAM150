@@ -13,6 +13,7 @@ void EdgeManager::awake()
 	E_path = enSystem->FindByNameGLOBAL("E_Path");
 	S_path = enSystem->FindByNameGLOBAL("S_Path");
 	W_path = enSystem->FindByNameGLOBAL("W_Path");
+	notif = enSystem->FindByNameGLOBAL("Notification");
 
 	if(N_path) SE_N = N_path->getComponent<SceneEdge>();
 	if(E_path) SE_E = E_path->getComponent<SceneEdge>();
@@ -37,6 +38,17 @@ void EdgeManager::UpdateEdges()
 	W_path->transform->children[0]->entity->isActive = !node.w;
 
 	NodeType currentNodeType = node.type;
+
+	if (currentNodeType == NodeType::Entry)
+	{
+		switch_BC = true;
+		notif->isActive = true;
+	}
+	else
+	{
+		switch_BC = false;
+		notif->isActive = false;
+	}
 
 	if (hasTraveled)
 	{
@@ -163,40 +175,24 @@ void EdgeManager::CheckNeighborNode(const MapNode& node)
 	if (!node.e)
 	{
 		MapNode eastNode = map.playMap.mapNodes[map.yPos][map.xPos + 1];
-		if (eastNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check west
 	if (!node.w)
 	{
 		MapNode westNode = map.playMap.mapNodes[map.yPos][map.xPos - 1];
-		if (westNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check north
 	if (!node.n)
 	{
 		MapNode northNode = map.playMap.mapNodes[map.yPos - 1][map.xPos];
-		if (northNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check south
 	if (!node.s)
 	{
 		MapNode southNode = map.playMap.mapNodes[map.yPos + 1][map.xPos];
-		if (southNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 }
 
@@ -267,6 +263,7 @@ void EdgeManager::update()
 	{
 		ts->TransitionToScene(GameStateManager::BASE_CAMP);
 		switch_BC = false;
+		notif->isActive = false;
 	}
 
 }

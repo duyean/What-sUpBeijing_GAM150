@@ -97,8 +97,8 @@ void Healthbar1::destroy()
 {
 	Destroy(en);
 	Destroy(hpBarBG);
-	for (auto& entity : statusIcons)
+	for (auto& ent : statusIcons)
 	{
-		Destroy(entity);
+		Destroy(ent);
 	}
 }

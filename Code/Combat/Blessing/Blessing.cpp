@@ -35,6 +35,7 @@ void AttributeBlessing::RemoveBuff(Character* target)
 	This function is empty as Attribute Blessings last forever and all modifiers
 	are wiped after battle
 	*/
+	UNREFERENCED_PARAMETER(target);
 }
 
 void TriggerBlessing::Apply(Character* target)
@@ -63,6 +64,7 @@ void TriggerBlessing::RemoveBuff(Character* target)
 	unregister all listeners at the end of battle. Therefore, setting the cooldown to
 	an arbitrary large number allows the blessing to be "deactivated" mid combat.
 	*/
+	UNREFERENCED_PARAMETER(target);
 }
 
 std::unique_ptr<Blessing> AttributeBlessing::Clone() const

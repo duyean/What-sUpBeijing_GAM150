@@ -62,7 +62,7 @@ public:
 	*/
 	Game::MOVE_TARGET_GROUP targetGroup;
 
-	Move()
+	Move() : targetGroup(Game::OPPOSITE)
 	{
 		coefficient = dot_coefficient = 0;
 		name = description = brief = "";

@@ -231,7 +231,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	Map::DebugPrint(travelPath);
 	*/
 
-	printf("Listing All Travellled Nodes: %d\n", endNodes.size());
+	printf("Listing All Travellled Nodes: %zu\n", endNodes.size());
 
 	int largestIndex = 0;
 

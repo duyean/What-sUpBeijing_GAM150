@@ -73,8 +73,8 @@ void BattleManager::ProcessTargeting()
 		AEInputGetCursorPosition(&mouseX, &mouseY);
 
 		//Convert to world space
-		mouseX = mouseX - (s32)(AEGfxGetWindowWidth() * 0.5f);
-		mouseY = (s32)(AEGfxGetWindowHeight() * 0.5f) - mouseY;
+		mouseX = mouseX - static_cast<s32>(AEGfxGetWindowWidth() * 0.5f);
+		mouseY = static_cast<s32>(AEGfxGetWindowHeight() * 0.5f) - mouseY;
 		//End of conversion
 
 		if (PointInMesh(mouseX, mouseY, unit->entity->transform))
@@ -345,10 +345,10 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			delay = 1.5f;
 
 			//DEBUG to add a random blessing after every battle victory
-			std::uniform_int_distribution<int> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
-			auto it = blessingDatabase.begin();
-			std::advance(it, dist(Game::gen));
-			auto randomBlessing = it->second->Clone();
+			std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+			auto it2 = blessingDatabase.begin();
+			std::advance(it2, dist(Game::gen));
+			auto randomBlessing = it2->second->Clone();
 			RunManager::Instance().AddBlessing(std::move(randomBlessing));
 		}
 	}

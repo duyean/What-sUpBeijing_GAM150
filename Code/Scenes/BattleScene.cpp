@@ -26,12 +26,11 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-#include "../Audio_WZBJ_Pak.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
-BattleScene::BattleScene()
+BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr)
 {
     
 }
@@ -384,14 +383,13 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
     Character* ch = nullptr;
-    //int enemies = 1;
     AEVec2 pos = {}, scale = { 200, 200 };
     AEVec2 hpBarScale = {};
     if (type == BATTLE_TYPE::NORMAL)
     {
         std::uniform_int_distribution<int> dist(1, 3);
-        int enemies = dist(Game::gen);
-        for (int i = 0; i < enemies; ++i)
+        int enemyCount = dist(Game::gen);
+        for (int i = 0; i < enemyCount; ++i)
         {
             character = std::make_unique<Entity>("Enemy");
             ch = character->addComponent<Character>();
@@ -456,7 +454,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             enSystem->entities.push_back(std::move(enemyHPBG));
 
             //Create enemy status icons
-            for (i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
             {
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };

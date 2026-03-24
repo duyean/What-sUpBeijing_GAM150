@@ -14,7 +14,7 @@ void MapDisplay::awake()
 	int depthPlayer = 202;
 	mapNodesReal.clear();
 	mapNodesFog.clear();
-
+	
 	mapCharIcon = enSystem->FindByNameGLOBAL("MapDisplayCharacter");
 
 	for (int textureIndex = 0; textureIndex < TEXTURE_COUNT; textureIndex++)
@@ -32,9 +32,11 @@ void MapDisplay::awake()
 			case NodeType::EnemyEncounter:
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
-			case NodeType::RandomEvent:	//both events have same sprite
-			case NodeType::FixedEvent:
+			case NodeType::RandomEvent:	
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				break;
+			case NodeType::FixedEvent:
+				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[8].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
 				break;
 			case NodeType::Entry:
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
@@ -51,8 +53,7 @@ void MapDisplay::awake()
 		{
 			mapNodesReal[count]->isActive = true;
 			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-			if (map.playMap.mapNodes[y][x].type == NodeType::Entry)
-				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
+			if (x == map.xPos && y == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 		}
 		count++;
 	}	}

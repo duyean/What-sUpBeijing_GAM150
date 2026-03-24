@@ -48,11 +48,8 @@ public:
 
 	TransitionScreen() = default;
 
-	TransitionScreen(T_State _state) {
-		transitionSpeed = 1000.f;
-		t_buffer = false;
-		state = _state;
-	}
+	TransitionScreen(T_State _state) 
+		: transitionSpeed(1500.f), t_buffer(false), state(_state){}
 
 	~TransitionScreen(){}
 

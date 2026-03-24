@@ -14,6 +14,8 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 #include "../Code/SoloBehavior/EdgeManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
+#include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 LevelScene::LevelScene()
 {	
@@ -268,12 +270,45 @@ void LevelScene::Load()
 	enSystem->entities.push_back(std::move(w_path));
 	enSystem->entities.push_back(std::move(w_path_sprite));
 
+	auto notif = std::make_unique<Entity>("Notification");
+	pos = { 0,  0 + ((float)AEGfxGetWindowHeight()/2.f - 200.f)};
+	scale = {1.f, 1.f };
+	notif->addComponent<Transform2D>(pos, scale, 0.f);
+	notif->addComponent<TextBox>("PRESS SPACE TO GO BACK TO BASE!", 1.f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(notif->transform);
+	enSystem->entities.push_back(std::move(notif));
+
+	auto ps = std::make_unique<Entity>("PauseScreen");
+	pos = { 0.f, 0.f };
+	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+	ps->addComponent<Transform2D>(pos, scale, 0.f);
+	ps->addComponent<PauseMenu>();
+	enSystem->rootEntity->transform->AddChild(ps->transform);
+	enSystem->entities.push_back(std::move(ps));
+
 	auto SE_Manager = std::make_unique<Entity>("SceneEdgeManager");
 	SE_Manager->addComponent<Transform2D>();
 	SE_Manager->addComponent<EdgeManager>(map);
 	enSystem->entities.push_back(std::move(SE_Manager));
 
 	RunManager::Instance().game_paused = false;
+
+	MapType mapType = RunManager::Instance().GetMapType();
+	switch (mapType)
+	{
+	case CityStreets:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL1_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL1_BGM, true);
+		break;
+	case OuterPalace:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL2_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL2_BGM, true);
+		break;
+	case InnerPalace:
+		AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_LEVEL3_BGM);
+		AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_LEVEL3_BGM, true);
+		break;
+	}
 }
 
 

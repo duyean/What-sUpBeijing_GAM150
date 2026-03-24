@@ -2,6 +2,7 @@
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
+#include "../Code/SoloBehavior/SettingsScreen.hpp"
 
 class PauseMenu : public SoloBehavior
 {
@@ -12,6 +13,9 @@ private:
 
 	TransitionScreen* ts_comp = nullptr;
 	EntityManager* enSystem = nullptr;
+	std::vector<Entity*>pauseMenuDisplay;
+	SettingsScreen* settings = nullptr;
+	bool canDisplay = true;
 public:
 	void awake() override;
 	void init() override;

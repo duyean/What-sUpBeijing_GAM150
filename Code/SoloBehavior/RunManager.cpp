@@ -9,6 +9,10 @@
 This file contains the implementation for a Run Manager for our game.
 *//*______________________________________________________________________*/
 #include "RunManager.hpp"
+#include "../UI_WZBJ_Pak.hpp"
+
+#include <iostream>
+#include <fstream>
 
 RunManager::RunManager()
 {
@@ -17,16 +21,26 @@ RunManager::RunManager()
 	party.push_back("Char2");
 	party.push_back("Char3");
 
-	SetMapType(MapType::CityStreets);
+	StartRun();
+}
+
+RunManager::~RunManager()
+{
+	SaveRun();
 }
 
 void RunManager::StartRun()
 {
-	//Set default values
-	enemyDifficulty = 1;
+	if (!LoadRun())
+	{
+		//Set default values
+		enemyDifficulty = 1;
 
-	//Can change this if the player owns an artifact
-	currency = 50;
+		//Can change this if the player owns an artifact
+		currency = 50;
+
+		SetMapType(MapType::CityStreets);
+	}
 }
 
 const std::vector<std::string>& RunManager::GetParty() const
@@ -55,9 +69,20 @@ void RunManager::ResetSave()
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 {
+	AEVec2 pos = { 0, 0 };
+	AEVec2 scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
+
+	auto displayBox = std::make_unique<Entity>("DisplayBox");
+	displayBox->addComponent<Transform2D>(pos, scale, 0.f);
+	displayBox->addComponent<Mesh>("Box", Color(50, 50, 50, 0.9f), 1002, MeshType::BOX_B);
+	const char* blessName = bless->blessingName.c_str();
+	const char* blessDesc = bless->blessingDesc.c_str();
+	displayBox->addComponent<DisplayBox>("New Blessing Obtained", blessName, blessDesc, "-- Click To Continue --");
+
 	//Add a new blessing, the original blessing from the database is cloned
-	std::cout << "Obtained Blessing: " << bless->blessingName << std::endl;
 	runBlessings.push_back(std::move(bless));
+	EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
+	EntityManager::getInstance().entities.push_back(std::move(displayBox));
 }
 
 void RunManager::SetBattleType(BATTLE_TYPE type)
@@ -98,6 +123,47 @@ MapType RunManager::GetMapType() const
 MapType RunManager::GetPrevMapType() const
 {
 	return prevMapType;
+}
+
+void RunManager::SaveRun() const
+{
+	JSONSerializer serializer;
+	std::ofstream ofs("Assets/SaveFile.json");
+	if (!ofs.is_open())
+	{
+		std::cout << "Cannot open Assets/SaveFile.json" << std::endl;
+		return;
+	}
+
+	rapidjson::OStreamWrapper os(ofs);
+	rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(os);
+	
+	writer.StartObject();
+		writer.Key("enemyDifficulty");
+		writer.Int(enemyDifficulty);
+		writer.Key("currency");
+		writer.Int(currency);
+		writer.Key("currMapType");
+		writer.Int(static_cast<int>(currMapType));
+		writer.Key("prevMapType");
+		writer.Int(static_cast<int>(prevMapType));
+	writer.EndObject();
+}
+
+bool RunManager::LoadRun()
+{
+	JSONSerializer serializer;
+	rapidjson::Document doc = serializer.ReadDocument("Assets/SaveFile.json");
+	if (doc.IsNull())
+	{
+		std::cout << "Unable to load RunManager as Document is nullptr" << std::endl;
+		return false;
+	}
+	enemyDifficulty = doc["enemyDifficulty"].GetInt();
+	currency = doc["currency"].GetInt();
+	currMapType = static_cast<MapType>(doc["currMapType"].GetInt());
+	prevMapType = static_cast<MapType>(doc["prevMapType"].GetInt());
+	return true;
 }
 
 const std::vector<std::unique_ptr<Blessing>>& RunManager::GetBlessings() const

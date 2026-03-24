@@ -2,6 +2,9 @@
 #include "EdgeManager.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../SoloBehavior/Occurence.hpp"
+#include "../UI_WZBJ_Pak.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 void EdgeManager::awake()
 {
@@ -10,6 +13,7 @@ void EdgeManager::awake()
 	E_path = enSystem->FindByNameGLOBAL("E_Path");
 	S_path = enSystem->FindByNameGLOBAL("S_Path");
 	W_path = enSystem->FindByNameGLOBAL("W_Path");
+	notif = enSystem->FindByNameGLOBAL("Notification");
 
 	if(N_path) SE_N = N_path->getComponent<SceneEdge>();
 	if(E_path) SE_E = E_path->getComponent<SceneEdge>();
@@ -35,6 +39,17 @@ void EdgeManager::UpdateEdges()
 
 	NodeType currentNodeType = node.type;
 
+	if (currentNodeType == NodeType::Entry)
+	{
+		switch_BC = true;
+		notif->isActive = true;
+	}
+	else
+	{
+		switch_BC = false;
+		notif->isActive = false;
+	}
+
 	if (hasTraveled)
 	{
 		switch (currentNodeType)
@@ -44,22 +59,108 @@ void EdgeManager::UpdateEdges()
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::Exit:
 			player->getComponent<Player>()->canMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::FixedEvent:
 			player->getComponent<Player>()->canMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::MINI_BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
+			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::RandomEvent:
-			
+		{
+			if (eventsDatabase.empty())
+			{
+				std::cout << "No events available!" << std::endl;
+				break;
+			}
+
+			AEVec2 pos = { 0.f,0.f };
+			AEVec2 scale = { 1.f, 1.f };
+			std::uniform_int_distribution<int> dist(0, eventsDatabase.size() - 1);
+			Occurence& randomOccurence = eventsDatabase.at(static_cast<OCCURENCE_ID>(dist(Game::gen)));
+			pos = { 0.f, 0.f };
+			scale = { 1.f, 1.f };
+			auto decisionBoxManager = std::make_unique<Entity>("DecisionBoxManager");
+			decisionBoxManager->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionBoxManager->addComponent<DecisionBoxManager>();
+			enSystem->rootEntity->transform->AddChild(decisionBoxManager->transform);
+
+			pos = { 0.f, 0.f };
+			scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
+			auto decisionBox = std::make_unique<Entity>("DecisionBox");
+			decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionBox->addComponent<Mesh>("Box", Color(0, 0, 0, 0.5f), 200, MeshType::BOX_B);
+			decisionBoxManager->transform->AddChild(decisionBox->transform);
+
+			pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f };
+			scale = { AEGfxGetWindowWidth() * 0.3f, AEGfxGetWindowHeight() * 0.1f };
+			auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
+			decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
+			decisionButtonLeft->addComponent<TextBox>(randomOccurence.option1Text, .5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+
+			Button* leftDecButton = decisionButtonLeft->addComponent<Button>();
+			leftDecButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
+			leftDecButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
+			leftDecButton->SetOnClick([this, randomOccurence, manager=decisionBoxManager.get()]() {
+				if (randomOccurence.option1) {
+					randomOccurence.option1(&RunManager::Instance());
+				}
+				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
+				});	
+			decisionBoxManager->transform->AddChild(decisionButtonLeft->transform);
+
+			pos = { AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f };
+			scale = { AEGfxGetWindowWidth() * 0.3f, AEGfxGetWindowHeight() * 0.1f };
+			auto decisionButtonRight = std::make_unique<Entity>("DecisionButtonRight");
+			decisionButtonRight->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionButtonRight->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 201, MeshType::BOX_B);
+			decisionButtonRight->addComponent<TextBox>(randomOccurence.option2Text, .5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+
+			Button* rightDecButton = decisionButtonRight->addComponent<Button>();
+			rightDecButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
+			rightDecButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
+			rightDecButton->SetOnClick([this, randomOccurence, manager = decisionBoxManager.get()]() {
+				if (randomOccurence.option2) {
+					randomOccurence.option2(&RunManager::Instance());
+				}
+				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
+				});
+			decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
+
+			pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.35f };
+			scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.1f };
+			auto decisionTitle = std::make_unique<Entity>("DecisionTitle");
+			decisionTitle->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionTitle->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+			decisionTitle->addComponent<TextBox>(randomOccurence.name, 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+			decisionBoxManager->transform->AddChild(decisionTitle->transform);
+			pos = { AEGfxGetWindowWidth() * 0.f, AEGfxGetWindowHeight() * 0.05f };
+			scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.5f };
+			auto decisionTitle2 = std::make_unique<Entity>("DecisionTitle2");
+			decisionTitle2->addComponent<Transform2D>(pos, scale, 0.f);
+			decisionTitle2->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+			decisionTitle2->addComponent<TextBox>(randomOccurence.desc, 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+			decisionBoxManager->transform->AddChild(decisionTitle2->transform);
+			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
+
+			enSystem->entities.push_back(std::move(decisionBox));
+			enSystem->entities.push_back(std::move(decisionBoxManager));
+			enSystem->entities.push_back(std::move(decisionButtonLeft));
+			enSystem->entities.push_back(std::move(decisionButtonRight));
+			enSystem->entities.push_back(std::move(decisionTitle));
+			enSystem->entities.push_back(std::move(decisionTitle2));
 			break;
+		}
 		default:
 			break;
 		}
@@ -74,40 +175,24 @@ void EdgeManager::CheckNeighborNode(const MapNode& node)
 	if (!node.e)
 	{
 		MapNode eastNode = map.playMap.mapNodes[map.yPos][map.xPos + 1];
-		if (eastNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check west
 	if (!node.w)
 	{
 		MapNode westNode = map.playMap.mapNodes[map.yPos][map.xPos - 1];
-		if (westNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check north
 	if (!node.n)
 	{
 		MapNode northNode = map.playMap.mapNodes[map.yPos - 1][map.xPos];
-		if (northNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 
 	//check south
 	if (!node.s)
 	{
 		MapNode southNode = map.playMap.mapNodes[map.yPos + 1][map.xPos];
-		if (southNode.type == NodeType::Entry)
-		{
-			switch_BC = true;
-		}
 	}
 }
 
@@ -178,6 +263,7 @@ void EdgeManager::update()
 	{
 		ts->TransitionToScene(GameStateManager::BASE_CAMP);
 		switch_BC = false;
+		notif->isActive = false;
 	}
 
 }

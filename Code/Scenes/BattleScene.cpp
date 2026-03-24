@@ -26,7 +26,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-
+#include "../Audio_WZBJ_Pak.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
@@ -52,7 +52,6 @@ This function loads splash screen image
 void BattleScene::Load()
 {
     //FOR DEBUG, TO REMOVE LATER!!!!
-    //InitBlessingDatabase();
 
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
@@ -72,11 +71,14 @@ void BattleScene::Load()
     battleManager = manager->addComponent<BattleManager>();
     enSystem->rootEntity->transform->AddChild(manager->transform);
     enSystem->entities.push_back(std::move(manager));
+
+    //The Image for the battle background @dan
+    meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "BattleImage");
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", Color(20, 20, 20, 1), 100, MeshType::BOX_B);
+    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
@@ -317,7 +319,7 @@ void BattleScene::Load()
     pos = { 0.f, 0.f };
     scale = { 400, 200};
     tt->addComponent<Transform2D>(pos, scale, 0.f);
-    tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8), 501, MeshType::BOX_B);
+    tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 501, MeshType::BOX_B);
     TextBox* tt_tb = tt->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
     tt_tb->text_layer = 502;
     tt_tb->line_padding = 2.f;
@@ -338,6 +340,27 @@ void BattleScene::Load()
 	Move::InitMoveDatabase(jsonSerializer, "Assets/Moves/moves-list.json");
 
     battleManager->StartBattle();
+
+    if (RunManager::Instance().GetBattleType() == BATTLE_TYPE::BOSS)
+    {
+        AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLEBOSS_BGM);
+        AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLEBOSS_BGM, true);
+    }
+    else
+    {
+        std::uniform_int_distribution<int> trackRand(0, 1);
+        int trackNo = trackRand(Game::gen);
+        if (trackNo)
+        {
+            AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLE1_BGM);
+            AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE1_BGM, true);
+        }
+        else
+        {
+            AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLE2_BGM);
+            AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
+        }
+    }
 }
 
 /*!
@@ -363,7 +386,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
     Character* ch = nullptr;
-    int enemies = 1;
+    //int enemies = 1;
     AEVec2 pos = {}, scale = { 200, 200 };
     AEVec2 hpBarScale = {};
     if (type == BATTLE_TYPE::NORMAL)
@@ -377,7 +400,32 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             hpBarScale = { 200, 10 };
             scale = { 200, 200 };
             pos = enemyPositions[i];
-            ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+            std::uniform_int_distribution<int> enemyDist(0, static_cast<int>(NORMAL_ENEMY_TYPE::TOTAL) - 1);
+            NORMAL_ENEMY_TYPE enemyType = static_cast<NORMAL_ENEMY_TYPE>(enemyDist(Game::gen));
+            switch (enemyType)
+            {
+                case NORMAL_ENEMY_TYPE::INFANTRY:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+                case NORMAL_ENEMY_TYPE::SLIME:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Slime.json");
+                    break;
+                }
+                {
+                case NORMAL_ENEMY_TYPE::DRAGON:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Dragon.json");
+                    break;
+                }
+                default:
+                {
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Enemy.json");
+                    break;
+                }
+            }
+
 
             //Create the enemy entity
             std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
@@ -410,7 +458,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             enSystem->entities.push_back(std::move(enemyHPBG));
 
             //Create enemy status icons
-            for (int i = 0; i < 3; ++i)
+            for (i = 0; i < 3; ++i)
             {
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };

@@ -78,7 +78,10 @@ public:
 	virtual bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
 	//Use the character's move, specified by the enum MOVE_SLOT
-	virtual void UseMove(MOVE_SLOT slot, Character* target);
+	virtual void UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName = true);
+
+	//Use the character's move, specified by the enum MOVE_SLOT
+	virtual void UseMove(MOVE_SLOT slot, std::vector<Character*> targets);
 
 	//Handles incoming damage, reduced by DEF and other factors
 	virtual void TakeDamage(Game::DamageInfo& damageInfo);

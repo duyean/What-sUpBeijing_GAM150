@@ -47,6 +47,7 @@ class RunManager
 	MapType prevMapType;
 public:
 	RunManager();
+	~RunManager();
 
 	const std::vector<std::string>& GetParty() const;
 
@@ -84,6 +85,9 @@ public:
 	MapType GetPrevMapType() const;
 
 	bool game_paused = false;
+
+	void SaveRun() const;
+	bool LoadRun();
 
 	//Get the current list of blessings
 	const std::vector<std::unique_ptr<Blessing>>& GetBlessings() const;

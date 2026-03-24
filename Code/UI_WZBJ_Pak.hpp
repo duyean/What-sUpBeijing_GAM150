@@ -17,3 +17,5 @@
 #include "SoloBehavior/DecisionBoxManager.hpp"
 #include "BaseSystems/Engine/TextMesh.hpp"
 #include "BaseSystems/Engine/TextBox.hpp"
+#include "../Code/SoloBehavior/Slider.hpp"
+#include "SoloBehavior/DisplayBox.hpp"

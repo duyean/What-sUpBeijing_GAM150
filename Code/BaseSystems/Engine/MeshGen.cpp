@@ -434,7 +434,10 @@ void MeshGen::ClearAllFont()
 
 void MeshGen::CreateTexture(const char* filePath, const char* fileName)
 {
-	pTex.insert({ fileName, AEGfxTextureLoad(filePath) });
+	if (pTex.find(fileName) == pTex.end())
+	{
+		pTex.insert({ fileName, AEGfxTextureLoad(filePath) });
+	}
 }
 
 void MeshGen::CreateSpriteSheet(int column, int row, int fps, const char* fileName)
@@ -521,4 +524,6 @@ void MeshGen::ClearAllMesh()
 	{
 		AEGfxTextureUnload(pair.second);
 	}
+	pMesh.clear();
+	pTex.clear();
 }

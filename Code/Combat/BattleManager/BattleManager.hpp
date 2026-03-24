@@ -95,6 +95,7 @@ public:
 	int GetCurrentTurn() const;
 	Character* GetActiveUnit();
 	Character* GetlastTargetedUnit();
+	std::vector<Character*> GetAllEnemies();
 	std::vector<Character*> GetPlayerParty() const;
 
 

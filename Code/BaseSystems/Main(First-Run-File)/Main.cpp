@@ -10,6 +10,7 @@
 #include "../Engine/EntityManager.hpp"
 #include "../Engine/PhysicSystem.hpp"
 #include "../Engine/RenderSystem.hpp"
+#include "../Audio/AudioManager.hpp"
 
 #include "../../SceneHandler_WZBJ_Pak.hpp"
 
@@ -18,7 +19,9 @@
 
 #include "../Engine/Editor/Editor.hpp"
 
-
+#ifdef _DEBUG
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 #ifdef ALPHA_EDITOR
 LRESULT CALLBACK EditorWndProc(HWND, UINT, WPARAM, LPARAM);
@@ -28,11 +31,14 @@ GameManager* gameManager = nullptr;
 
 
 #define CAPSPEED 60.0
+
 EntityManager* enSystem = &EntityManager::getInstance();
 
 PhysicSystem* phSystem = &PhysicSystem::getInstance();
 
 RenderSystem* rSystem = &RenderSystem::getInstance();
+
+MeshGen* meshSystem = &MeshGen::getInstance();
 
 
 
@@ -41,7 +47,6 @@ void game_init(void)
 	gameManager = GameManager::GetInstance();
 	gameManager->Init();
 	rSystem->init();
-
 }
 
 void game_update(void)
@@ -55,6 +60,7 @@ void game_exit(void)
 	gameManager->Exit();
 	enSystem->forceClearAllDestroyed();
 	GameManager::DestroyInstance();
+	AudioManager::DestroyInstance();
 }
 
 constexpr double FIXED_DT = 1.0 / CAPSPEED;
@@ -75,7 +81,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	int gGameRunning = 1;
 
 
-
 	LRESULT(CALLBACK * wndProc)(
 		HWND, UINT, WPARAM, LPARAM
 		) = nullptr;
@@ -84,6 +89,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     #ifdef ALPHA_EDITOR
 	wndProc = EditorWndProc;
     #endif
+
+	//_CrtSetBreakAlloc(111815);
+	//_CrtSetBreakAlloc(111814);
+	//_CrtSetBreakAlloc(111813);
+	//_CrtSetBreakAlloc(111812);
 
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, wndProc);
@@ -97,7 +107,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	//Game Initialization
 	game_init();
-
 	//FixedUpdate
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	double accumulator = 0.0;
@@ -105,6 +114,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//Move all of these into a GameSceneManager/GameStateManager
    //Root
 	enSystem->entities.reserve(1000);
+
 
 	// Game Loop
 	while (gameManager->quitGame != true)
@@ -127,7 +137,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			frameTime = std::chrono::duration<double>(0.25);
 		}
 		accumulator += frameTime.count();
-
 
 	 	// Your own update logic goes here
 		// Game Update 
@@ -160,4 +169,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// free the system
 	game_exit();
 	AESysExit();
+
 }

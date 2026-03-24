@@ -6,19 +6,27 @@ void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
 	if (!ch->IsEndingTurn())
 	{
-		ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+		bool isAOE = Move::moveDatabase[ch->GetMoveList().at(ms)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
+		if (isAOE)
+		{
+			ch->UseMove(ms, battleManager->GetAllEnemies());
+		}
+		else
+		{
+			ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+		}
 	}
 }
 
 void MovesUI::DisplayToolTip(MOVE_SLOT ms)
 {
-	tooltip->isActive = true;
-	tooltip->getComponent<TextBox>()->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(ms)].brief).c_str();
+	canDisplay = true;
+	currMoveSlot = ms;
 }
 
 void MovesUI::HideToolTip()
 {
-	tooltip->isActive = false;
+	canDisplay = false;
 }
 
 void MovesUI::awake()
@@ -41,6 +49,8 @@ void MovesUI::init()
 
 	tooltip = EntityManager::getInstance().FindByNameGLOBAL("ToolTipUI");
 	tooltip->isActive = false;
+
+	currentCh = battleManager->GetActiveUnit();
 
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
@@ -67,6 +77,24 @@ void MovesUI::update()
 	{
 		return;
 	}
+	bool endingTurn = battleManager->GetActiveUnit()->IsEndingTurn();
+	
+	moveButton1->entity->isActive = !endingTurn;
+	moveButton2->entity->isActive = !endingTurn;
+	moveButton3->entity->isActive = !endingTurn;
+	moveButton4->entity->isActive = !endingTurn;
+
+	if (canDisplay && !endingTurn)
+	{
+		tooltip->getComponent<TextBox>()->text =
+			(Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(currMoveSlot)].brief).c_str();
+		tooltip->isActive = true;
+	}
+	else
+	{
+		tooltip->isActive = false;
+		canDisplay = false;
+	}
 
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
@@ -76,7 +104,7 @@ void MovesUI::update()
 		tb4->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str();
 	}
 	AEVec2 ttbox_scale = tb1->entity->transform->getScale();
-	AEVec2 mouseCoord = { EventSystem::getInstance().eventData.x , EventSystem::getInstance().eventData.y };
+	AEVec2 mouseCoord = { (f32)EventSystem::getInstance().eventData.x , (f32)EventSystem::getInstance().eventData.y };
 	tooltip->transform->setPosition({ mouseCoord.x + (ttbox_scale.x / 2), mouseCoord.y + (ttbox_scale.y) });
 }
 

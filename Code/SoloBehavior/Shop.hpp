@@ -23,9 +23,10 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Shop();
+	Shop() = default;
 	~Shop();
 private:
+	bool canShow = false;
 	std::vector<Entity*> display{};
 	std::map<int, bool> selection{};
 	int currSelection{ -1 };

@@ -11,8 +11,10 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
-#include "../Code/SoloBehavior/Slider.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Code/SoloBehavior/SettingsScreen.hpp"
+#include "../SoloBehavior/Occurence.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 MainMenu::MainMenu()
 {	
@@ -35,6 +37,7 @@ This function loads splash screen image
 void MainMenu::Load()
 {
 	InitBlessingDatabase();
+	InitEventsDatabase();
 
 	meshSystem = &MeshGen::getInstance();
 	meshSystem->CreateTexture("../../Assets/UI/button_border.png", "Button");
@@ -47,6 +50,18 @@ void MainMenu::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
+	meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "MenuImage");
+	auto menuScreen = std::make_unique<Entity>("MENU_IMAGE");
+	Entity* ms = menuScreen.get();
+	pos = { 0.f ,0.f };
+	scale = { 1800.f, 1280.f };
+	ms->addComponent<Transform2D>(pos, scale, 0.f);
+	ms->addComponent<Mesh>("Box", "MenuImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
+	enSystem->rootEntity->transform->AddChild(ms->transform);
+	enSystem->entities.push_back(std::move(menuScreen));
+	mainMenuDisplay.push_back(ms);
+	
+
 
 	auto title_en = std::make_unique<Entity>("TITLE");
 	Entity* te = title_en.get();
@@ -56,6 +71,7 @@ void MainMenu::Load()
 	te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(te->transform);
 	enSystem->entities.push_back(std::move(title_en));
+	mainMenuDisplay.push_back(te);
 
 
 	////////////////////////////////////////////////
@@ -63,10 +79,9 @@ void MainMenu::Load()
 	// START BUTTON
 	//
 	////////////////////////////////////////////////
-
 	auto b = std::make_unique<Entity>("START BUTTON");
 	Entity* sb = b.get();
-	pos = { 0.f,0.f };
+	pos = { 0.f,100.f };
 	scale = { 300.f, 80.f };
 	sb->addComponent<Transform2D>(pos, scale, 0.f);
 	sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -79,6 +94,7 @@ void MainMenu::Load()
 	sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(sb->transform);
 	enSystem->entities.push_back(std::move(b));
+	mainMenuDisplay.push_back(sb);
 
 
 	////////////////////////////////////////////////
@@ -86,10 +102,9 @@ void MainMenu::Load()
 	// NEW GAME BUTTON
 	//
 	////////////////////////////////////////////////
-
 	auto ng = std::make_unique<Entity>("NEW GAME BUTTON");
 	Entity* ngb = ng.get();
-	pos = { 0.f,-100.f };
+	pos = { 0.f,0.f };
 	scale = { 300.f, 80.f };
 	ng->addComponent<Transform2D>(pos, scale, 0.f);
 	ng->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -103,6 +118,30 @@ void MainMenu::Load()
 
 	enSystem->rootEntity->transform->AddChild(ngb->transform);
 	enSystem->entities.push_back(std::move(ng));
+	mainMenuDisplay.push_back(ngb);
+
+
+	////////////////////////////////////////////////
+	// 
+	// SETTINGS BUTTON
+	//
+	////////////////////////////////////////////////
+	auto settingsB = std::make_unique<Entity>("SETTINGS BUTTON");
+	Entity* settingsB_en = settingsB.get();
+	pos = { 0.f,-100.f };
+	scale = { 300.f, 80.f };
+	settingsB_en->addComponent<Transform2D>(pos, scale, 0.f);
+	settingsB_en->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+
+	Button* settingsButton = settingsB_en->addComponent<Button>();
+	settingsButton->SetNormalColor(Color{ 200,200,200,1 });
+	settingsButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	settingsB_en->addComponent<TextBox>("SETTINGS", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(settingsB_en->transform);
+	enSystem->entities.push_back(std::move(settingsB));
+	mainMenuDisplay.push_back(settingsB_en);
+	
 
 
 	////////////////////////////////////////////////
@@ -110,7 +149,6 @@ void MainMenu::Load()
 	// QUIT BUTTON
 	//
 	////////////////////////////////////////////////
-
 	auto e = std::make_unique<Entity>("QUIT BUTTON");
 	Entity* qb = e.get();
 	pos = { 0.f,-200.f };
@@ -127,16 +165,40 @@ void MainMenu::Load()
 
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
+	mainMenuDisplay.push_back(qb);
 
 
+	////////////////////////////////////////////////
+	// 
+	// SETTINGS SCREEN
+	//
+	////////////////////////////////////////////////
+	auto ss = std::make_unique<Entity>("SettingsScreen");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	ss->addComponent<Transform2D>(pos, scale, 0.f);\
+	SettingsScreen* settings = ss->addComponent<SettingsScreen>(mainMenuDisplay);
+	enSystem->rootEntity->transform->AddChild(ss->transform);
+	enSystem->entities.push_back(std::move(ss));
 
-	//auto slider = std::make_unique<Entity>("Slider");
-	//pos = { 0.f, 0.f };
-	//scale = { 1.f, 1.f };
-	//slider->addComponent<Transform2D>(pos, scale, 0.f);
-	//slider->addComponent<Slider>();
-	////slider->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	//enSystem->entities.push_back(std::move(slider));
+	//add the settings button on click function after to avoid potential problems
+	settingsButton->SetOnClick([this, settings]() {settings->ShowSettings(true); });
+
+	/*auto slider = std::make_unique<Entity>("Slider");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	float value1 = 0.f;
+	slider->addComponent<Transform2D>(pos, scale, 0.f);
+	slider->addComponent<Slider>(value1, 10.f, 1.45f);
+	enSystem->entities.push_back(std::move(slider));
+
+	auto slider2 = std::make_unique<Entity>("Slider2");
+	pos = { 0.f, 200.f };
+	scale = { 1.f, 1.f };
+	float value2 = 0.f;
+	slider2->addComponent<Transform2D>(pos, scale, 0.f);
+	slider2->addComponent<Slider>(value2, 10.f, 1.f);
+	enSystem->entities.push_back(std::move(slider2));*/
 
 	/*auto test = std::make_unique<Entity>("Text");
 	pos = { 0.f, 0.f };
@@ -180,11 +242,14 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 
+	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_MAINMENU_BGM);
+	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_MAINMENU_BGM, true);
 }
 
 void MainMenu::SwitchToGame()
 {
 	ts_comp->TransitionToScene(GameStateManager::BASE_CAMP);
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_GAME_START);
 }
 
 void MainMenu::PlayNewSave()

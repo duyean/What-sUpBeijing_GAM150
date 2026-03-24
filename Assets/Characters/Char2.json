@@ -1,9 +1,9 @@
 {
     "name": "Shu Weiyang",
     "element": 0,
-    "baseHP": 150.0,
-    "baseATK": 150.0,
-    "baseDEF": 75.0,
+    "baseHP": 1750.0,
+    "baseATK": 1500.0,
+    "baseDEF": 1000.0,
     "faction": 1,
     "initiative":7,
     "texture":"ShuWeiYangBack.png",

@@ -26,7 +26,7 @@ public:
 	/// <param name="position">The position of the text</param>
 	/// <param name="text">The text to display</param>
 	/// <param name="color">The color of the text</param>
-	void CreateMessageText(AEVec2 position, std::string text, Color color = Color(255, 255, 255, 1));
+	void CreateMessageText(AEVec2 position, std::string text, Color color = Color(255, 255, 255, 1), float size = 1);
 
 	/// <summary>
 	/// Clears the queues

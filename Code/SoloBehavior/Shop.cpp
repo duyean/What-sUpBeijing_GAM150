@@ -1,14 +1,12 @@
 #include "Shop.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
 {
-	for (Entity* ent : display)
-		ent->isActive = true;
-	if (currSelection != -1 && selection.find(currSelection)->second != true)
-		buyButton->isActive = true;
+	canShow = true;
 	player->getComponent<Player>()->canMove = false;
 }
 void Shop::onStay(BoxCollider2D* other)
@@ -30,6 +28,7 @@ void Shop::ChooseSelection(int id)
 		buyButton->isActive = true;
 	else
 		buyButton->isActive = false;
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_SELECT_SHOP);
 }
 
 void Shop::SetBuyButton(Entity* ent)
@@ -53,6 +52,7 @@ void Shop::PurchaseSelection()
 	for (std::pair<int, bool> p : selection)
 		p.second = false;
 	buyButton->isActive = false;
+	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
 }
 
 void Shop::AddShopBlessings(ShopBlessing* b, int id)
@@ -62,9 +62,7 @@ void Shop::AddShopBlessings(ShopBlessing* b, int id)
 
 void Shop::CloseShopUI()
 {
-	for (Entity* ent : display)
-		ent->isActive = false;
-	buyButton->isActive = false;
+	canShow = false;
 }
 
 void Shop::SetPlayer(Entity* p)
@@ -80,6 +78,8 @@ void Shop::awake()
 		col->onCollisionStay([this](BoxCollider2D* other) { onStay(other); });
 		col->onCollisionExit([this](BoxCollider2D* other) { onExit(other); });
 	}
+
+	CloseShopUI();
 }
 
 void Shop::init()
@@ -96,6 +96,19 @@ void Shop::init()
 
 void Shop::update()
 {
+	if (canShow && !RunManager::Instance().game_paused)
+	{
+		for (Entity* ent : display)
+			ent->isActive = true;
+		if (currSelection != -1 && selection.find(currSelection)->second != true)
+			buyButton->isActive = true;
+	}
+	else
+	{
+		for (Entity* ent : display)
+			ent->isActive = false;
+		buyButton->isActive = false;
+	}
 }
 
 void Shop::fixedUpdate()
@@ -103,10 +116,6 @@ void Shop::fixedUpdate()
 }
 
 void Shop::destroy()
-{
-}
-
-Shop::Shop()
 {
 }
 

@@ -10,6 +10,7 @@ class AudioManager : public SingletonPattern<AudioManager>
 {
 	friend SingletonPattern<AudioManager>;
 
+public:
 	enum AUDIO_TYPE
 	{
 		AUDIO_MAINMENU_BGM = 0,
@@ -19,15 +20,15 @@ class AudioManager : public SingletonPattern<AudioManager>
 		AUDIO_LEVEL3_BGM,
 		AUDIO_BATTLE1_BGM,
 		AUDIO_BATTLE2_BGM,
-		AUDIO_BATTLE3_BGM,
 		AUDIO_BATTLEBOSS_BGM,
-		AUDIO_BATTLECRITICAL_BGM,
 		AUDIO_TOTAL
 	};
 
 	enum SFX_TYPE
 	{
 		SFX_BUTTON_PRESS = 0,
+		SFX_GAME_START,
+		SFX_SELECT_SHOP,
 		SFX_PURCHASE_SHOP,
 		SFX_START_LEVEL,
 		SFX_ATTACK_BASIC,
@@ -55,6 +56,7 @@ class AudioManager : public SingletonPattern<AudioManager>
 		SFX_BATTLE_HURT2,
 		SFX_BATTLE_DEATH,
 		SFX_BATTLE_DEATH2,
+		SFX_BATTLE_START,
 		SFX_BATTLE_WIN,
 		SFX_TOTAL
 	};
@@ -68,8 +70,10 @@ public:
 	void AddTrack(AUDIO_TYPE type, std::string fileName);
 	bool PlayTrack(AUDIO_TYPE id, bool fade) const;
 	void StopTrack(AUDIO_TYPE id, bool fade) const;
+	void StopAllTracks(bool fade, AUDIO_TYPE exception = AUDIO_TOTAL) const;
 	void AddSFX(SFX_TYPE type, std::string fileName);
 	void PlaySFX(SFX_TYPE id) const;
+	void Update();
 
 private:
 	std::map<AUDIO_TYPE, AudioTrack*> tracks;

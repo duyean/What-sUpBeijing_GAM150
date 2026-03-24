@@ -20,7 +20,10 @@ private:
 	TextBox* tb4 = nullptr;
 
 	Entity* tooltip = nullptr;
+	bool canDisplay = false;
 
+	Character* currentCh = nullptr;
+	MOVE_SLOT currMoveSlot;
 
 	void UseCurrMove(MOVE_SLOT ms, Character* ch);
 	void DisplayToolTip(MOVE_SLOT ms);

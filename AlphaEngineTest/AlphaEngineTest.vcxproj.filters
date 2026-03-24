@@ -34,9 +34,6 @@
     <Filter Include="Header Files\Base Systems\Scene Handler">
       <UniqueIdentifier>{3fe8b227-74cc-4811-b39a-71a6177191e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scenes">
-      <UniqueIdentifier>{2b3348a6-92dd-4083-b098-1e7992949a44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{1bcbcca0-4c69-4663-87a0-ab358f43f290}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     </Filter>
     <Filter Include="Source Files\Base Systems\Audio">
       <UniqueIdentifier>{58bf33ab-b55b-4805-9d55-bed29d5c9548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{2b3348a6-92dd-4083-b098-1e7992949a44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,9 +261,6 @@
     <ClCompile Include="..\Code\Combat\Blessing\Blessing.cpp">
       <Filter>Source Files\Combat Systems\Blessing</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Map\NavigationData.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -279,50 +276,11 @@
     <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Scenes\LevelScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Scenes\BattleScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Map\MapDisplay.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\EdgeManagerBase.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Scenes\MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\DecisionBoxManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\Shop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\Slider.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
@@ -333,9 +291,6 @@
     <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
       <Filter>Source Files\Base Systems\Audio</Filter>
     </ClCompile>
@@ -344,6 +299,54 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp">
       <Filter>Source Files\Base Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\DisplayBox.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scenes\BattleScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scenes\LevelScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\DecisionBoxManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scenes\MainMenu.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\PauseMenu.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Shop.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\PartyUI.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\ShopBlessing.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp">
+      <Filter>Source Files\Entities\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,9 +527,6 @@
     <ClInclude Include="..\Code\Combat\EventHandler\CombatEventHandler.hpp">
       <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Map\NavigationData.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -545,19 +545,10 @@
     <ClInclude Include="..\Code\Scenes\BaseCamp.hpp">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Scenes\LevelScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Scenes\BattleScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Map\MapDisplay.hpp">
@@ -566,28 +557,10 @@
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Scenes\MainMenu.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\Shop.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\Renderable.hpp">
@@ -595,12 +568,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\Text.hpp">
       <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\Slider.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
@@ -611,9 +578,6 @@
     <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
       <Filter>Header Files\Base Systems\Audio</Filter>
     </ClInclude>
@@ -622,6 +586,48 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Audio\SFXTrack.hpp">
       <Filter>Header Files\Base Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\DisplayBox.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Audio_WZBJ_Pak.hpp">
+      <Filter>Header Files\Global Inherit Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\PartyUI.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\PauseMenu.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Shop.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\ShopBlessing.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp">
+      <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\BattleScene.hpp">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\LevelScene.hpp">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scenes\MainMenu.hpp">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

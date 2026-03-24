@@ -10,6 +10,9 @@
 
 void Map::GenerateMap(MapType type, int xLen, int yLen)
 {
+	bool properGeneration = false;
+	while (!properGeneration)
+	{
 	this->mapType = type;
 	printf("Map Type Set\n");
 
@@ -231,8 +234,6 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	Map::DebugPrint(travelPath);
 	*/
 
-	printf("Listing All Travellled Nodes: %zu\n", endNodes.size());
-
 	int largestIndex = 0;
 
 	printf("Designating Exit Node.\n");
@@ -255,10 +256,11 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 		printf("Not enough end nodes generated to designate event node. No Map-Specific Event Node will be generated.\n");
 		if (endNodes.size() < 2)
 		{
-			printf("broken map, please generate a new one\n");
-			return;
+			printf("broken map, generating new map\n");
+			continue;
 		}
 	}
+	properGeneration = true;
 
 	//remove entry and exit nodes from endNode list
 	endNodes.erase(endNodes.begin() + largestIndex);
@@ -327,7 +329,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 						this->mapNodes[y][x].type = NodeType::RandomEvent;
 						eventNodeCount++;
 					}
-	}	}	}	}
+	}	}	}	}	}
 }
 
 void Map::DebugPrint(Map map)

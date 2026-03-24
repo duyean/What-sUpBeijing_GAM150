@@ -5,8 +5,9 @@
 #include "Modifier/Modifier.hpp"
 #include "../BaseSystems/JSONSerializer/JSONSerializer.hpp"
 
-enum MOVE_SLOT
+enum struct MOVE_SLOT
 {
+	NONE = -1,
 	MOVE_SLOT_1,
 	MOVE_SLOT_2,
 	MOVE_SLOT_3,

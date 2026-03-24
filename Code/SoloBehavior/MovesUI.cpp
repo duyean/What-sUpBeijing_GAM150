@@ -6,14 +6,24 @@ void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
 	if (!ch->IsEndingTurn())
 	{
-		bool isAOE = Move::moveDatabase[ch->GetMoveList().at(ms)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
-		if (isAOE)
+		auto moveGroup = Move::moveDatabase[ch->GetMoveList().at(ms)].targetGroup;
+		switch (moveGroup)
 		{
-			ch->UseMove(ms, battleManager->GetAllEnemies());
-		}
-		else
-		{
-			ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+			case (Game::AOE_OPPOSITE):
+			{
+				ch->UseMove(ms, battleManager->GetAllEnemies());
+				break;
+			}
+			case (Game::AOE_ALLY):
+			{
+				ch->UseMove(ms, battleManager->GetPlayerParty());
+				break;
+			}
+			default:
+			{
+				ch->UseMove(ms, battleManager->GetlastTargetedUnit());
+				break;
+			}
 		}
 	}
 }
@@ -54,15 +64,15 @@ void MovesUI::init()
 
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
-		moveButton1->SetOnClick([this]() {UseCurrMove(MOVE_SLOT_1, battleManager->GetActiveUnit()); });
-		moveButton2->SetOnClick([this]() {UseCurrMove(MOVE_SLOT_2, battleManager->GetActiveUnit()); });
-		moveButton3->SetOnClick([this]() {UseCurrMove(MOVE_SLOT_3, battleManager->GetActiveUnit()); });
-		moveButton4->SetOnClick([this]() {UseCurrMove(MOVE_SLOT_4, battleManager->GetActiveUnit()); });
+		moveButton1->SetOnClick([this]() {UseCurrMove(MOVE_SLOT::MOVE_SLOT_1, battleManager->GetActiveUnit()); });
+		moveButton2->SetOnClick([this]() {UseCurrMove(MOVE_SLOT::MOVE_SLOT_2, battleManager->GetActiveUnit()); });
+		moveButton3->SetOnClick([this]() {UseCurrMove(MOVE_SLOT::MOVE_SLOT_3, battleManager->GetActiveUnit()); });
+		moveButton4->SetOnClick([this]() {UseCurrMove(MOVE_SLOT::MOVE_SLOT_4, battleManager->GetActiveUnit()); });
 
-		moveButton1->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT_1); });
-		moveButton2->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT_2); });
-		moveButton3->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT_3); });
-		moveButton4->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT_4); });
+		moveButton1->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT::MOVE_SLOT_1); });
+		moveButton2->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT::MOVE_SLOT_2); });
+		moveButton3->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT::MOVE_SLOT_3); });
+		moveButton4->SetOnHover([this]() { DisplayToolTip(MOVE_SLOT::MOVE_SLOT_4); });
 
 		moveButton1->SetOnHoverExit([this]() { HideToolTip(); });
 		moveButton2->SetOnHoverExit([this]() { HideToolTip(); });
@@ -98,10 +108,10 @@ void MovesUI::update()
 
 	if (battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
-		tb1->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_1)].name).c_str();
-		tb2->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_2)].name).c_str();
-		tb3->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_3)].name).c_str();
-		tb4->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT_4)].name).c_str();
+		tb1->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT::MOVE_SLOT_1)].name).c_str();
+		tb2->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT::MOVE_SLOT_2)].name).c_str();
+		tb3->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT::MOVE_SLOT_3)].name).c_str();
+		tb4->text = (Move::moveDatabase[battleManager->GetActiveUnit()->GetMoveList().at(MOVE_SLOT::MOVE_SLOT_4)].name).c_str();
 	}
 	AEVec2 ttbox_scale = tb1->entity->transform->getScale();
 	AEVec2 mouseCoord = { (f32)EventSystem::getInstance().eventData.x , (f32)EventSystem::getInstance().eventData.y };

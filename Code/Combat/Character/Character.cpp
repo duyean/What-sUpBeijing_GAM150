@@ -93,10 +93,10 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 	this->characterModelTexture2 = doc["texture2"].GetString();
 	this->characterIconTexture = doc["icontexture"].GetString();
 	// move list
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
 
 	std::cout << this->name << " = "
 		<< this->element << " element, "
@@ -358,7 +358,7 @@ void Character::AIAttack()
 	{
 		return;
 	}
-	std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
+	std::uniform_int_distribution<int> randMove(static_cast<int>(MOVE_SLOT::MOVE_SLOT_1), static_cast<int>(MOVE_SLOT::MOVE_SLOT_4));
 	MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
 	auto& moveToUse = moveList[slotSelected];
 	Move* move = &Move::moveDatabase[moveToUse];
@@ -423,6 +423,12 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 		break;
 	case Game::CRIT_DAMAGE:
 		critDMG += value;
+		break;
+	case Game::ATTRIBUTE_TYPE::DMG_BONUS:
+		dmgBonus += value;
+		break;
+	case Game::ATTRIBUTE_TYPE::DMG_REDUCTION:
+		dmgReduction += value;
 		break;
 	}
 }

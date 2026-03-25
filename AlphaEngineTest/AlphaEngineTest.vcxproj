@@ -16,6 +16,7 @@
     <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Bounce.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Bounce.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp" />

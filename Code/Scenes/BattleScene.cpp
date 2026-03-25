@@ -26,7 +26,8 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-
+#include "../Audio_WZBJ_Pak.hpp"
+#include "../BaseSystems/Engine/Bounce.hpp"
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
@@ -107,6 +108,7 @@ void BattleScene::Load()
         meshSystem->CreateTexture(iconPath.c_str(), ch->characterIconTexture.c_str());
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         character->getComponent<Mesh>()->isActive = false;
+        character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
         battleManager->LoadBattleUnit(ch);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
@@ -431,6 +433,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Transform2D>(pos, scale, 0.f);
             character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
+            character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));

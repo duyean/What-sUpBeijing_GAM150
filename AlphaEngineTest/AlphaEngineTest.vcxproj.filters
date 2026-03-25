@@ -351,6 +351,9 @@
     <ClCompile Include="..\Code\SoloBehavior\CurrencyDisplay.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\Bounce.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\CurrencyDisplay.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\Bounce.hpp">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

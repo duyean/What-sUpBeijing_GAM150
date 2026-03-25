@@ -504,6 +504,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         auto hpBar = character->addComponent<Healthbar1>();
         battleManager->LoadBattleUnit(ch);
+        character->addComponent<Tinter>(1.f);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
 

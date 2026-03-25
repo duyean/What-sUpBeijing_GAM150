@@ -5,7 +5,9 @@ class RunManager;
 
 enum struct OCCURENCE_ID
 {
-	TEST_EVENT_1
+	TEST_EVENT_1,
+	REWARD_EVENT_1,
+	GAMBLING_EVENT_1
 };
 
 class Occurence

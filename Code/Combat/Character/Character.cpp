@@ -6,6 +6,17 @@
 #include "../Code/BaseSystems/Engine/MeshGen.hpp"
 #include "../Code/Audio_WZBJ_Pak.hpp"
 
+Character::Character() : meshSystem(nullptr), endingTurn(false), name(""), element(Game::WUXING_ELEMENT::FIRE),
+hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0),
+baseATK(0), atkBonus(0), atk(0),
+baseDEF(0), defBonus(0), def(0),
+critRate(0), critDMG(0), dmgBonus(0),
+effectList(), dmgReduction(0), initiative(0),
+turnFinished(false), isDead(false), faction(Game::NONE),
+moveList(), targets(), characterIconTexture(""),
+characterModelTexture(""), characterModelTexture2(""), onDeath(nullptr)
+{ };
+
 void Character::DealDamage(Character* target, float coefficient)
 {
 	if (coefficient <= 0) //If coefficient is 0, the move doesn't do any damage
@@ -13,7 +24,7 @@ void Character::DealDamage(Character* target, float coefficient)
 		return;
 	}
 
-	std::uniform_real_distribution<> randFloat(0.0f, 1.0f);
+	std::uniform_real_distribution<float> randFloat(0.0f, 1.0f);
 	float critRoll = randFloat(Game::gen);
 	bool isCrit = (critRoll < this->critRate);
 	float finalDamage = (this->atk * coefficient) * (isCrit ? 1 + critDMG : 1) * (1 + this->dmgBonus);
@@ -23,7 +34,7 @@ void Character::DealDamage(Character* target, float coefficient)
 	info.elementType = this->element;
 	info.source = this;
 
-	EventData evt{ info.source, this, (int)finalDamage };
+	EventData evt{ info.source, this, finalDamage };
 	CombatEventHandler::Instance().Dispatch(EventType::DealtDamage, evt);
 
 	if (isCrit)
@@ -37,7 +48,7 @@ void Character::DealDamage(Character* target, float coefficient)
 void Character::TakeDamage(Game::DamageInfo& damageInfo)
 {
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
-	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 - dmgReduction);
+	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 / (dmgReduction + 1));
 	damageInfo.damage = finalDamageTaken;
 	hp -= finalDamageTaken;
 	hp = AEClamp(hp, 0, maxHP);
@@ -45,7 +56,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	CombatUIManager::Instance().CreateDamageNumber(this->entity->transform->getPosition() + offset, damageInfo);
 
 	//Event Handler
-	EventData evt{ damageInfo.source, this, (int)finalDamageTaken};
+	EventData evt{ damageInfo.source, this, finalDamageTaken};
 	CombatEventHandler::Instance().Dispatch(EventType::TookDamage, evt);
 
 	if (hp <= 0)
@@ -82,10 +93,10 @@ bool Character::LoadCharacter(JSONSerializer& serializer, std::string fileName)
 	this->characterModelTexture2 = doc["texture2"].GetString();
 	this->characterIconTexture = doc["icontexture"].GetString();
 	// move list
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
-	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_1, static_cast<MOVE_ID>(doc["moves"]["0"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_2, static_cast<MOVE_ID>(doc["moves"]["1"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_3, static_cast<MOVE_ID>(doc["moves"]["2"].GetInt())));
+	this->moveList.insert(std::pair<MOVE_SLOT, MOVE_ID>(MOVE_SLOT::MOVE_SLOT_4, static_cast<MOVE_ID>(doc["moves"]["3"].GetInt())));
 
 	std::cout << this->name << " = "
 		<< this->element << " element, "
@@ -113,18 +124,18 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 1.2 * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.25 * RunManager::Instance().GetEnemyDifficulty();
-		baseDEF *= 1 + 0.15 * RunManager::Instance().GetEnemyDifficulty();
+		baseMaxHP *= 1 + 1.1f * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.2f * RunManager::Instance().GetEnemyDifficulty();
+		baseDEF *= 1 + 0.15f * RunManager::Instance().GetEnemyDifficulty();
 	}
 	UpdateAttributes();
 	hp = maxHP;
 }
 
-void Character::UseMove(MOVE_SLOT slot, std::vector<Character*> targets)
+void Character::UseMove(MOVE_SLOT slot, std::vector<Character*> targets_list)
 {
 	bool renderMove = true;
-	for (auto ch : targets)
+	for (auto ch : targets_list)
 	{
 		UseMove(slot, ch, renderMove);
 		renderMove = false;
@@ -180,7 +191,7 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 		DealDamage(target, move->coefficient);
 		EndTurn();
 
-		switch (move_id)
+		switch (static_cast<int>(move_id))
 		{
 		case 0:
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_ATTACK_BASIC);
@@ -231,6 +242,7 @@ void Character::UpdateAttributes(void)
 	maxHP = baseMaxHP * (1 + maxHPBonus);
 	atk = baseATK * (1 + atkBonus);
 	def = baseDEF * (1 + defBonus);
+	dmgReduction = std::max(-0.90f, dmgReduction);
 }
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)
@@ -347,7 +359,7 @@ void Character::AIAttack()
 	{
 		return;
 	}
-	std::uniform_int_distribution<> randMove(MOVE_SLOT_1, MOVE_SLOT_4);
+	std::uniform_int_distribution<int> randMove(static_cast<int>(MOVE_SLOT::MOVE_SLOT_1), static_cast<int>(MOVE_SLOT::MOVE_SLOT_4));
 	MOVE_SLOT slotSelected = static_cast<MOVE_SLOT>(randMove(Game::gen));
 	auto& moveToUse = moveList[slotSelected];
 	Move* move = &Move::moveDatabase[moveToUse];
@@ -355,7 +367,7 @@ void Character::AIAttack()
 	{
 		if (!targets.empty())
 		{
-			std::uniform_int_distribution<> randTarget(0, targets.size() - 1);
+			std::uniform_int_distribution<size_t> randTarget(0, targets.size() - 1);
 			Character* target = targets[randTarget(Game::gen)];
 			target->entity->getComponent<Mesh>()->isActive = true;
 			target->timer = 2.0f;
@@ -413,6 +425,12 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 	case Game::CRIT_DAMAGE:
 		critDMG += value;
 		break;
+	case Game::ATTRIBUTE_TYPE::DMG_BONUS:
+		dmgBonus += value;
+		break;
+	case Game::ATTRIBUTE_TYPE::DMG_REDUCTION:
+		dmgReduction += value;
+		break;
 	}
 }
 
@@ -437,7 +455,7 @@ void Character::update()
 		if (timer > 0.f)
 		{
 			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
-			timer -= 1.0f * AEFrameRateControllerGetFrameTime();
+			timer -= 1.0f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 		}
 
 		if (timer <= 0.5f)

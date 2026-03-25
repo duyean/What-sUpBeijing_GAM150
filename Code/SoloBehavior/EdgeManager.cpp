@@ -98,18 +98,18 @@ void EdgeManager::UpdateEdges()
 			scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
 			auto decisionBox = std::make_unique<Entity>("DecisionBox");
 			decisionBox->addComponent<Transform2D>(pos, scale, 0.f);
-			decisionBox->addComponent<Mesh>("Box", Color(0, 0, 0, 0.5f), 200, MeshType::BOX_B);
+			decisionBox->addComponent<Mesh>("Box", Color(0, 0, 0, 0.75f), 200, MeshType::BOX_B);
 			decisionBoxManager->transform->AddChild(decisionBox->transform);
 
 			pos = { -AEGfxGetWindowWidth() * 0.2f, -AEGfxGetWindowHeight() * 0.3f };
 			scale = { AEGfxGetWindowWidth() * 0.3f, AEGfxGetWindowHeight() * 0.1f };
 			auto decisionButtonLeft = std::make_unique<Entity>("DecisionButtonLeft");
 			decisionButtonLeft->addComponent<Transform2D>(pos, scale, 0.f);
-			decisionButtonLeft->addComponent<Mesh>("Box", Color(255, 255, 55, 1.f), 201, MeshType::BOX_B);
+			decisionButtonLeft->addComponent<Mesh>("Box", Color(111, 166, 104, 1.f), 201, MeshType::BOX_B);
 			decisionButtonLeft->addComponent<TextBox>(randomOccurence.option1Text, .5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 
 			Button* leftDecButton = decisionButtonLeft->addComponent<Button>();
-			leftDecButton->SetNormalColor(Color{ 55, 255, 55, 1.f });
+			leftDecButton->SetNormalColor(Color{ 76, 158, 66, 1.f });
 			leftDecButton->SetHighlightedColor(Color{ 155, 255, 155, 1.f });
 			leftDecButton->SetOnClick([this, randomOccurence, manager=decisionBoxManager.get()]() {
 				if (randomOccurence.option1) {
@@ -127,8 +127,8 @@ void EdgeManager::UpdateEdges()
 			decisionButtonRight->addComponent<TextBox>(randomOccurence.option2Text, .5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 
 			Button* rightDecButton = decisionButtonRight->addComponent<Button>();
-			rightDecButton->SetNormalColor(Color{ 255, 55, 55, 1.f });
-			rightDecButton->SetHighlightedColor(Color{ 255, 155, 155, 1.f });
+			rightDecButton->SetNormalColor(Color{ 171, 65, 65, 1.f });
+			rightDecButton->SetHighlightedColor(Color{ 173, 102, 102, 1.f });
 			rightDecButton->SetOnClick([this, randomOccurence, manager = decisionBoxManager.get()]() {
 				if (randomOccurence.option2) {
 					randomOccurence.option2(&RunManager::Instance());

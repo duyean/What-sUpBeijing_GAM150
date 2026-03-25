@@ -5,14 +5,14 @@
     "baseATK": 1000.0,
     "baseDEF": 1000.0,
     "faction": 1,
-    "initiative":4,
+    "initiative":10,
     "texture":"GuanShiYinBack.png",
     "texture2":"GuanShiYinFront.png",
     "icontexture":"GuanShiYinIcon.png",
     "moves": {
-        "0": 0,
-        "1": 1,
-        "2": 2,
-        "3": 3
+        "0": 3,
+        "1": 15,
+        "2": 16,
+        "3": 17
     }
 }

@@ -62,9 +62,12 @@ void RunManager::ResetSave()
 		std::cout << "ViewMap.json was unable to be removed.\n";
 	if (std::remove("Assets/Map/NavData.json") != 0)
 		std::cout << "NavData.json was unable to be removed.\n";
+	if (std::remove("Assets/SaveFile.json") != 0)
+		std::cout << "SaveFile.json was unable to be removed.\n";
 
 	runBlessings.clear();
 	currency = 50;
+	enemyDifficulty = 1;
 }
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)

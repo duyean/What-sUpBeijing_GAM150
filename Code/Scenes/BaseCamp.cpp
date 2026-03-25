@@ -109,13 +109,13 @@ void BaseCamp::Load()
 	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 
-	auto curr_disp = std::make_unique<Entity>("CurrDisp");
+	/*auto curr_disp = std::make_unique<Entity>("CurrDisp");
 	pos = { 0.f, 0.f };
 	scale = { 100.f, 100.f };
 	curr_disp->addComponent<Transform2D>(pos, scale, 0.f);
 	curr_disp->addComponent<CurrencyDisplay>();
 	enSystem->rootEntity->transform->AddChild(curr_disp->transform);
-	enSystem->entities.push_back(std::move(curr_disp));
+	enSystem->entities.push_back(std::move(curr_disp));*/
 
 	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");

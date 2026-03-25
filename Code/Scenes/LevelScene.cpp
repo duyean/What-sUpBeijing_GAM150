@@ -17,7 +17,6 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
-
 LevelScene::LevelScene()
 {	
 }
@@ -160,7 +159,6 @@ void LevelScene::Load()
 	pos = { minimapOffX + (float)map.xPos * NODE_SIZE, minimapOffY - (float)map.yPos * NODE_SIZE };
 	scale = { NODE_SIZE - 2, NODE_SIZE - 2};
 	playerCharacter->addComponent<Transform2D>(pos, scale, 0.f);
-	playerCharacter->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(playerCharacter->transform);
 	enSystem->entities.push_back(std::move(playerCharacter));
 
@@ -193,6 +191,7 @@ void LevelScene::Load()
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	e->addComponent<Player>();
+	//e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 

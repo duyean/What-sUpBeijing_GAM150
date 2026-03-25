@@ -68,6 +68,7 @@ void RunManager::ResetSave()
 	runBlessings.clear();
 	currency = 50;
 	enemyDifficulty = 1;
+	SetMapType(MapType::CityStreets);
 }
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)

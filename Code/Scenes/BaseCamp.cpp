@@ -16,6 +16,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/UI_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Code/SoloBehavior/CurrencyDisplay.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
@@ -107,6 +108,14 @@ void BaseCamp::Load()
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
 	enSystem->rootEntity->transform->AddChild(e->transform);
+
+	auto curr_disp = std::make_unique<Entity>("CurrDisp");
+	pos = { 0.f, 0.f };
+	scale = { 100.f, 100.f };
+	curr_disp->addComponent<Transform2D>(pos, scale, 0.f);
+	curr_disp->addComponent<CurrencyDisplay>();
+	enSystem->rootEntity->transform->AddChild(curr_disp->transform);
+	enSystem->entities.push_back(std::move(curr_disp));
 
 	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");

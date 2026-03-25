@@ -5,7 +5,8 @@
 //Do collision logic
 void SceneEdge::onHit(BoxCollider2D* other)
 {
-	triggerBuffer = true;
+	if(other->entity->name == "Player")
+		triggerBuffer = true;
 }
 void SceneEdge::onStay(BoxCollider2D* other)
 {
@@ -13,7 +14,8 @@ void SceneEdge::onStay(BoxCollider2D* other)
 }
 void SceneEdge::onExit(BoxCollider2D* other)
 {
-	
+	if (other->entity->name == "Player")
+		triggerBuffer = false;
 }
 
 void SceneEdge::awake()

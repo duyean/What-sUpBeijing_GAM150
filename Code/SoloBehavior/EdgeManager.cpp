@@ -166,7 +166,7 @@ void EdgeManager::UpdateEdges()
 		}
 	}
 
-	CheckNeighborNode(node);
+	//CheckNeighborNode(node);
 }
 
 void EdgeManager::CheckNeighborNode(const MapNode& node)
@@ -198,6 +198,7 @@ void EdgeManager::CheckNeighborNode(const MapNode& node)
 
 void EdgeManager::init()
 {
+	player->transform->setPosition({ 0.f, 0.f });
 	UpdateEdges();
 }
 

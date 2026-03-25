@@ -279,4 +279,6 @@ void MainMenu::Unload()
     for (auto& e : enSystem->entities) {
         e->toDestroy = true;
     }
+
+	mainMenuDisplay.clear();
 }

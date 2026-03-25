@@ -13,7 +13,14 @@ class MeshGen;
 class Character : public SoloBehavior
 {
 private:
-	float timer = 2.f;
+	enum struct SPRITE_STATE
+	{
+		IDLE,
+		ATTACKING,
+	};
+
+	float spriteTimer = 0.f;
+	SPRITE_STATE spriteState = SPRITE_STATE::IDLE;
 
 	MeshGen* meshSystem;
 

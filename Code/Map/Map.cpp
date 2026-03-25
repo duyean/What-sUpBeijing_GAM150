@@ -10,6 +10,9 @@
 
 void Map::GenerateMap(MapType type, int xLen, int yLen)
 {
+	bool properGeneration = false;
+	while (!properGeneration)
+	{
 	this->mapType = type;
 	printf("Map Type Set\n");
 
@@ -231,8 +234,6 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	Map::DebugPrint(travelPath);
 	*/
 
-	printf("Listing All Travellled Nodes: %d\n", endNodes.size());
-
 	int largestIndex = 0;
 
 	printf("Designating Exit Node.\n");
@@ -255,10 +256,11 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 		printf("Not enough end nodes generated to designate event node. No Map-Specific Event Node will be generated.\n");
 		if (endNodes.size() < 2)
 		{
-			printf("broken map, please generate a new one\n");
-			return;
+			printf("broken map, generating new map\n");
+			continue;
 		}
 	}
+	properGeneration = true;
 
 	//remove entry and exit nodes from endNode list
 	endNodes.erase(endNodes.begin() + largestIndex);
@@ -278,14 +280,14 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 			printf("No Map-Specific Event Node Generated for City Streets Map.\n");
 			break;
 		}
-		case MapType::OuterPalace:
-		{
-			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
-			printf("Outer Palace Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
-			break;
-		}
+		case MapType::OuterPalace:	//both have miniboss type fixed events
 		case MapType::InnerPalace:
 		{
+			if (endNodes.size() <= 0)
+			{
+				printf("Not enough end nodes generated to designate event node. Regenerating Map.\n");
+				continue;
+			}
 			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
 			printf("Specific Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
 			break;
@@ -327,7 +329,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 						this->mapNodes[y][x].type = NodeType::RandomEvent;
 						eventNodeCount++;
 					}
-	}	}	}	}
+	}	}	}	}	}
 }
 
 void Map::DebugPrint(Map map)

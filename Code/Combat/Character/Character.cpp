@@ -189,6 +189,9 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 			CombatUIManager::Instance().CreateMessageText(pos, move->name, (faction == Game::FACTION::PLAYER) ? Color(0, 255, 0, 1) : Color(255, 0, 0, 1));
 		}
 		DealDamage(target, move->coefficient);
+		
+		spriteState = SPRITE_STATE::ATTACKING;
+		spriteTimer = 2.0f;
 		EndTurn();
 
 		switch (static_cast<int>(move_id))
@@ -347,8 +350,8 @@ void Character::StartTurn(void)
 	endingTurn = false;
 	if (faction == Game::PLAYER)
 	{
-		entity->getComponent<Mesh>()->isActive = true;
-		entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+		spriteTimer = 999;
+		spriteState = SPRITE_STATE::IDLE;
 	}
 	std::cout << "It is " << name << "\'s turn\nHP: " << hp << " / " << maxHP << std::endl;
 }
@@ -369,8 +372,8 @@ void Character::AIAttack()
 		{
 			std::uniform_int_distribution<size_t> randTarget(0, targets.size() - 1);
 			Character* target = targets[randTarget(Game::gen)];
-			target->entity->getComponent<Mesh>()->isActive = true;
-			target->timer = 2.0f;
+			target->spriteState = SPRITE_STATE::IDLE;
+			target->spriteTimer = 2.0f;
 			UseMove(slotSelected, target);
 		}
 	}
@@ -378,8 +381,8 @@ void Character::AIAttack()
 	{
 		for (auto& target : targets)
 		{
-			target->entity->getComponent<Mesh>()->isActive = true;
-			target->timer = 2.0f;
+			target->spriteState = SPRITE_STATE::IDLE;
+			target->spriteTimer = 2.0f;
 		}
 		UseMove(slotSelected, targets);
 	}
@@ -392,7 +395,6 @@ void Character::AIAttack()
 void Character::EndTurn(void)
 {
 	endingTurn = true;
-	timer = 2.0f;
 }
 
 void Character::Death(void)
@@ -450,27 +452,58 @@ void Character::awake()
 
 void Character::update()
 {
-	if (endingTurn)
+	//if (endingTurn)
+	//{
+	//	if (spriteTimer > 0.f)
+	//	{
+	//		entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+	//		spriteTimer -= 1.0f * static_cast<float>(AEFrameRateControllerGetFrameTime());
+	//	}
+
+	//	if (spriteTimer <= 0.5f)
+	//	{
+	//		entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+
+	//		if (spriteTimer <= 0)
+	//		{
+	//			if (faction == Game::PLAYER)
+	//			{
+	//				entity->getComponent<Mesh>()->isActive = false;
+	//			}
+	//			turnFinished = true;
+	//		}
+	//	}
+	//}
+
+	if (spriteTimer > 0)
 	{
-		if (timer > 0.f)
+		entity->getComponent<Mesh>()->isActive = true;
+		switch (spriteState)
 		{
-			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
-			timer -= 1.0f * static_cast<float>(AEFrameRateControllerGetFrameTime());
-		}
-
-		if (timer <= 0.5f)
-		{
-			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
-
-			if (timer <= 0)
+			case SPRITE_STATE::IDLE:
 			{
-				if (faction == Game::PLAYER)
+				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
+				break;
+			}
+			case SPRITE_STATE::ATTACKING:
+			{
+				entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+				if (spriteTimer <= 0.5f)
 				{
-					entity->getComponent<Mesh>()->isActive = false;
+					entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture.c_str());
 				}
-				turnFinished = true;
+				break;
 			}
 		}
+		spriteTimer -= 1.0f * static_cast<float>(AEFrameRateControllerGetFrameTime());
+	}
+	else
+	{
+		if (faction == Game::FACTION::PLAYER)
+		{
+			entity->getComponent<Mesh>()->isActive = false;
+		}
+		turnFinished = true;
 	}
 }
 

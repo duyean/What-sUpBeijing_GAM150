@@ -5,12 +5,14 @@
 //Do collision logic
 void SceneEdge::onHit(BoxCollider2D* other)
 {
-	std::cout << other->entity->name << "collided with Scene edge " << entity->name
-		<< ", making Scene edge " << entity->name <<"'s value become: " << triggerBuffer << "!!!!!" << std::endl;
 	if (other->entity->name == "Player")
 	{
 		triggerBuffer = true;
-	}		
+	}
+	else
+	{
+		triggerBuffer = false;
+	}
 }
 void SceneEdge::onStay(BoxCollider2D* other)
 {

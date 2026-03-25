@@ -280,14 +280,14 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 			printf("No Map-Specific Event Node Generated for City Streets Map.\n");
 			break;
 		}
-		case MapType::OuterPalace:
-		{
-			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
-			printf("Outer Palace Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
-			break;
-		}
+		case MapType::OuterPalace:	//both have miniboss type fixed events
 		case MapType::InnerPalace:
 		{
+			if (endNodes.size() <= 0)
+			{
+				printf("Not enough end nodes generated to designate event node. Regenerating Map.\n");
+				continue;
+			}
 			this->mapNodes[endNodes[eventNodeIndex][0]][endNodes[eventNodeIndex][1]].type = NodeType::FixedEvent;
 			printf("Specific Event Node Designated at %d, %d.\n", endNodes[eventNodeIndex][1], endNodes[eventNodeIndex][0]);
 			break;

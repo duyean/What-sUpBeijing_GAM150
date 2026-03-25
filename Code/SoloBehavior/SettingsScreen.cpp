@@ -120,3 +120,8 @@ void SettingsScreen::destroy()
 {
 
 }
+
+void SettingsScreen::AddPrevDisplayEntity(Entity* en)
+{
+	prevDisplay.push_back(en);
+}

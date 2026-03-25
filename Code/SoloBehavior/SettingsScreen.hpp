@@ -11,7 +11,7 @@ private:
 	Slider* bgm_sl = nullptr;
 	Slider* sfx_sl = nullptr;
 
-	bool isDisplaying;
+	bool isDisplaying = false;
 public:
 	void ShowSettings(bool canShow);
 	void awake() override;
@@ -21,7 +21,7 @@ public:
 	void destroy() override;
 
 	bool IsDisplaying() const { return isDisplaying; }
-
-	SettingsScreen(std::vector<Entity*> const& _prevDisplay) : prevDisplay(_prevDisplay) {}
+	void AddPrevDisplayEntity(Entity* en);
+	SettingsScreen() : isDisplaying(false){}
 	~SettingsScreen() {};
 };

@@ -7,14 +7,21 @@ void PauseMenu::awake()
 {
 	enSystem = &EntityManager::getInstance();
 
+	auto ss = std::make_unique<Entity>("SettingsScreen");
+	AEVec2 pos = { 0.f, 0.f };
+	AEVec2 scale = { 1.f, 1.f };
+	ss->addComponent<Transform2D>(pos, scale, 0.f);
+	settings = ss->addComponent<SettingsScreen>();
+
 	//background
 	auto pause_bg = std::make_unique<Entity>("PAUSE BG");
-	AEVec2 pos = { 0.f ,0.f };
-	AEVec2 scale = { 1.f, 1.f };
+	pos = { 0.f ,0.f };
+	scale = { 1.f, 1.f };
 	pause_bg->addComponent<Transform2D>(pos, scale, 0.f);
 	pause_bg->addComponent<Mesh>("Box", Color(1, 1, 1, 0.5), 499, MeshType::BOX_B);
 	entity->transform->AddChild(pause_bg->transform);
-	pauseMenuDisplay.push_back(pause_bg.get());
+	settings->AddPrevDisplayEntity(pause_bg.get());
+
 
 	//pause menu title
 	auto title_pause = std::make_unique<Entity>("PAUSE TITLE");
@@ -24,7 +31,8 @@ void PauseMenu::awake()
 	TextBox* ttb = title_pause->addComponent<TextBox>("PAUSE", 1.5f, TextBoxVAllign::TOP, TextBoxHAllign::CENTER);
 	ttb->padding_v = 100.f;
 	entity->transform->AddChild(title_pause->transform);
-	pauseMenuDisplay.push_back(title_pause.get());
+	settings->AddPrevDisplayEntity(title_pause.get());
+
 
 	//Quit to main menu button
 	auto qmmb = std::make_unique<Entity>("QUIT MAIN MENU BUTTON");
@@ -39,7 +47,7 @@ void PauseMenu::awake()
 	quitMMButton->SetNormalColor(Color{ 200,200,200,1 });
 	quitMMButton->SetHighlightedColor(Color{ 255,255,255,1 });
 	qmmb->addComponent<TextBox>("MAIN MENU", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	pauseMenuDisplay.push_back(qmmb.get());
+	settings->AddPrevDisplayEntity(qmmb.get());
 
 	//Quit button
 	auto qb = std::make_unique<Entity>("PAUSE QUIT BUTTON");
@@ -54,7 +62,7 @@ void PauseMenu::awake()
 	quitButton->SetNormalColor(Color{ 200,200,200,1 });
 	quitButton->SetHighlightedColor(Color{ 255,255,255,1 });
 	qb->addComponent<TextBox>("QUIT GAME", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	pauseMenuDisplay.push_back(qb.get());
+	settings->AddPrevDisplayEntity(qb.get());
 
 	//Settings Button
 	auto settingsB = std::make_unique<Entity>("SETTINGS BUTTON");
@@ -69,7 +77,7 @@ void PauseMenu::awake()
 	settingsButton->SetNormalColor(Color{ 200,200,200,1 });
 	settingsButton->SetHighlightedColor(Color{ 255,255,255,1 });
 	settingsB_en->addComponent<TextBox>("SETTINGS", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	pauseMenuDisplay.push_back(settingsB.get());
+	settings->AddPrevDisplayEntity(settingsB.get());
 
 	
 	//Resume Button
@@ -85,20 +93,18 @@ void PauseMenu::awake()
 	resumeButton->SetNormalColor(Color{ 200,200,200,1 });
 	resumeButton->SetHighlightedColor(Color{ 255,255,255,1 });
 	rb->addComponent<TextBox>("CONTINUE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	pauseMenuDisplay.push_back(rb.get());
+	settings->AddPrevDisplayEntity(rb.get());
 
+	//push back all the display entities to the entity system
 	enSystem->entities.push_back(std::move(pause_bg));
 	enSystem->entities.push_back(std::move(title_pause));
 	enSystem->entities.push_back(std::move(qmmb));
 	enSystem->entities.push_back(std::move(qb));
 	enSystem->entities.push_back(std::move(rb));
 	enSystem->entities.push_back(std::move(settingsB));
-
-	auto ss = std::make_unique<Entity>("SettingsScreen");
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	ss->addComponent<Transform2D>(pos, scale, 0.f);
-	settings = ss->addComponent<SettingsScreen>(pauseMenuDisplay);
+	
+	
+	//push the settings screen entity last
 	enSystem->entities.push_back(std::move(ss));
 
 	//add the settings button on click function after to avoid potential problems

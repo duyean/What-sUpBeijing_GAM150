@@ -189,7 +189,7 @@ void LevelScene::Load()
 	scale = { 100.f, 100.f };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
 	e->addComponent<Player>();
 	//e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(e->transform);
@@ -203,7 +203,7 @@ void LevelScene::Load()
 	pos = { 0.f, (float)AEGfxGetWindowHeight() / 2 - scale.y/2};
 	n_path->addComponent<Transform2D>(pos, scale, 0.f);
 	//n_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
-	n_path->addComponent<BoxCollider2D>(scale.x/2, scale.y/2);
+	n_path->addComponent<BoxCollider2D>(scale.x/ 1.5, scale.y/ 1.5);
 	n_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(n_path->transform);
 	
@@ -222,7 +222,7 @@ void LevelScene::Load()
 	pos = { (float)AEGfxGetWindowWidth()/2 - scale.x/2, 0.f };
 	e_path->addComponent<Transform2D>(pos, scale, 0.f);
 	//e_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
-	e_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
 	e_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(e_path->transform);
 
@@ -240,7 +240,7 @@ void LevelScene::Load()
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
 	pos = { 0.f, scale.y/2 - (float)AEGfxGetWindowHeight()/2};
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
-	s_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	s_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
 	s_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
 
@@ -258,7 +258,7 @@ void LevelScene::Load()
 	scale = { collidersize, (float)AEGfxGetWindowHeight() };
 	pos = { scale.x/2 - (float)AEGfxGetWindowWidth() / 2, 0.f };
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
-	w_path->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	w_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
 	w_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
 

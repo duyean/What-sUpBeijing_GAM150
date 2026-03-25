@@ -204,7 +204,7 @@ void EdgeManager::init()
 
 void EdgeManager::update()
 {
-	
+
 	if (SE_N && SE_N->triggerBuffer)
 	{
 		hasTraveled = true;

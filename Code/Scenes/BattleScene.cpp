@@ -505,6 +505,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         auto hpBar = character->addComponent<Healthbar1>();
         character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
+        character->addComponent<Tinter>(1.f);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
 

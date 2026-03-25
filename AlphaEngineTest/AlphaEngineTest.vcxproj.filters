@@ -347,8 +347,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\PartyManagerObject.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
-    <ClCompile Include="..\Code\BaseSystems\Engine\Bounce.cpp">
-      <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -630,8 +628,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp">
       <Filter>Header Files\Scenes</Filter>
-    <ClInclude Include="..\Code\BaseSystems\Engine\Bounce.hpp">
-      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

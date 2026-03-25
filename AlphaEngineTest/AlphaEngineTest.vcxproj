@@ -24,6 +24,7 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Tinter.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Text.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Tinter.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />

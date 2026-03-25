@@ -28,6 +28,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../UI_WZBJ_Pak.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
+#include "../BaseSystems/Engine/Tinter.hpp"
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
@@ -109,6 +110,7 @@ void BattleScene::Load()
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         character->getComponent<Mesh>()->isActive = false;
         character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+        character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
@@ -434,6 +436,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
             character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+            character->addComponent<Tinter>(1.f);
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));

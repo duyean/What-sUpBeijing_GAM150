@@ -39,11 +39,11 @@
             "name": "Armor Piercing Strike",
             "coefficient": 1.20,
             "dot": 0.0,
-            "brief": "Strike an enemy and decreases their DEF by 40%",
+            "brief": "Strike an enemy and applies VULNERABILITY.\nVULNERABILITY makes enemies take 50% more DMG.",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
             "modifiers": [
-              4
+              11
             ]
         },
         {
@@ -73,9 +73,9 @@
         {
             "id": 6,
             "name": "Cataclysm",
-            "coefficient": 0.65,
+            "coefficient": 1.50,
             "dot": 0.9,
-            "brief": "Strike an enemy and inflicts them with SUPERHEATED, taking high damage over time.",
+            "brief": "Strike an enemy for 150% ATK DMG and inflicts them with SUPERHEATED, taking high damage over time.",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
             "modifiers": [
@@ -87,7 +87,7 @@
             "name": "Water Surge",
             "coefficient": 0.30,
             "dot": 0.0,
-            "brief": "Deals 30% ATK DMG to all enemies, weakening them, reducing their ATK by 25%.",
+            "brief": "Deals 30% ATK DMG to all enemies, WEAKENING enemies.\nWEAKEN reduces ATK by 25%.",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 3,
             "modifiers": [

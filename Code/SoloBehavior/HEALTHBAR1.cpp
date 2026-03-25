@@ -2,6 +2,8 @@
 #include "../BaseSystems/Engine/EntityManager.hpp"
 #include "Player.hpp"
 #include "../Combat/Character/Character.hpp"
+#include "../SoloBehavior/RunManager.hpp"
+#include <sstream>
 
 void Healthbar1::awake()
 {
@@ -31,7 +33,9 @@ void Healthbar1::update()
 	AEVec2 entityScale = entity->transform->getScale();
 	AEVec2 trueScale = { hpBarScale.x * hpperc, hpBarScale.y };
 	AEVec2 offset{ -entityScale.x * 0.5f, -entityScale.y * 0.5f - 40};
-	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y + 35) / 450.f, 0.5f, Color(255, 255, 255, 1), this->entity->getComponent<Character>()->GetName().c_str(), "liberi");
+	std::stringstream enemyName;
+	enemyName << "Lv. " << RunManager::Instance().GetEnemyDifficulty() << " " << this->entity->getComponent<Character>()->GetName();
+	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y + 35) / 450.f, 0.5f, Color(255, 255, 255, 1), enemyName.str().c_str(), "liberi");
 	hpBarBG->transform->setPosition(pos + offset);
 	hpBarBG->transform->setScale(hpBarScale);
 

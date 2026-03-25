@@ -48,7 +48,7 @@ void Character::DealDamage(Character* target, float coefficient)
 void Character::TakeDamage(Game::DamageInfo& damageInfo)
 {
 	float defDMGReduction = def / (def + Game::DEF_CONSTANT);
-	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 - dmgReduction);
+	float finalDamageTaken = damageInfo.damage * (1 - defDMGReduction) * (1 / (dmgReduction + 1));
 	damageInfo.damage = finalDamageTaken;
 	hp -= finalDamageTaken;
 	hp = AEClamp(hp, 0, maxHP);
@@ -124,8 +124,8 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 1.2f * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.25f * RunManager::Instance().GetEnemyDifficulty();
+		baseMaxHP *= 1 + 1.1f * RunManager::Instance().GetEnemyDifficulty();
+		baseATK *= 1 + 0.2f * RunManager::Instance().GetEnemyDifficulty();
 		baseDEF *= 1 + 0.15f * RunManager::Instance().GetEnemyDifficulty();
 	}
 	UpdateAttributes();
@@ -242,6 +242,7 @@ void Character::UpdateAttributes(void)
 	maxHP = baseMaxHP * (1 + maxHPBonus);
 	atk = baseATK * (1 + atkBonus);
 	def = baseDEF * (1 + defBonus);
+	dmgReduction = std::max(-0.90f, dmgReduction);
 }
 
 void Character::AddModifier(std::unique_ptr<Modifier> modifier)

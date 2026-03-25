@@ -483,6 +483,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             case (BATTLE_TYPE::BOSS):
             {
                 hpBarScale = { 350, 10 };
+                scale = { 300, 300 };
                 pos = enemyPositions[0];
                 ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
                 break;

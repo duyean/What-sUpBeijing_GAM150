@@ -10,7 +10,7 @@
     "texture2":"GuanShiYinFront.png",
     "icontexture":"GuanShiYinIcon.png",
     "moves": {
-        "0": 0,
+        "0": 3,
         "1": 15,
         "2": 16,
         "3": 17

@@ -114,7 +114,8 @@ void BattleManager::ResetBattle()
 	enemyCount = 0;
 	wait = false;
 
-	RunManager::Instance().ModifyEnemyDifficulty(1);
+	std::uniform_int_distribution<int> d(1, 3);
+	RunManager::Instance().ModifyEnemyDifficulty(d(Game::gen));
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)

@@ -29,6 +29,9 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
 #include "../BaseSystems/Engine/Tinter.hpp"
+#include "../BaseSystems/Engine/CameraVFX.hpp"
+#include "../SoloBehavior/JumpToPoint.hpp"
+
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
@@ -64,6 +67,7 @@ void BattleScene::Load()
     AEVec2 pos = { 0.f,0.f };
     AEVec2 scale = { 1.f,1.f };
     enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+    enSystem->rootEntity->addComponent<CameraVFX>(1.f, 50.f);
     enSystem->entities.push_back(std::move(r));
 
     auto manager = std::make_unique<Entity>("Manager");
@@ -437,6 +441,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             auto hpBar = character->addComponent<Healthbar1>();
             character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
             character->addComponent<Tinter>(1.f);
+            character->addComponent<JumpToPoint>();
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));
@@ -506,6 +511,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
         character->addComponent<Tinter>(1.f);
+        character->addComponent<JumpToPoint>();
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
 

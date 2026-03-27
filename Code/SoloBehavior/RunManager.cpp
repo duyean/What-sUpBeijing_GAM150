@@ -89,6 +89,13 @@ void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 	EntityManager::getInstance().entities.push_back(std::move(displayBox));
 }
 
+bool RunManager::RemoveCurrency(int curr)
+{
+	if (curr > currency) return false;
+	currency -= curr;
+	return true;
+}
+
 void RunManager::SetBattleType(BATTLE_TYPE type)
 {
 	bt = type;

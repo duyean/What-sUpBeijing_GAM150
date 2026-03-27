@@ -2,6 +2,7 @@
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../BaseSystems/Engine/TextBox.hpp"
 
 // Collision logic
 void Shop::onHit(BoxCollider2D* other)
@@ -46,18 +47,51 @@ void Shop::PurchaseSelection()
 	// Purchase logic
 	selection.find(currSelection)->second = true;
 
+	bool couldPurchase = false;
 	// Selection is Blessing
 	if (currSelection <= 3)
 	{
 		auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
-		RunManager::Instance().AddBlessing(std::move(b));
+		int cost{ 0 };
+		switch (b.get()->blessingRarity)
+		{
+		case BLESSING_RARITY::COMMON:
+			cost = 25;
+			break;
+		case BLESSING_RARITY::RARE:
+			cost = 50;
+			break;
+		case BLESSING_RARITY::LEGENDARY:
+			cost = 100;
+			break;
+		case BLESSING_RARITY::MYTHICAL:
+			cost = 250;
+			break;
+		}
+
+		if (RunManager::Instance().RemoveCurrency(cost))
+		{
+			RunManager::Instance().AddBlessing(std::move(b));
+			couldPurchase = true;
+		}
+		else
+		{
+			currencyFlashTimer = currencyFlashTimerMax;
+			currency->getComponent<TextBox>()->text_color = Color{ 255, 55, 55, 1.f };
+		}
 	}
 
 	// UI elements
-	for (std::pair<int, bool> p : selection)
-		p.second = false;
-	buyButton->isActive = false;
-	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
+	if (couldPurchase)
+	{
+		for (std::pair<int, bool> p : selection)
+			p.second = false;
+		buyButton->isActive = false;
+
+		curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
+		currency->getComponent<TextBox>()->text = curStr.c_str();
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
+	}
 }
 
 void Shop::AddShopBlessings(ShopBlessing* b, int id)
@@ -73,6 +107,11 @@ void Shop::CloseShopUI()
 void Shop::SetPlayer(Entity* p)
 {
 	player = p;
+}
+
+void Shop::SetCurrency(Entity* c)
+{
+	currency = c;
 }
 
 void Shop::awake()
@@ -97,6 +136,11 @@ void Shop::init()
 	selection.insert(std::make_pair<int, bool>(5, false));
 	selection.insert(std::make_pair<int, bool>(6, false));
 	selection.insert(std::make_pair<int, bool>(7, false));
+
+	curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
+	currency->getComponent<TextBox>()->text = curStr.c_str();
+
+	currencyFlashTimerMax = 0.5f;
 }
 
 void Shop::update()
@@ -114,6 +158,10 @@ void Shop::update()
 			ent->isActive = false;
 		buyButton->isActive = false;
 	}
+	if (currencyFlashTimer > 0.f)
+		currencyFlashTimer -= AEFrameRateControllerGetFrameTime();
+	else
+		currency->getComponent<TextBox>()->text_color = Color{ 255, 255, 255, 1.f };
 }
 
 void Shop::fixedUpdate()

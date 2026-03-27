@@ -24,10 +24,10 @@ void MapDisplay::awake()
 
 	mapCharIcon->addComponent<Mesh>("Box", textureName[7].c_str(), Color(255, 255, 255, 1.0f), depthPlayer, MeshType::BOX_T);
 
-	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
-		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(x) + "_" + std::to_string(y)));
-		mapNodesFog.push_back(enSystem->FindByNameGLOBAL("MapFog_" + std::to_string(x) + "_" + std::to_string(y)));
-		switch (map.playMap.mapNodes[y][x].type)
+	for (int xi = 0; xi < map.playMap.mapNodes[0].size(); x++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(xi) + "_" + std::to_string(yi)));
+		mapNodesFog.push_back(enSystem->FindByNameGLOBAL("MapFog_" + std::to_string(xi) + "_" + std::to_string(yi)));
+		switch (map.playMap.mapNodes[yi][xi].type)
 		{
 			case NodeType::EnemyEncounter:
 				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
@@ -49,11 +49,11 @@ void MapDisplay::awake()
 		}
 		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depthBack, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;
-		if (map.viewMap.mapNodes[y][x].type == NodeType::VisionClear)
+		if (map.viewMap.mapNodes[yi][xi].type == NodeType::VisionClear)
 		{
 			mapNodesReal[count]->isActive = true;
 			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-			if (x == map.xPos && y == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
+			if (xi == map.xPos && yi == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 		}
 		count++;
 	}	}
@@ -70,15 +70,15 @@ void MapDisplay::update()
 	if (x != map.xPos || y != map.yPos)	//check if map updates
 	{
 		int count = 0;
-		for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
-			if (map.viewMap.mapNodes[y][x].type != NodeType::VisionFog)
+		for (int xi = 0; xi < map.playMap.mapNodes[0].size(); x++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+			if (map.viewMap.mapNodes[yi][xi].type != NodeType::VisionFog)
 			{
 				mapNodesReal[count]->isActive = true;
 				mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-				if (map.playMap.mapNodes[y][x].type == NodeType::Empty)
+				if (map.playMap.mapNodes[yi][xi].type == NodeType::Empty)
 					mapNodesReal[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 			}
-			if (map.xPos == x && map.yPos == y)
+			if (map.xPos == xi && map.yPos == yi)
 			{
 				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 			}

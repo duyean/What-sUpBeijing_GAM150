@@ -17,6 +17,7 @@ public:
 	void CloseShopUI();
 	void SetPlayer(Entity* p);
 	void SetCurrency(Entity* c);
+	void SetCost(Entity* c);
 
 	void awake() override;
 	void init() override;
@@ -36,6 +37,8 @@ private:
 	ShopBlessing* shopBlessings[4];
 	Entity* currency;
 	std::string curStr;
+	Entity* cost;
+	std::string costStr;
 
 	float currencyFlashTimer;
 	float currencyFlashTimerMax;

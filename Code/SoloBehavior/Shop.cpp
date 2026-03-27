@@ -26,9 +26,30 @@ void Shop::ChooseSelection(int id)
 {
 	currSelection = id;
 	if (selection.find(currSelection)->second != true)
+	{
 		buyButton->isActive = true;
+		auto b = shopBlessings[currSelection]->GetBlessing().get();
+		switch (b->blessingRarity)
+		{
+		case BLESSING_RARITY::COMMON:
+			costStr = "Cost: 25";
+			break;
+		case BLESSING_RARITY::RARE:
+			costStr = "Cost: 50";
+			break;
+		case BLESSING_RARITY::LEGENDARY:
+			costStr = "Cost: 100";
+			break;
+		case BLESSING_RARITY::MYTHICAL:
+			costStr = "Cost: 250";
+			break;
+		}
+	}
 	else
+	{
 		buyButton->isActive = false;
+		costStr = "Purchased!";
+	}
 	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_SELECT_SHOP);
 }
 
@@ -87,6 +108,7 @@ void Shop::PurchaseSelection()
 		for (std::pair<int, bool> p : selection)
 			p.second = false;
 		buyButton->isActive = false;
+		costStr = "Purchased!";
 
 		curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
 		currency->getComponent<TextBox>()->text = curStr.c_str();
@@ -114,6 +136,11 @@ void Shop::SetCurrency(Entity* c)
 	currency = c;
 }
 
+void Shop::SetCost(Entity* c)
+{
+	cost = c;
+}
+
 void Shop::awake()
 {
 	BoxCollider2D* col = entity->getComponent<BoxCollider2D>();
@@ -139,6 +166,7 @@ void Shop::init()
 
 	curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
 	currency->getComponent<TextBox>()->text = curStr.c_str();
+	cost->getComponent<TextBox>()->text = "";
 
 	currencyFlashTimerMax = 0.5f;
 }
@@ -162,6 +190,7 @@ void Shop::update()
 		currencyFlashTimer -= AEFrameRateControllerGetFrameTime();
 	else
 		currency->getComponent<TextBox>()->text_color = Color{ 255, 255, 255, 1.f };
+	cost->getComponent<TextBox>()->text = costStr.c_str();
 }
 
 void Shop::fixedUpdate()

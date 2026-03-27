@@ -10,7 +10,7 @@ private:
 	Entity* slider = nullptr;
 
 	float max_value;
-	float value;
+	float& value;
 	float changeFactor;
 
 	EntityManager* enSystem = nullptr;

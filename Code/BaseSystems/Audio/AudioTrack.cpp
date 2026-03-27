@@ -3,7 +3,7 @@
 #include <iostream>
 
 AudioTrack::AudioTrack(std::string fileName)
-	: volume{1.0f}, fadeIn{false}, fadeOut{false}
+	: volume{ 1.0f }, volMult{ 1.0f }, fadeIn { false }, fadeOut{ false }
 {
 	audio = AEAudioLoadMusic(fileName.c_str());
 	if (!AEAudioIsValidAudio(audio)) std::cout << "Unable to load audio file " << fileName << std::endl;
@@ -44,8 +44,14 @@ bool AudioTrack::SetVolume(float vol)
 	}
 
 	volume = vol;
-	AEAudioSetGroupVolume(audioGroup, volume);
+	AEAudioSetGroupVolume(audioGroup, volume * volMult);
 	return true;
+}
+
+void AudioTrack::SetVolumeMult(float mult)
+{
+	volMult = mult;
+	AEAudioSetGroupVolume(audioGroup, volume * volMult);
 }
 
 bool& AudioTrack::FadeIn()

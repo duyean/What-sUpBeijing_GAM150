@@ -38,6 +38,11 @@ void Shop::SetBuyButton(Entity* ent)
 
 void Shop::PurchaseSelection()
 {
+	//if (RunManager::Instance().GetCurrency() <= itemPrice)
+	//{
+	//	Show the player cannot buy this item (Flash button, show text, play audio etc)
+	//	return;
+	//}
 	// Purchase logic
 	selection.find(currSelection)->second = true;
 

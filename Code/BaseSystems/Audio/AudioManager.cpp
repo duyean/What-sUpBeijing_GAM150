@@ -5,6 +5,7 @@
 #include <AEFrameRateController.h>
 
 AudioManager::AudioManager()
+	: bgmVol{1.f}, sfxVol{1.f}, prevBgmVol{1.f}, prevSfxVol{1.f}
 {
 	sfxGroup = AEAudioCreateGroup();
 
@@ -130,13 +131,13 @@ void AudioManager::Update()
 		if (pair.second->FadeIn())
 		{
 			float newVol = AEClamp(pair.second->GetVolume() + float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			pair.second->SetVolume(newVol);
-			if (newVol == 1.f) pair.second->FadeIn() = false;
+			pair.second->SetVolume(newVol * bgmVol);
+			if (newVol >= 1.f * bgmVol) pair.second->FadeIn() = false;
 		}
 		else if (pair.second->FadeOut())
 		{
 			float newVol = AEClamp(pair.second->GetVolume() - float(AEFrameRateControllerGetFrameTime() * 0.5f), 0.f, 1.f);
-			pair.second->SetVolume(newVol);
+			pair.second->SetVolume(newVol * bgmVol);
 			if (newVol == 0.f)
 			{
 				pair.second->FadeOut() = false;
@@ -144,5 +145,29 @@ void AudioManager::Update()
 			}
 		}
 	}
+	
+	if (bgmVol != prevBgmVol)
+	{
+		for (std::pair<AUDIO_TYPE, AudioTrack*> pair : tracks)
+		{
+			pair.second->SetVolumeMult(bgmVol);
+		}
+		prevBgmVol = bgmVol;
+	}
+	if (sfxVol != prevSfxVol)
+	{
+		AEAudioSetGroupVolume(sfxGroup, sfxVol);
+		prevSfxVol = sfxVol;
+	}
+}
+
+float& AudioManager::BGMVolume()
+{
+	return bgmVol;
+}
+
+float& AudioManager::SFXVolume()
+{
+	return sfxVol;
 }
 

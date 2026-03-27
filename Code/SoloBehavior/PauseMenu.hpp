@@ -13,7 +13,6 @@ private:
 
 	TransitionScreen* ts_comp = nullptr;
 	EntityManager* enSystem = nullptr;
-	std::vector<Entity*>pauseMenuDisplay;
 	SettingsScreen* settings = nullptr;
 	bool canDisplay = true;
 public:

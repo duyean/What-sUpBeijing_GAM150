@@ -48,6 +48,8 @@ namespace Game
 		OPPOSITE,
 		//The move targets all units on the opposing team
 		AOE_OPPOSITE,
+		//The move targets all allies on the team
+		AOE_ALLY
 	};
 
 	struct DamageInfo

@@ -3,7 +3,7 @@
 
 class DisplayBox : public SoloBehavior
 {
-	float onClickDestroyTimer;
+	double onClickDestroyTimer;
 	const char* header;
 	const char* title;
 	const char* desc;

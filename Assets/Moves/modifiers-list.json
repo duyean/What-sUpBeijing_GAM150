@@ -73,6 +73,50 @@
             "behaviour": 1,
             "self":0,
             "texture":"weaken.png"
+        },
+        {
+            "id": 8,
+            "name": "Resistance",
+            "duration": 3,
+            "type": 0,
+            "attribute": 1,
+            "value": 0.40,
+            "behaviour": 1,
+            "self":0,
+            "texture":"resistance.png"
+        },
+        {
+            "id": 9,
+            "name": "Empowered",
+            "duration": 3,
+            "type": 0,
+            "attribute": 0,
+            "value": 0.15,
+            "behaviour": 1,
+            "self":0,
+            "texture":"empowered.png"
+        },
+        {
+            "id": 10,
+            "name": "DMG BOOST",
+            "duration": 3,
+            "type": 0,
+            "attribute": 0,
+            "value": 0.25,
+            "behaviour": 1,
+            "self":0,
+            "texture":"dmgboost.png"
+        },
+        {
+            "id": 11,
+            "name": "Vulnerability",
+            "duration": 3,
+            "type": 0,
+            "attribute": 6,
+            "value": -0.5,
+            "behaviour": 1,
+            "self":0,
+            "texture":"exposed.png"            
         }
     ]
 }

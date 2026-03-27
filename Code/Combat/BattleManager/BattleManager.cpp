@@ -73,8 +73,8 @@ void BattleManager::ProcessTargeting()
 		AEInputGetCursorPosition(&mouseX, &mouseY);
 
 		//Convert to world space
-		mouseX = mouseX - (s32)(AEGfxGetWindowWidth() * 0.5f);
-		mouseY = (s32)(AEGfxGetWindowHeight() * 0.5f) - mouseY;
+		mouseX = mouseX - static_cast<s32>(AEGfxGetWindowWidth() * 0.5f);
+		mouseY = static_cast<s32>(AEGfxGetWindowHeight() * 0.5f) - mouseY;
 		//End of conversion
 
 		if (PointInMesh(mouseX, mouseY, unit->entity->transform))
@@ -114,7 +114,8 @@ void BattleManager::ResetBattle()
 	enemyCount = 0;
 	wait = false;
 
-	RunManager::Instance().ModifyEnemyDifficulty(1);
+	std::uniform_int_distribution<int> d(1, 3);
+	RunManager::Instance().ModifyEnemyDifficulty(d(Game::gen));
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -233,54 +234,45 @@ void BattleManager::update()
 				//Placeholder to render targeting UI
 				MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), { 100, 100 }, Color(255, 0, 0, 0.3f));
 			}
-
+			MOVE_SLOT usingMove = MOVE_SLOT::NONE;
 			//Register Inputs
 			if (AEInputCheckTriggered(AEVK_Z))
 			{
-				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_1)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
-				if (isAOE)
-				{
-					activeUnit->UseMove(MOVE_SLOT_1, GetAllEnemies());
-				}
-				else
-				{
-					activeUnit->UseMove(MOVE_SLOT_1, lastTargetedUnit);
-				}
+				usingMove = MOVE_SLOT::MOVE_SLOT_1;
 			}
 			else if (AEInputCheckTriggered(AEVK_X))
 			{
-				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_2)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
-				if (isAOE)
-				{
-					activeUnit->UseMove(MOVE_SLOT_2, GetAllEnemies());
-				}
-				else
-				{
-					activeUnit->UseMove(MOVE_SLOT_2, lastTargetedUnit);
-				}
+				usingMove = MOVE_SLOT::MOVE_SLOT_2;
 			}
 			else if (AEInputCheckTriggered(AEVK_C))
 			{
-				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_3)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
-				if (isAOE)
-				{
-					activeUnit->UseMove(MOVE_SLOT_3, GetAllEnemies());
-				}
-				else
-				{
-					activeUnit->UseMove(MOVE_SLOT_3, lastTargetedUnit);
-				}
+				usingMove = MOVE_SLOT::MOVE_SLOT_3;
 			}
 			else if (AEInputCheckTriggered(AEVK_V))
 			{
-				bool isAOE = Move::moveDatabase[activeUnit->GetMoveList().at(MOVE_SLOT_4)].targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE;
-				if (isAOE)
+				usingMove = MOVE_SLOT::MOVE_SLOT_4;
+			}
+
+			if (usingMove != MOVE_SLOT::NONE)
+			{
+				auto moveGroup = Move::moveDatabase[activeUnit->GetMoveList().at(usingMove)].targetGroup;
+				switch (moveGroup)
 				{
-					activeUnit->UseMove(MOVE_SLOT_4, GetAllEnemies());
+				case (Game::AOE_OPPOSITE):
+				{
+					activeUnit->UseMove(usingMove, GetAllEnemies());
+					break;
 				}
-				else
+				case (Game::AOE_ALLY):
 				{
-					activeUnit->UseMove(MOVE_SLOT_4, lastTargetedUnit);
+					activeUnit->UseMove(usingMove, GetPlayerParty());
+					break;
+				}
+				default:
+				{
+					activeUnit->UseMove(usingMove, lastTargetedUnit);
+					break;
+				}
 				}
 			}
 		}
@@ -345,10 +337,10 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			delay = 1.5f;
 
 			//DEBUG to add a random blessing after every battle victory
-			std::uniform_int_distribution<int> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
-			auto it = blessingDatabase.begin();
-			std::advance(it, dist(Game::gen));
-			auto randomBlessing = it->second->Clone();
+			std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+			auto it2 = blessingDatabase.begin();
+			std::advance(it2, dist(Game::gen));
+			auto randomBlessing = it2->second->Clone();
 			RunManager::Instance().AddBlessing(std::move(randomBlessing));
 		}
 	}

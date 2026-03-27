@@ -10,7 +10,7 @@ private:
 	std::unique_ptr<Entity> mainHP;
 	//Queue to store the pending text elements to prevent overlapping
 	std::queue<std::unique_ptr<Entity>> damageNumbers, messages;
-	float dnDelay, messDelay;
+	double dnDelay = 0, messDelay = 0;
 	static CombatUIManager* instance;
 public:
 	static CombatUIManager& Instance();

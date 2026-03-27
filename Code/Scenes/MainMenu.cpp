@@ -59,7 +59,7 @@ void MainMenu::Load()
 	ms->addComponent<Mesh>("Box", "MenuImage", Color(255, 255, 255, 1.f), 99, MeshType::BOX_T);
 	enSystem->rootEntity->transform->AddChild(ms->transform);
 	enSystem->entities.push_back(std::move(menuScreen));
-	mainMenuDisplay.push_back(ms);
+
 	
 
 
@@ -71,7 +71,7 @@ void MainMenu::Load()
 	te->addComponent<TextBox>("THE HEAVENS MOVE", 1.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(te->transform);
 	enSystem->entities.push_back(std::move(title_en));
-	mainMenuDisplay.push_back(te);
+
 
 
 	////////////////////////////////////////////////
@@ -94,7 +94,7 @@ void MainMenu::Load()
 	sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(sb->transform);
 	enSystem->entities.push_back(std::move(b));
-	mainMenuDisplay.push_back(sb);
+
 
 
 	////////////////////////////////////////////////
@@ -118,7 +118,7 @@ void MainMenu::Load()
 
 	enSystem->rootEntity->transform->AddChild(ngb->transform);
 	enSystem->entities.push_back(std::move(ng));
-	mainMenuDisplay.push_back(ngb);
+
 
 
 	////////////////////////////////////////////////
@@ -140,7 +140,6 @@ void MainMenu::Load()
 	settingsB_en->addComponent<TextBox>("SETTINGS", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
 	enSystem->rootEntity->transform->AddChild(settingsB_en->transform);
 	enSystem->entities.push_back(std::move(settingsB));
-	mainMenuDisplay.push_back(settingsB_en);
 	
 
 
@@ -165,7 +164,7 @@ void MainMenu::Load()
 
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
-	mainMenuDisplay.push_back(qb);
+
 
 
 	////////////////////////////////////////////////
@@ -176,8 +175,16 @@ void MainMenu::Load()
 	auto ss = std::make_unique<Entity>("SettingsScreen");
 	pos = { 0.f, 0.f };
 	scale = { 1.f, 1.f };
-	ss->addComponent<Transform2D>(pos, scale, 0.f);\
-	SettingsScreen* settings = ss->addComponent<SettingsScreen>(mainMenuDisplay);
+	ss->addComponent<Transform2D>(pos, scale, 0.f);
+	SettingsScreen* settings = ss->addComponent<SettingsScreen>();
+
+	settings->AddPrevDisplayEntity(ms);
+	settings->AddPrevDisplayEntity(te);
+	settings->AddPrevDisplayEntity(sb);
+	settings->AddPrevDisplayEntity(ngb);
+	settings->AddPrevDisplayEntity(settingsB_en);
+	settings->AddPrevDisplayEntity(qb);
+
 	enSystem->rootEntity->transform->AddChild(ss->transform);
 	enSystem->entities.push_back(std::move(ss));
 
@@ -279,6 +286,4 @@ void MainMenu::Unload()
     for (auto& e : enSystem->entities) {
         e->toDestroy = true;
     }
-
-	mainMenuDisplay.clear();
 }

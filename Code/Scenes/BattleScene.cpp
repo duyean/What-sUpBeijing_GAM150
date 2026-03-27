@@ -27,11 +27,15 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../BaseSystems/Engine/Bounce.hpp"
+#include "../BaseSystems/Engine/Tinter.hpp"
+#include "../BaseSystems/Engine/CameraVFX.hpp"
+#include "../SoloBehavior/JumpToPoint.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
-BattleScene::BattleScene()
+BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr)
 {
     
 }
@@ -63,6 +67,7 @@ void BattleScene::Load()
     AEVec2 pos = { 0.f,0.f };
     AEVec2 scale = { 1.f,1.f };
     enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+    enSystem->rootEntity->addComponent<CameraVFX>(1.f, 50.f);
     enSystem->entities.push_back(std::move(r));
 
     auto manager = std::make_unique<Entity>("Manager");
@@ -108,6 +113,8 @@ void BattleScene::Load()
         meshSystem->CreateTexture(iconPath.c_str(), ch->characterIconTexture.c_str());
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         character->getComponent<Mesh>()->isActive = false;
+        character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+        character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
@@ -386,14 +393,13 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
 {
     JSONSerializer jsonSerializer{};
     Character* ch = nullptr;
-    //int enemies = 1;
     AEVec2 pos = {}, scale = { 200, 200 };
     AEVec2 hpBarScale = {};
     if (type == BATTLE_TYPE::NORMAL)
     {
         std::uniform_int_distribution<int> dist(1, 3);
-        int enemies = dist(Game::gen);
-        for (int i = 0; i < enemies; ++i)
+        int enemyCount = dist(Game::gen);
+        for (int i = 0; i < enemyCount; ++i)
         {
             character = std::make_unique<Entity>("Enemy");
             ch = character->addComponent<Character>();
@@ -435,6 +441,9 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Transform2D>(pos, scale, 0.f);
             character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
+            character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+            character->addComponent<Tinter>(1.f);
+            character->addComponent<JumpToPoint>();
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));
@@ -458,7 +467,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             enSystem->entities.push_back(std::move(enemyHPBG));
 
             //Create enemy status icons
-            for (i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
             {
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };
@@ -487,6 +496,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             case (BATTLE_TYPE::BOSS):
             {
                 hpBarScale = { 350, 10 };
+                scale = { 300, 300 };
                 pos = enemyPositions[0];
                 ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
                 break;
@@ -500,7 +510,10 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         character->addComponent<Transform2D>(pos, scale, 0.f);
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         auto hpBar = character->addComponent<Healthbar1>();
+        character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
+        character->addComponent<Tinter>(1.f);
+        character->addComponent<JumpToPoint>();
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
 

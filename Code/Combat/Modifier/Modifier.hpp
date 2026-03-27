@@ -37,7 +37,9 @@ enum MODIFIER_ID
 	SUPERHEAT_DOT = 6,
 	GENERIC_WEAKEN_DEBUFF = 7,
 	BLESSING_CRIT_DMG_BUFF = 8,
-	BLESSING_ENRAGED_BUFF = 9
+	BLESSING_ENRAGED_BUFF = 9,
+	GENERIC_DMG_BOOST = 10,
+	GENERIC_VULN = 11,
 	//Custom Modifiers
 };
 
@@ -79,7 +81,7 @@ public:
 		name(name), duration(duration), effectType(type), icon(icon), ID(id), stackBehaviour(stackBeh), stackCount(stackCount), source(nullptr), selfCast(selfCast), hidden(hide) {
 	};
 	virtual ~Modifier() = default;
-	virtual void Apply(Character* target) {};
+	virtual void Apply(Character* target) = 0;
 	virtual std::unique_ptr<Modifier> Clone() const = 0;
 };
 

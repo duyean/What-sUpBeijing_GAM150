@@ -17,6 +17,7 @@ public:
 	AEAudioGroup GetAEAudioGroup() const;
 	float GetVolume() const;
 	bool SetVolume(float vol);
+	void SetVolumeMult(float mult);
 	bool& FadeIn();
 	bool& FadeOut();
 
@@ -26,6 +27,7 @@ public:
 private:
 	bool fadeIn, fadeOut;
 	float volume;
+	float volMult;
 	AEAudio audio;
 	AEAudioGroup audioGroup;
 };

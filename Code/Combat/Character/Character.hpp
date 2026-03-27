@@ -13,7 +13,14 @@ class MeshGen;
 class Character : public SoloBehavior
 {
 private:
-	float timer = 2.f;
+	enum struct SPRITE_STATE
+	{
+		IDLE,
+		ATTACKING,
+	};
+
+	float spriteTimer = 0.f;
+	SPRITE_STATE spriteState = SPRITE_STATE::IDLE;
 
 	MeshGen* meshSystem;
 
@@ -69,52 +76,54 @@ protected:
 	std::vector<Character*> targets;
 
 public:
+	Character();
+
 	using DeathCallback = std::function<void(Character*)>;
 	std::string characterModelTexture;
 	std::string characterModelTexture2;
 	std::string characterIconTexture;
 
 	//Load character data from JSON
-	virtual bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
+	 bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
 	//Use the character's move, specified by the enum MOVE_SLOT
-	virtual void UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName = true);
+	 void UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName = true);
 
 	//Use the character's move, specified by the enum MOVE_SLOT
-	virtual void UseMove(MOVE_SLOT slot, std::vector<Character*> targets);
+	 void UseMove(MOVE_SLOT slot, std::vector<Character*> targets);
 
 	//Handles incoming damage, reduced by DEF and other factors
-	virtual void TakeDamage(Game::DamageInfo& damageInfo);
+	 void TakeDamage(Game::DamageInfo& damageInfo);
 
 	//Deals damage to the target, followed by the coefficient of the move
-	virtual void DealDamage(Character* target, float coefficient);
+	 void DealDamage(Character* target, float coefficient);
 
 	//Update any attribute modifiers
-	virtual void UpdateAttributes(void);
+	 void UpdateAttributes(void);
 
 	//Start this unit's turn
-	virtual void StartTurn(void);
+	 void StartTurn(void);
 
 	//Add a Modifier to this unit. Automatically calls UpdateAttribute() 
-	virtual void AddModifier(std::unique_ptr<Modifier> modifier);
+	 void AddModifier(std::unique_ptr<Modifier> modifier);
 
 	//Process any modifiers, usually used for damage over time effects
-	virtual void ProcessModifiers(void);
+	 void ProcessModifiers(void);
 
 	//Get the modifiers of this unit
-	virtual std::vector<std::unique_ptr<Modifier>> const& GetModifierList() const;
+	 std::vector<std::unique_ptr<Modifier>> const& GetModifierList() const;
 
 	//End this unit's turn. If extra turns are implemented, edit here
-	virtual void EndTurn(void);
+	 void EndTurn(void);
 
 	//Process this unit's death
-	virtual void Death(void);
+	 void Death(void);
 	
 	//Initialise the character, typically used at the start of battle
-	virtual void Init(void);
+	 void Init(void);
 
 	//Modify the attribute bonus by a value
-	virtual void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
+	 void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
 
 	//TThe character uses a random attack
 	void AIAttack();
@@ -124,10 +133,10 @@ public:
 	inline int GetInitiative(void) const { return initiative; }
 	inline bool TurnFinished(void) const { return turnFinished; }
 	inline std::string GetName() const { return name; }
-	inline void SetName(std::string name) { this->name = name; }
-	inline void SetFaction(Game::FACTION faction) { this->faction = faction; }
+	inline void SetName(std::string n) { this->name = n; }
+	inline void SetFaction(Game::FACTION f) { this->faction = f; }
 	inline float GetHealthPercentage(void) { return hp / maxHP; }
-	inline void SetTargets(std::vector<Character*> targets) { this->targets = targets; }
+	inline void SetTargets(std::vector<Character*> t) { this->targets = t; }
 	inline Game::WUXING_ELEMENT GetElement() const { return element; }
 	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 	inline bool IsEndingTurn() const { return endingTurn; }

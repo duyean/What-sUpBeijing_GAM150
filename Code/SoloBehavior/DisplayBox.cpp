@@ -19,7 +19,7 @@ void DisplayBox::awake()
 
 void DisplayBox::init()
 {
-	onClickDestroyTimer = 1.5f;
+	onClickDestroyTimer = 0.5f;
 	float parentYScale = entity->transform->getScale().y;
 	AEVec2 pos = { 0, parentYScale * 0.5f - parentYScale * 0.05f};
 	AEVec2 scale = { 600 , 100 };

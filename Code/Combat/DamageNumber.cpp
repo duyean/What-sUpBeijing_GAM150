@@ -71,7 +71,7 @@ void DamageNumbers::update()
 		{
 			size -= 0.3f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 			if (textColor.A >= 0.f) {
-				textColor.A -= 2.f * static_cast<float>(AEFrameRateControllerGetFrameTime());
+				textColor.A -= 1.f * static_cast<float>(AEFrameRateControllerGetFrameTime());
 			}
 		
 

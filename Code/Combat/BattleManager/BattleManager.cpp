@@ -186,6 +186,7 @@ void BattleManager::update()
 			if (outcome == BATTLE_OUTCOME::DEFEAT)
 			{
 				CombatUIManager::Instance().CreateMessageText(pos, "Game Over!");
+				RunManager::Instance().ResetSave();
 			}
 			else if (outcome == BATTLE_OUTCOME::VICTORY)
 			{

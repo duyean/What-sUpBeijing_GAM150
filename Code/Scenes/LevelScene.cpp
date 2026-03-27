@@ -38,6 +38,7 @@ This function loads splash screen image
 void LevelScene::Load()
 {
 	meshSystem = &MeshGen::getInstance();
+	std::cout << "CURRENT MAP: " << RunManager::Instance().GetMapType() << std::endl;
 
 	//check if the current map is the same as the prev set map
 	if (RunManager::Instance().GetMapType() == RunManager::Instance().GetPrevMapType())

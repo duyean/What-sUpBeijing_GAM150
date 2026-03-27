@@ -13,6 +13,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/Player.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Code/SoloBehavior/SettingsScreen.hpp"
+#include "../Code/SoloBehavior/CreditsScreen.hpp"
 #include "../SoloBehavior/Occurence.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 
@@ -119,7 +120,24 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(ngb->transform);
 	enSystem->entities.push_back(std::move(ng));
 
+	////////////////////////////////////////////////
+	// 
+	// CREDITS BUTTON
+	//
+	////////////////////////////////////////////////
+	auto creditsB = std::make_unique<Entity>("CREDITS BUTTON");
+	Entity* creditsB_en = creditsB.get();
+	pos = { 0.f,-100.f };
+	scale = { 300.f, 80.f };
+	creditsB_en->addComponent<Transform2D>(pos, scale, 0.f);
+	creditsB_en->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 
+	Button* creditsButton = creditsB_en->addComponent<Button>();
+	creditsButton->SetNormalColor(Color{ 200,200,200,1 });
+	creditsButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	creditsB_en->addComponent<TextBox>("CREDITS", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	enSystem->rootEntity->transform->AddChild(creditsB_en->transform);
+	enSystem->entities.push_back(std::move(creditsB));
 
 	////////////////////////////////////////////////
 	// 
@@ -128,7 +146,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto settingsB = std::make_unique<Entity>("SETTINGS BUTTON");
 	Entity* settingsB_en = settingsB.get();
-	pos = { 0.f,-100.f };
+	pos = { 0.f,-200.f };
 	scale = { 300.f, 80.f };
 	settingsB_en->addComponent<Transform2D>(pos, scale, 0.f);
 	settingsB_en->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -150,7 +168,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto e = std::make_unique<Entity>("QUIT BUTTON");
 	Entity* qb = e.get();
-	pos = { 0.f,-200.f };
+	pos = { 0.f,-300.f };
 	scale = { 300.f, 80.f };
 	qb->addComponent<Transform2D>(pos, scale, 0.f);
 	qb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -182,6 +200,7 @@ void MainMenu::Load()
 	settings->AddPrevDisplayEntity(te);
 	settings->AddPrevDisplayEntity(sb);
 	settings->AddPrevDisplayEntity(ngb);
+	settings->AddPrevDisplayEntity(creditsB_en);
 	settings->AddPrevDisplayEntity(settingsB_en);
 	settings->AddPrevDisplayEntity(qb);
 
@@ -191,48 +210,42 @@ void MainMenu::Load()
 	//add the settings button on click function after to avoid potential problems
 	settingsButton->SetOnClick([this, settings]() {settings->ShowSettings(true); });
 
-	/*auto slider = std::make_unique<Entity>("Slider");
+	
+	////////////////////////////////////////////////
+	// 
+	// CREDITS SCREEN
+	//
+	////////////////////////////////////////////////
+	auto cs = std::make_unique<Entity>("CreditsScreen");
 	pos = { 0.f, 0.f };
 	scale = { 1.f, 1.f };
-	float value1 = 0.f;
-	slider->addComponent<Transform2D>(pos, scale, 0.f);
-	slider->addComponent<Slider>(value1, 10.f, 1.45f);
-	enSystem->entities.push_back(std::move(slider));
+	cs->addComponent<Transform2D>(pos, scale, 0.f);
+	CreditsScreen* credits = cs->addComponent<CreditsScreen>();
 
-	auto slider2 = std::make_unique<Entity>("Slider2");
-	pos = { 0.f, 200.f };
-	scale = { 1.f, 1.f };
-	float value2 = 0.f;
-	slider2->addComponent<Transform2D>(pos, scale, 0.f);
-	slider2->addComponent<Slider>(value2, 10.f, 1.f);
-	enSystem->entities.push_back(std::move(slider2));*/
+	credits->AddPrevDisplayEntity(ms);
+	credits->AddPrevDisplayEntity(te);
+	credits->AddPrevDisplayEntity(sb);
+	credits->AddPrevDisplayEntity(ngb);
+	credits->AddPrevDisplayEntity(creditsB_en);
+	credits->AddPrevDisplayEntity(settingsB_en);
+	credits->AddPrevDisplayEntity(qb);
 
-	/*auto test = std::make_unique<Entity>("Text");
-	pos = { 0.f, 0.f };
-	scale = { 400, 200 };
-	test->addComponent<Transform2D>(pos, scale, 0.f);
-	test->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	test->addComponent<TextBox>("Strike an enemy and decreases their DEF, while increasing your ATK", 0.4f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
-	enSystem->rootEntity->transform->AddChild(test->transform);
-	enSystem->entities.push_back(std::move(test));*/
+	enSystem->rootEntity->transform->AddChild(cs->transform);
+	enSystem->entities.push_back(std::move(cs));
+
+	//add the credits button on click function after to avoid potential problems
+	creditsButton->SetOnClick([this, credits]() {credits->ShowCredits(true); });
 
 
-	/*auto t = std::make_unique<Entity>("lineH");
-	pos = { 0.f, 0.f };
-	scale = { 2, (float)AEGfxGetWindowHeight() };
-	t->addComponent<Transform2D>(pos, scale, 0.f);
-	t->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	enSystem->rootEntity->transform->AddChild(t->transform);
-	enSystem->entities.push_back(std::move(t));
-
-	auto l = std::make_unique<Entity>("LineV");
-	pos = { 0.f, 0.f };
-	scale = { (float)AEGfxGetWindowWidth(), 2 };
-	l->addComponent<Transform2D>(pos, scale, 0.f);
-	l->addComponent<Mesh>("Box", Color(50, 50, 50, 1), 100, MeshType::BOX_B);
-	enSystem->rootEntity->transform->AddChild(l->transform);
-	enSystem->entities.push_back(std::move(l));*/
-
+	if (RunManager::Instance().game_won)
+	{
+		std::cout << "GAME WON!!!!" << std::endl;
+		credits->ShowCredits(true);
+	}
+	else
+	{
+		credits->ShowCredits(false);
+	}
 
 	////////////////////////////////////////////////
 	// 

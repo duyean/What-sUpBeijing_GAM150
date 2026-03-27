@@ -193,10 +193,10 @@ void BattleManager::update()
 				AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_WIN);
 			}
 
-			if (bt == BATTLE_TYPE::MINI_BOSS)
-			{
-				//unlock character goes here
-			}
+			//if (bt == BATTLE_TYPE::MINI_BOSS)
+			//{
+			//	//unlock character goes here
+			//}
 			if (bt != BATTLE_TYPE::BOSS)
 			{
 				//Change scene back to exploration
@@ -204,10 +204,16 @@ void BattleManager::update()
 			}
 			else
 			{
-				//Change scene back to base camp
-				// Need check if win game or not
-				RunManager::Instance().IncrementMapType();
-				ts->TransitionToScene(GameStateManager::BASE_CAMP);
+				if (RunManager::Instance().GetMapType() == InnerPalace)
+				{
+					RunManager::Instance().game_won = true;
+					ts->TransitionToScene(GameStateManager::MAIN_MENU);
+				}
+				else
+				{
+					RunManager::Instance().IncrementMapType();
+					ts->TransitionToScene(GameStateManager::BASE_CAMP);
+				}
 			}
 
 		}

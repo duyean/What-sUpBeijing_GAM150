@@ -86,6 +86,8 @@ public:
 
 	bool game_paused = false;
 
+	bool game_won = false;
+
 	void SaveRun() const;
 	bool LoadRun();
 

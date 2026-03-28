@@ -32,6 +32,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../BaseSystems/Engine/CameraVFX.hpp"
 #include "../SoloBehavior/JumpToPoint.hpp"
 #include "../SoloBehavior/PauseMenu.hpp"
+#include "../SoloBehavior/TutorialScreen.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
@@ -385,6 +386,19 @@ void BattleScene::Load()
             AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_BATTLE2_BGM);
             AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
         }
+    }
+
+    if (RunManager::Instance().firstTimeCombat)
+    {
+        auto tut_s = std::make_unique<Entity>("TutorialScreen");
+        pos = { 0.f, 0.f };
+        scale = { 1.f, 1.f };
+        tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+        TutorialScreen* tutorial = tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_COMBAT);
+        enSystem->rootEntity->transform->AddChild(tut_s->transform);
+        enSystem->entities.push_back(std::move(tut_s));
+
+        RunManager::Instance().firstTimeCombat = false;
     }
 
 

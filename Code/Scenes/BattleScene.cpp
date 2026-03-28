@@ -26,11 +26,12 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
-
+#include "../BaseSystems/Engine/Bounce.hpp"
+#include "../BaseSystems/Engine/Tinter.hpp"
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
-BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr)
+BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr), renderUnitStat(true)
 {
     
 }
@@ -333,6 +334,16 @@ void BattleScene::Load()
     ts->addComponent<TransitionScreen>(T_State::T_OUT);
     enSystem->rootEntity->transform->AddChild(ts->transform);
     enSystem->entities.push_back(std::move(ts));
+
+    auto statScreenBG = std::make_unique<Entity>("BattleStatScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    statScreenBG->addComponent<Transform2D>(pos, scale, 0.f);
+    statScreenBG->addComponent<Mesh>("Box", Color(20, 20, 20, 0.9f), 1500, MeshType::BOX_B);
+    auto bsUI = statScreenBG->addComponent<BattleStatUI>();
+    bsUI->SetBattleManager(battleManager);
+    enSystem->rootEntity->transform->AddChild(statScreenBG->transform);
+    enSystem->entities.push_back(std::move(statScreenBG));
 
     //Can call this every battle since the function clears the databases 
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");

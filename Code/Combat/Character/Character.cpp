@@ -235,6 +235,8 @@ void Character::UpdateAttributes(void)
 	atkBonus = defBonus = maxHPBonus = 0; //Reset stats first
 	critRate = 0.05f; //5% Base Crit Rate
 	critDMG = 0.5f; //50% Base Crit DMG
+	dmgBonus = 0;
+	dmgReduction = 0;
 	for (auto& mod : effectList)
 	{
 		if (mod->effectType == ATTRIBUTE_MODIFIER)
@@ -433,6 +435,45 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 	case Game::ATTRIBUTE_TYPE::DMG_REDUCTION:
 		dmgReduction += value;
 		break;
+	}
+}
+
+float Character::GetStat(Game::ATTRIBUTE_TYPE type) const
+{
+	switch (type)
+	{
+		case (Game::ATTRIBUTE_TYPE::ATK):
+		{
+			return atk;
+		}
+		case (Game::ATTRIBUTE_TYPE::DEF):
+		{
+			return def;
+		}
+		case (Game::ATTRIBUTE_TYPE::HP):
+		{
+			return maxHP;
+		}
+		case (Game::ATTRIBUTE_TYPE::CRIT_RATE):
+		{
+			return critRate;
+		}
+		case (Game::ATTRIBUTE_TYPE::CRIT_DAMAGE):
+		{
+			return critDMG;
+		}
+		case (Game::ATTRIBUTE_TYPE::DMG_BONUS):
+		{
+			return dmgBonus;
+		}
+		case (Game::ATTRIBUTE_TYPE::DMG_REDUCTION):
+		{
+			return dmgReduction;
+		}
+		default:
+		{
+			return 0.0f;
+		}
 	}
 }
 

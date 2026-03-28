@@ -141,6 +141,7 @@ public:
 	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 	inline bool IsEndingTurn() const { return endingTurn; }
 	inline bool IsDead() const { return isDead; }
+	float GetStat(Game::ATTRIBUTE_TYPE type) const;
 
 	void init() override;
 	void awake() override;

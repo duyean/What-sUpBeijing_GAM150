@@ -197,7 +197,7 @@ void BattleManager::update()
 			{
 				//unlock character goes here
 			}
-			if (bt != BATTLE_TYPE::BOSS)
+			if (bt != BATTLE_TYPE::BOSS || outcome == BATTLE_OUTCOME::DEFEAT)
 			{
 				//Change scene back to exploration
 				ts->TransitionToScene(GameStateManager::LEVEL_SCENE);

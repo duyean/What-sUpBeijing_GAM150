@@ -307,7 +307,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	bool shopNodeGenerated = false;
 	int combatNodeLimit = nodeTotal * combatNodePercent / 100, eventNodeLimit = nodeTotal * eventNodePercent / 100;
 
-	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit)
+	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit || !shopNodeGenerated)
 	{
 		for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) {
 				if (this->mapNodes[y][x].type == NodeType::Empty)
@@ -316,16 +316,17 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 
 					if (combatNodeCount < combatNodeLimit && rollType <= combatNodePercent)
 					{
+						if (!shopNodeGenerated)
+						{
+							this->mapNodes[y][x].type = NodeType::Shop;
+							shopNodeGenerated = true;
+							continue;
+						}
 						this->mapNodes[y][x].type = NodeType::EnemyEncounter;
 						combatNodeCount++;
 					}
 					else if (eventNodeCount < eventNodeLimit)
 					{
-						if (!shopNodeGenerated)
-						{
-							this->mapNodes[y][x].type = NodeType::Shop;
-							shopNodeGenerated = true;
-						}
 						this->mapNodes[y][x].type = NodeType::RandomEvent;
 						eventNodeCount++;
 					}

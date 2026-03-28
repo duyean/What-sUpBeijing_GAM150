@@ -360,6 +360,15 @@
     <ClCompile Include="..\Code\SoloBehavior\BattleStatUI.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Engine\CameraVFX.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\JumpToPoint.cpp">
+      <Filter>Source Files\ENGINE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\CreditsScreen.cpp">
+      <Filter>Source Files\Entities\UIObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -651,6 +660,15 @@
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\BattleStatUI.hpp">
+          <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\Engine\CameraVFX.hpp">
+      <Filter>Header Files\ENGINE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\JumpToPoint.hpp">
+      <Filter>Header Files\Entities\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>

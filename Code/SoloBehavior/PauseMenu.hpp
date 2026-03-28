@@ -10,10 +10,10 @@ private:
 	void ResumeGame();
 	void QuitGame();
 	void QuitToMainMenu();
+	std::vector<Entity*> prevDisplay;
 
 	TransitionScreen* ts_comp = nullptr;
 	EntityManager* enSystem = nullptr;
-	std::vector<Entity*>pauseMenuDisplay;
 	SettingsScreen* settings = nullptr;
 	bool canDisplay = true;
 public:
@@ -22,6 +22,7 @@ public:
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
+	void AddPrevDisplayEntity(Entity* en);
 
 	PauseMenu() {}
 	~PauseMenu() {}

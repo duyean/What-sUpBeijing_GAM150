@@ -1,6 +1,7 @@
 
 #include "EdgeManagerBase.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void EdgeManagerBase::awake()
 {
@@ -24,7 +25,8 @@ void EdgeManagerBase::update()
 {
 	if (base_exit && base_exit->triggerBuffer)
 	{
-		player->getComponent<Player>()->canMove = false;
+		//player->getComponent<Player>()->canMove = false;
+		RunManager::Instance().playerCanMove = false;
 		ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 		base_exit->triggerBuffer = false;
 	}

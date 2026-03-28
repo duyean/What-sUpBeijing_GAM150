@@ -5,7 +5,9 @@
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/BaseSystems/Engine/MeshGen.hpp"
 #include "../Code/Audio_WZBJ_Pak.hpp"
-
+#include "../../BaseSystems/Engine/Tinter.hpp"
+#include "../../BaseSystems/Engine/CameraVFX.hpp"
+#include "../../SoloBehavior/JumpToPoint.hpp"
 Character::Character() : meshSystem(nullptr), endingTurn(false), name(""), element(Game::WUXING_ELEMENT::FIRE),
 hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0),
 baseATK(0), atkBonus(0), atk(0),
@@ -40,6 +42,7 @@ void Character::DealDamage(Character* target, float coefficient)
 	if (isCrit)
 	{
 		CombatEventHandler::Instance().Dispatch(EventType::DealtCriticalHit, evt);
+		EntityManager::getInstance().rootEntity->getComponent<CameraVFX>()->TriggerShake();
 	}
 
 	target->TakeDamage(info);
@@ -58,7 +61,7 @@ void Character::TakeDamage(Game::DamageInfo& damageInfo)
 	//Event Handler
 	EventData evt{ damageInfo.source, this, finalDamageTaken};
 	CombatEventHandler::Instance().Dispatch(EventType::TookDamage, evt);
-
+	entity->getComponent<Tinter>()->Trigger();
 	if (hp <= 0)
 	{
 		Death();
@@ -156,6 +159,10 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 		if (faction == Game::PLAYER)
 		{
 			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
+		}
+		else
+		{
+			entity->getComponent<JumpToPoint>()->Trigger(AEVec2{ -500.f, -150.f }, 500.f, 0.5f);
 		}
 		std::cout << name << " used " << move->name << " on " << target->name << std::endl;
 		if (move->moveModifiers.size() > 0)

@@ -66,6 +66,9 @@ public:
 	//Add a blessing to the current run
 	void AddBlessing(std::unique_ptr<Blessing> blessing);
 
+	// Remove currency when buying items
+	bool RemoveCurrency(int curr);
+
 	inline int GetEnemyDifficulty() const { return enemyDifficulty; }
 	inline void ModifyCurrency(int v) { currency += v; AEClamp(currency, 0, currency); }
 	inline void ModifyEnemyDifficulty(int v) { enemyDifficulty += v; }
@@ -85,6 +88,10 @@ public:
 	MapType GetPrevMapType() const;
 
 	bool game_paused = false;
+
+	bool game_won = false;
+
+	bool playerCanMove = true;
 
 	void SaveRun() const;
 	bool LoadRun();

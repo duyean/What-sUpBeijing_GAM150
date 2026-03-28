@@ -25,8 +25,6 @@ private:
 	MeshGen* meshSystem = nullptr;
 	TransitionScreen* ts_comp = nullptr;
 
-	std::vector<Entity*>mainMenuDisplay;
-
 	void SwitchToGame();
 	void PlayNewSave();
 	void QuitGame();

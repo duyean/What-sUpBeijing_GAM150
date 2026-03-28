@@ -1,6 +1,7 @@
 #include "SettingsScreen.hpp"
 #include "../BaseSystems/Engine/EventSystem.hpp"
 #include "../Code/SoloBehavior/PauseMenu.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 
 void SettingsScreen::ShowSettings(bool canShow)
 {
@@ -51,9 +52,8 @@ void SettingsScreen::awake()
 	auto sfx_slider = std::make_unique<Entity>("SFX Slider");
 	pos = { 0.f, 100.f };
 	scale = { 1.f, 1.f };
-	float value2 = 4.f;
 	sfx_slider->addComponent<Transform2D>(pos, scale, 0.f);
-	sfx_sl = sfx_slider->addComponent<Slider>(value2, 10.f, 1.f);
+	sfx_sl = sfx_slider->addComponent<Slider>(AudioManager::GetInstance()->SFXVolume(), 1.f, .1f);
 	entity->transform->AddChild(sfx_slider->transform);
 
 	auto title_bgm = std::make_unique<Entity>("BGM TITLE");
@@ -66,9 +66,8 @@ void SettingsScreen::awake()
 	auto bgm_slider = std::make_unique<Entity>("BGM Slider");
 	pos = { 0.f, 0.f };
 	scale = { 1.f, 1.f }; 
-	float value1 = 6.f;
 	bgm_slider->addComponent<Transform2D>(pos, scale, 0.f);
-	bgm_sl = bgm_slider->addComponent<Slider>(value1, 10.f, 1.45f);
+	bgm_sl = bgm_slider->addComponent<Slider>(AudioManager::GetInstance()->BGMVolume(), 1.f, 0.1f);
 	entity->transform->AddChild(bgm_slider->transform);
 
 
@@ -77,15 +76,15 @@ void SettingsScreen::awake()
 	pos = { 0.f, -300.f };
 	scale = { 200.f, 80.f };
 	close_b->addComponent<Transform2D>(pos, scale, 0.f);
-	close_b->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	close_b->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 900, MeshType::BOX_T);
 	entity->transform->AddChild(close_b->transform);
 
 	Button* closeButton = close_b->addComponent<Button>();
 	closeButton->SetOnClick([this]() {ShowSettings(false); });
 	closeButton->SetNormalColor(Color{ 200,200,200,1 });
 	closeButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	close_b->addComponent<TextBox>("CLOSE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	
+	TextBox* cb_tb = close_b->addComponent<TextBox>("CLOSE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	cb_tb->text_layer = 901;
 
 	enSystem->entities.push_back(std::move(settings_bg));
 	enSystem->entities.push_back(std::move(title_settings));
@@ -119,4 +118,9 @@ void SettingsScreen::fixedUpdate()
 void SettingsScreen::destroy()
 {
 
+}
+
+void SettingsScreen::AddPrevDisplayEntity(Entity* en)
+{
+	prevDisplay.push_back(en);
 }

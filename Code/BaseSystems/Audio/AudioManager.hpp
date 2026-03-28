@@ -74,9 +74,13 @@ public:
 	void AddSFX(SFX_TYPE type, std::string fileName);
 	void PlaySFX(SFX_TYPE id) const;
 	void Update();
+	float& BGMVolume();
+	float& SFXVolume();
 
 private:
 	std::map<AUDIO_TYPE, AudioTrack*> tracks;
 	std::map<SFX_TYPE, SFXTrack*> sfxs;
 	AEAudioGroup sfxGroup;
+	float bgmVol, sfxVol;
+	float prevBgmVol, prevSfxVol;
 };

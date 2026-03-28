@@ -16,6 +16,8 @@
     <ClCompile Include="..\Code\BaseSystems\Audio\SFXTrack.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OOVERLOAD.cpp" />
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Bounce.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\CameraVFX.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\Editor.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorApp.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.cpp" />
@@ -23,6 +25,7 @@
     <ClCompile Include="..\Code\BaseSystems\Engine\RenderSystem.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\TextBox.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\TextMesh.cpp" />
+    <ClCompile Include="..\Code\BaseSystems\Engine\Tinter.cpp" />
     <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\BoxCollider2D.cpp" />
     <ClCompile Include="..\Code\BaseSystems\Engine\ECS.cpp" />
@@ -56,12 +59,14 @@
     <ClCompile Include="..\Code\SoloBehavior\BattleStatUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\CreditsScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CurrencyDisplay.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\DecisionBoxManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\DisplayBox.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\EdgeManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\EdgeManagerBase.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\HEALTHBAR1.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\JumpToPoint.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\MainHealthbar.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\MovesUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp" />
@@ -94,6 +99,8 @@
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Bounce.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\CameraVFX.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\Editor.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorApp.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Editor\EditorWindow.hpp" />
@@ -104,6 +111,7 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Text.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\TextBox.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\TextMesh.hpp" />
+    <ClInclude Include="..\Code\BaseSystems\Engine\Tinter.hpp" />
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\BoxCollider2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Colors.hpp" />
@@ -142,10 +150,12 @@
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\BattleStatUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CurrencyDisplay.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\DisplayBox.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\JumpToPoint.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MainHealthbar.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\MovesUI.hpp" />

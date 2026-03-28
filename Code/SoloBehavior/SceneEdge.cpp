@@ -5,8 +5,14 @@
 //Do collision logic
 void SceneEdge::onHit(BoxCollider2D* other)
 {
-	if(other->entity->name == "Player")
+	if (other->entity->name == "Player")
+	{
 		triggerBuffer = true;
+	}
+	else
+	{
+		triggerBuffer = false;
+	}
 }
 void SceneEdge::onStay(BoxCollider2D* other)
 {

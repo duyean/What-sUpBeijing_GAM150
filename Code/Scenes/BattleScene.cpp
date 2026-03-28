@@ -26,8 +26,13 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../SoloBehavior/PartyUI.hpp"
 #include "../SoloBehavior/MovesUI.hpp"
 #include "../UI_WZBJ_Pak.hpp"
+#include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
 #include "../BaseSystems/Engine/Tinter.hpp"
+#include "../BaseSystems/Engine/CameraVFX.hpp"
+#include "../SoloBehavior/JumpToPoint.hpp"
+#include "../SoloBehavior/PauseMenu.hpp"
+
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
@@ -63,6 +68,7 @@ void BattleScene::Load()
     AEVec2 pos = { 0.f,0.f };
     AEVec2 scale = { 1.f,1.f };
     enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
+    enSystem->rootEntity->addComponent<CameraVFX>(1.f, 50.f);
     enSystem->entities.push_back(std::move(r));
 
     auto manager = std::make_unique<Entity>("Manager");
@@ -108,6 +114,8 @@ void BattleScene::Load()
         meshSystem->CreateTexture(iconPath.c_str(), ch->characterIconTexture.c_str());
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         character->getComponent<Mesh>()->isActive = false;
+        character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+        character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
@@ -231,6 +239,13 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
 
+    //Pause screen
+    auto ps = std::make_unique<Entity>("PauseScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    ps->addComponent<Transform2D>(pos, scale, 0.f);
+    PauseMenu* pauseMenu = ps->addComponent<PauseMenu>();
+
     //load the button textures
     meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
     ////////////////////////////////////////////////
@@ -249,8 +264,8 @@ void BattleScene::Load()
     moveButton1->SetNormalColor(Color{ 200,200,200,1 });
     moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb1->transform);
-    enSystem->entities.push_back(std::move(mb1));
-
+    pauseMenu->AddPrevDisplayEntity(mb1.get());
+    
 
     ////////////////////////////////////////////////
     // 
@@ -268,7 +283,7 @@ void BattleScene::Load()
     moveButton2->SetNormalColor(Color{ 200,200,200,1 });
     moveButton2->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb2->transform);
-    enSystem->entities.push_back(std::move(mb2));
+    pauseMenu->AddPrevDisplayEntity(mb2.get());
 
 
     ////////////////////////////////////////////////
@@ -287,7 +302,7 @@ void BattleScene::Load()
     moveButton3->SetNormalColor(Color{ 200,200,200,1 });
     moveButton3->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb3->transform);
-    enSystem->entities.push_back(std::move(mb3));
+    pauseMenu->AddPrevDisplayEntity(mb3.get());
 
 
     ////////////////////////////////////////////////
@@ -306,7 +321,7 @@ void BattleScene::Load()
     moveButton4->SetNormalColor(Color{ 200,200,200,1 });
     moveButton4->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb4->transform);
-    enSystem->entities.push_back(std::move(mb4));
+    pauseMenu->AddPrevDisplayEntity(mb4.get());
 
 
     ////////////////////////////////////////////////
@@ -371,6 +386,16 @@ void BattleScene::Load()
             AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
         }
     }
+
+
+    enSystem->entities.push_back(std::move(mb1));
+    enSystem->entities.push_back(std::move(mb2));
+    enSystem->entities.push_back(std::move(mb3));
+    enSystem->entities.push_back(std::move(mb4));
+    
+
+    enSystem->rootEntity->transform->AddChild(ps->transform);
+    enSystem->entities.push_back(std::move(ps));
 }
 
 /*!
@@ -442,6 +467,9 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             character->addComponent<Transform2D>(pos, scale, 0.f);
             character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
+            character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+            character->addComponent<Tinter>(1.f);
+            character->addComponent<JumpToPoint>();
             battleManager->LoadBattleUnit(ch);
             enSystem->rootEntity->transform->AddChild(character->transform);
             enSystem->entities.push_back(std::move(character));
@@ -508,7 +536,10 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         character->addComponent<Transform2D>(pos, scale, 0.f);
         character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
         auto hpBar = character->addComponent<Healthbar1>();
+        character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
+        character->addComponent<Tinter>(1.f);
+        character->addComponent<JumpToPoint>();
         enSystem->rootEntity->transform->AddChild(character->transform);
         enSystem->entities.push_back(std::move(character));
 

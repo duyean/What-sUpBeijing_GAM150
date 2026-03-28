@@ -407,7 +407,7 @@ void Map::DebugPrint(Map map)
 	printf("end of map debug printing.\n");
 }
 
-bool Map::SaveMap(JSONSerializer /*serializer*/, std::string fileName)
+bool Map::SaveMap(JSONSerializer serializer, std::string fileName)
 {
 	std::ofstream ofs(fileName);
 	if (!ofs.is_open())

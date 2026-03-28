@@ -4,6 +4,7 @@
 #include "../CombatUIManager.hpp"
 #include "../../Scenes/SceneHandler/GameStateManager.hpp"
 #include "../Code/Audio_WZBJ_Pak.hpp"
+#include "../../BaseSystems/Engine/CameraVFX.hpp"
 
 void BattleManager::awake()
 {
@@ -194,21 +195,45 @@ void BattleManager::update()
 				AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_WIN);
 			}
 
-			if (bt == BATTLE_TYPE::MINI_BOSS)
-			{
-				//unlock character goes here
-			}
+			//if (bt == BATTLE_TYPE::MINI_BOSS)
+			//{
+			//	//unlock character goes here
+			//}
 			if (bt != BATTLE_TYPE::BOSS)
 			{
+				//add blessing
+				std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+				auto it2 = blessingDatabase.begin();
+				std::advance(it2, dist(Game::gen));
+				auto randomBlessing = it2->second->Clone();
+				RunManager::Instance().AddBlessing(std::move(randomBlessing));
+
 				//Change scene back to exploration
 				ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 			}
 			else
 			{
-				//Change scene back to base camp
-				// Need check if win game or not
-				RunManager::Instance().IncrementMapType();
-				ts->TransitionToScene(GameStateManager::BASE_CAMP);
+				if (RunManager::Instance().GetMapType() == InnerPalace)
+				{
+					RunManager::Instance().game_won = true;
+					//ts->TransitionToScene(GameStateManager::MAIN_MENU);
+					CameraVFX* camvfx = EntityManager::getInstance().rootEntity->getComponent<CameraVFX>();
+					camvfx->SetShakeDuration(6.f);
+					camvfx->TriggerShake();
+					ts->FadeOutToScene(GameStateManager::MAIN_MENU);
+				}
+				else
+				{
+					//add blessing
+					std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+					auto it2 = blessingDatabase.begin();
+					std::advance(it2, dist(Game::gen));
+					auto randomBlessing = it2->second->Clone();
+					RunManager::Instance().AddBlessing(std::move(randomBlessing));
+
+					RunManager::Instance().IncrementMapType();
+					ts->TransitionToScene(GameStateManager::BASE_CAMP);
+				}
 			}
 
 		}
@@ -338,11 +363,11 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 			delay = 1.5f;
 
 			//DEBUG to add a random blessing after every battle victory
-			std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+			/*std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
 			auto it2 = blessingDatabase.begin();
 			std::advance(it2, dist(Game::gen));
 			auto randomBlessing = it2->second->Clone();
-			RunManager::Instance().AddBlessing(std::move(randomBlessing));
+			RunManager::Instance().AddBlessing(std::move(randomBlessing));*/
 		}
 	}
 	else if (dead->GetFaction() == Game::FACTION::PLAYER)

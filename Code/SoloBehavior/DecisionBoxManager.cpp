@@ -1,4 +1,5 @@
 #include "DecisionBoxManager.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 void DecisionBoxManager::ToggleDecisionBox(bool toggle)
 {
@@ -6,6 +7,7 @@ void DecisionBoxManager::ToggleDecisionBox(bool toggle)
 	{
 		child->entity->isActive = toggle;
 	}
+	RunManager::Instance().playerCanMove = !toggle;
 }
 
 void DecisionBoxManager::awake()

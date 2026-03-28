@@ -89,6 +89,10 @@ public:
 
 	bool game_paused = false;
 
+	bool game_won = false;
+
+	bool playerCanMove = true;
+
 	void SaveRun() const;
 	bool LoadRun();
 

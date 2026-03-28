@@ -76,15 +76,15 @@ void SettingsScreen::awake()
 	pos = { 0.f, -300.f };
 	scale = { 200.f, 80.f };
 	close_b->addComponent<Transform2D>(pos, scale, 0.f);
-	close_b->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	close_b->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 900, MeshType::BOX_T);
 	entity->transform->AddChild(close_b->transform);
 
 	Button* closeButton = close_b->addComponent<Button>();
 	closeButton->SetOnClick([this]() {ShowSettings(false); });
 	closeButton->SetNormalColor(Color{ 200,200,200,1 });
 	closeButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	close_b->addComponent<TextBox>("CLOSE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	
+	TextBox* cb_tb = close_b->addComponent<TextBox>("CLOSE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	cb_tb->text_layer = 901;
 
 	enSystem->entities.push_back(std::move(settings_bg));
 	enSystem->entities.push_back(std::move(title_settings));

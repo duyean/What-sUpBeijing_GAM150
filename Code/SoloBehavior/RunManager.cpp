@@ -33,13 +33,15 @@ void RunManager::StartRun()
 {
 	if (!LoadRun())
 	{
+		game_won = false;
+
 		//Set default values
 		enemyDifficulty = 1;
 
 		//Can change this if the player owns an artifact
 		currency = 50;
-
-		SetMapType(MapType::CityStreets);
+		
+		SetMapType(MapType::InnerPalace);
 	}
 }
 
@@ -68,7 +70,7 @@ void RunManager::ResetSave()
 	runBlessings.clear();
 	currency = 50;
 	enemyDifficulty = 1;
-	SetMapType(MapType::CityStreets);
+	SetMapType(MapType::InnerPalace);
 }
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)

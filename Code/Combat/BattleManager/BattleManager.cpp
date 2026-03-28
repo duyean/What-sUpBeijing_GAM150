@@ -115,7 +115,7 @@ void BattleManager::ResetBattle()
 	enemyCount = 0;
 	wait = false;
 
-	std::uniform_int_distribution<int> d(1, 3);
+	std::uniform_int_distribution<int> d(1, 2);
 	RunManager::Instance().ModifyEnemyDifficulty(d(Game::gen));
 }
 
@@ -207,7 +207,7 @@ void BattleManager::update()
 				std::advance(it2, dist(Game::gen));
 				auto randomBlessing = it2->second->Clone();
 				RunManager::Instance().AddBlessing(std::move(randomBlessing));
-
+				RunManager::Instance().ModifyCurrency(20);
 				//Change scene back to exploration
 				ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 			}

@@ -39,7 +39,7 @@ void RunManager::StartRun()
 		enemyDifficulty = 1;
 
 		//Can change this if the player owns an artifact
-		currency = 50;
+		currency = 200;
 
 		//booleans to show tutorials
 		firstTimeBase = true;
@@ -82,7 +82,7 @@ void RunManager::ResetSave()
 	firstTimeCombat = true;
 
 	runBlessings.clear();
-	currency = 50;
+	currency = 200;
 	enemyDifficulty = 1;
 	SetMapType(MapType::CityStreets);
 }

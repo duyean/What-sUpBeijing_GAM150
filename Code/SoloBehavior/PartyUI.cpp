@@ -1,5 +1,18 @@
 #include "PartyUI.hpp"
 #include "../Combat/BattleManager/BattleManager.hpp"
+#include "../UI_WZBJ_Pak.hpp"
+#include <sstream>
+
+bool PartyUI::IsMouseOverIcon(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
+{
+	float halfWidth = transform->getLocalScale().x * 0.5f;
+	float halfHeight = transform->getLocalScale().y * 0.5f;
+	float centerX = transform->getLocalPosition().x;
+	float centerY = transform->getLocalPosition().y;
+
+	return std::abs(mouseX - centerX) <= halfWidth &&
+		std::abs(mouseY - centerY) <= halfHeight;
+}
 
 void PartyUI::AddIcon(Entity* en)
 {
@@ -28,6 +41,7 @@ void PartyUI::awake()
 void PartyUI::init()
 {
 	battleManager = EntityManager::getInstance().findByComponentGLOBAL<BattleManager>()->getComponent<BattleManager>();
+	modifierTooltip = EntityManager::getInstance().FindByNameGLOBAL("StatusTooltipUI");
 }
 
 void PartyUI::update()
@@ -61,6 +75,8 @@ void PartyUI::update()
 			healthBars[i]->transform->setScale(trueScale);
 		}
 
+		std::unordered_map<Entity*, Modifier*> iconToModifier;
+
 		//Render status icons
 		for (auto& vec : modifierIcons)
 		{
@@ -84,8 +100,10 @@ void PartyUI::update()
 				AEGfxTexture* tex = MeshGen::getInstance().getTexture(mod->icon.c_str());
 				if (tex != nullptr)
 				{
-					modifierIcons[i][modCount]->getComponent<Mesh>()->isActive = true;
-					modifierIcons[i][modCount]->getComponent<Mesh>()->pTex = tex;
+					auto* icon = modifierIcons[i][modCount];
+					icon->getComponent<Mesh>()->isActive = true;
+					icon->getComponent<Mesh>()->pTex = tex;
+					iconToModifier[icon] = mod.get();
 					++modCount;
 				}
 
@@ -110,13 +128,46 @@ void PartyUI::update()
 			int total = std::min(modCount, 3); // only show up to 3 icons
 			for (int j = 0; j < total; ++j)
 			{
+				auto ic = modifierIcons[i][j];
 				// Compute offset so icons are centered as a group
 				float offsetX = (j - (total - 1) / 2.0f) * spacing;
 				AEVec2 iconPos = { centerPos.x + offsetX, centerPos.y };
-
-				modifierIcons[i][j]->transform->setPosition(iconPos);
+				ic->transform->setPosition(iconPos);
+				float normX = iconPos.x / (AEGfxGetWindowWidth() * 0.5f);
+				float normY = (iconPos.y - 15) / (AEGfxGetWindowHeight() * 0.5f);
+				MeshGen::getInstance().DrawFont(normX, normY, 0.35f, Color(255, 255, 255, 1.0f),
+					std::to_string(iconToModifier[modifierIcons[i][j]]->duration).c_str(), "liberi");
 			}
 		}
+
+		bool tooltipShown = false;
+		for (auto& [icon, mod] : iconToModifier)
+		{
+			s32 mouseX, mouseY;
+			AEInputGetCursorPosition(&mouseX, &mouseY);
+			mouseX = mouseX - static_cast<s32>(AEGfxGetWindowWidth() * 0.5f);
+			mouseY = static_cast<s32>(AEGfxGetWindowHeight() * 0.5f) - mouseY;
+
+			if (IsMouseOverIcon(mouseX, mouseY, icon->transform))
+			{
+				std::ostringstream oss;
+				oss << mod->name << std::endl;
+				oss << mod->description;
+				toolTipBuffer = oss.str();
+				modifierTooltip->getComponent<TextBox>()->text = toolTipBuffer.c_str();
+				tooltipShown = true;
+				modifierTooltip->isActive = true;
+				AEVec2 ttbox_scale = modifierTooltip->transform->getScale();
+				modifierTooltip->transform->setPosition({ mouseX + (ttbox_scale.x / 2), mouseY + (ttbox_scale.y) });
+				break;
+			}
+		}
+
+		if (!tooltipShown)
+		{
+			modifierTooltip->isActive = false;
+		}
+
 	}
 }
 

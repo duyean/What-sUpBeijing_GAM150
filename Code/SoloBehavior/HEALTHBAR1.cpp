@@ -34,7 +34,7 @@ void Healthbar1::update()
 	AEVec2 trueScale = { hpBarScale.x * hpperc, hpBarScale.y };
 	AEVec2 offset{ -entityScale.x * 0.5f, -entityScale.y * 0.5f - 40};
 	std::stringstream enemyName;
-	enemyName << "Lv. " << RunManager::Instance().GetEnemyDifficulty() << " " << this->entity->getComponent<Character>()->GetName();
+	enemyName << "Lv. " << entity->getComponent<Character>()->GetLevel() << " " << this->entity->getComponent<Character>()->GetName();
 	MeshGen::getInstance().DrawFont((pos.x + offset.x)/ 800.f, (pos.y + offset.y + 35) / 450.f, 0.5f, Color(255, 255, 255, 1), enemyName.str().c_str(), "liberi");
 	hpBarBG->transform->setPosition(pos + offset);
 	hpBarBG->transform->setScale(hpBarScale);

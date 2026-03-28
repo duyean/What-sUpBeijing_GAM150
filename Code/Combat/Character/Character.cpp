@@ -9,7 +9,7 @@
 #include "../../BaseSystems/Engine/CameraVFX.hpp"
 #include "../../SoloBehavior/JumpToPoint.hpp"
 Character::Character() : meshSystem(nullptr), endingTurn(false), name(""), element(Game::WUXING_ELEMENT::FIRE),
-hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0),
+hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0), enemyLevel(0),
 baseATK(0), atkBonus(0), atk(0),
 baseDEF(0), defBonus(0), def(0),
 critRate(0), critDMG(0), dmgBonus(0),
@@ -127,9 +127,12 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 1.1f * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.2f * RunManager::Instance().GetEnemyDifficulty();
-		baseDEF *= 1 + 0.15f * RunManager::Instance().GetEnemyDifficulty();
+		std::uniform_int_distribution<int> dist(0, 3);
+		enemyLevel = RunManager::Instance().GetEnemyDifficulty() + dist(Game::gen);
+		enemyLevel = std::max(0, enemyLevel);
+		baseMaxHP *= std::pow(1.2f, enemyLevel);
+		baseATK *= 1 + 0.25f * enemyLevel;
+		baseDEF *= 1 + 0.10f * enemyLevel;
 	}
 	UpdateAttributes();
 	hp = maxHP;
@@ -286,7 +289,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			case (STACK_BEHAVIOUR::STACK):
 			{
 				(*modExists)->stackCount += modifier->stackCount;
-				(*modExists)->stackCount = std::min((*modExists)->stackCount, 5);
+				(*modExists)->stackCount = std::min((*modExists)->stackCount, 15);
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}

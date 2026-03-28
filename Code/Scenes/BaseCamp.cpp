@@ -18,6 +18,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Code/SoloBehavior/CurrencyDisplay.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/TutorialScreen.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -331,6 +332,19 @@ void BaseCamp::Load()
 	ps->addComponent<PauseMenu>();
 	enSystem->rootEntity->transform->AddChild(ps->transform);
 	enSystem->entities.push_back(std::move(ps));
+
+	if (RunManager::Instance().firstTimeBase)
+	{
+		auto tut_s = std::make_unique<Entity>("TutorialScreen");
+		pos = { 0.f, 0.f };
+		scale = { 1.f, 1.f };
+		tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+		tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_BASE_CAMP);
+		enSystem->rootEntity->transform->AddChild(tut_s->transform);
+		enSystem->entities.push_back(std::move(tut_s));
+		
+		RunManager::Instance().firstTimeBase = false;
+	}
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };

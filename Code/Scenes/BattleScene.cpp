@@ -31,6 +31,7 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../BaseSystems/Engine/Tinter.hpp"
 #include "../BaseSystems/Engine/CameraVFX.hpp"
 #include "../SoloBehavior/JumpToPoint.hpp"
+#include "../SoloBehavior/PauseMenu.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
@@ -238,6 +239,13 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
 
+    //Pause screen
+    auto ps = std::make_unique<Entity>("PauseScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    ps->addComponent<Transform2D>(pos, scale, 0.f);
+    PauseMenu* pauseMenu = ps->addComponent<PauseMenu>();
+
     //load the button textures
     meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
     ////////////////////////////////////////////////
@@ -256,8 +264,8 @@ void BattleScene::Load()
     moveButton1->SetNormalColor(Color{ 200,200,200,1 });
     moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb1->transform);
-    enSystem->entities.push_back(std::move(mb1));
-
+    pauseMenu->AddPrevDisplayEntity(mb1.get());
+    
 
     ////////////////////////////////////////////////
     // 
@@ -275,7 +283,7 @@ void BattleScene::Load()
     moveButton2->SetNormalColor(Color{ 200,200,200,1 });
     moveButton2->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb2->transform);
-    enSystem->entities.push_back(std::move(mb2));
+    pauseMenu->AddPrevDisplayEntity(mb2.get());
 
 
     ////////////////////////////////////////////////
@@ -294,7 +302,7 @@ void BattleScene::Load()
     moveButton3->SetNormalColor(Color{ 200,200,200,1 });
     moveButton3->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb3->transform);
-    enSystem->entities.push_back(std::move(mb3));
+    pauseMenu->AddPrevDisplayEntity(mb3.get());
 
 
     ////////////////////////////////////////////////
@@ -313,7 +321,7 @@ void BattleScene::Load()
     moveButton4->SetNormalColor(Color{ 200,200,200,1 });
     moveButton4->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb4->transform);
-    enSystem->entities.push_back(std::move(mb4));
+    pauseMenu->AddPrevDisplayEntity(mb4.get());
 
 
     ////////////////////////////////////////////////
@@ -368,6 +376,16 @@ void BattleScene::Load()
             AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
         }
     }
+
+
+    enSystem->entities.push_back(std::move(mb1));
+    enSystem->entities.push_back(std::move(mb2));
+    enSystem->entities.push_back(std::move(mb3));
+    enSystem->entities.push_back(std::move(mb4));
+    
+
+    enSystem->rootEntity->transform->AddChild(ps->transform);
+    enSystem->entities.push_back(std::move(ps));
 }
 
 /*!

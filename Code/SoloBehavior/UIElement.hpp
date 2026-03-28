@@ -17,7 +17,8 @@ public:
 	virtual void OnHover() = 0;
 	virtual void OnHoverExit() = 0;
 	bool reset;
-	UIElement():reset(false){}
+	bool enabled;
+	UIElement():reset(false), enabled(true){}
 	~UIElement(){};
 };
 

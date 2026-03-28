@@ -40,7 +40,35 @@ void CreditsScreen::awake()
 	entity->transform->AddChild(title_credits->transform);
 
 
-	
+	auto credits_text_l = std::make_unique<Entity>("CREDITS TEXT LEFT");
+	pos = { (-(float)AEGfxGetWindowWidth() / 2.f + 400.f) ,(float)AEGfxGetWindowHeight() / 2.f };
+	scale = { 1.f, 1.f };
+	credits_text_l->addComponent<Transform2D>(pos, scale, 0.f);
+	TextBox* cdt_l = credits_text_l->addComponent<TextBox>(
+		"Engine Program:\nCombat Program:\nMap Program:\nAudio and Shop Program:\nUi Program:", 
+		0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+	cdt_l->padding_v = 300.f;
+	entity->transform->AddChild(credits_text_l->transform);
+
+	auto credits_text_r = std::make_unique<Entity>("CREDITS TEXT RIGHT");
+	pos = { ((float)AEGfxGetWindowWidth() / 2.f - 400.f) ,(float)AEGfxGetWindowHeight() / 2.f };
+	scale = { 1.f, 1.f };
+	credits_text_r->addComponent<Transform2D>(pos, scale, 0.f);
+	TextBox* cdt_r = credits_text_r->addComponent<TextBox>(
+		"edmund\nwayne\ndaniel\nbryson\nqian yi",
+		0.6f, TextBoxVAllign::TOP, TextBoxHAllign::RIGHT);
+	cdt_r->padding_v = 300.f;
+	entity->transform->AddChild(credits_text_r->transform);
+
+	auto credits_text_footer = std::make_unique<Entity>("CREDITS TEXT FOOT");
+	pos = { 0.f ,-(float)AEGfxGetWindowHeight() / 2.f };
+	scale = { 1.f, 1.f };
+	credits_text_footer->addComponent<Transform2D>(pos, scale, 0.f);
+	TextBox* cdt_f = credits_text_footer->addComponent<TextBox>(
+		"Thanks for playing!\nA game by Team WhatsUpBeijing",
+		0.6f, TextBoxVAllign::BOTTOM, TextBoxHAllign::CENTER);
+	cdt_f->padding_v = -250.f;
+	entity->transform->AddChild(credits_text_footer->transform);
 
 
 	//Close Button
@@ -60,6 +88,9 @@ void CreditsScreen::awake()
 
 	enSystem->entities.push_back(std::move(credits_bg));
 	enSystem->entities.push_back(std::move(title_credits));
+	enSystem->entities.push_back(std::move(credits_text_l));
+	enSystem->entities.push_back(std::move(credits_text_r));
+	enSystem->entities.push_back(std::move(credits_text_footer));
 	enSystem->entities.push_back(std::move(close_b));
 }
 

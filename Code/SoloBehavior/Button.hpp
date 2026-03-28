@@ -21,6 +21,7 @@ private:
 	Color normal_color;
 	Color highlighted_color;
 	Color pressed_color;
+	Color disabled_color;
 public:
 	using Callback = std::function<void()>;
 
@@ -49,12 +50,15 @@ public:
 	void SetNormalColor(Color color);
 	void SetHighlightedColor(Color color);
 	void SetPressedColor(Color color);
+	void SetDisabledColor(Color color);
 
 	Button() {
+		enabled = true;
 		buttonMesh = nullptr;
 		normal_color = {255,255,255,1 };
 		highlighted_color = { 255,255,255,1 };
 		pressed_color = { 200,200,200,1 };
+		disabled_color = { 200,200,200, 0.5 };
 	}
 	~Button(){}
 

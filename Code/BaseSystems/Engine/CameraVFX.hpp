@@ -27,6 +27,7 @@ public:
     void fixedUpdate() override;
     void destroy() override;
     void TriggerShake();
+    void SetShakeDuration(float newDuration) { duration = newDuration; }
     CameraVFX(float _duration, float _intensity)
         : duration(_duration), intensity(_intensity) {
     }

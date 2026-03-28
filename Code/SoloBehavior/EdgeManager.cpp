@@ -55,21 +55,21 @@ void EdgeManager::UpdateEdges()
 		switch (currentNodeType)
 		{
 		case NodeType::EnemyEncounter:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::Exit:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::FixedEvent:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::MINI_BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
@@ -77,6 +77,7 @@ void EdgeManager::UpdateEdges()
 			break;
 		case NodeType::RandomEvent:
 		{
+			RunManager::Instance().playerCanMove = false;
 			if (eventsDatabase.empty())
 			{
 				std::cout << "No events available!" << std::endl;

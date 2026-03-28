@@ -7,7 +7,8 @@
 void Shop::onHit(BoxCollider2D* other)
 {
 	canShow = true;
-	player->getComponent<Player>()->canMove = false;
+	//player->getComponent<Player>()->canMove = false;
+	RunManager::Instance().playerCanMove = false;
 }
 void Shop::onStay(BoxCollider2D* other)
 {

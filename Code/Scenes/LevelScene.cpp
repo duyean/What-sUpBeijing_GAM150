@@ -171,7 +171,18 @@ void LevelScene::Load()
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	bg->addComponent<Transform2D>(pos, scale, 0.f);
-	bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	switch (RunManager::Instance().GetMapType())
+	{
+	case CityStreets:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+		break;
+	case OuterPalace:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(200, 200, 255, 1.f), 100, MeshType::BOX_T);
+		break;
+	case InnerPalace:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 200, 200, 1.f), 100, MeshType::BOX_T);
+		break;
+	}
 	enSystem->rootEntity->transform->AddChild(bg->transform);
 	enSystem->entities.push_back(std::move(bg));
 

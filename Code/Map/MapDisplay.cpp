@@ -24,7 +24,7 @@ void MapDisplay::awake()
 
 	mapCharIcon->addComponent<Mesh>("Box", textureName[7].c_str(), Color(255, 255, 255, 1.0f), depthPlayer, MeshType::BOX_T);
 
-	for (int xi = 0; xi < map.playMap.mapNodes[0].size(); x++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+	for (int xi = 0; xi < map.playMap.mapNodes[0].size(); xi++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
 		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(xi) + "_" + std::to_string(yi)));
 		mapNodesFog.push_back(enSystem->FindByNameGLOBAL("MapFog_" + std::to_string(xi) + "_" + std::to_string(yi)));
 		switch (map.playMap.mapNodes[yi][xi].type)
@@ -70,7 +70,7 @@ void MapDisplay::update()
 	if (x != map.xPos || y != map.yPos)	//check if map updates
 	{
 		int count = 0;
-		for (int xi = 0; xi < map.playMap.mapNodes[0].size(); x++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+		for (int xi = 0; xi < map.playMap.mapNodes[0].size(); xi++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
 			if (map.viewMap.mapNodes[yi][xi].type != NodeType::VisionFog)
 			{
 				mapNodesReal[count]->isActive = true;

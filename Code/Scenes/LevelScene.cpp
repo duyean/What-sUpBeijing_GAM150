@@ -17,6 +17,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
+#include "../SoloBehavior/TutorialScreen.hpp"
 LevelScene::LevelScene()
 {	
 }
@@ -185,6 +186,19 @@ void LevelScene::Load()
 	}
 	enSystem->rootEntity->transform->AddChild(bg->transform);
 	enSystem->entities.push_back(std::move(bg));
+
+	if (RunManager::Instance().firstTimeExplore)
+	{
+		auto tut_s = std::make_unique<Entity>("TutorialScreen");
+		pos = { 0.f, 0.f };
+		scale = { 1.f, 1.f };
+		tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+		TutorialScreen* tutorial = tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_EXPLORATION);
+		enSystem->rootEntity->transform->AddChild(tut_s->transform);
+		enSystem->entities.push_back(std::move(tut_s));
+
+		RunManager::Instance().firstTimeExplore = false;
+	}
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };

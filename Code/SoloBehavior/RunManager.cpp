@@ -40,8 +40,13 @@ void RunManager::StartRun()
 
 		//Can change this if the player owns an artifact
 		currency = 50;
+
+		//booleans to show tutorials
+		firstTimeBase = true;
+		firstTimeExplore = true;
+		firstTimeCombat = true;
 		
-		SetMapType(MapType::InnerPalace);
+		SetMapType(MapType::CityStreets);
 	}
 }
 
@@ -52,6 +57,11 @@ const std::vector<std::string>& RunManager::GetParty() const
 
 void RunManager::ResetRun()
 {
+	//reset show tutorials
+	firstTimeBase = true;
+	firstTimeExplore = true;
+	firstTimeCombat = true;
+
 	//Clear the blessings for the current run
 	runBlessings.clear();
 }
@@ -67,10 +77,14 @@ void RunManager::ResetSave()
 	if (std::remove("Assets/SaveFile.json") != 0)
 		std::cout << "SaveFile.json was unable to be removed.\n";
 
+	firstTimeBase = true;
+	firstTimeExplore = true;
+	firstTimeCombat = true;
+
 	runBlessings.clear();
 	currency = 50;
 	enemyDifficulty = 1;
-	SetMapType(MapType::InnerPalace);
+	SetMapType(MapType::CityStreets);
 }
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
@@ -153,6 +167,12 @@ void RunManager::SaveRun() const
 		writer.Int(static_cast<int>(currMapType));
 		writer.Key("prevMapType");
 		writer.Int(static_cast<int>(prevMapType));
+		writer.Key("firstTimeBase");
+		writer.Int(static_cast<int>(firstTimeBase));
+		writer.Key("firstTimeExplore");
+		writer.Int(static_cast<int>(firstTimeExplore));
+		writer.Key("firstTimeCombat");
+		writer.Int(static_cast<int>(firstTimeCombat));
 	writer.EndObject();
 }
 
@@ -169,6 +189,9 @@ bool RunManager::LoadRun()
 	currency = doc["currency"].GetInt();
 	currMapType = static_cast<MapType>(doc["currMapType"].GetInt());
 	prevMapType = static_cast<MapType>(doc["prevMapType"].GetInt());
+	firstTimeBase = static_cast<bool>(doc["firstTimeBase"].GetInt());
+	firstTimeExplore = static_cast<bool>(doc["firstTimeExplore"].GetInt());
+	firstTimeCombat = static_cast<bool>(doc["firstTimeCombat"].GetInt());
 	return true;
 }
 

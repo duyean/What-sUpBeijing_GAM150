@@ -84,11 +84,15 @@ public:
 
 	MapType GetPrevMapType() const;
 
+	//game related booleans
 	bool game_paused = false;
-
 	bool game_won = false;
-
 	bool playerCanMove = true;
+
+	//tutorial page booleans
+	bool firstTimeBase;
+	bool firstTimeExplore;
+	bool firstTimeCombat;
 
 	void SaveRun() const;
 	bool LoadRun();

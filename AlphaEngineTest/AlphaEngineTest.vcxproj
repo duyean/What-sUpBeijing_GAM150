@@ -81,6 +81,7 @@
     <ClCompile Include="..\Code\SoloBehavior\Slider.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\SplashLogo.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\TransitionScreen.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\TutorialScreen.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\UIElement.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="..\Code\SoloBehavior\Slider.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\SplashLogo.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\TransitionScreen.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\TutorialScreen.hpp" />
     <ClInclude Include="..\Code\UI_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\Engine_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\JSONSerializer_WZBJ_Pak.hpp" />

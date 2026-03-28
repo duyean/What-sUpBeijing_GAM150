@@ -188,7 +188,7 @@ void Shop::update()
 		buyButton->isActive = false;
 	}
 	if (currencyFlashTimer > 0.f)
-		currencyFlashTimer -= AEFrameRateControllerGetFrameTime();
+		currencyFlashTimer -= float(AEFrameRateControllerGetFrameTime());
 	else
 		currency->getComponent<TextBox>()->text_color = Color{ 255, 255, 255, 1.f };
 	cost->getComponent<TextBox>()->text = costStr.c_str();

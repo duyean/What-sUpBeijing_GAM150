@@ -70,7 +70,7 @@ public:
 	bool RemoveCurrency(int curr);
 
 	inline int GetEnemyDifficulty() const { return enemyDifficulty; }
-	inline void ModifyCurrency(int v) { currency += v; AEClamp(currency, 0, currency); }
+	inline void ModifyCurrency(int v) { currency += v; AEClamp(f32(currency), 0.f, f32(currency)); }
 	inline void ModifyEnemyDifficulty(int v) { enemyDifficulty += v; }
 	inline int GetCurrency() const { return currency; }
 	void SetBattleType(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);

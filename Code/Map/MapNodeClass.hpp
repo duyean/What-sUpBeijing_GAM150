@@ -7,6 +7,7 @@ enum class NodeType
 	EnemyEncounter =	 2,
 	RandomEvent =		 4,
 	FixedEvent =		 5,
+	Shop =				 3,
 
 	//special nodes
 	Entry =				-1,

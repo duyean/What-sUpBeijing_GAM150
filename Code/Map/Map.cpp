@@ -162,43 +162,37 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 			printf("North Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY - 1][currentX].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY - 1][currentX].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY - 1, currentX, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.s)
-		{	
+		{
 			printf("South Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY + 1][currentX].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY + 1][currentX].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY + 1, currentX, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.e)
-		{	
+		{
 			printf("East Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY][currentX + 1].type == NodeType::Empty)
 			{
-				foundNewNode = true;	
+				travelPath.mapNodes[currentY][currentX + 1].type = NodeType::Debug;
+				foundNewNode = true;
 				traveller.push_back({ currentY, currentX + 1, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.w)
-		{	
+		{
 			printf("West Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY][currentX - 1].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY][currentX - 1].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY, currentX - 1, traveller[0][2] + 1 });
 		}	}
-
-		
-		for (int i = 0; i < traveller.size(); i++)
-		{
-			//debug print all travellers currents in action
-			printf("Traveller %d: %d, %d (Distance: %d)\n", i, traveller[i][1], traveller[i][0], traveller[i][2]);
-
-			//designate travelled paths
-			travelPath.mapNodes[traveller[i][0]][traveller[i][1]].type = NodeType::Debug;
-		}
 
 		if (!foundNewNode)
 		{
@@ -310,6 +304,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	int combatNodePercent = 40; //40% chance of encounter node
 
 	int combatNodeCount = 0, eventNodeCount = 0;
+	bool shopNodeGenerated = false;
 	int combatNodeLimit = nodeTotal * combatNodePercent / 100, eventNodeLimit = nodeTotal * eventNodePercent / 100;
 
 	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit)
@@ -326,6 +321,11 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 					}
 					else if (eventNodeCount < eventNodeLimit)
 					{
+						if (!shopNodeGenerated)
+						{
+							this->mapNodes[y][x].type = NodeType::Shop;
+							shopNodeGenerated = true;
+						}
 						this->mapNodes[y][x].type = NodeType::RandomEvent;
 						eventNodeCount++;
 					}

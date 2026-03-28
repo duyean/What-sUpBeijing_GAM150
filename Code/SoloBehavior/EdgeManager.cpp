@@ -83,7 +83,7 @@ void EdgeManager::UpdateEdges()
 				std::cout << "No events available!" << std::endl;
 				break;
 			}
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			AEVec2 pos = { 0.f,0.f };
 			AEVec2 scale = { 1.f, 1.f };
 			std::uniform_int_distribution<int> dist(0, eventsDatabase.size() - 1);
@@ -117,7 +117,7 @@ void EdgeManager::UpdateEdges()
 					randomOccurence.option1(&RunManager::Instance());
 				}
 				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
-				player->getComponent<Player>()->canMove = true;
+				RunManager::Instance().playerCanMove = true;
 				});	
 			decisionBoxManager->transform->AddChild(decisionButtonLeft->transform);
 
@@ -136,7 +136,7 @@ void EdgeManager::UpdateEdges()
 					randomOccurence.option2(&RunManager::Instance());
 				}
 				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
-				player->getComponent<Player>()->canMove = true;
+				RunManager::Instance().playerCanMove = true;
 				});
 			decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
 

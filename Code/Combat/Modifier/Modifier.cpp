@@ -78,6 +78,7 @@ bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
         std::string name = (*p)["name"].GetString();
         int duration = (*p)["duration"].GetInt();
         EFFECT_TYPE type = static_cast<EFFECT_TYPE>((*p)["type"].GetInt());
+        std::string desc = (*p)["desc"].GetString();
         STACK_BEHAVIOUR behaviour = static_cast<STACK_BEHAVIOUR>((*p)["behaviour"].GetInt());
         bool self = static_cast<bool>((*p)["self"].GetInt());
         std::string filePath = (*p)["texture"].GetString();
@@ -94,13 +95,13 @@ bool InitModifierDatabase(JSONSerializer& serializer, std::string fileName)
             float value = (*p)["value"].GetFloat();
             Game::ATTRIBUTE_TYPE attType = static_cast<Game::ATTRIBUTE_TYPE>((*p)["attribute"].GetInt());
             modifierDatabase.emplace(id,
-                std::make_unique<AttributeModifier>(name, duration, type, texture, id, value, attType, behaviour, self));
+                std::make_unique<AttributeModifier>(name, duration, type, desc, texture, id, value, attType, behaviour, self));
         }
         else
         {
             float damage = (*p)["damage"].GetFloat();
             modifierDatabase.emplace(id,
-                std::make_unique<StatusEffect>(name, duration, type, texture, id, damage, behaviour, 1, self));
+                std::make_unique<StatusEffect>(name, duration, type, desc, texture, id, damage, behaviour, 1, self));
         }
     }
     return true;

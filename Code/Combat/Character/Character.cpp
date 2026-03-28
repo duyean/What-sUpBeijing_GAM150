@@ -9,7 +9,7 @@
 #include "../../BaseSystems/Engine/CameraVFX.hpp"
 #include "../../SoloBehavior/JumpToPoint.hpp"
 Character::Character() : meshSystem(nullptr), endingTurn(false), name(""), element(Game::WUXING_ELEMENT::FIRE),
-hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0),
+hp(0), baseMaxHP(0), maxHPBonus(0), maxHP(0), enemyLevel(0),
 baseATK(0), atkBonus(0), atk(0),
 baseDEF(0), defBonus(0), def(0),
 critRate(0), critDMG(0), dmgBonus(0),
@@ -127,9 +127,12 @@ void Character::Init(void)
 	//Scale enemy difficulty
 	else
 	{
-		baseMaxHP *= 1 + 1.1f * RunManager::Instance().GetEnemyDifficulty();
-		baseATK *= 1 + 0.2f * RunManager::Instance().GetEnemyDifficulty();
-		baseDEF *= 1 + 0.15f * RunManager::Instance().GetEnemyDifficulty();
+		std::uniform_int_distribution<int> dist(0, 3);
+		enemyLevel = RunManager::Instance().GetEnemyDifficulty() + dist(Game::gen);
+		enemyLevel = std::max(0, enemyLevel);
+		baseMaxHP *= std::pow(1.2f, enemyLevel);
+		baseATK *= 1 + 0.25f * enemyLevel;
+		baseDEF *= 1 + 0.10f * enemyLevel;
 	}
 	UpdateAttributes();
 	hp = maxHP;
@@ -242,6 +245,8 @@ void Character::UpdateAttributes(void)
 	atkBonus = defBonus = maxHPBonus = 0; //Reset stats first
 	critRate = 0.05f; //5% Base Crit Rate
 	critDMG = 0.5f; //50% Base Crit DMG
+	dmgBonus = 0;
+	dmgReduction = 0;
 	for (auto& mod : effectList)
 	{
 		if (mod->effectType == ATTRIBUTE_MODIFIER)
@@ -284,7 +289,7 @@ void Character::AddModifier(std::unique_ptr<Modifier> modifier)
 			case (STACK_BEHAVIOUR::STACK):
 			{
 				(*modExists)->stackCount += modifier->stackCount;
-				(*modExists)->stackCount = std::min((*modExists)->stackCount, 5);
+				(*modExists)->stackCount = std::min((*modExists)->stackCount, 15);
 				(*modExists)->duration = std::max(modifier->duration, (*modExists)->duration); //Pick longest duration
 				break;
 			}
@@ -440,6 +445,45 @@ void Character::ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value)
 	case Game::ATTRIBUTE_TYPE::DMG_REDUCTION:
 		dmgReduction += value;
 		break;
+	}
+}
+
+float Character::GetStat(Game::ATTRIBUTE_TYPE type) const
+{
+	switch (type)
+	{
+		case (Game::ATTRIBUTE_TYPE::ATK):
+		{
+			return atk;
+		}
+		case (Game::ATTRIBUTE_TYPE::DEF):
+		{
+			return def;
+		}
+		case (Game::ATTRIBUTE_TYPE::HP):
+		{
+			return maxHP;
+		}
+		case (Game::ATTRIBUTE_TYPE::CRIT_RATE):
+		{
+			return critRate;
+		}
+		case (Game::ATTRIBUTE_TYPE::CRIT_DAMAGE):
+		{
+			return critDMG;
+		}
+		case (Game::ATTRIBUTE_TYPE::DMG_BONUS):
+		{
+			return dmgBonus;
+		}
+		case (Game::ATTRIBUTE_TYPE::DMG_REDUCTION):
+		{
+			return dmgReduction;
+		}
+		default:
+		{
+			return 0.0f;
+		}
 	}
 }
 

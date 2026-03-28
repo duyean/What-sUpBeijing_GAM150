@@ -37,9 +37,9 @@
         {
             "id": 3,
             "name": "Armor Piercing Strike",
-            "coefficient": 1.20,
+            "coefficient": 0.8,
             "dot": 0.0,
-            "brief": "Strike an enemy and applies VULNERABILITY.\nVULNERABILITY makes enemies take 50% more DMG.",
+            "brief": "Strike an enemy and applies VULNERABILITY.\nVULNERABILITY reduces enemies' DMG Reduction by 20% ",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
             "modifiers": [

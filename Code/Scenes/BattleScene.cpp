@@ -37,7 +37,7 @@ This file contains the definitions for the collection of functions in BattleScen
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
-BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr)
+BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr), renderUnitStat(true)
 {
     
 }
@@ -342,6 +342,18 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(tt->transform);
     enSystem->entities.push_back(std::move(tt));
 
+    auto statusIconTooltip = std::make_unique<Entity>("StatusTooltipUI");
+    pos = { 0.f, 0.f };
+    scale = { 500, 150 };
+    statusIconTooltip->addComponent<Transform2D>(pos, scale, 0.f);
+    statusIconTooltip->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 502, MeshType::BOX_B);
+    TextBox* tt_tb2 = statusIconTooltip->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+    tt_tb2->text_layer = 503;
+    tt_tb2->text_size = 0.5f;
+    tt_tb2->line_padding = 2.f;
+    enSystem->rootEntity->transform->AddChild(statusIconTooltip->transform);
+    enSystem->entities.push_back(std::move(statusIconTooltip));
+
     auto ts = std::make_unique<Entity>("TransitionScreen");
     pos = { 0.f, 0.f };
     scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
@@ -350,6 +362,16 @@ void BattleScene::Load()
     ts->addComponent<TransitionScreen>(T_State::T_OUT);
     enSystem->rootEntity->transform->AddChild(ts->transform);
     enSystem->entities.push_back(std::move(ts));
+
+    auto statScreenBG = std::make_unique<Entity>("BattleStatScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    statScreenBG->addComponent<Transform2D>(pos, scale, 0.f);
+    statScreenBG->addComponent<Mesh>("Box", Color(20, 20, 20, 0.9f), 1500, MeshType::BOX_B);
+    auto bsUI = statScreenBG->addComponent<BattleStatUI>();
+    bsUI->SetBattleManager(battleManager);
+    enSystem->rootEntity->transform->AddChild(statScreenBG->transform);
+    enSystem->entities.push_back(std::move(statScreenBG));
 
     //Can call this every battle since the function clears the databases 
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");

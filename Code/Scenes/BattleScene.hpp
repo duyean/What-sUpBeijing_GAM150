@@ -34,6 +34,7 @@ private:
 	MeshGen* meshSystem;
 	EntityManager* enSystem;
 	BattleManager* battleManager;
+	bool renderUnitStat;
 public:
 	BattleScene();
 	~BattleScene();

@@ -33,6 +33,9 @@ private:
 	//Element of the character
 	Game::WUXING_ELEMENT element;
 
+	//Probably should just made Enemy and PlayerChar child classes :(
+	int enemyLevel;
+
 	//How much health the unit has
 	float hp;
 
@@ -141,6 +144,8 @@ public:
 	inline const std::unordered_map<MOVE_SLOT, MOVE_ID>& GetMoveList() const { return moveList; }
 	inline bool IsEndingTurn() const { return endingTurn; }
 	inline bool IsDead() const { return isDead; }
+	inline int GetLevel() const { return enemyLevel; }
+	float GetStat(Game::ATTRIBUTE_TYPE type) const;
 
 	void init() override;
 	void awake() override;

@@ -115,7 +115,7 @@ void BattleManager::ResetBattle()
 	enemyCount = 0;
 	wait = false;
 
-	std::uniform_int_distribution<int> d(1, 3);
+	std::uniform_int_distribution<int> d(1, 2);
 	RunManager::Instance().ModifyEnemyDifficulty(d(Game::gen));
 }
 
@@ -195,11 +195,11 @@ void BattleManager::update()
 				AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_WIN);
 			}
 
-			//if (bt == BATTLE_TYPE::MINI_BOSS)
-			//{
-			//	//unlock character goes here
-			//}
-			if (bt != BATTLE_TYPE::BOSS)
+			if (bt == BATTLE_TYPE::MINI_BOSS)
+			{
+				//unlock character goes here
+			}
+			if (bt != BATTLE_TYPE::BOSS || outcome == BATTLE_OUTCOME::DEFEAT)
 			{
 				//add blessing
 				std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
@@ -207,7 +207,7 @@ void BattleManager::update()
 				std::advance(it2, dist(Game::gen));
 				auto randomBlessing = it2->second->Clone();
 				RunManager::Instance().AddBlessing(std::move(randomBlessing));
-
+				RunManager::Instance().ModifyCurrency(20);
 				//Change scene back to exploration
 				ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 			}

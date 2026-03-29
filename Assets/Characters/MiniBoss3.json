@@ -1,0 +1,18 @@
+{
+  "name": "Chong Qun Zhi Huang",
+  "element": 2,
+  "baseHP": 2500.0,
+  "baseATK": 1500.0,
+  "baseDEF": 500.0,
+  "faction": 2,
+  "initiative": 1,
+  "texture": "MianJuCong.png",
+  "texture2": "MianJuCongBall.png",
+  "icontexture": "MianJuCong.png",
+  "moves": {
+    "0": 0,
+    "1": 2,
+    "2": 11,
+    "3": 12
+  }
+}

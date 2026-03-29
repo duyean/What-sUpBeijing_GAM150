@@ -57,8 +57,6 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void BattleScene::Load()
 {
-    //FOR DEBUG, TO REMOVE LATER!!!!
-
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
     meshSystem = &MeshGen::getInstance();
@@ -85,7 +83,18 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
+    switch (RunManager::Instance().GetMapType())
+    {
+    case CityStreets:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
+        break;
+    case OuterPalace:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(200, 200, 255, .75f), 99, MeshType::BOX_T);
+        break;
+    case InnerPalace:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(255, 200, 200, .75f), 99, MeshType::BOX_T);
+        break;
+    }
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
@@ -245,7 +254,7 @@ void BattleScene::Load()
     pos = { 0.f, 0.f };
     scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
     ps->addComponent<Transform2D>(pos, scale, 0.f);
-    PauseMenu* pauseMenu = ps->addComponent<PauseMenu>();
+    SettingsScreen* pauseMenu = ps->addComponent<SettingsScreen>();
 
     //load the button textures
     meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
@@ -536,13 +545,25 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
     {
         character = std::make_unique<Entity>("Enemy");
         ch = character->addComponent<Character>();
+        Color colorModifier = { 255, 255, 255, 1.f };
         switch (type)
         {
             case (BATTLE_TYPE::MINI_BOSS):
             {
                 hpBarScale = { 250, 10 };
                 pos = enemyPositions[0];
-                ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+                switch (RunManager::Instance().GetMapType())
+                {
+                case CityStreets:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+                    break;
+                case OuterPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss2.json");
+                    break;
+                case InnerPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss3.json");
+                    break;
+                }       
                 break;
             }
             case (BATTLE_TYPE::BOSS):
@@ -550,7 +571,18 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 hpBarScale = { 350, 10 };
                 scale = { 300, 300 };
                 pos = enemyPositions[0];
-                ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
+                switch (RunManager::Instance().GetMapType())
+                {
+                case CityStreets:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
+                    break;
+                case OuterPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss2.json");
+                    break;
+                case InnerPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss3.json");
+                    break;
+                }
                 break;
             }
         }
@@ -560,7 +592,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
         meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
         character->addComponent<Transform2D>(pos, scale, 0.f);
-        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), colorModifier, 100, MeshType::BOX_T);
         auto hpBar = character->addComponent<Healthbar1>();
         character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);

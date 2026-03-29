@@ -12,7 +12,8 @@ This file contains the interface for a Run Manager for our game.
 #pragma once
 #include "../Code/Engine_WZBJ_Pak.hpp"
 #include "../Combat/Blessing/Blessing.hpp"
-#include "../Map/MapClass.hpp"
+//#include "../Map/MapClass.hpp"
+#include "../Maps_WZBJ_Pak.hpp"
 #include <memory>
 
 //Forward declare the character class
@@ -86,6 +87,7 @@ public:
 	MapType GetMapType() const;
 
 	MapType GetPrevMapType() const;
+
 
 	//game related booleans
 	bool game_paused = false;

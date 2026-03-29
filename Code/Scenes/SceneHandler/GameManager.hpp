@@ -30,14 +30,13 @@ private:
 	EntityManager* enSystem;
 	PhysicSystem* phSystem;
 	RenderSystem* rSystem;
-	bool ShowDebug;
 	
 
 public:
 	GameManager();
 	~GameManager();
 
-	bool quitGame;
+	bool quitGame =  false;
 
 	/*!
 	@brief Initialize game variables and settings

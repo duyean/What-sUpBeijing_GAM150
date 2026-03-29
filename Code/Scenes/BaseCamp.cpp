@@ -45,7 +45,7 @@ void BaseCamp::Purchase()
 void BaseCamp::CloseShop()
 {
 	Entity* shop = enSystem->rootEntity->FindByName("Shop");
-	Entity* player = enSystem->rootEntity->FindByName("Player");
+	//Entity* player = enSystem->rootEntity->FindByName("Player");
 	
 	shop->getComponent<Shop>()->CloseShopUI();
 	//player->getComponent<Player>()->canMove = true;

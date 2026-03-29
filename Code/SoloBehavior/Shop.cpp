@@ -4,16 +4,16 @@
 #include "../Audio_WZBJ_Pak.hpp"
 
 // Collision logic
-void Shop::onHit(BoxCollider2D* other)
+void Shop::onHit(BoxCollider2D*)
 {
 	canShow = true;
 	//player->getComponent<Player>()->canMove = false;
 	RunManager::Instance().playerCanMove = false;
 }
-void Shop::onStay(BoxCollider2D* other)
+void Shop::onStay(BoxCollider2D*)
 {
 }
-void Shop::onExit(BoxCollider2D* other)
+void Shop::onExit(BoxCollider2D*)
 {
 }
 

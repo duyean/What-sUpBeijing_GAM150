@@ -71,6 +71,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentY--;
 							break;
 						}
+						[[fallthrough]];
 				case 2: //south
 					if (currentY + 1 <= mapHeight)
 						if (NodeType::Debug == this->mapNodes[currentY + 1][currentX].type)
@@ -81,6 +82,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentY++;
 							break;
 						}
+						[[fallthrough]];
 				case 3: //east
 					if (currentX + 1 <= mapWidth)
 						if (NodeType::Debug == this->mapNodes[currentY][currentX + 1].type)
@@ -91,6 +93,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentX++;
 							break;
 						}
+						[[fallthrough]];
 				case 4: //west
 					if (currentX - 1 >= 0)
 						if (NodeType::Debug == this->mapNodes[currentY][currentX - 1].type)
@@ -101,6 +104,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentX--;
 							break;
 						}
+						[[fallthrough]];
 				default: //all nodes surrounding are already generated
 					stuck = true;
 			}
@@ -407,7 +411,7 @@ void Map::DebugPrint(Map map)
 	printf("end of map debug printing.\n");
 }
 
-bool Map::SaveMap(JSONSerializer serializer, std::string fileName)
+bool Map::SaveMap(JSONSerializer, std::string fileName)
 {
 	std::ofstream ofs(fileName);
 	if (!ofs.is_open())

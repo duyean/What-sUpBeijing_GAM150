@@ -30,9 +30,9 @@ private:
 	std::vector<Entity*> display{};
 	std::map<int, bool> selection{};
 	int currSelection{ -1 };
-	Entity* buyButton;
-	Entity* player;
-	ShopBlessing* shopBlessings[4];
+	Entity* buyButton = nullptr;
+	Entity* player = nullptr;
+	ShopBlessing* shopBlessings[4]{};
 	
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

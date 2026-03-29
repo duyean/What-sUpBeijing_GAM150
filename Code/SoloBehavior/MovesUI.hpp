@@ -23,7 +23,7 @@ private:
 	bool canDisplay = false;
 
 	Character* currentCh = nullptr;
-	MOVE_SLOT currMoveSlot;
+	MOVE_SLOT currMoveSlot = MOVE_SLOT::NONE;
 
 	void UseCurrMove(MOVE_SLOT ms, Character* ch);
 	void DisplayToolTip(MOVE_SLOT ms);

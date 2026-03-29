@@ -59,7 +59,7 @@ void TransitionScreen::update()
 		pos = { 0.f , 0.f };
 		entity->transform->setPosition(pos);
 
-		currFadeTime -= dt;
+		currFadeTime -= (float)dt;
 		if (currFadeTime > maxFadeTime / 2)
 			ts_opacity = Lerp(0.f, 1.f, (maxFadeTime - currFadeTime) / (maxFadeTime / 2));
 		else

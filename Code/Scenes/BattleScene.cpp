@@ -384,7 +384,7 @@ void BattleScene::Load()
         pos = { 0.f, 0.f };
         scale = { 1.f, 1.f };
         tut_s->addComponent<Transform2D>(pos, scale, 0.f);
-        TutorialScreen* tutorial = tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_COMBAT);
+        tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_COMBAT);
         enSystem->rootEntity->transform->AddChild(tut_s->transform);
         enSystem->entities.push_back(std::move(tut_s));
 

@@ -20,7 +20,7 @@ public:
 
 private:
 	std::vector<CollisionCallback> onEnter, onStay, onExit;
-	PhysicSystem* phSystem;
+	PhysicSystem* phSystem = nullptr;
 public:
     AEVec2 halfExtents;
     bool isTrigger = false;

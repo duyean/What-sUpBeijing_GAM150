@@ -54,8 +54,9 @@ public:
 
 	TransitionScreen() = default;
 
-	TransitionScreen(T_State _state) 
-		:ts_color(255), ts_opacity(1.f), currFadeTime(0.f), maxFadeTime(12.f), transitionSpeed(1500.f), t_buffer(false), state(_state){}
+	TransitionScreen(T_State _state)
+		:ts_color(255), ts_opacity(1.f), currFadeTime(0.f), maxFadeTime(12.f),
+		scene_t_buffer(false), transitionSpeed(1500.f), t_buffer(false), state(_state) {}
 
 	~TransitionScreen(){}
 

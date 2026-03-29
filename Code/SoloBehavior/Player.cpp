@@ -5,15 +5,15 @@
 BoxCollider2D* col;
 
 //Do collision logic
-void Player::onHit(BoxCollider2D* other)
+void Player::onHit(BoxCollider2D*)
 {
 	
 }
-void Player::onStay(BoxCollider2D* other)
+void Player::onStay(BoxCollider2D*)
 {
 
 }
-void Player::onExit(BoxCollider2D* other)
+void Player::onExit(BoxCollider2D*)
 {
 
 }

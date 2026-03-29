@@ -55,15 +55,12 @@ const std::vector<std::string>& RunManager::GetParty() const
 	return party;
 }
 
-void RunManager::ResetRun()
+void RunManager::ResetTutorials()
 {
 	//reset show tutorials
 	firstTimeBase = true;
 	firstTimeExplore = true;
 	firstTimeCombat = true;
-
-	//Clear the blessings for the current run
-	runBlessings.clear();
 }
 
 void RunManager::ResetSave()
@@ -76,10 +73,6 @@ void RunManager::ResetSave()
 		std::cout << "NavData.json was unable to be removed.\n";
 	if (std::remove("Assets/SaveFile.json") != 0)
 		std::cout << "SaveFile.json was unable to be removed.\n";
-
-	firstTimeBase = true;
-	firstTimeExplore = true;
-	firstTimeCombat = true;
 
 	runBlessings.clear();
 	currency = 200;

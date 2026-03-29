@@ -249,12 +249,12 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
 
-    ////Pause screen
-    //auto ps = std::make_unique<Entity>("PauseScreen");
-    //pos = { 0.f, 0.f };
-    //scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
-    //ps->addComponent<Transform2D>(pos, scale, 0.f);
-    //SettingsScreen* pauseMenu = ps->addComponent<SettingsScreen>();
+    //Pause screen
+    auto ps = std::make_unique<Entity>("PauseScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    ps->addComponent<Transform2D>(pos, scale, 0.f);
+    PauseMenu* pauseMenu = ps->addComponent<PauseMenu>();
 
     //load the button textures
     meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
@@ -274,7 +274,7 @@ void BattleScene::Load()
     moveButton1->SetNormalColor(Color{ 200,200,200,1 });
     moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb1->transform);
-    //pauseMenu->AddPrevDisplayEntity(mb1.get());
+    pauseMenu->AddPrevDisplayEntity(mb1.get());
     
 
     ////////////////////////////////////////////////
@@ -293,7 +293,7 @@ void BattleScene::Load()
     moveButton2->SetNormalColor(Color{ 200,200,200,1 });
     moveButton2->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb2->transform);
-    //pauseMenu->AddPrevDisplayEntity(mb2.get());
+    pauseMenu->AddPrevDisplayEntity(mb2.get());
 
 
     ////////////////////////////////////////////////
@@ -312,7 +312,7 @@ void BattleScene::Load()
     moveButton3->SetNormalColor(Color{ 200,200,200,1 });
     moveButton3->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb3->transform);
-    //pauseMenu->AddPrevDisplayEntity(mb3.get());
+    pauseMenu->AddPrevDisplayEntity(mb3.get());
 
 
     ////////////////////////////////////////////////
@@ -331,7 +331,7 @@ void BattleScene::Load()
     moveButton4->SetNormalColor(Color{ 200,200,200,1 });
     moveButton4->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb4->transform);
-    //pauseMenu->AddPrevDisplayEntity(mb4.get());
+    pauseMenu->AddPrevDisplayEntity(mb4.get());
 
 
     ////////////////////////////////////////////////
@@ -429,8 +429,8 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(mb4));
     
 
-    //enSystem->rootEntity->transform->AddChild(ps->transform);
-    //enSystem->entities.push_back(std::move(ps));
+    enSystem->rootEntity->transform->AddChild(ps->transform);
+    enSystem->entities.push_back(std::move(ps));
 }
 
 /*!

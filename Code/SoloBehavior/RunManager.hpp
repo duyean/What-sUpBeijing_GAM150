@@ -46,7 +46,6 @@ class RunManager
 
 	MapType currMapType;
 	MapType prevMapType;
-	NavigationData* navData = nullptr;
 public:
 	RunManager();
 	~RunManager();
@@ -59,8 +58,8 @@ public:
 	//Starts a new run
 	void StartRun();
 
-	//Ends the current run
-	void ResetRun();
+	//Reset Tutorial Pages
+	void ResetTutorials();
 
 	// Resets everything in the save
 	void ResetSave();
@@ -89,9 +88,6 @@ public:
 
 	MapType GetPrevMapType() const;
 
-	void SetNavData(NavigationData* _navData) { navData = _navData; }
-	NavigationData* NavData() { return navData; }
-
 	//game related booleans
 	bool game_paused = false;
 	bool game_won = false;
@@ -101,8 +97,6 @@ public:
 	bool firstTimeBase;
 	bool firstTimeExplore;
 	bool firstTimeCombat;
-
-	
 
 	void SaveRun() const;
 	bool LoadRun();

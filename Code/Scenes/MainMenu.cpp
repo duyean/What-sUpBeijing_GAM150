@@ -275,6 +275,7 @@ void MainMenu::SwitchToGame()
 void MainMenu::PlayNewSave()
 {
 	RunManager::Instance().ResetSave();
+	RunManager::Instance().ResetTutorials();
 	SwitchToGame();
 }
 

@@ -5,15 +5,15 @@
 BoxCollider2D* col;
 
 //Do collision logic
-void Player::onHit(BoxCollider2D* other)
+void Player::onHit(BoxCollider2D*)
 {
 	
 }
-void Player::onStay(BoxCollider2D* other)
+void Player::onStay(BoxCollider2D*)
 {
 
 }
-void Player::onExit(BoxCollider2D* other)
+void Player::onExit(BoxCollider2D*)
 {
 
 }
@@ -31,7 +31,7 @@ void Player::awake()
 
 void Player::init()
 {
-
+	RunManager::Instance().playerCanMove = true;
 }
 
 void Player::update()
@@ -39,7 +39,7 @@ void Player::update()
 	float dt = (float)AEFrameRateControllerGetFrameTime();
 	AEVec2 pos = entity->transform->getPosition();
 
-	if (canMove && !RunManager::Instance().game_paused)
+	if (RunManager::Instance().playerCanMove && !RunManager::Instance().game_paused)
 	{
 		if (AEInputCheckCurr(AEVK_W))
 		{

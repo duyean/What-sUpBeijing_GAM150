@@ -11,6 +11,9 @@ class PartyUI : public SoloBehavior
 	std::vector<Entity*> icons;
 	std::vector<Entity*> healthBars;
 	std::array<std::vector<Entity*>, 3> modifierIcons = {};
+	Entity* modifierTooltip = nullptr;
+	std::string toolTipBuffer;
+
 public:
 	void AddIcon(Entity* en);
 	void AddModifierIcon(int index, Entity* en);
@@ -20,4 +23,5 @@ public:
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
+	bool IsMouseOverIcon(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
 };

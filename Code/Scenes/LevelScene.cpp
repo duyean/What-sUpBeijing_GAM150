@@ -17,6 +17,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../BaseSystems/Engine/Bounce.hpp"
+#include "../SoloBehavior/TutorialScreen.hpp"
 LevelScene::LevelScene()
 {	
 }
@@ -38,6 +39,7 @@ This function loads splash screen image
 void LevelScene::Load()
 {
 	meshSystem = &MeshGen::getInstance();
+	std::cout << "CURRENT MAP: " << RunManager::Instance().GetMapType() << std::endl;
 
 	//check if the current map is the same as the prev set map
 	if (RunManager::Instance().GetMapType() == RunManager::Instance().GetPrevMapType())
@@ -65,7 +67,6 @@ void LevelScene::Load()
 
 		std::cout << "Generating a new map since we change level!" << "\n";
 	}
-
 	
 	std::cout << "Now on map: " << RunManager::Instance().GetMapType()<<"\n";
 		
@@ -82,14 +83,14 @@ void LevelScene::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	float NODE_SIZE = 23.f;
-	float minimapOffX =  300.f;
-	float minimapOffY = -150.f;
-	int depthWall = 202;
-	float thickWall = 2.f;
+	float	NODE_SIZE			=	36.f;
+	float	minimapOffX			=	478.f;
+	float	minimapOffY			=	276.f;
+	int		depthWall			=	202;
+	float	thickWall			=	3.f;
 
 	//map entities
-	for (int x = map.playMap.mapNodes[0].size() - 1; x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size() - 1; y >= 0 ; y--) {
+	for (int x = (int)map.playMap.mapNodes[0].size() - 1; x >= 0 ; x--) { for (int y = (int)map.playMap.mapNodes.size() - 1; y >= 0; y--) {
 		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
 		auto mapFog = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
 		pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE };
@@ -170,9 +171,33 @@ void LevelScene::Load()
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
 	bg->addComponent<Transform2D>(pos, scale, 0.f);
-	bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	switch (RunManager::Instance().GetMapType())
+	{
+	case CityStreets:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+		break;
+	case OuterPalace:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(200, 200, 255, 1.f), 100, MeshType::BOX_T);
+		break;
+	case InnerPalace:
+		bg->addComponent<Mesh>("Box", "OP_BG", Color(255, 200, 200, 1.f), 100, MeshType::BOX_T);
+		break;
+	}
 	enSystem->rootEntity->transform->AddChild(bg->transform);
 	enSystem->entities.push_back(std::move(bg));
+
+	if (RunManager::Instance().firstTimeExplore)
+	{
+		auto tut_s = std::make_unique<Entity>("TutorialScreen");
+		pos = { 0.f, 0.f };
+		scale = { 1.f, 1.f };
+		tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+		tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_EXPLORATION);
+		enSystem->rootEntity->transform->AddChild(tut_s->transform);
+		enSystem->entities.push_back(std::move(tut_s));
+
+		RunManager::Instance().firstTimeExplore = false;
+	}
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };
@@ -189,7 +214,7 @@ void LevelScene::Load()
 	scale = { 100.f, 100.f };
 	e->addComponent<Transform2D>(pos, scale, 0.f);
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
-	e->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
+	e->addComponent<BoxCollider2D>(scale.x / 1.5f, scale.y / 1.5f);
 	e->addComponent<Player>();
 	//e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(e->transform);
@@ -203,7 +228,7 @@ void LevelScene::Load()
 	pos = { 0.f, (float)AEGfxGetWindowHeight() / 2 - scale.y/2};
 	n_path->addComponent<Transform2D>(pos, scale, 0.f);
 	//n_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
-	n_path->addComponent<BoxCollider2D>(scale.x/ 1.5, scale.y/ 1.5);
+	n_path->addComponent<BoxCollider2D>(scale.x/ 1.5f, scale.y/ 1.5f);
 	n_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(n_path->transform);
 	
@@ -222,7 +247,7 @@ void LevelScene::Load()
 	pos = { (float)AEGfxGetWindowWidth()/2 - scale.x/2, 0.f };
 	e_path->addComponent<Transform2D>(pos, scale, 0.f);
 	//e_path->addComponent<Mesh>("Box", Color(255, 255, 255, 0.3), 100, MeshType::BOX_B);
-	e_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
+	e_path->addComponent<BoxCollider2D>(scale.x / 1.5f, scale.y / 1.5f);
 	e_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(e_path->transform);
 
@@ -238,9 +263,9 @@ void LevelScene::Load()
 
 	auto s_path = std::make_unique<Entity>("S_Path");
 	scale = { (float)AEGfxGetWindowWidth(), collidersize };
-	pos = { 0.f, scale.y/2 - (float)AEGfxGetWindowHeight()/2};
+	pos = { 0.f, scale.y/2.f - (float)AEGfxGetWindowHeight()/2.f};
 	s_path->addComponent<Transform2D>(pos, scale, 0.f);
-	s_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
+	s_path->addComponent<BoxCollider2D>(scale.x / 1.5f, scale.y / 1.5f);
 	s_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(s_path->transform);
 
@@ -258,7 +283,7 @@ void LevelScene::Load()
 	scale = { collidersize, (float)AEGfxGetWindowHeight() };
 	pos = { scale.x/2 - (float)AEGfxGetWindowWidth() / 2, 0.f };
 	w_path->addComponent<Transform2D>(pos, scale, 0.f);
-	w_path->addComponent<BoxCollider2D>(scale.x / 1.5, scale.y / 1.5);
+	w_path->addComponent<BoxCollider2D>(scale.x / 1.5f, scale.y / 1.5f);
 	w_path->addComponent<SceneEdge>();
 	enSystem->rootEntity->transform->AddChild(w_path->transform);
 

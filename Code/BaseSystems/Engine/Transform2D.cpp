@@ -67,8 +67,8 @@ void Transform2D::setScale(const AEVec2& worldScale) { // world scale setter
 }
 
 AEVec2 Transform2D::getLocalScale() const { return localScale; }
-void Transform2D::setLocalScale(const AEVec2& scale) {
-	localScale = scale;
+void Transform2D::setLocalScale(const AEVec2& _scale) {
+	localScale = _scale;
 	MarkDirty();
 	syncTransform();
 }

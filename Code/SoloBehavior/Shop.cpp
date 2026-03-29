@@ -2,17 +2,19 @@
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../BaseSystems/Engine/TextBox.hpp"
 
 // Collision logic
-void Shop::onHit(BoxCollider2D* other)
+void Shop::onHit(BoxCollider2D*)
 {
 	canShow = true;
-	player->getComponent<Player>()->canMove = false;
+	//player->getComponent<Player>()->canMove = false;
+	RunManager::Instance().playerCanMove = false;
 }
-void Shop::onStay(BoxCollider2D* other)
+void Shop::onStay(BoxCollider2D*)
 {
 }
-void Shop::onExit(BoxCollider2D* other)
+void Shop::onExit(BoxCollider2D*)
 {
 }
 
@@ -25,9 +27,30 @@ void Shop::ChooseSelection(int id)
 {
 	currSelection = id;
 	if (selection.find(currSelection)->second != true)
+	{
 		buyButton->isActive = true;
+		auto b = shopBlessings[currSelection]->GetBlessing().get();
+		switch (b->blessingRarity)
+		{
+		case BLESSING_RARITY::COMMON:
+			costStr = "Cost: 25";
+			break;
+		case BLESSING_RARITY::RARE:
+			costStr = "Cost: 50";
+			break;
+		case BLESSING_RARITY::LEGENDARY:
+			costStr = "Cost: 100";
+			break;
+		case BLESSING_RARITY::MYTHICAL:
+			costStr = "Cost: 250";
+			break;
+		}
+	}
 	else
+	{
 		buyButton->isActive = false;
+		costStr = "Purchased!";
+	}
 	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_SELECT_SHOP);
 }
 
@@ -46,18 +69,52 @@ void Shop::PurchaseSelection()
 	// Purchase logic
 	selection.find(currSelection)->second = true;
 
+	bool couldPurchase = false;
 	// Selection is Blessing
 	if (currSelection <= 3)
 	{
 		auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
-		RunManager::Instance().AddBlessing(std::move(b));
+		int itemcost{ 0 };
+		switch (b.get()->blessingRarity)
+		{
+		case BLESSING_RARITY::COMMON:
+			itemcost = 25;
+			break;
+		case BLESSING_RARITY::RARE:
+			itemcost = 50;
+			break;
+		case BLESSING_RARITY::LEGENDARY:
+			itemcost = 100;
+			break;
+		case BLESSING_RARITY::MYTHICAL:
+			itemcost = 250;
+			break;
+		}
+
+		if (RunManager::Instance().RemoveCurrency(itemcost))
+		{
+			RunManager::Instance().AddBlessing(std::move(b));
+			couldPurchase = true;
+		}
+		else
+		{
+			currencyFlashTimer = currencyFlashTimerMax;
+			currency->getComponent<TextBox>()->text_color = Color{ 255, 55, 55, 1.f };
+		}
 	}
 
 	// UI elements
-	for (std::pair<int, bool> p : selection)
-		p.second = false;
-	buyButton->isActive = false;
-	AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
+	if (couldPurchase)
+	{
+		for (std::pair<int, bool> p : selection)
+			p.second = false;
+		buyButton->isActive = false;
+		costStr = "Purchased!";
+
+		curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
+		currency->getComponent<TextBox>()->text = curStr.c_str();
+		AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_PURCHASE_SHOP);
+	}
 }
 
 void Shop::AddShopBlessings(ShopBlessing* b, int id)
@@ -73,6 +130,16 @@ void Shop::CloseShopUI()
 void Shop::SetPlayer(Entity* p)
 {
 	player = p;
+}
+
+void Shop::SetCurrency(Entity* c)
+{
+	currency = c;
+}
+
+void Shop::SetCost(Entity* c)
+{
+	cost = c;
 }
 
 void Shop::awake()
@@ -97,6 +164,12 @@ void Shop::init()
 	selection.insert(std::make_pair<int, bool>(5, false));
 	selection.insert(std::make_pair<int, bool>(6, false));
 	selection.insert(std::make_pair<int, bool>(7, false));
+
+	curStr = "Currency: " + to_string(RunManager::Instance().GetCurrency());
+	currency->getComponent<TextBox>()->text = curStr.c_str();
+	cost->getComponent<TextBox>()->text = "";
+
+	currencyFlashTimerMax = 0.5f;
 }
 
 void Shop::update()
@@ -114,6 +187,11 @@ void Shop::update()
 			ent->isActive = false;
 		buyButton->isActive = false;
 	}
+	if (currencyFlashTimer > 0.f)
+		currencyFlashTimer -= float(AEFrameRateControllerGetFrameTime());
+	else
+		currency->getComponent<TextBox>()->text_color = Color{ 255, 255, 255, 1.f };
+	cost->getComponent<TextBox>()->text = costStr.c_str();
 }
 
 void Shop::fixedUpdate()

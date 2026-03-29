@@ -1,5 +1,6 @@
 #include "DisplayBox.hpp"
 #include "../UI_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/RunManager.hpp"
 
 DisplayBox::DisplayBox() : header(""), title(""), desc(""), footer(""), onClickDestroyTimer(0), children({})
 {
@@ -78,11 +79,12 @@ void DisplayBox::update()
 	{
 		if (onClickDestroyTimer <= 0)
 		{
+			RunManager::Instance().playerCanMove = true;
 			for (auto& e : children)
 			{
 				Destroy(e);
 			}
-			Destroy(this->entity);
+			Destroy(this->entity);		
 		}
 	}
 }

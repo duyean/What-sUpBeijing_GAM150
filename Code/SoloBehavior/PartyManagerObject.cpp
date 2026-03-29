@@ -1,14 +1,14 @@
 #include "PartyManagerObject.hpp"
 
 // Collision logic
-void PartyManagerObject::onHit(BoxCollider2D* other)
+void PartyManagerObject::onHit(BoxCollider2D*)
 {
 	decisionBox->ToggleDecisionBox(true);
 }
-void PartyManagerObject::onStay(BoxCollider2D* other)
+void PartyManagerObject::onStay(BoxCollider2D*)
 {
 }
-void PartyManagerObject::onExit(BoxCollider2D* other)
+void PartyManagerObject::onExit(BoxCollider2D* )
 {
 }
 

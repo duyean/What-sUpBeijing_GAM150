@@ -18,6 +18,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/PauseMenu.hpp"
 #include "../Code/SoloBehavior/CurrencyDisplay.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/TutorialScreen.hpp"
 
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
@@ -44,10 +45,11 @@ void BaseCamp::Purchase()
 void BaseCamp::CloseShop()
 {
 	Entity* shop = enSystem->rootEntity->FindByName("Shop");
-	Entity* player = enSystem->rootEntity->FindByName("Player");
+	//Entity* player = enSystem->rootEntity->FindByName("Player");
 	
 	shop->getComponent<Shop>()->CloseShopUI();
-	player->getComponent<Player>()->canMove = true;
+	//player->getComponent<Player>()->canMove = true;
+	RunManager::Instance().playerCanMove = true;
 }
 
 BaseCamp::BaseCamp()
@@ -258,6 +260,24 @@ void BaseCamp::Load()
 	shopCloseButton->isActive = false;
 	enSystem->rootEntity->transform->AddChild(shopCloseButton->transform);
 
+	auto currencyText = std::make_unique<Entity>("CurrencyText");
+	pos = { -AEGfxGetWindowWidth() * 0.275f, AEGfxGetWindowHeight() * 0.25f };
+	scale = { AEGfxGetWindowWidth() * 0.1f, AEGfxGetWindowHeight() * 0.05f };
+	currencyText->addComponent<Transform2D>(pos, scale, 0.f);
+	currencyText->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	currencyText->addComponent<TextBox>("Currency: ", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	currencyText->isActive = false;
+	enSystem->rootEntity->transform->AddChild(currencyText->transform);
+
+	auto costText = std::make_unique<Entity>("CostText");
+	pos = { AEGfxGetWindowWidth() * 0.26f, -AEGfxGetWindowHeight() * 0.15f };
+	scale = { AEGfxGetWindowWidth() * 0.15f, AEGfxGetWindowHeight() * 0.05f };
+	costText->addComponent<Transform2D>(pos, scale, 0.f);
+	costText->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	costText->addComponent<TextBox>("Cost: ", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	costText->isActive = false;
+	enSystem->rootEntity->transform->AddChild(costText->transform);
+
 	meshSystem->CreateTexture("Assets/Images/shop.png", "shop");
 	auto shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
@@ -277,12 +297,16 @@ void BaseCamp::Load()
 	s->AddDisplayEntity(typeDesc.get());
 	s->AddDisplayEntity(longDesc.get());
 	s->AddDisplayEntity(shopCloseButton.get());
+	s->AddDisplayEntity(currencyText.get());
+	s->AddDisplayEntity(costText.get());
 	s->SetBuyButton(buyButton.get());
 	s->AddShopBlessings(shopB1, 0);
 	s->AddShopBlessings(shopB2, 1);
 	s->AddShopBlessings(shopB3, 2);
 	s->AddShopBlessings(shopB4, 3);
 	s->SetPlayer(e.get());
+	s->SetCurrency(currencyText.get());
+	s->SetCost(costText.get());
 	enSystem->rootEntity->transform->AddChild(shop->transform);
 	enSystem->entities.push_back(std::move(shopBackground));
 	enSystem->entities.push_back(std::move(blessing1));
@@ -296,6 +320,8 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(longDesc));
 	enSystem->entities.push_back(std::move(buyButton));
 	enSystem->entities.push_back(std::move(shopCloseButton));
+	enSystem->entities.push_back(std::move(currencyText));
+	enSystem->entities.push_back(std::move(costText));
 	enSystem->entities.push_back(std::move(shop));
 	enSystem->entities.push_back(std::move(e));
 
@@ -306,6 +332,19 @@ void BaseCamp::Load()
 	ps->addComponent<PauseMenu>();
 	enSystem->rootEntity->transform->AddChild(ps->transform);
 	enSystem->entities.push_back(std::move(ps));
+
+	if (RunManager::Instance().firstTimeBase)
+	{
+		auto tut_s = std::make_unique<Entity>("TutorialScreen");
+		pos = { 0.f, 0.f };
+		scale = { 1.f, 1.f };
+		tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+		tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_BASE_CAMP);
+		enSystem->rootEntity->transform->AddChild(tut_s->transform);
+		enSystem->entities.push_back(std::move(tut_s));
+		
+		RunManager::Instance().firstTimeBase = false;
+	}
 
 	auto ts = std::make_unique<Entity>("TransitionScreen");
 	pos = { 0.f, 0.f };

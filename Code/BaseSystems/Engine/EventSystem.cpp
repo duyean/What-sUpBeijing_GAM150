@@ -52,7 +52,7 @@ void EventSystem::DispatchPointerTriggered(UIElement* uiElement, const PointerEv
 	}
 }
 
-void EventSystem::Update(double dt)
+void EventSystem::Update(double)
 {
 	//get the mouse position
 	s32 m_x{}, m_y{};
@@ -73,7 +73,8 @@ void EventSystem::Update(double dt)
 		if (pointOverlap(m_x - screen_x_offset, m_y - screen_y_offset, uiElement))
 		{			
 			//call the respective dispatchers to return event data
-			if (AEInputCheckTriggered(AEVK_LBUTTON) && uiElement->entity->isActive == true)
+			if (AEInputCheckTriggered(AEVK_LBUTTON) && uiElement->entity->isActive == true
+				&& uiElement->enabled)
 			{
 				DispatchPointerTriggered(uiElement, eventData);
 				uiElement->reset = true;

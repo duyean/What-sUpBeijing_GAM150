@@ -32,7 +32,7 @@ void ShopBlessing::destroy()
 
 ShopBlessing::ShopBlessing()
 {
-	std::uniform_int_distribution<int> rand(0, blessingDatabase.size() - 1);
+	std::uniform_int_distribution<int> rand(0, (int)blessingDatabase.size() - 1);
 	auto it = blessingDatabase.begin();
 	std::advance(it, rand(Game::gen));
 	blessing = it->second->Clone();

@@ -83,6 +83,12 @@ void MovesUI::init()
 
 void MovesUI::update()
 {
+	if (RunManager::Instance().game_paused)
+	{
+		tooltip->isActive = false;
+		return;
+	}
+
 	if (!battleManager->InBattle())
 	{
 		return;

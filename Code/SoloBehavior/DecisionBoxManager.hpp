@@ -6,7 +6,7 @@ class DecisionBoxManager : public SoloBehavior
 {
 public:
 	void ToggleDecisionBox(bool toggle);
-	Button* leftButton, *rightButton;
+	Button* leftButton = nullptr, *rightButton = nullptr;
 
 	void awake() override;
 	void init() override;

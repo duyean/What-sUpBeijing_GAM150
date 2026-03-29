@@ -71,6 +71,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentY--;
 							break;
 						}
+						[[fallthrough]];
 				case 2: //south
 					if (currentY + 1 <= mapHeight)
 						if (NodeType::Debug == this->mapNodes[currentY + 1][currentX].type)
@@ -81,6 +82,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentY++;
 							break;
 						}
+						[[fallthrough]];
 				case 3: //east
 					if (currentX + 1 <= mapWidth)
 						if (NodeType::Debug == this->mapNodes[currentY][currentX + 1].type)
@@ -91,6 +93,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentX++;
 							break;
 						}
+						[[fallthrough]];
 				case 4: //west
 					if (currentX - 1 >= 0)
 						if (NodeType::Debug == this->mapNodes[currentY][currentX - 1].type)
@@ -101,6 +104,7 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 							currentX--;
 							break;
 						}
+						[[fallthrough]];
 				default: //all nodes surrounding are already generated
 					stuck = true;
 			}
@@ -162,43 +166,37 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 			printf("North Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY - 1][currentX].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY - 1][currentX].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY - 1, currentX, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.s)
-		{	
+		{
 			printf("South Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY + 1][currentX].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY + 1][currentX].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY + 1, currentX, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.e)
-		{	
+		{
 			printf("East Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY][currentX + 1].type == NodeType::Empty)
 			{
-				foundNewNode = true;	
+				travelPath.mapNodes[currentY][currentX + 1].type = NodeType::Debug;
+				foundNewNode = true;
 				traveller.push_back({ currentY, currentX + 1, traveller[0][2] + 1 });
 		}	}
 		if (!currentNode.w)
-		{	
+		{
 			printf("West Node Possible Path!\n");
 			if (travelPath.mapNodes[currentY][currentX - 1].type == NodeType::Empty)
 			{
+				travelPath.mapNodes[currentY][currentX - 1].type = NodeType::Debug;
 				foundNewNode = true;
 				traveller.push_back({ currentY, currentX - 1, traveller[0][2] + 1 });
 		}	}
-
-		
-		for (int i = 0; i < traveller.size(); i++)
-		{
-			//debug print all travellers currents in action
-			printf("Traveller %d: %d, %d (Distance: %d)\n", i, traveller[i][1], traveller[i][0], traveller[i][2]);
-
-			//designate travelled paths
-			travelPath.mapNodes[traveller[i][0]][traveller[i][1]].type = NodeType::Debug;
-		}
 
 		if (!foundNewNode)
 		{
@@ -310,9 +308,10 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 	int combatNodePercent = 40; //40% chance of encounter node
 
 	int combatNodeCount = 0, eventNodeCount = 0;
+	bool shopNodeGenerated = false;
 	int combatNodeLimit = nodeTotal * combatNodePercent / 100, eventNodeLimit = nodeTotal * eventNodePercent / 100;
 
-	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit)
+	while (combatNodeCount < combatNodeLimit || eventNodeCount < eventNodeLimit || !shopNodeGenerated)
 	{
 		for (int y = 0; y < yLen; y++) { for (int x = 0; x < xLen; x++) {
 				if (this->mapNodes[y][x].type == NodeType::Empty)
@@ -321,6 +320,12 @@ void Map::GenerateMap(MapType type, int xLen, int yLen)
 
 					if (combatNodeCount < combatNodeLimit && rollType <= combatNodePercent)
 					{
+						if (!shopNodeGenerated)
+						{
+							this->mapNodes[y][x].type = NodeType::Shop;
+							shopNodeGenerated = true;
+							continue;
+						}
 						this->mapNodes[y][x].type = NodeType::EnemyEncounter;
 						combatNodeCount++;
 					}
@@ -407,7 +412,7 @@ void Map::DebugPrint(Map map)
 	printf("end of map debug printing.\n");
 }
 
-bool Map::SaveMap(JSONSerializer serializer, std::string fileName)
+bool Map::SaveMap(JSONSerializer, std::string fileName)
 {
 	std::ofstream ofs(fileName);
 	if (!ofs.is_open())

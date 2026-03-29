@@ -19,3 +19,4 @@
 #include "BaseSystems/Engine/TextBox.hpp"
 #include "../Code/SoloBehavior/Slider.hpp"
 #include "SoloBehavior/DisplayBox.hpp"
+#include "../Code/SoloBehavior/BattleStatUI.hpp"

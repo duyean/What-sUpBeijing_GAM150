@@ -17,6 +17,7 @@ This file contains the definitions for the collection of functions in GameStateM
 #include "../Code/Scenes/MainMenu.hpp"
 
 GameStateManager::GameStateManager() :
+	currentLevel(SCENES::SPLASHSCREEN),
 	curGameState(nullptr),
 	nextGameState(nullptr)
 {
@@ -45,7 +46,7 @@ This function updates current scene frame and changes scene if there is one on s
 @param float
 @return void
 *//*______________________________________________________________*/
-void GameStateManager::Update(float _dt)
+void GameStateManager::Update(float)
 {
 	if (nextGameState != nullptr)
 	{

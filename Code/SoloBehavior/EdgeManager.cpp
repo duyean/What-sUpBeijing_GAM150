@@ -55,21 +55,21 @@ void EdgeManager::UpdateEdges()
 		switch (currentNodeType)
 		{
 		case NodeType::EnemyEncounter:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::NORMAL);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::Exit:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
 			AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_START);
 			break;
 		case NodeType::FixedEvent:
-			player->getComponent<Player>()->canMove = false;
+			RunManager::Instance().playerCanMove = false;
 			RunManager::Instance().SetBattleType(BATTLE_TYPE::MINI_BOSS);
 			ts->TransitionToScene(GameStateManager::BATTLE_SCENE);
 			map.playMap.mapNodes[map.yPos][map.xPos].type = NodeType::Empty;
@@ -77,15 +77,16 @@ void EdgeManager::UpdateEdges()
 			break;
 		case NodeType::RandomEvent:
 		{
+			RunManager::Instance().playerCanMove = false;
 			if (eventsDatabase.empty())
 			{
 				std::cout << "No events available!" << std::endl;
 				break;
 			}
-
+			RunManager::Instance().playerCanMove = false;
 			AEVec2 pos = { 0.f,0.f };
 			AEVec2 scale = { 1.f, 1.f };
-			std::uniform_int_distribution<int> dist(0, eventsDatabase.size() - 1);
+			std::uniform_int_distribution<int> dist(0, (int)eventsDatabase.size() - 1);
 			Occurence& randomOccurence = eventsDatabase.at(static_cast<OCCURENCE_ID>(dist(Game::gen)));
 			pos = { 0.f, 0.f };
 			scale = { 1.f, 1.f };
@@ -116,6 +117,7 @@ void EdgeManager::UpdateEdges()
 					randomOccurence.option1(&RunManager::Instance());
 				}
 				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
+				RunManager::Instance().playerCanMove = true;
 				});	
 			decisionBoxManager->transform->AddChild(decisionButtonLeft->transform);
 
@@ -134,6 +136,7 @@ void EdgeManager::UpdateEdges()
 					randomOccurence.option2(&RunManager::Instance());
 				}
 				manager->getComponent<DecisionBoxManager>()->ToggleDecisionBox(false);
+				RunManager::Instance().playerCanMove = true;
 				});
 			decisionBoxManager->transform->AddChild(decisionButtonRight->transform);
 

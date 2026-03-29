@@ -14,7 +14,7 @@ void SplashLogo::init()
 
 void SplashLogo::update()
 {
-	float dt = AEFrameRateControllerGetFrameTime();
+	float dt = (float)AEFrameRateControllerGetFrameTime();
 	curSplashTimer -= dt;
 
 	if ((curSplashTimer < 0 || AEInputCheckTriggered(AEVK_SPACE) || AEInputCheckTriggered(AEVK_ESCAPE)) && transition) {

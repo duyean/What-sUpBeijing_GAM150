@@ -106,7 +106,7 @@ void PhysicSystem::narrowPhase()
 	}
 }
 
-void PhysicSystem::fixedUpdate(double dt) {
+void PhysicSystem::fixedUpdate(double) {
     broadPhase();
     narrowPhase();
 }

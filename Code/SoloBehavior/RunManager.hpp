@@ -12,7 +12,8 @@ This file contains the interface for a Run Manager for our game.
 #pragma once
 #include "../Code/Engine_WZBJ_Pak.hpp"
 #include "../Combat/Blessing/Blessing.hpp"
-#include "../Map/MapClass.hpp"
+//#include "../Map/MapClass.hpp"
+#include "../Maps_WZBJ_Pak.hpp"
 #include <memory>
 
 //Forward declare the character class
@@ -66,8 +67,11 @@ public:
 	//Add a blessing to the current run
 	void AddBlessing(std::unique_ptr<Blessing> blessing);
 
+	// Remove currency when buying items
+	bool RemoveCurrency(int curr);
+
 	inline int GetEnemyDifficulty() const { return enemyDifficulty; }
-	inline void ModifyCurrency(int v) { currency += v; AEClamp(currency, 0, currency); }
+	inline void ModifyCurrency(int v) { currency += v; AEClamp(f32(currency), 0.f, f32(currency)); }
 	inline void ModifyEnemyDifficulty(int v) { enemyDifficulty += v; }
 	inline int GetCurrency() const { return currency; }
 	void SetBattleType(BATTLE_TYPE type = BATTLE_TYPE::NORMAL);
@@ -84,7 +88,16 @@ public:
 
 	MapType GetPrevMapType() const;
 
+
+	//game related booleans
 	bool game_paused = false;
+	bool game_won = false;
+	bool playerCanMove = true;
+
+	//tutorial page booleans
+	bool firstTimeBase;
+	bool firstTimeExplore;
+	bool firstTimeCombat;
 
 	void SaveRun() const;
 	bool LoadRun();

@@ -31,11 +31,13 @@ This file contains the definitions for the collection of functions in BattleScen
 #include "../BaseSystems/Engine/Tinter.hpp"
 #include "../BaseSystems/Engine/CameraVFX.hpp"
 #include "../SoloBehavior/JumpToPoint.hpp"
+#include "../SoloBehavior/PauseMenu.hpp"
+#include "../SoloBehavior/TutorialScreen.hpp"
 
 std::unique_ptr<Entity> character;
 //Map myMap{};
 
-BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr)
+BattleScene::BattleScene() : battleManager(nullptr), enSystem(nullptr), meshSystem(nullptr), stateManager(nullptr), renderUnitStat(true)
 {
     
 }
@@ -55,8 +57,6 @@ This function loads splash screen image
 *//*______________________________________________________________*/
 void BattleScene::Load()
 {
-    //FOR DEBUG, TO REMOVE LATER!!!!
-
     JSONSerializer jsonSerializer{};
     enSystem = &EntityManager::getInstance();
     meshSystem = &MeshGen::getInstance();
@@ -83,7 +83,18 @@ void BattleScene::Load()
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
     background->addComponent<Transform2D>(pos, scale, 0.f);
-    background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
+    switch (RunManager::Instance().GetMapType())
+    {
+    case CityStreets:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(255, 255, 255, .75f), 99, MeshType::BOX_T);
+        break;
+    case OuterPalace:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(200, 200, 255, .75f), 99, MeshType::BOX_T);
+        break;
+    case InnerPalace:
+        background->addComponent<Mesh>("Box", "BattleImage", Color(255, 200, 200, .75f), 99, MeshType::BOX_T);
+        break;
+    }
     enSystem->rootEntity->transform->AddChild(background->transform);
     enSystem->entities.push_back(std::move(background));
  
@@ -163,7 +174,7 @@ void BattleScene::Load()
             auto characterIcon = std::make_unique<Entity>("StatusIcon");
             scale = { 30, 30 };
             pos = { 0, 0 };
-            characterIcon->addComponent<Transform2D>(pos, scale, 0);
+            characterIcon->addComponent<Transform2D>(pos, scale, (f32)0);
             characterIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 103, MeshType::BOX_T);
             pUI->AddModifierIcon(count, characterIcon.get());
             enSystem->rootEntity->transform->AddChild(characterIcon->transform);
@@ -238,6 +249,13 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(moveui->transform);
     enSystem->entities.push_back(std::move(moveui));
 
+    //Pause screen
+    auto ps = std::make_unique<Entity>("PauseScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    ps->addComponent<Transform2D>(pos, scale, 0.f);
+    SettingsScreen* pauseMenu = ps->addComponent<SettingsScreen>();
+
     //load the button textures
     meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
     ////////////////////////////////////////////////
@@ -256,8 +274,8 @@ void BattleScene::Load()
     moveButton1->SetNormalColor(Color{ 200,200,200,1 });
     moveButton1->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb1->transform);
-    enSystem->entities.push_back(std::move(mb1));
-
+    pauseMenu->AddPrevDisplayEntity(mb1.get());
+    
 
     ////////////////////////////////////////////////
     // 
@@ -275,7 +293,7 @@ void BattleScene::Load()
     moveButton2->SetNormalColor(Color{ 200,200,200,1 });
     moveButton2->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb2->transform);
-    enSystem->entities.push_back(std::move(mb2));
+    pauseMenu->AddPrevDisplayEntity(mb2.get());
 
 
     ////////////////////////////////////////////////
@@ -294,7 +312,7 @@ void BattleScene::Load()
     moveButton3->SetNormalColor(Color{ 200,200,200,1 });
     moveButton3->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb3->transform);
-    enSystem->entities.push_back(std::move(mb3));
+    pauseMenu->AddPrevDisplayEntity(mb3.get());
 
 
     ////////////////////////////////////////////////
@@ -313,7 +331,7 @@ void BattleScene::Load()
     moveButton4->SetNormalColor(Color{ 200,200,200,1 });
     moveButton4->SetHighlightedColor(Color{ 255,255,255,1 });
     enSystem->rootEntity->transform->AddChild(mb4->transform);
-    enSystem->entities.push_back(std::move(mb4));
+    pauseMenu->AddPrevDisplayEntity(mb4.get());
 
 
     ////////////////////////////////////////////////
@@ -333,6 +351,18 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(tt->transform);
     enSystem->entities.push_back(std::move(tt));
 
+    auto statusIconTooltip = std::make_unique<Entity>("StatusTooltipUI");
+    pos = { 0.f, 0.f };
+    scale = { 500, 150 };
+    statusIconTooltip->addComponent<Transform2D>(pos, scale, 0.f);
+    statusIconTooltip->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 502, MeshType::BOX_B);
+    TextBox* tt_tb2 = statusIconTooltip->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);
+    tt_tb2->text_layer = 503;
+    tt_tb2->text_size = 0.5f;
+    tt_tb2->line_padding = 2.f;
+    enSystem->rootEntity->transform->AddChild(statusIconTooltip->transform);
+    enSystem->entities.push_back(std::move(statusIconTooltip));
+
     auto ts = std::make_unique<Entity>("TransitionScreen");
     pos = { 0.f, 0.f };
     scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
@@ -341,6 +371,16 @@ void BattleScene::Load()
     ts->addComponent<TransitionScreen>(T_State::T_OUT);
     enSystem->rootEntity->transform->AddChild(ts->transform);
     enSystem->entities.push_back(std::move(ts));
+
+    auto statScreenBG = std::make_unique<Entity>("BattleStatScreen");
+    pos = { 0.f, 0.f };
+    scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
+    statScreenBG->addComponent<Transform2D>(pos, scale, 0.f);
+    statScreenBG->addComponent<Mesh>("Box", Color(20, 20, 20, 0.9f), 1500, MeshType::BOX_B);
+    auto bsUI = statScreenBG->addComponent<BattleStatUI>();
+    bsUI->SetBattleManager(battleManager);
+    enSystem->rootEntity->transform->AddChild(statScreenBG->transform);
+    enSystem->entities.push_back(std::move(statScreenBG));
 
     //Can call this every battle since the function clears the databases 
 	InitModifierDatabase(jsonSerializer, "Assets/Moves/modifiers-list.json");
@@ -368,6 +408,29 @@ void BattleScene::Load()
             AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_BATTLE2_BGM, true);
         }
     }
+
+    if (RunManager::Instance().firstTimeCombat)
+    {
+        auto tut_s = std::make_unique<Entity>("TutorialScreen");
+        pos = { 0.f, 0.f };
+        scale = { 1.f, 1.f };
+        tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+        tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::TUTORIAL_COMBAT);
+        enSystem->rootEntity->transform->AddChild(tut_s->transform);
+        enSystem->entities.push_back(std::move(tut_s));
+
+        RunManager::Instance().firstTimeCombat = false;
+    }
+
+
+    enSystem->entities.push_back(std::move(mb1));
+    enSystem->entities.push_back(std::move(mb2));
+    enSystem->entities.push_back(std::move(mb3));
+    enSystem->entities.push_back(std::move(mb4));
+    
+
+    enSystem->rootEntity->transform->AddChild(ps->transform);
+    enSystem->entities.push_back(std::move(ps));
 }
 
 /*!
@@ -472,7 +535,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };
                 pos = { 0, 0 };
-                enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+                enemyIcon->addComponent<Transform2D>(pos, scale, (f32)0);
                 enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
                 hpBar->statusIcons.push_back(enemyIcon.get());
                 enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
@@ -484,13 +547,25 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
     {
         character = std::make_unique<Entity>("Enemy");
         ch = character->addComponent<Character>();
+        Color colorModifier = { 255, 255, 255, 1.f };
         switch (type)
         {
             case (BATTLE_TYPE::MINI_BOSS):
             {
                 hpBarScale = { 250, 10 };
                 pos = enemyPositions[0];
-                ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+                switch (RunManager::Instance().GetMapType())
+                {
+                case CityStreets:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss1.json");
+                    break;
+                case OuterPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss2.json");
+                    break;
+                case InnerPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/MiniBoss3.json");
+                    break;
+                }       
                 break;
             }
             case (BATTLE_TYPE::BOSS):
@@ -498,7 +573,18 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 hpBarScale = { 350, 10 };
                 scale = { 300, 300 };
                 pos = enemyPositions[0];
-                ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
+                switch (RunManager::Instance().GetMapType())
+                {
+                case CityStreets:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss1.json");
+                    break;
+                case OuterPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss2.json");
+                    break;
+                case InnerPalace:
+                    ch->LoadCharacter(jsonSerializer, "Assets/Characters/Boss3.json");
+                    break;
+                }
                 break;
             }
         }
@@ -508,7 +594,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
         meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
         meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
         character->addComponent<Transform2D>(pos, scale, 0.f);
-        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+        character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), colorModifier, 100, MeshType::BOX_T);
         auto hpBar = character->addComponent<Healthbar1>();
         character->addComponent<Tinter>(1.f);
         battleManager->LoadBattleUnit(ch);
@@ -541,7 +627,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             auto enemyIcon = std::make_unique<Entity>("StatusIcon");
             scale = { 30, 30 };
             pos = { 0, 0 };
-            enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+            enemyIcon->addComponent<Transform2D>(pos, scale, 0.f);
             enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
             hpBar->statusIcons.push_back(enemyIcon.get());
             enSystem->rootEntity->transform->AddChild(enemyIcon->transform);

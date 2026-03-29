@@ -18,6 +18,7 @@ enum T_State
 {
 	T_IN,
 	T_OUT,
+	T_FADE_OUT,
 	DONE,
 	T_NONE
 };
@@ -28,6 +29,10 @@ class TransitionScreen: public SoloBehavior
 {
 private:
 	float transitionSpeed;
+	float currFadeTime;
+	float maxFadeTime;
+	float ts_opacity;
+	int ts_color;
 	bool t_buffer; // a trigger buffer for the transition screen when calling reset
 	bool scene_t_buffer; //scene transition buffer
 	GameStateManager::SCENES nextScene = GameStateManager::NUM_SCENES; //default value NUM_SCENES (not a valid scene)
@@ -44,12 +49,14 @@ public:
 	void destroy() override;
 	void SetState(T_State _state) { state = _state; t_buffer = true; }
 	void TransitionToScene(GameStateManager::SCENES gs);
+	void FadeOutToScene(GameStateManager::SCENES gs);
 	T_State GetState() const { return state; }
 
 	TransitionScreen() = default;
 
-	TransitionScreen(T_State _state) 
-		: transitionSpeed(1500.f), t_buffer(false), state(_state){}
+	TransitionScreen(T_State _state)
+		:ts_color(255), ts_opacity(1.f), currFadeTime(0.f), maxFadeTime(12.f),
+		scene_t_buffer(false), transitionSpeed(1500.f), t_buffer(false), state(_state) {}
 
 	~TransitionScreen(){}
 

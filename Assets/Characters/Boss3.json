@@ -1,0 +1,18 @@
+{
+  "name": "Hei Chao Zhi Wang",
+  "element": 2,
+  "baseHP": 5000.0,
+  "baseATK": 1250.0,
+  "baseDEF": 500.0,
+  "faction": 2,
+  "initiative": 1,
+  "texture": "MianJuCong.png",
+  "texture2": "MianJuCongBall.png",
+  "icontexture": "MianJuCong.png",
+  "moves": {
+    "0": 0,
+    "1": 2,
+    "2": 11,
+    "3": 12
+  }
+}

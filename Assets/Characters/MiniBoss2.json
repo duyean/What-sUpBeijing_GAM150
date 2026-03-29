@@ -1,0 +1,18 @@
+{
+  "name": "Tun Shi Zhe",
+  "element": 2,
+  "baseHP": 2500.0,
+  "baseATK": 1500.0,
+  "baseDEF": 500.0,
+  "faction": 2,
+  "initiative": 1,
+  "texture": "Suramu.png",
+  "texture2": "SuramuScream.png",
+  "icontexture": "Suramu.png",
+  "moves": {
+    "0": 0,
+    "1": 2,
+    "2": 10,
+    "3": 0
+  }
+}

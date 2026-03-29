@@ -18,6 +18,12 @@ void Button::init()
 
 void Button::update()
 {
+	if (!enabled)
+	{
+		buttonMesh->color = disabled_color;
+		return;
+	}
+
 	if (reset)
 	{
 		buttonMesh->color = normal_color;
@@ -50,7 +56,12 @@ void Button::SetPressedColor(Color color)
 	pressed_color = color;
 }
 
-void Button::OnPointerTriggered(const PointerEventData& event)
+void Button::SetDisabledColor(Color color)
+{
+	disabled_color = color;
+}
+
+void Button::OnPointerTriggered(const PointerEventData&)
 {
 	if(buttonMesh)
 		buttonMesh->color = pressed_color;

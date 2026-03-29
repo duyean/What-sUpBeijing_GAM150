@@ -30,8 +30,8 @@ public:
 	template<typename T>
 	T* GetComponent();
 
-	void Destroy(Entity& entity);
-	void Destroy(Entity* entity);
+	void Destroy(Entity& _entity);
+	void Destroy(Entity* _entity);
 
 	SoloBehavior() = default;
 

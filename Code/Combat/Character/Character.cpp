@@ -130,7 +130,7 @@ void Character::Init(void)
 		std::uniform_int_distribution<int> dist(0, 3);
 		enemyLevel = RunManager::Instance().GetEnemyDifficulty() + dist(Game::gen);
 		enemyLevel = std::max(0, enemyLevel);
-		baseMaxHP *= std::pow(1.2f, enemyLevel);
+		baseMaxHP *= static_cast<float>(std::pow(1.2f, enemyLevel));
 		baseATK *= 1 + 0.25f * enemyLevel;
 		baseDEF *= 1 + 0.10f * enemyLevel;
 	}

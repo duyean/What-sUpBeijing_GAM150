@@ -14,7 +14,7 @@ AEVec2 operator*(const AEVec2& lhs, const AEVec2& rhs) {
     AEVec2 aev = { lhs.x * rhs.x, lhs.y * rhs.y };
     return aev;
 }
-AEVec2 operator*(const AEVec2& lhs, const f64& rhs) {
+AEVec2 operator*(const AEVec2& lhs, const f32& rhs) {
     AEVec2 aev(lhs.x * rhs, lhs.y * rhs);
     return aev;
 }
@@ -24,7 +24,7 @@ AEVec2 operator/(const AEVec2& lhs, const AEVec2& rhs) {
     return aev;
 }
 
-AEVec2 operator/(const AEVec2& lhs, const f64& rhs) {
+AEVec2 operator/(const AEVec2& lhs, const f32& rhs) {
     AEVec2 aev(lhs.x / rhs, lhs.y / rhs);
     return aev;
 }

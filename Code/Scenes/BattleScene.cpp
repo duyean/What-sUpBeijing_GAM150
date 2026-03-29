@@ -165,7 +165,7 @@ void BattleScene::Load()
             auto characterIcon = std::make_unique<Entity>("StatusIcon");
             scale = { 30, 30 };
             pos = { 0, 0 };
-            characterIcon->addComponent<Transform2D>(pos, scale, 0);
+            characterIcon->addComponent<Transform2D>(pos, scale, (f32)0);
             characterIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 103, MeshType::BOX_T);
             pUI->AddModifierIcon(count, characterIcon.get());
             enSystem->rootEntity->transform->AddChild(characterIcon->transform);
@@ -524,7 +524,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
                 auto enemyIcon = std::make_unique<Entity>("StatusIcon");
                 scale = { 30, 30 };
                 pos = { 0, 0 };
-                enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+                enemyIcon->addComponent<Transform2D>(pos, scale, (f32)0);
                 enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
                 hpBar->statusIcons.push_back(enemyIcon.get());
                 enSystem->rootEntity->transform->AddChild(enemyIcon->transform);
@@ -593,7 +593,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             auto enemyIcon = std::make_unique<Entity>("StatusIcon");
             scale = { 30, 30 };
             pos = { 0, 0 };
-            enemyIcon->addComponent<Transform2D>(pos, scale, 0);
+            enemyIcon->addComponent<Transform2D>(pos, scale, 0.f);
             enemyIcon->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_T);
             hpBar->statusIcons.push_back(enemyIcon.get());
             enSystem->rootEntity->transform->AddChild(enemyIcon->transform);

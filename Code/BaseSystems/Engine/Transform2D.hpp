@@ -77,7 +77,7 @@ public:
 	void setScale(const AEVec2& worldScale);
 
 	AEVec2 getLocalScale() const;
-	void setLocalScale(const AEVec2& scale);
+	void setLocalScale(const AEVec2& _scale);
 
 	Transform2D() {
 

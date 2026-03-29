@@ -52,7 +52,7 @@ void EventSystem::DispatchPointerTriggered(UIElement* uiElement, const PointerEv
 	}
 }
 
-void EventSystem::Update(double dt)
+void EventSystem::Update(double)
 {
 	//get the mouse position
 	s32 m_x{}, m_y{};

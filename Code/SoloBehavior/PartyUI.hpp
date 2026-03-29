@@ -11,7 +11,7 @@ class PartyUI : public SoloBehavior
 	std::vector<Entity*> icons;
 	std::vector<Entity*> healthBars;
 	std::array<std::vector<Entity*>, 3> modifierIcons = {};
-	Entity* modifierTooltip;
+	Entity* modifierTooltip = nullptr;
 	std::string toolTipBuffer;
 
 public:

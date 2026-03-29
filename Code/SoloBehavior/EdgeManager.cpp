@@ -86,7 +86,7 @@ void EdgeManager::UpdateEdges()
 			RunManager::Instance().playerCanMove = false;
 			AEVec2 pos = { 0.f,0.f };
 			AEVec2 scale = { 1.f, 1.f };
-			std::uniform_int_distribution<int> dist(0, eventsDatabase.size() - 1);
+			std::uniform_int_distribution<int> dist(0, (int)eventsDatabase.size() - 1);
 			Occurence& randomOccurence = eventsDatabase.at(static_cast<OCCURENCE_ID>(dist(Game::gen)));
 			pos = { 0.f, 0.f };
 			scale = { 1.f, 1.f };

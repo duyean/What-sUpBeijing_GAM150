@@ -129,7 +129,7 @@ void InitBlessingDatabase()
 			"", EventType::TookDamage,
 			[](const EventData& data)
 			{
-				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "Enraged. ATK +25%. Fully stackable and permanent.", "Assets/Images/StatusEffectIcons/empowered.png", BLESSING_ENRAGED_BUFF, 0.30,
+				auto mod = std::make_unique<AttributeModifier>("Enraged", 999, EFFECT_TYPE::ATTRIBUTE_MODIFIER, "Enraged. ATK +25%. Fully stackable and permanent.", "Assets/Images/StatusEffectIcons/empowered.png", BLESSING_ENRAGED_BUFF, 0.30f,
 					Game::ATK, STACK, true, false);
 				data.target->AddModifier(std::move(mod));
 			}, -1));

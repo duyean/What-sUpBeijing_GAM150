@@ -12,7 +12,7 @@ void InitEventsDatabase()
 {
 	eventsDatabase.clear();
 	eventsDatabase.emplace(OCCURENCE_ID::TEST_EVENT_1, Occurence("Up For A Bet?", "A strange merchant offers you a choice, what do you do?", "50% chance of obtaining a random blessing.", "Decline as you do not gamble. Get 10 currency",
-		[](RunManager* rm) 
+		[](RunManager*) 
 		{
 			std::uniform_real_distribution<float> chanceRoll(0.0, 1.0);
 			float rng = chanceRoll(Game::gen);
@@ -40,7 +40,7 @@ void InitEventsDatabase()
 		}, [](RunManager* rm) {rm->ModifyCurrency(10); }));
 
 	eventsDatabase.emplace(OCCURENCE_ID::GAMBLING_EVENT_1, Occurence("Lottery Ticket?", "You stumbled upon a scratch ticket. What do you do?", "Try your hand to win BIG!", "Throw the ticket away, you never win these things anyway.",
-		[](RunManager* rm)
+		[](RunManager*)
 		{
 			std::uniform_real_distribution<float> outcome(0.f, 1.f);
 			float rng = outcome(Game::gen);

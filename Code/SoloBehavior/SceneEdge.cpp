@@ -14,7 +14,7 @@ void SceneEdge::onHit(BoxCollider2D* other)
 		triggerBuffer = false;
 	}
 }
-void SceneEdge::onStay(BoxCollider2D* other)
+void SceneEdge::onStay(BoxCollider2D*)
 {
 
 }

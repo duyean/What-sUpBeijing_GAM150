@@ -14,13 +14,13 @@ void Slider::awake()
 	entity->transform->AddChild(background->transform);
 	sliderComp.push_back(background.get());
 
-	auto slider = std::make_unique<Entity>("Slider");
+	auto slider_en = std::make_unique<Entity>("Slider");
 	pos = { -(scale.x * 0.5f), -(scale.y * 0.5f)};
 	scale = { 1.f, 1.f };
-	slider->addComponent<Transform2D>(pos, scale, 0.f);
-	slider->addComponent<Mesh>("Box", slider_color, 100, MeshType::BOX_BL);
-	background->transform->AddChild(slider->transform);
-	sliderComp.push_back(slider.get());
+	slider_en->addComponent<Transform2D>(pos, scale, 0.f);
+	slider_en->addComponent<Mesh>("Box", slider_color, 100, MeshType::BOX_BL);
+	background->transform->AddChild(slider_en->transform);
+	sliderComp.push_back(slider_en.get());
 
 	auto ib = std::make_unique<Entity>("inc button");
 	pos = { 150.f, 0.f };
@@ -51,7 +51,7 @@ void Slider::awake()
 	sliderComp.push_back(db.get());
 
 	enSystem->entities.push_back(std::move(background));
-	enSystem->entities.push_back(std::move(slider));
+	enSystem->entities.push_back(std::move(slider_en));
 	enSystem->entities.push_back(std::move(ib));
 	enSystem->entities.push_back(std::move(db));
 }

@@ -78,9 +78,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 
-	int gGameRunning = 1;
-
-
 	LRESULT(CALLBACK * wndProc)(
 		HWND, UINT, WPARAM, LPARAM
 		) = nullptr;

@@ -112,7 +112,7 @@ void TextMesh::update()
 			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f), size, color, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::CENTER:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5), size, color, lines[i].c_str(), font, t_allign, layer);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5f), size, color, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::BOTTOM:
 			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height), size, color, lines[i].c_str(), font, t_allign, layer);

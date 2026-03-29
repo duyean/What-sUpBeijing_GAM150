@@ -37,7 +37,7 @@ private:
 	UIElement* lastObject = nullptr;
 public:
 	
-	PointerEventData eventData;
+	PointerEventData eventData{ 0,0,0,0 };
 	void ClearLastHoverObject();
 	EventSystem(const EventSystem&) = delete;
 	EventSystem& operator=(const EventSystem&) = delete;

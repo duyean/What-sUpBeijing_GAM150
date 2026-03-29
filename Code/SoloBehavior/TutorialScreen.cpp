@@ -62,7 +62,7 @@ void TutorialScreen::awake()
 	AEVec2 pos = { 0.f ,0.f };
 	AEVec2 scale = { (float)AEGfxGetWindowWidth() * 0.8f, (float)AEGfxGetWindowHeight() * 0.95f };
 	tutorial_bg->addComponent<Transform2D>(pos, scale, 0.f);
-	tutorial_bg->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8), 900, MeshType::BOX_B);
+	tutorial_bg->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 900, MeshType::BOX_B);
 	entity->transform->AddChild(tutorial_bg->transform);
 
 	//Tutorial page title

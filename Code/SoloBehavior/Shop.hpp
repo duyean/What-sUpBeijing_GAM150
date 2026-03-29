@@ -36,10 +36,10 @@ private:
 	Entity* player = nullptr;
 	ShopBlessing* shopBlessings[4]{};
 
-	Entity* currency;
-	std::string curStr;
-	Entity* cost;
-	std::string costStr;
+	Entity* currency = nullptr;
+	std::string curStr{};
+	Entity* cost = nullptr;
+	std::string costStr{};
 
 	float currencyFlashTimer;
 	float currencyFlashTimerMax;

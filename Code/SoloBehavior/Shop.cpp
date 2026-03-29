@@ -74,24 +74,24 @@ void Shop::PurchaseSelection()
 	if (currSelection <= 3)
 	{
 		auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
-		int cost{ 0 };
+		int itemcost{ 0 };
 		switch (b.get()->blessingRarity)
 		{
 		case BLESSING_RARITY::COMMON:
-			cost = 25;
+			itemcost = 25;
 			break;
 		case BLESSING_RARITY::RARE:
-			cost = 50;
+			itemcost = 50;
 			break;
 		case BLESSING_RARITY::LEGENDARY:
-			cost = 100;
+			itemcost = 100;
 			break;
 		case BLESSING_RARITY::MYTHICAL:
-			cost = 250;
+			itemcost = 250;
 			break;
 		}
 
-		if (RunManager::Instance().RemoveCurrency(cost))
+		if (RunManager::Instance().RemoveCurrency(itemcost))
 		{
 			RunManager::Instance().AddBlessing(std::move(b));
 			couldPurchase = true;

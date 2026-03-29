@@ -24,36 +24,39 @@ void MapDisplay::awake()
 
 	mapCharIcon->addComponent<Mesh>("Box", textureName[7].c_str(), Color(255, 255, 255, 1.0f), depthPlayer, MeshType::BOX_T);
 
-	for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
-		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(x) + "_" + std::to_string(y)));
-		mapNodesFog.push_back(enSystem->FindByNameGLOBAL("MapFog_" + std::to_string(x) + "_" + std::to_string(y)));
-		switch (map.playMap.mapNodes[y][x].type)
+	for (int xi = 0; xi < map.playMap.mapNodes[0].size(); xi++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+		mapNodesReal.push_back(enSystem->FindByNameGLOBAL("MapNode_" + std::to_string(xi) + "_" + std::to_string(yi)));
+		mapNodesFog.push_back(enSystem->FindByNameGLOBAL("MapFog_" + std::to_string(xi) + "_" + std::to_string(yi)));
+		int ti = 1; //default tile = 1, texture index
+		switch (map.playMap.mapNodes[yi][xi].type)
 		{
 			case NodeType::EnemyEncounter:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[2].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				ti = 2;
 				break;
 			case NodeType::RandomEvent:	
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[3].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				ti = 3;
 				break;
 			case NodeType::FixedEvent:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[8].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				ti = 8;
 				break;
 			case NodeType::Entry:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[4].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				ti = 4;
 				break;
 			case NodeType::Exit:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[5].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+				ti = 5;
 				break;
-			default:
-				mapNodesReal[count]->addComponent<Mesh>("Box", textureName[1].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+			case NodeType::Shop:
+				ti = 6;
 		}
+		mapNodesReal[count]->addComponent<Mesh>("Box", textureName[ti].c_str(), Color(255, 255, 255, 1.0f), depthFront, MeshType::BOX_T);
+		//SEPERATE FRONT AND BACK
 		mapNodesFog[count]->addComponent<Mesh>("Box", textureName[0].c_str(), Color(255, 255, 255, 1.0f), depthBack, MeshType::BOX_T);
 		mapNodesReal[count]->isActive = false;
-		if (map.viewMap.mapNodes[y][x].type == NodeType::VisionClear)
+		if (map.viewMap.mapNodes[yi][xi].type == NodeType::VisionClear)
 		{
 			mapNodesReal[count]->isActive = true;
 			mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-			if (x == map.xPos && y == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
+			if (xi == map.xPos && yi == map.yPos) mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 		}
 		count++;
 	}	}
@@ -70,15 +73,15 @@ void MapDisplay::update()
 	if (x != map.xPos || y != map.yPos)	//check if map updates
 	{
 		int count = 0;
-		for (int x = 0; x < map.playMap.mapNodes[0].size(); x++) { for (int y = 0; y < map.playMap.mapNodes.size(); y++) {
-			if (map.viewMap.mapNodes[y][x].type != NodeType::VisionFog)
+		for (int xi = 0; xi < map.playMap.mapNodes[0].size(); xi++) { for (int yi = 0; yi < map.playMap.mapNodes.size(); yi++) {
+			if (map.viewMap.mapNodes[yi][xi].type != NodeType::VisionFog)
 			{
 				mapNodesReal[count]->isActive = true;
 				mapNodesFog[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
-				if (map.playMap.mapNodes[y][x].type == NodeType::Empty)
+				if (map.playMap.mapNodes[yi][xi].type == NodeType::Empty)
 					mapNodesReal[count]->getComponent<Mesh>()->setTexture(textureName[1].c_str());
 			}
-			if (map.xPos == x && map.yPos == y)
+			if (map.xPos == xi && map.yPos == yi)
 			{
 				mapCharIcon->transform->setPosition(mapNodesReal[count]->transform->getPosition());
 			}

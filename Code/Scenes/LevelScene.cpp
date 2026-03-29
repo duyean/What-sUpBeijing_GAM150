@@ -84,14 +84,14 @@ void LevelScene::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	float NODE_SIZE = 23.f;
-	float minimapOffX =  300.f;
-	float minimapOffY = -150.f;
-	int depthWall = 202;
-	float thickWall = 2.f;
+	float	NODE_SIZE			=	36.f;
+	float	minimapOffX			=	478.f;
+	float	minimapOffY			=	276.f;
+	int		depthWall			=	202;
+	float	thickWall			=	3.f;
 
 	//map entities
-	for (int x = map.playMap.mapNodes[0].size() - 1; x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size() - 1; y >= 0 ; y--) {
+	for (int x = map.playMap.mapNodes[0].size() - 1; x >= 0 ; x--) { for (int y = map.playMap.mapNodes.size() - 1; y >= 0; y--) {
 		auto mapNode = std::make_unique<Entity>("MapNode_" + std::to_string(x) + "_" + std::to_string(y));
 		auto mapFog = std::make_unique<Entity>("MapFog_" + std::to_string(x) + "_" + std::to_string(y));
 		pos = { minimapOffX + (float)x * NODE_SIZE, minimapOffY - (float)y * NODE_SIZE };

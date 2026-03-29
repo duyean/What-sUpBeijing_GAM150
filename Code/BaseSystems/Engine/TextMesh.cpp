@@ -109,13 +109,13 @@ void TextMesh::update()
 		switch (tl_allign)
 		{
 		case TextLineAllignment::TOP:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f), size, color, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::CENTER:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height * 0.5), size, color, lines[i].c_str(), font, t_allign, layer);
 			break;
 		case TextLineAllignment::BOTTOM:
-			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height), size, Color{ 255,255,255,1 }, lines[i].c_str(), font, t_allign, layer);
+			MeshGen::getInstance().DrawFont(normalised.x, normalised.y - (i * height) - (i * padding * 0.01f) + (lines.size() * height), size, color, lines[i].c_str(), font, t_allign, layer);
 			break;
 		default:
 			break;

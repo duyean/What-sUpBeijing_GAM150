@@ -56,6 +56,7 @@
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameState.cpp" />
     <ClCompile Include="..\Code\Scenes\SceneHandler\GameStateManager.cpp" />
     <ClCompile Include="..\Code\Scenes\SplashScreen.cpp" />
+    <ClCompile Include="..\Code\SoloBehavior\BattleStatUI.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\Button.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp" />
     <ClCompile Include="..\Code\SoloBehavior\CreditsScreen.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="..\Code\Scenes\BaseCamp.hpp" />
     <ClInclude Include="..\Code\Scenes\LevelScene.hpp" />
     <ClInclude Include="..\Code\Scenes\MainMenu.hpp" />
+    <ClInclude Include="..\Code\SoloBehavior\BattleStatUI.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp" />
     <ClInclude Include="..\Code\SoloBehavior\CurrencyDisplay.hpp" />

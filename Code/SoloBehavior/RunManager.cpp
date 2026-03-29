@@ -39,7 +39,7 @@ void RunManager::StartRun()
 		enemyDifficulty = 1;
 
 		//Can change this if the player owns an artifact
-		currency = 50;
+		currency = 200;
 
 		//booleans to show tutorials
 		firstTimeBase = true;
@@ -82,7 +82,7 @@ void RunManager::ResetSave()
 	firstTimeCombat = true;
 
 	runBlessings.clear();
-	currency = 50;
+	currency = 200;
 	enemyDifficulty = 1;
 	SetMapType(MapType::CityStreets);
 }
@@ -103,6 +103,13 @@ void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)
 	runBlessings.push_back(std::move(bless));
 	EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
 	EntityManager::getInstance().entities.push_back(std::move(displayBox));
+}
+
+bool RunManager::RemoveCurrency(int curr)
+{
+	if (curr > currency) return false;
+	currency -= curr;
+	return true;
 }
 
 void RunManager::SetBattleType(BATTLE_TYPE type)

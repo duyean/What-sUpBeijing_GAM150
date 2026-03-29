@@ -16,6 +16,8 @@ public:
 	void AddShopBlessings(ShopBlessing* b, int id);
 	void CloseShopUI();
 	void SetPlayer(Entity* p);
+	void SetCurrency(Entity* c);
+	void SetCost(Entity* c);
 
 	void awake() override;
 	void init() override;
@@ -33,6 +35,14 @@ private:
 	Entity* buyButton = nullptr;
 	Entity* player = nullptr;
 	ShopBlessing* shopBlessings[4]{};
+
+	Entity* currency;
+	std::string curStr;
+	Entity* cost;
+	std::string costStr;
+
+	float currencyFlashTimer;
+	float currencyFlashTimerMax;
 	
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

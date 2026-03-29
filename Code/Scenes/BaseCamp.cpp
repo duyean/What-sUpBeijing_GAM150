@@ -260,6 +260,24 @@ void BaseCamp::Load()
 	shopCloseButton->isActive = false;
 	enSystem->rootEntity->transform->AddChild(shopCloseButton->transform);
 
+	auto currencyText = std::make_unique<Entity>("CurrencyText");
+	pos = { -AEGfxGetWindowWidth() * 0.275f, AEGfxGetWindowHeight() * 0.25f };
+	scale = { AEGfxGetWindowWidth() * 0.1f, AEGfxGetWindowHeight() * 0.05f };
+	currencyText->addComponent<Transform2D>(pos, scale, 0.f);
+	currencyText->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	currencyText->addComponent<TextBox>("Currency: ", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	currencyText->isActive = false;
+	enSystem->rootEntity->transform->AddChild(currencyText->transform);
+
+	auto costText = std::make_unique<Entity>("CostText");
+	pos = { AEGfxGetWindowWidth() * 0.26f, -AEGfxGetWindowHeight() * 0.15f };
+	scale = { AEGfxGetWindowWidth() * 0.15f, AEGfxGetWindowHeight() * 0.05f };
+	costText->addComponent<Transform2D>(pos, scale, 0.f);
+	costText->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 201, MeshType::BOX_B);
+	costText->addComponent<TextBox>("Cost: ", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::LEFT);
+	costText->isActive = false;
+	enSystem->rootEntity->transform->AddChild(costText->transform);
+
 	meshSystem->CreateTexture("Assets/Images/shop.png", "shop");
 	auto shop = std::make_unique<Entity>("Shop");
 	pos = { -300.f, 100.f };
@@ -279,12 +297,16 @@ void BaseCamp::Load()
 	s->AddDisplayEntity(typeDesc.get());
 	s->AddDisplayEntity(longDesc.get());
 	s->AddDisplayEntity(shopCloseButton.get());
+	s->AddDisplayEntity(currencyText.get());
+	s->AddDisplayEntity(costText.get());
 	s->SetBuyButton(buyButton.get());
 	s->AddShopBlessings(shopB1, 0);
 	s->AddShopBlessings(shopB2, 1);
 	s->AddShopBlessings(shopB3, 2);
 	s->AddShopBlessings(shopB4, 3);
 	s->SetPlayer(e.get());
+	s->SetCurrency(currencyText.get());
+	s->SetCost(costText.get());
 	enSystem->rootEntity->transform->AddChild(shop->transform);
 	enSystem->entities.push_back(std::move(shopBackground));
 	enSystem->entities.push_back(std::move(blessing1));
@@ -298,6 +320,8 @@ void BaseCamp::Load()
 	enSystem->entities.push_back(std::move(longDesc));
 	enSystem->entities.push_back(std::move(buyButton));
 	enSystem->entities.push_back(std::move(shopCloseButton));
+	enSystem->entities.push_back(std::move(currencyText));
+	enSystem->entities.push_back(std::move(costText));
 	enSystem->entities.push_back(std::move(shop));
 	enSystem->entities.push_back(std::move(e));
 

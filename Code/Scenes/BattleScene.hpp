@@ -24,11 +24,12 @@ enum struct NORMAL_ENEMY_TYPE
 	TOTAL
 };
 
+static const std::vector<AEVec2> enemyPositions = { { 400.f, 250.f }, {150.f, 300.f}, {650.f, 300.f} };
+static const std::vector<AEVec2> allyPositions = { { -450.f, -150.f }, {-300.f, 300.f}, {-600.f, 300.f} };
+
 class BattleScene : public GameState
 {
 private:
-	const std::vector<AEVec2> enemyPositions = { { 400.f, 250.f }, {150.f, 300.f}, {650.f, 300.f} };
-	const std::vector<AEVec2> allyPositions = { { -450.f, -150.f }, {-300.f, 300.f}, {-600.f, 300.f} };
 
 	GameStateManager* stateManager;
 	MeshGen* meshSystem;

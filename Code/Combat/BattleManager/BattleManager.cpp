@@ -397,4 +397,6 @@ std::vector<Character*> BattleManager::GetPlayerParty() const
 void BattleManager::destroy()
 {
 	battleUnits.clear();
+	lastTargetedUnit = nullptr;
+	//ResetBattle();
 }

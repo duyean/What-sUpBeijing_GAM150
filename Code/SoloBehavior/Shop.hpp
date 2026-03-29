@@ -25,7 +25,7 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Shop() = default;
+	Shop() {}
 	~Shop();
 private:
 	bool canShow = false;
@@ -41,8 +41,8 @@ private:
 	Entity* cost = nullptr;
 	std::string costStr{};
 
-	float currencyFlashTimer;
-	float currencyFlashTimerMax;
+	float currencyFlashTimer{};
+	float currencyFlashTimerMax{};
 	
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);

@@ -19,6 +19,7 @@ enum T_State
 	T_IN,
 	T_OUT,
 	T_FADE_OUT,
+	T_BLACK_OUT,
 	DONE,
 	T_NONE
 };
@@ -50,6 +51,7 @@ public:
 	void SetState(T_State _state) { state = _state; t_buffer = true; }
 	void TransitionToScene(GameStateManager::SCENES gs);
 	void FadeOutToScene(GameStateManager::SCENES gs);
+	void BlackOutToScene(GameStateManager::SCENES gs);
 	T_State GetState() const { return state; }
 
 	TransitionScreen() = default;

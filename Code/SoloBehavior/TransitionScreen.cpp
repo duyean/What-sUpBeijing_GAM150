@@ -72,6 +72,17 @@ void TransitionScreen::update()
 		if (currFadeTime <= 0.f)
 			state = DONE;
 		break;
+	case T_BLACK_OUT:
+		pos = { 0.f , 0.f };
+		entity->transform->setPosition(pos);
+
+		currFadeTime -= (float)dt;
+		ts_opacity = Lerp(0.f, 1.f, (maxFadeTime - currFadeTime) / maxFadeTime);
+
+		entity->getComponent<Mesh>()->color = { 20, 20, 20, ts_opacity };
+		if (ts_opacity >= 1.f)
+			state = DONE;
+		break;
 	case DONE:
 		if (scene_t_buffer == true && nextScene != GameStateManager::NUM_SCENES)
 		{
@@ -96,7 +107,18 @@ void TransitionScreen::FadeOutToScene(GameStateManager::SCENES gs)
 {
 	scene_t_buffer = true;
 	nextScene = gs;
+	maxFadeTime = 12.f;
+	currFadeTime = maxFadeTime;
 	SetState(T_FADE_OUT);
+}
+
+void TransitionScreen::BlackOutToScene(GameStateManager::SCENES gs)
+{
+	scene_t_buffer = true;
+	nextScene = gs;
+	maxFadeTime = 6.f;
+	currFadeTime = maxFadeTime;
+	SetState(T_BLACK_OUT);
 }
 
 void TransitionScreen::fixedUpdate()

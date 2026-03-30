@@ -369,6 +369,9 @@
     <ClCompile Include="..\Code\SoloBehavior\CreditsScreen.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\TutorialScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
@@ -660,7 +663,7 @@
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\BattleStatUI.hpp">
-          <Filter>Header Files\Entities\UIObjects</Filter>
+      <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\CameraVFX.hpp">
       <Filter>Header Files\ENGINE</Filter>
@@ -670,6 +673,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\TutorialScreen.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

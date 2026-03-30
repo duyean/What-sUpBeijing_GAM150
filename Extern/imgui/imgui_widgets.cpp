@@ -2238,16 +2238,16 @@ static const char* ImGuiGetNameFromIndexOldToNewCallback(void* user_data, int id
     return s;
 }
 
-bool ImGui::ListBox(const char* label, int* current_item, bool (*old_getter)(void*, int, const char**), void* user_data, int items_count, int height_in_items)
-{
-    ImGuiGetNameFromIndexOldToNewCallbackData old_to_new_data = { user_data, old_getter };
-    return ListBox(label, current_item, ImGuiGetNameFromIndexOldToNewCallback, &old_to_new_data, items_count, height_in_items);
-}
-bool ImGui::Combo(const char* label, int* current_item, bool (*old_getter)(void*, int, const char**), void* user_data, int items_count, int popup_max_height_in_items)
-{
-    ImGuiGetNameFromIndexOldToNewCallbackData old_to_new_data = { user_data, old_getter };
-    return Combo(label, current_item, ImGuiGetNameFromIndexOldToNewCallback, &old_to_new_data, items_count, popup_max_height_in_items);
-}
+//bool ImGui::ListBox(const char* label, int* current_item, bool (*old_getter)(void*, int, const char**), void* user_data, int items_count, int height_in_items)
+//{
+//    ImGuiGetNameFromIndexOldToNewCallbackData old_to_new_data = { user_data, old_getter };
+//    return ListBox(label, current_item, ImGuiGetNameFromIndexOldToNewCallback, &old_to_new_data, items_count, height_in_items);
+//}
+//bool ImGui::Combo(const char* label, int* current_item, bool (*old_getter)(void*, int, const char**), void* user_data, int items_count, int popup_max_height_in_items)
+//{
+//    ImGuiGetNameFromIndexOldToNewCallbackData old_to_new_data = { user_data, old_getter };
+//    return Combo(label, current_item, ImGuiGetNameFromIndexOldToNewCallback, &old_to_new_data, items_count, popup_max_height_in_items);
+//}
 
 #endif
 

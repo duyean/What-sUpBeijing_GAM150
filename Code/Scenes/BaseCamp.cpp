@@ -19,7 +19,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/CurrencyDisplay.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 #include "../Code/SoloBehavior/TutorialScreen.hpp"
-
+#include "../BaseSystems/Engine/Bounce.hpp"
 void BaseCamp::DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId)
 {
 	// Get the three text boxes
@@ -109,6 +109,7 @@ void BaseCamp::Load()
 	e->addComponent<Player>();
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	e->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 
 	/*auto curr_disp = std::make_unique<Entity>("CurrDisp");

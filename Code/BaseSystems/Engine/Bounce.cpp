@@ -1,9 +1,10 @@
 #include "Bounce.hpp"
 #include "../EaseFunctions/AEVEC2OVERLOAD.hpp"
+
 void Bounce::awake()
 {
-
 }
+
 void Bounce::init()
 {
     cleanScale = entity->transform->getScale();
@@ -12,6 +13,10 @@ void Bounce::init()
 
 void Bounce::update()
 {
+    // Always sync cleanPos from actual position minus current bounce offset
+    AEVec2 currentPos = entity->transform->getPosition();
+    cleanPos = { currentPos.x, currentPos.y - currentBounceOffset };
+
     time += (f32)AEFrameRateControllerGetFrameTime() * spd;
     if (time > maxTime) time -= maxTime;
 
@@ -22,9 +27,7 @@ void Bounce::update()
     {
         entity->transform->setScale(cleanScale);
         entity->transform->setPosition(cleanPos);
-
-        cleanScale = entity->transform->getScale();
-        cleanPos = entity->transform->getPosition();
+        // Do NOT re-read cleanScale / cleanPos here
     }
 
     AEVec2 tempScale
@@ -34,20 +37,19 @@ void Bounce::update()
     };
     entity->transform->setScale(tempScale);
 
-    float posOffset = (cleanScale.y * scaleDiff) * 0.5f;
+    currentBounceOffset = (cleanScale.y * scaleDiff) * 0.5f;
     AEVec2 tempPosition
     {
         cleanPos.x,
-        cleanPos.y + posOffset
+        cleanPos.y + currentBounceOffset
     };
     entity->transform->setPosition(tempPosition);
 }
+
 void Bounce::fixedUpdate()
 {
-
 }
+
 void Bounce::destroy()
 {
-
 }
-

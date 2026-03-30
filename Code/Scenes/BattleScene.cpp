@@ -500,7 +500,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
             meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
             character->addComponent<Transform2D>(pos, scale, 0.f);
-            character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+            character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(std::uniform_int_distribution<int>(30, 255)(Game::gen), std::uniform_int_distribution<int>(30, 255)(Game::gen), std::uniform_int_distribution<int>(30, 255)(Game::gen), 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
             character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
             character->addComponent<Tinter>(1.f);

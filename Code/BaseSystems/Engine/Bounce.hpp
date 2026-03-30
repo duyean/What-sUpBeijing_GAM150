@@ -24,6 +24,9 @@ class Bounce : public SoloBehavior
     float lastPosOffset = 0.f;
     AEVec2 cleanScale{ 1.0f, 1.0f };
     AEVec2 cleanPos{ 1.0f, 1.0f };
+    f32 currentBounceOffset = 0.0f;
+
+
 public:
     void awake() override;
     void init() override;

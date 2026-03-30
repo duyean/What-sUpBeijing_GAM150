@@ -215,7 +215,7 @@ void LevelScene::Load()
 	e->addComponent<Mesh>("Box", "player_sprite", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 	e->addComponent<BoxCollider2D>(scale.x / 1.5f, scale.y / 1.5f);
 	e->addComponent<Player>();
-	//e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
+	e->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
 	enSystem->rootEntity->transform->AddChild(e->transform);
 	enSystem->entities.push_back(std::move(e));
 

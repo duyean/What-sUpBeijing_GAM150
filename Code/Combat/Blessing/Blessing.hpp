@@ -55,7 +55,11 @@ enum struct BLESSING_RARITY
 	MYTHICAL
 };
 
-
+/*!***********************************************************************
+* \class Blessing
+* \brief
+* The Data to store a blessing
+*************************************************************************/
 class Blessing
 {
 public:
@@ -79,16 +83,38 @@ public:
 
 	//The icon of the blessing
 	std::string logo;
+
+	//Default ctor
 	Blessing();
+
+	//Ctor with arguments to customise a blessing
 	Blessing(BLESSING_ID, std::string, std::string, BLESSING_TYPE, BLESSING_RARITY, std::string, std::string);
 
+	/*!***********************************************************************
+	* \brief
+	* Prototype Pattern: Clone a blessing from the database
+	* \return
+	* A copied blessing from the database
+	*************************************************************************/
 	virtual std::unique_ptr<Blessing> Clone() const = 0;
 
-	//Virtual function to apply this blessing effect
+	/*!***********************************************************************
+	* \brief
+	*  Apply the blessing effect to the specified target, pure virtual function
+	* \param[in] target
+	*  The target to apply the blessing to
+	*************************************************************************/
 	virtual void Apply(Character* target) = 0;
 
-	//Virtual function to remove this blessing effect
+	/*!***********************************************************************
+	* \brief
+	*  Remove the blessing effect to the specified target, pure virtual function
+	* \param[in] target
+	*  The target to remove the blessing effect from
+	*************************************************************************/
 	virtual void RemoveBuff(Character* target) = 0;
+
+	//Destructor
 	virtual ~Blessing() = default;
 };
 
@@ -120,6 +146,7 @@ public:
 		attType(type),
 		value(val) {}
 
+	//Override for base method Clone
 	std::unique_ptr<Blessing> Clone() const override;
 
 };
@@ -145,6 +172,7 @@ public:
 	//Override
 	void RemoveBuff(Character* target) override;
 
+	//Customised constructor
 	TriggerBlessing(BLESSING_ID id,
 		std::string name,
 		std::string desc,
@@ -161,8 +189,15 @@ public:
 		cooldown(0) {
 	}
 
+	//Override for Clone method of base class
 	std::unique_ptr<Blessing> Clone() const override;
 };
 
+//The database to store all blessings
 extern std::unordered_map<BLESSING_ID, std::unique_ptr<Blessing>> blessingDatabase;
+
+/*!***********************************************************************
+* \brief
+* Initialise all blessings for the game
+*************************************************************************/
 extern void InitBlessingDatabase();

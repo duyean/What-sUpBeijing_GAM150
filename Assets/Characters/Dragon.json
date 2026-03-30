@@ -1,8 +1,8 @@
 {
     "name": "Mian Ju Cong",
     "element": 1,
-    "baseHP": 750.0,
-    "baseATK": 750.0,
+    "baseHP": 700.0,
+    "baseATK": 700.0,
     "baseDEF": 250.0,
     "faction": 2,
     "initiative":1,

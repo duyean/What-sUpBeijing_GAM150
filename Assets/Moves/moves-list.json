@@ -228,6 +228,55 @@
             "modifiers": [
                 10
             ]
+        },
+        {
+            "id": 18,
+            "name": "D?#r_ow!n",
+            "coefficient": 0.8,
+            "dot": 0.0,
+            "brief": "They will suffer. 80% ATK DMG.\nGain 2 action points",
+            "description": "",
+            "target": 2,
+            "cost" : -2,
+            "modifiers": [
+            ]
+        },
+        {
+            "id": 19,
+            "name": "Su#r)p?r!e&ss",
+            "coefficient": 0.50,
+            "dot": 0.0,
+            "brief": "Put all of them in their place. 50% ATK DMG. Inflicts ?????? on all enemies\nMove cost: 2",
+            "description": "",
+            "target": 3,
+            "cost" : 1,
+            "modifiers": [
+                12
+            ]
+        },
+        {
+            "id": 20,
+            "name": "R*#(u@!N",
+            "coefficient": 1.50,
+            "dot": 0.0,
+            "brief": "Play a game but you are the only winner, pick the loser. 150% ATK DMG.\nMove cost: 2",
+            "description": "",
+            "target": 2,
+            "cost" : 2,
+            "modifiers": [
+            ]
+        },
+        {
+            "id": 21,
+            "name": "T#&*$h_e E9#n!)#d",
+            "coefficient": 9.99,
+            "dot": 0.0,
+            "brief": "Enough games. 999% ATK DMG.\nMove cost: 5",
+            "description": "",
+            "target": 3,
+            "cost" : 5,
+            "modifiers": [
+            ]
         }
     ]
 }

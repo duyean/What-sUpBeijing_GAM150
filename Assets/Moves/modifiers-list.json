@@ -128,6 +128,18 @@
             "behaviour": 1,
             "self":0,
             "texture":"exposed.png"            
+        },
+        {
+            "id": 12,
+            "name": "??????",
+            "duration": 3,
+            "type": 0,
+            "desc":"#&&^$*@ reduced by XX%. Stacks in @&^#$&#.",
+            "attribute": 6,
+            "value": -0.33,
+            "behaviour": 1,
+            "self":0,
+            "texture":"nullified.png"  
         }
     ]
 }

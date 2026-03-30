@@ -23,12 +23,14 @@ void MainHealthbar::update()
 	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y - 0.1f, 0.8f, Color(255, 255, 255, 255), to_string(battleManager->GetCurrentTurn()).c_str(), "liberi", TextAlignment::CENTER, 700);
 	if (battleManager->GetActiveUnit() && battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
-		MeshGen::getInstance().DrawFont(-0.825f, 0.725f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi", TextAlignment::LEFT, 700);
+		std::ostringstream os;
+		os << "Lv " << RunManager::Instance().GetPartyLevel() << " " << battleManager->GetActiveUnit()->GetName();
+		MeshGen::getInstance().DrawFont(-0.825f, 0.725f, 0.5f, Color(255, 255, 255, 255),os.str().c_str(), "liberi", TextAlignment::LEFT, 700);
 
 	}
 	std::ostringstream oss;
 	oss << "Action Points: " << battleManager->actionPoint << "/" << battleManager->maxActionPoints;
-	MeshGen::getInstance().DrawFont(-0.825f, 0.9f, 0.6f, Color(255, 255, 255, 1), oss.str().c_str(), "liberi", TextAlignment::LEFT, 700);
+	MeshGen::getInstance().DrawFont(-0.825f, 0.91f, 0.6f, Color(255, 255, 255, 1), oss.str().c_str(), "liberi", TextAlignment::LEFT, 700);
 }
 
 void MainHealthbar::fixedUpdate()

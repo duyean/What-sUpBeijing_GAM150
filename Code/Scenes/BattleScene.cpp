@@ -109,12 +109,13 @@ void BattleScene::Load()
     int count = 0;
     for (const auto& str : RunManager::Instance().GetParty())
     {
-        character = std::make_unique<Entity>(str.c_str());
+        std::string characterString = Game::charIDToString[str];
+        character = std::make_unique<Entity>(characterString.c_str());
         pos = { -500.f, -150.f };
         scale = { static_cast<float>(AEGfxGetWindowWidth() / 2.f), static_cast<float>(AEGfxGetWindowHeight()) };
         character->addComponent<Transform2D>(pos, scale, 0.f);
         auto ch = character->addComponent<Character>();
-        std::string charDataPath = "Assets/Characters/" + str + ".json";
+        std::string charDataPath = "Assets/Characters/" + characterString + ".json";
         character->getComponent<Character>()->LoadCharacter(jsonSerializer, charDataPath.c_str());
         std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
         std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
@@ -205,6 +206,15 @@ void BattleScene::Load()
     enSystem->rootEntity->transform->AddChild(mainUnitHealthBar->transform);
     enSystem->entities.push_back(std::move(mainUnitHealthBar));
 
+    meshSystem->CreateTexture("Assets/UI/crosshair.png", "crosshair");
+    auto targetingUI = std::make_unique<Entity>("Crosshair");
+    pos = {0, 0};
+    scale = { 100, 100 };
+    targetingUI->addComponent<Transform2D>(pos, scale, 0.f);
+    targetingUI->addComponent<Mesh>("Box", "crosshair", Color(255, 255, 255, 0.75f), 102, MeshType::BOX_T);
+    battleManager->SetTargetingReticle(targetingUI.get());
+    enSystem->rootEntity->transform->AddChild(targetingUI->transform);
+    enSystem->entities.push_back(std::move(targetingUI));
 
     meshSystem->CreateTexture("Assets/UI/Bottom1.png", "Bottom1");
     auto UI_Bottom1 = std::make_unique<Entity>("Bottom1");

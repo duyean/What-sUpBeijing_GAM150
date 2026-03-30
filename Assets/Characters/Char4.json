@@ -1,0 +1,18 @@
+{
+    "name": "An Ye Sha Shou",
+    "element": 3,
+    "baseHP": 2000.0,
+    "baseATK": 1500.0,
+    "baseDEF": 800.0,
+    "faction": 1,
+    "initiative":9,
+    "texture":"Void_Back.png",
+    "texture2":"Void_Front.png",
+    "icontexture":"Void_Icon.png",
+    "moves": {
+        "0": 18,
+        "1": 19,
+        "2": 20,
+        "3": 21
+    }
+}

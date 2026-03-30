@@ -1,9 +1,9 @@
 {
     "name": "Suramu",
     "element": 1,
-    "baseHP": 750.0,
-    "baseATK": 750.0,
-    "baseDEF": 250.0,
+    "baseHP": 600.0,
+    "baseATK": 500.0,
+    "baseDEF": 200.0,
     "faction": 2,
     "initiative":1,
     "texture":"Suramu.png",

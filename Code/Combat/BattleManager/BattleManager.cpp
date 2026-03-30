@@ -18,10 +18,15 @@ void BattleManager::init()
 
 BattleManager::BattleManager() : delay(0), wait(false),
 currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false), 
-outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0), activeUnit(nullptr)
+outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(1), activeUnit(nullptr), targetingReticle(nullptr)
 {
 	maxActionPoints = 5;
-	actionPoint = std::ceil(maxActionPoints / 2);
+	actionPoint = std::ceil(maxActionPoints / 2.f);
+}
+
+void BattleManager::SetTargetingReticle(Entity* en)
+{
+	targetingReticle = en;
 }
 
 bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
@@ -118,6 +123,7 @@ void BattleManager::ResetBattle()
 
 	std::uniform_int_distribution<int> d(1, 2);
 	RunManager::Instance().ModifyEnemyDifficulty(d(Game::gen));
+	RunManager::Instance().ModifyPartyLevel(1);
 }
 
 void BattleManager::LoadBattleUnit(Character* unit)
@@ -199,6 +205,8 @@ void BattleManager::update()
 				if (bt == BATTLE_TYPE::MINI_BOSS)
 				{
 					//unlock character goes here
+					auto charID = RunManager::Instance().GenerateCharacter();
+					RunManager::Instance().AddCharacter(charID);
 				}
 				if (bt != BATTLE_TYPE::BOSS)
 				{
@@ -243,9 +251,9 @@ void BattleManager::update()
 	}
 
 	activeUnit = battleUnits[currentActiveUnit];
+	targetingReticle->isActive = false;
 	if (!wait)
 	{
-		currentTurn++;
 		delay = activeUnit->GetFaction() == Game::PLAYER ? 0.25f : 0.75f;
 		activeUnit->StartTurn();
 		wait = true;
@@ -259,8 +267,8 @@ void BattleManager::update()
 
 			if (lastTargetedUnit)
 			{
-				//Placeholder to render targeting UI
-				MeshGen::getInstance().DrawCircle(lastTargetedUnit->entity->transform->getPosition(), { 100, 100 }, Color(255, 0, 0, 0.3f));
+				targetingReticle->transform->setPosition(lastTargetedUnit->entity->transform->getPosition());
+				targetingReticle->isActive = true;
 			}
 			MOVE_SLOT usingMove = MOVE_SLOT::NONE;
 			//Register Inputs
@@ -338,6 +346,7 @@ void BattleManager::update()
 			if (currentActiveUnit >= battleUnits.size())
 			{
 				currentActiveUnit = 0;
+				currentTurn++;
 			}
 			wait = false;
 
@@ -347,7 +356,12 @@ void BattleManager::update()
 
 void BattleManager::fixedUpdate()
 {
-
+	if (targetingReticle)
+	{
+		float newRotation = targetingReticle->transform->getRotation() + 1.0f;
+		newRotation = fmod(newRotation, 360.0f);
+		targetingReticle->transform->setRotation(newRotation);
+	}
 }
 
 void BattleManager::ProcessDeadUnit(Character* dead)

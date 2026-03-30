@@ -5,9 +5,10 @@
             "name": "Basic Attack",
             "coefficient": 0.5,
             "dot": 0.0,
-            "brief": "Attacks a single enemy for 50% ATK as DMG",
+            "brief": "Attacks a single enemy for 50% ATK as DMG. Gain 3 action points.",
             "description": "This is a LONG description of Move 1. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr",
             "target": 2,
+            "cost" : -3,
             "modifiers": []
         },
         {
@@ -18,6 +19,7 @@
             "brief": "Attacks an enemy and applies BURN, dealing damage over time.",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm on fire now.",
             "target": 2,
+            "cost" : 0,
             "modifiers": [
               1
             ]
@@ -27,9 +29,10 @@
             "name": "Empower",
             "coefficient": 0.0,
             "dot": 0.15,
-            "brief": "Gains an ATK buff.",
+            "brief": "Gains an ATK buff.\nMove cost: 1",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 1,
+            "cost": 1,
             "modifiers": [
               3
             ]
@@ -37,11 +40,12 @@
         {
             "id": 3,
             "name": "Armor Piercing Strike",
-            "coefficient": 0.8,
+            "coefficient": 1.0,
             "dot": 0.0,
-            "brief": "Strike an enemy and applies VULNERABILITY.\nVULNERABILITY reduces enemies' DMG Reduction by 20% ",
+            "brief": "Strike an enemy for 100% ATK DMG and applies VULNERABILITY.\nVULNERABILITY reduces enemies' DMG Reduction by 20%",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
+            "cost":0,
             "modifiers": [
               11
             ]
@@ -51,9 +55,10 @@
             "name": "Flaming Strike",
             "coefficient": 0.4,
             "dot": 0.2,
-            "brief": "Slash an enemy with your fiery sword, burning them and dealing 40% ATK DMG",
+            "brief": "Slash an enemy with your fiery sword, burning them and dealing 40% ATK DMG. Gain 1 action point.",
             "description": "",
             "target": 2,
+            "cost" : -1,
             "modifiers": [
               1
             ]
@@ -66,6 +71,7 @@
             "brief": "Surround yourself with flames, massively increasing ATK by 70%.",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
+            "cost":0,
             "modifiers": [
               5
             ]
@@ -73,11 +79,12 @@
         {
             "id": 6,
             "name": "Cataclysm",
-            "coefficient": 1.50,
+            "coefficient": 1.80,
             "dot": 0.9,
-            "brief": "Strike an enemy for 150% ATK DMG and inflicts them with SUPERHEATED, taking high damage over time.",
+            "brief": "Strike an enemy for 180% ATK DMG and inflicts them with SUPERHEATED, taking high damage over time.\nMove cost: 3",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 2,
+            "cost":3,
             "modifiers": [
               6
             ]
@@ -85,11 +92,12 @@
         {
             "id": 7,
             "name": "Water Surge",
-            "coefficient": 0.30,
+            "coefficient": 0.60,
             "dot": 0.0,
-            "brief": "Deals 30% ATK DMG to all enemies, WEAKENING enemies.\nWEAKEN reduces ATK by 25%.",
+            "brief": "Deals 60% ATK DMG to all enemies, WEAKENING enemies.\nWEAKEN reduces ATK by 25%.\nMove cost: 1",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 3,
+            "cost":1,
             "modifiers": [
               7
             ]
@@ -99,9 +107,10 @@
             "name": "Hydro Rush",
             "coefficient": 0.50,
             "dot": 0.0,
-            "brief": "Deals 50% ATK DMG to all enemies and EXPOSING enemies.\nEXPOSED reduces DEF by 40%.",
+            "brief": "Deals 50% ATK DMG to all enemies and EXPOSING enemies.\nEXPOSED reduces DEF by 40%.\nMove cost: 1",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 3,
+            "cost":1,
             "modifiers": [
               4
             ]
@@ -109,11 +118,12 @@
         {
             "id": 9,
             "name": "Tidal Wave",
-            "coefficient": 0.80,
+            "coefficient": 1.10,
             "dot": 0.0,
-            "brief": "Deals 80% ATK DMG to all enemies",
+            "brief": "Deals 110% ATK DMG to all enemies.\nMove cost: 3",
             "description": "This is a LONG description of Move 2. Blah blah blah weh weh weh grrrrrrrrrrrrrrrrr\nAlso I'm stronk now.",
             "target": 3,
+            "cost" : 3,
             "modifiers": [
             ]
         },
@@ -125,6 +135,7 @@
             "brief": "Enemy Move: Weaken all allies",
             "description": "",
             "target": 3,
+            "cost" : 0,
             "modifiers": [
               7
             ]
@@ -137,6 +148,7 @@
             "brief": "Enemy Move: Damage an ally target",
             "description": "",
             "target": 2,
+            "cost" : 0,
             "modifiers": [
             ]
         },
@@ -148,6 +160,7 @@
             "brief": "Enemy Move: Damage and expose all allies",
             "description": "",
             "target": 3,
+            "cost" : 0,
             "modifiers": [
               4
             ]
@@ -160,6 +173,7 @@
             "brief": "Enemy Move: Damage and burn one ally",
             "description": "",
             "target": 2,
+            "cost" : 0,
             "modifiers": [
               1
             ]
@@ -172,6 +186,7 @@
             "brief": "Enemy Move: Damages all allies",
             "description": "",
             "target": 3,
+            "cost" : 0,
             "modifiers": [
             ]
         },
@@ -180,9 +195,10 @@
             "name": "Toughen Up",
             "coefficient": 0.0,
             "dot": 0.0,
-            "brief": "Grants RESISTANCE to all allies. RESISTANCE grants +40% DEF",
+            "brief": "Grants RESISTANCE to all allies. RESISTANCE grants +40% DEF.\nMove cost: 1",
             "description": "",
             "target": 4,
+            "cost" : 1,
             "modifiers": [
                 8
             ]
@@ -192,9 +208,10 @@
             "name": "Inspire",
             "coefficient": 0.0,
             "dot": 0.0,
-            "brief": "Grants EMPOWERED to all allies. EMPOWERED grants +15% ATK",
+            "brief": "Grants EMPOWERED to all allies. EMPOWERED grants +25% ATK.\nMove cost: 1",
             "description": "",
             "target": 4,
+            "cost" : 1,
             "modifiers": [
                 9
             ]
@@ -204,9 +221,10 @@
             "name": "Rallying Cry",
             "coefficient": 0.0,
             "dot": 0.0,
-            "brief": "Empower the resolve of allies, granting them 25% DMG BOOST",
+            "brief": "Empower the resolve of allies, granting them 25% DMG BOOST.\nMove cost: 1",
             "description": "",
             "target": 4,
+            "cost" : 1,
             "modifiers": [
                 10
             ]

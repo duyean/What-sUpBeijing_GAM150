@@ -56,6 +56,9 @@ class BattleManager : public SoloBehavior
 	EntityManager* enSystem = nullptr;
 	TransitionScreen* ts = nullptr;
 public:
+
+	int actionPoint, maxActionPoints;
+
 	//Constructor
 	BattleManager();
 

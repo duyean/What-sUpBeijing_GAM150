@@ -98,7 +98,7 @@
             "name": "Empowered",
             "duration": 3,
             "type": 0,
-            "desc":"ATK increased by 15%. Stacks in duration.",
+            "desc":"ATK increased by 25%. Stacks in duration.",
             "attribute": 0,
             "value": 0.15,
             "behaviour": 1,

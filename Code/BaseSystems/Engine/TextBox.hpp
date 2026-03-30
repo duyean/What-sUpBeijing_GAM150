@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   TextBox.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Text Box
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef _Text_
 #include <iostream>
@@ -53,6 +65,18 @@ public:
 	Color text_color;
 
 	TextBox();
+/*!***********************************************************************
+\brief Constructor for TextBox Class
+\param _text
+text for the text box
+\param _size
+size of the text box
+\param _allign_v
+vertical allignment type for the text
+\param _allign_h
+horizontal allignment type for the text
+Draw order for the text
+*************************************************************************/
 	TextBox(const char* _text, float _size, TextBoxVAllign _allign_v = TextBoxVAllign::TOP, TextBoxHAllign _allign_h = TextBoxHAllign::LEFT);
 	~TextBox(){}
 };

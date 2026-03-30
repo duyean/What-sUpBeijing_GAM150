@@ -1,13 +1,15 @@
+/******************************************************************************/
 /*!
-@file GameStateManager.h
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 12/1/26
-@brief
-This file contains the declarations of functions to manage Game States
-*//*______________________________________________________________________*/
+\file   GameStateManager.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions to manage Game States
+*/
+/******************************************************************************/
+
 #pragma once
 #include "../../BaseSystems_WZBJ_Pak.hpp"
 #include "GameState.hpp"
@@ -36,37 +38,33 @@ public:
 	GameStateManager();
 	~GameStateManager();
 
-	/*!
-	@brief Initialize GameStateManager variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Initialize GameState variables
+*************************************************************************/
 	void Init();
 
-	/*!
-	@brief Updates current scene
-	@param float
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Updates current scene
+\param _dt
+delta time
+*************************************************************************/
 	void Update(float _dt);
 
-
-	/*!
-	@brief Clears GameStateManager variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Clears GameState variables
+*************************************************************************/
 	void Exit();
 
-	/*!
-	@brief Loads next Game State
-	@param enum SCENES
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Loads next GameState
+*************************************************************************/
 	void NextScene(SCENES _scene);
 
-	bool IsLastLevel(void);
-	SCENES GetCurrentLevel(void);
-	void LoadNextLevel(void);
+/*!***********************************************************************
+\brief Gets the current Scene enum
+\return SCENES
+enum of the current scene
+*************************************************************************/
+	SCENES GetCurrentLevel(void) const;
 };
 

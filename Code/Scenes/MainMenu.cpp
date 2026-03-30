@@ -1,13 +1,15 @@
+/******************************************************************************/
 /*!
-@file SplashScreen.cpp
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 13/1/26
-@brief
-This file contains the definitions for the collection of functions in SplashScreen.h
-*//*______________________________________________________________________*/
+\file   MainMenu.cpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the definitions of functions for Main Menu
+*/
+/******************************************************************************/
+
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
@@ -25,16 +27,6 @@ MainMenu::~MainMenu()
 {
 }
 
-
-/*!
-@brief Initialize splash screen variables
-
-Overwrites virtual GameState::Init().
-This function loads splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
 void MainMenu::Load()
 {
 	InitBlessingDatabase();
@@ -285,15 +277,6 @@ void MainMenu::QuitGame()
 }
 
 
-/*!
-@brief Clears splash screen variables
-
-Overwrites virtual GameState::Exit().
-This function frees splash screen image used.
-
-@param void
-@return void
-*//*______________________________________________________________*/
 void MainMenu::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;

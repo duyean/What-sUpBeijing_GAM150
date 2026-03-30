@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   TutorialScreen.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Tutorial Screen
+*/
+/******************************************************************************/
 #pragma once
 #include "../Engine_WZBJ_Pak.hpp"
 #include "../UI_WZBJ_Pak.hpp"
@@ -65,14 +76,29 @@ private:
 	std::vector<TutorialPage> tutorialPages;
 
 public:
+/*!***********************************************************************
+\brief Function to toggle tuorial page showing
+\param canShow
+*************************************************************************/
 	void ShowTutorial(bool canShow);
+
 	void awake() override;
 	void init() override;
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
 
+/*!***********************************************************************
+\brief Function to add previous display objects to hide them
+\param en
+Pointer to the display Entity object
+*************************************************************************/
 	void AddPrevDisplayEntity(Entity* en);
+/*!***********************************************************************
+\brief Single arguement contructor of the Tutorial Screen
+\param type
+The type of tutorial we want
+*************************************************************************/
 	TutorialScreen(TUTORIAL_TYPE type) : tut_type(type){}
 	~TutorialScreen() {};
 };

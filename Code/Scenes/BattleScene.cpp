@@ -200,18 +200,11 @@ void BattleScene::Load()
     pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
     scale = { 300, 12 };
     mainUnitHealthBar->addComponent<Transform2D>(pos, scale, 0.f);
-    mainUnitHealthBar->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_BL);
+    mainUnitHealthBar->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 102, MeshType::BOX_BL);
     mainUnitHealthBar->addComponent<MainHealthbar>();
     enSystem->rootEntity->transform->AddChild(mainUnitHealthBar->transform);
     enSystem->entities.push_back(std::move(mainUnitHealthBar));
 
-    auto mainUnitHealthBarBG = std::make_unique<Entity>("HealthBarBG");
-    pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
-    scale = { 300, 12 };
-    mainUnitHealthBarBG->addComponent<Transform2D>(pos, scale, 0.f);
-    mainUnitHealthBarBG->addComponent<Mesh>("Box", Color(122, 0, 0, 1.f), 101, MeshType::BOX_BL);
-    enSystem->rootEntity->transform->AddChild(mainUnitHealthBarBG->transform);
-    enSystem->entities.push_back(std::move(mainUnitHealthBarBG));
 
     meshSystem->CreateTexture("Assets/UI/Bottom1.png", "Bottom1");
     auto UI_Bottom1 = std::make_unique<Entity>("Bottom1");

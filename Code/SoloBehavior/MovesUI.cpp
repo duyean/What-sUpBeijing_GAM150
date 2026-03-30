@@ -1,11 +1,21 @@
 #include "MovesUI.hpp"
 #include "../Combat/BattleManager/BattleManager.hpp"
 #include "../BaseSystems/Engine/EventSystem.hpp"
+#include "../Combat/CombatUIManager.hpp"
 
 void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 {
 	if (!ch->IsEndingTurn())
 	{
+		auto& move = Move::moveDatabase[ch->GetMoveList().at(ms)];
+
+		if (move.moveCost > battleManager->actionPoint)
+		{
+			AEVec2 pos = { 0, 225.0f };
+			CombatUIManager::Instance().CreateMessageText(pos, "Not Enough Action Points");
+			return;
+		}
+
 		auto moveGroup = Move::moveDatabase[ch->GetMoveList().at(ms)].targetGroup;
 		switch (moveGroup)
 		{
@@ -25,6 +35,9 @@ void MovesUI::UseCurrMove(MOVE_SLOT ms, Character* ch)
 				break;
 			}
 		}
+
+		battleManager->actionPoint -= move.moveCost;
+		battleManager->actionPoint = std::clamp(battleManager->actionPoint, 0, battleManager->maxActionPoints);
 	}
 }
 

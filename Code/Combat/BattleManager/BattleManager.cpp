@@ -20,7 +20,8 @@ BattleManager::BattleManager() : delay(0), wait(false),
 currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false), 
 outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(0), activeUnit(nullptr)
 {
-
+	maxActionPoints = 5;
+	actionPoint = std::ceil(maxActionPoints / 2);
 }
 
 bool BattleManager::PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform)
@@ -282,25 +283,36 @@ void BattleManager::update()
 
 			if (usingMove != MOVE_SLOT::NONE)
 			{
-				auto moveGroup = Move::moveDatabase[activeUnit->GetMoveList().at(usingMove)].targetGroup;
+				auto& move = Move::moveDatabase[activeUnit->GetMoveList().at(usingMove)];
+
+				if (move.moveCost > actionPoint)
+				{
+					AEVec2 pos = { 0, 225.0f };
+					CombatUIManager::Instance().CreateMessageText(pos, "Not Enough Action Points");
+					return;
+				}
+
+				auto moveGroup = move.targetGroup;
 				switch (moveGroup)
 				{
-				case (Game::AOE_OPPOSITE):
-				{
-					activeUnit->UseMove(usingMove, GetAllEnemies());
-					break;
+					case (Game::AOE_OPPOSITE):
+					{
+						activeUnit->UseMove(usingMove, GetAllEnemies());
+						break;
+					}
+					case (Game::AOE_ALLY):
+					{
+						activeUnit->UseMove(usingMove, GetPlayerParty());
+						break;
+					}
+					default:
+					{
+						activeUnit->UseMove(usingMove, lastTargetedUnit);
+						break;
+					}
 				}
-				case (Game::AOE_ALLY):
-				{
-					activeUnit->UseMove(usingMove, GetPlayerParty());
-					break;
-				}
-				default:
-				{
-					activeUnit->UseMove(usingMove, lastTargetedUnit);
-					break;
-				}
-				}
+				actionPoint -= move.moveCost;
+				actionPoint = std::clamp(actionPoint, 0, maxActionPoints);
 			}
 		}
 	}

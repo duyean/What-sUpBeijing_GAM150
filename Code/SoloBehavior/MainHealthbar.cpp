@@ -1,4 +1,5 @@
 #include "MainHealthbar.hpp"
+#include <sstream>
 
 void MainHealthbar::awake()
 {
@@ -22,22 +23,12 @@ void MainHealthbar::update()
 	MeshGen::getInstance().DrawFont(currentTurnTextPos.x, currentTurnTextPos.y - 0.1f, 0.8f, Color(255, 255, 255, 255), to_string(battleManager->GetCurrentTurn()).c_str(), "liberi", TextAlignment::CENTER, 700);
 	if (battleManager->GetActiveUnit() && battleManager->GetActiveUnit()->GetFaction() == Game::PLAYER)
 	{
-		Color color;
-		float hpperc = battleManager->GetActiveUnit()->GetHealthPercentage();
-		if (hpperc >= 0.4f)
-		{
-			color = Color(0, 255, 0, 1);
-		}
-		else
-		{
-			color = Color(255, 0, 0, 1);
-		}
-		AEVec2 scale = { 300, 12 };
-		AEVec2 trueScale = { scale.x * hpperc, scale.y };
-		entity->transform->setScale(trueScale);
-		entity->getComponent<Mesh>()->color = color;
 		MeshGen::getInstance().DrawFont(-0.825f, 0.725f, 0.5f, Color(255, 255, 255, 255), battleManager->GetActiveUnit()->GetName().c_str(), "liberi", TextAlignment::LEFT, 700);
+
 	}
+	std::ostringstream oss;
+	oss << "Action Points: " << battleManager->actionPoint << "/" << battleManager->maxActionPoints;
+	MeshGen::getInstance().DrawFont(-0.825f, 0.9f, 0.6f, Color(255, 255, 255, 1), oss.str().c_str(), "liberi", TextAlignment::LEFT, 700);
 }
 
 void MainHealthbar::fixedUpdate()

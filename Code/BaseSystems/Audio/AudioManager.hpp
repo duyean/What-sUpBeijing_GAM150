@@ -1,3 +1,12 @@
+/*!************************************************************************
+* \file AudioManager.hpp
+* \author Tai Yang Tat Bryson
+* \par DP email: t.yangtatbryson\@digipen.edu
+* \par Course: CSD1451-b
+* \brief
+*   This file implements functions regarding AudioManager to play BGM and SFX
+**************************************************************************/
+
 #pragma once
 
 #include "AudioTrack.hpp"
@@ -6,6 +15,11 @@
 
 #include <map>
 
+/*!***********************************************************************
+* \class AudioManager
+* \brief
+*  Manager for everything related to Audio
+*************************************************************************/
 class AudioManager : public SingletonPattern<AudioManager>
 {
 	friend SingletonPattern<AudioManager>;
@@ -62,25 +76,112 @@ public:
 	};
 
 public:
-	// Constructor
+	/*!***********************************************************************
+	* \brief
+	*  Default constructor
+	*************************************************************************/
 	AudioManager();
-	// Destructor
+	/*!***********************************************************************
+	* \brief
+	*  Default destructor
+	*************************************************************************/
 	~AudioManager();
 
+	/*!***********************************************************************
+	* \brief
+	*  Adds an AudioTrack into a map of all tracks
+	* \param[in] type
+	*  Type of AudioTrack
+	* \param[in] fileName
+	*  Name of the file Asset
+	* \return
+	*  void
+	*************************************************************************/
 	void AddTrack(AUDIO_TYPE type, std::string fileName);
+	/*!***********************************************************************
+	* \brief
+	*  Plays a single AudioTrack
+	* \param[in] id
+	*  Type of AudioTrack to play
+	* \param[in] fade
+	*  If the AudioTrack should fade in
+	* \return
+	*  If the track is successfully played
+	*************************************************************************/
 	bool PlayTrack(AUDIO_TYPE id, bool fade) const;
+	/*!***********************************************************************
+	* \brief
+	*  Stops a single AudioTrack
+	* \param[in] id
+	*  Type of AudioTrack to stop
+	* \param[in] fade
+	*  If the AudioTrack should fade out
+	* \return
+	*  void
+	*************************************************************************/
 	void StopTrack(AUDIO_TYPE id, bool fade) const;
+	/*!***********************************************************************
+	* \brief
+	*  Stops all AudioTracks except for exception
+	* \param[in] fade
+	*  If the AudioTracks should fade out
+	* \param[in] exception
+	*  The AudioTrack to keep playing (if any)
+	* \return
+	*  void
+	*************************************************************************/
 	void StopAllTracks(bool fade, AUDIO_TYPE exception = AUDIO_TOTAL) const;
+	/*!***********************************************************************
+	* \brief
+	*  Adds an SFXTrack into a map of all SFXs
+	* \param[in] type
+	*  Type of SFX
+	* \param[in] fileName
+	*  Name of the file Asset
+	* \return
+	*  void
+	*************************************************************************/
 	void AddSFX(SFX_TYPE type, std::string fileName);
+	/*!***********************************************************************
+	* \brief
+	*  Plays a single SFX
+	* \param[in] id
+	*  Type of SFX to play
+	* \return
+	*  void
+	*************************************************************************/
 	void PlaySFX(SFX_TYPE id) const;
+	/*!***********************************************************************
+	* \brief
+	*  Update function to update AudioTrack volumes
+	* \return
+	*  void
+	*************************************************************************/
 	void Update();
+	/*!***********************************************************************
+	* \brief
+	*  Accessor function for bgmVol
+	* \return
+	*  A reference to bgmVol
+	*************************************************************************/
 	float& BGMVolume();
+	/*!***********************************************************************
+	* \brief
+	*  Accessor function for sfxVol
+	* \return
+	*  A reference to sfxVol
+	*************************************************************************/
 	float& SFXVolume();
 
 private:
+	// A map of all AudioTracks
 	std::map<AUDIO_TYPE, AudioTrack*> tracks;
+	// A map of all SFXTracks
 	std::map<SFX_TYPE, SFXTrack*> sfxs;
+	// AEAudioGroup for SFX
 	AEAudioGroup sfxGroup;
+	// Volume of BGM and SFX
 	float bgmVol, sfxVol;
+	// Previous volume of BGM and SFX
 	float prevBgmVol, prevSfxVol;
 };

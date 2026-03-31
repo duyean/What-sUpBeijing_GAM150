@@ -102,6 +102,21 @@ public:
 	*  void
 	*************************************************************************/
 	void SetCost(Entity* c);
+	/*!***********************************************************************
+	* \brief
+	*  Displays the blessing's description in the UI
+	* \param[in] nameStr
+	*  Name of the blessing
+	* \param[in] typeDesc
+	*  Description of blessings
+	* \param[in] longDescStr
+	*  Long description of blessing
+	* \param[in] shopId
+	*  ID of item in shop
+	* \return
+	*  void
+	*************************************************************************/
+	void DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId);
 
 	/*!***********************************************************************
 	* \brief
@@ -143,13 +158,17 @@ public:
 	* \brief
 	*  Default constructor
 	*************************************************************************/
-	Shop() {}
+	Shop();
 	/*!***********************************************************************
 	* \brief
 	*  Default destructor
 	*************************************************************************/
 	~Shop();
 private:
+	// Entity Manager for creation of other entities
+	EntityManager* enSystem;
+	// Mesh system for creation of textures
+	MeshGen* meshSystem;
 	// Boolean to show the shop UI
 	bool canShow = false;
 	// Vector of all shop UI Entities
@@ -159,7 +178,7 @@ private:
 	// The current shop item selected
 	int currSelection{ -1 };
 	// The buy button entity
-	Entity* buyButton = nullptr;
+	Entity* buyButtonEnt = nullptr;
 	// The player entity
 	Entity* player = nullptr;
 	// The ShopBlessings in the shop

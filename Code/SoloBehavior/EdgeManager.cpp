@@ -5,6 +5,7 @@
 #include "../SoloBehavior/Occurence.hpp"
 #include "../UI_WZBJ_Pak.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../Code/SoloBehavior/Shop.hpp"
 
 void EdgeManager::awake()
 {
@@ -22,6 +23,21 @@ void EdgeManager::awake()
 
 	player = enSystem->FindByNameGLOBAL("Player");
 	ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
+
+	(&MeshGen::getInstance())->CreateTexture("Assets/Images/shop.png", "shop");
+	auto shopEnt = std::make_unique<Entity>("Shop");
+	AEVec2 pos = { 0.f, 0.f };
+	AEVec2 scale = { 200.f, 200.f };
+	shopEnt->addComponent<Transform2D>(pos, scale, 0.f);
+	shopEnt->addComponent<Mesh>("Box", "shop", Color(255, 255, 255, 1), 100, MeshType::BOX_T);
+	shopEnt->addComponent<BoxCollider2D>(scale.x / 2, scale.y / 2);
+	Shop* s = shopEnt->addComponent<Shop>();
+	auto e = enSystem->rootEntity->FindByName("Player");
+	s->SetPlayer(e);
+	shopEnt->isActive = false;
+	shop = shopEnt.get();
+	enSystem->rootEntity->transform->AddChild(shop->transform);
+	enSystem->entities.push_back(std::move(shopEnt));
 }
 
 void EdgeManager::UpdateEdges()
@@ -52,6 +68,7 @@ void EdgeManager::UpdateEdges()
 
 	if (hasTraveled)
 	{
+		shop->isActive = false;
 		switch (currentNodeType)
 		{
 		case NodeType::EnemyEncounter:
@@ -164,6 +181,9 @@ void EdgeManager::UpdateEdges()
 			enSystem->entities.push_back(std::move(decisionTitle2));
 			break;
 		}
+		case NodeType::Shop:
+			shop->isActive = true;
+			break;
 		default:
 			break;
 		}

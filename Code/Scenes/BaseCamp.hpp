@@ -25,10 +25,6 @@ class BaseCamp : public GameState
 private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
-
-	void DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId);
-	void Purchase();
-	void CloseShop();
 	//Map* map = nullptr;
 public:
 	BaseCamp();

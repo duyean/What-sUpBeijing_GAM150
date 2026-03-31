@@ -36,6 +36,7 @@ private:
 	SceneEdge* SE_W = nullptr;
 
 	Entity* player = nullptr;
+	Entity* shop = nullptr;
 	TransitionScreen* ts = nullptr;
 	Entity* notif = nullptr;
 

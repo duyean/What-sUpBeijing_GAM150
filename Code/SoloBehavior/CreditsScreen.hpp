@@ -9,6 +9,15 @@ private:
 	std::vector<Entity*> prevDisplay;
 
 	bool isDisplaying = false;
+	float scrollOffset = 0.f;
+	float startingPos = -360.f;
+
+	Entity* logo = nullptr;
+	Entity* title = nullptr;
+	Entity* LeftText = nullptr;
+	Entity* RightText = nullptr;
+	Entity* Footer = nullptr;
+
 public:
 	void ShowCredits(bool canShow);
 	void awake() override;

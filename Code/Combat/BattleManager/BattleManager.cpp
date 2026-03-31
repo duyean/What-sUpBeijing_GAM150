@@ -21,7 +21,7 @@ currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false),
 outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(1), activeUnit(nullptr), targetingReticle(nullptr)
 {
 	maxActionPoints = 5;
-	actionPoint = std::ceil(maxActionPoints / 2.f);
+	actionPoint = (int)std::ceil(maxActionPoints / 2.f);
 }
 
 void BattleManager::SetTargetingReticle(Entity* en)

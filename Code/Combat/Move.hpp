@@ -70,6 +70,7 @@ public:
 	{
 		coefficient = dot_coefficient = 0;
 		name = description = brief = "";
+		moveCost = 0;
 	}
 	Move(std::string name, float coefficient, float dot_coeff, std::string brief, std::string desc, Game::MOVE_TARGET_GROUP target, int cost) :
 		name(name), coefficient(coefficient), dot_coefficient(dot_coeff), brief(brief), description(desc), targetGroup(target), moveCost(cost) {};

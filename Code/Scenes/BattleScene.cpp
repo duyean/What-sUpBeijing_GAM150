@@ -345,7 +345,7 @@ void BattleScene::Load()
 
     auto tt = std::make_unique<Entity>("ToolTipUI");
     pos = { 0.f, 0.f };
-    scale = { 400, 200};
+    scale = { 400, 300};
     tt->addComponent<Transform2D>(pos, scale, 0.f);
     tt->addComponent<Mesh>("Box", Color(1, 1, 1, 0.8f), 501, MeshType::BOX_B);
     TextBox* tt_tb = tt->addComponent<TextBox>("tooltip", 0.6f, TextBoxVAllign::TOP, TextBoxHAllign::LEFT);

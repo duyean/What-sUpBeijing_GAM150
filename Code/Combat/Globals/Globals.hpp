@@ -1,14 +1,27 @@
 #pragma once
 #include <random>
+#include <unordered_map>
 //global combat enums
 
 class Character;
 
 namespace Game
 {
-	static constexpr int DEF_CONSTANT = 500; //The Damage Reduction from DEF will be 0.5 at this DEF value
+	enum struct CHARACTER_ID
+	{
+		DEBUFFER_CHICK,
+		DPS_DUDE,
+		BUFFER_ASSASSIN,
+		OP_VOID_ASSASSIN,
+		TOTAL,
+	};
+
+	static constexpr int DEF_CONSTANT = 5000; //The Damage Reduction from DEF will be 0.5 at this DEF value
 	static std::random_device seedling;
 	static std::mt19937 gen(seedling());
+	static std::unordered_map<CHARACTER_ID, std::string> charIDToString = { {CHARACTER_ID::DEBUFFER_CHICK, "Char3"}, 
+		{CHARACTER_ID::DPS_DUDE, "Char2"}, {CHARACTER_ID::BUFFER_ASSASSIN, "Guy"}, {CHARACTER_ID::OP_VOID_ASSASSIN, "Char4"}};
+
 
 	enum ATTRIBUTE_TYPE
 	{

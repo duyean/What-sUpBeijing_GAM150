@@ -16,6 +16,9 @@ class BattleManager : public SoloBehavior
 	//The original unsorted player units for the Party UI
 	std::vector<Character*> playerUnits;
 
+	//Pointer to a targeting reticle Entity
+	Entity* targetingReticle;
+
 	//An integer to index the current acting unit
 	int currentActiveUnit;
 
@@ -56,6 +59,9 @@ class BattleManager : public SoloBehavior
 	EntityManager* enSystem = nullptr;
 	TransitionScreen* ts = nullptr;
 public:
+
+	int actionPoint, maxActionPoints;
+
 	//Constructor
 	BattleManager();
 
@@ -97,7 +103,7 @@ public:
 	Character* GetlastTargetedUnit();
 	std::vector<Character*> GetAllEnemies();
 	std::vector<Character*> GetPlayerParty() const;
-
+	void SetTargetingReticle(Entity* en);
 
 	void awake() override;
 	void init() override;

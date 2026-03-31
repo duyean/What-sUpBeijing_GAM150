@@ -11,13 +11,13 @@ std::unordered_map<OCCURENCE_ID, Occurence> eventsDatabase = {};
 void InitEventsDatabase()
 {
 	eventsDatabase.clear();
-	eventsDatabase.emplace(OCCURENCE_ID::TEST_EVENT_1, Occurence("Up For A Bet?", "A strange merchant offers you a choice, what do you do?", "50% chance of obtaining a random blessing.", "Decline as you do not gamble. Get 10 currency",
+	eventsDatabase.emplace(OCCURENCE_ID::TEST_EVENT_1, Occurence("Up For A Bet?", "A strange merchant offers you a choice, what do you do?", "75% chance of obtaining a random blessing.", "Decline as you do not gamble. Get 10 currency",
 		[](RunManager*) 
 		{
 			std::uniform_real_distribution<float> chanceRoll(0.0, 1.0);
 			float rng = chanceRoll(Game::gen);
 			std::cout << "RNG: " << rng << std::endl;
-			if (rng <= 0.5)
+			if (rng <= 0.75)
 			{
 				std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
 				auto it = blessingDatabase.begin();
@@ -90,14 +90,14 @@ void InitEventsDatabase()
 			//Get currency
 			case (1):
 			{
-				rm->ModifyCurrency(50);
+				rm->ModifyCurrency(250);
 				AEVec2 pos = { 0, 0 };
 				AEVec2 scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
 
 				auto displayBox = std::make_unique<Entity>("DisplayBox");
 				displayBox->addComponent<Transform2D>(pos, scale, 0.f);
 				displayBox->addComponent<Mesh>("Box", Color(50, 50, 50, 0.9f), 1002, MeshType::BOX_B);
-				displayBox->addComponent<DisplayBox>("Event Outcome", "You have found a stash of coins!", "+50 Currency", "-- Click To Continue --");
+				displayBox->addComponent<DisplayBox>("Event Outcome", "You have found a stash of coins!", "+250 Currency", "-- Click To Continue --");
 				EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
 				EntityManager::getInstance().entities.push_back(std::move(displayBox));
 				break;

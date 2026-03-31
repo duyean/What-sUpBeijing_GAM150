@@ -119,6 +119,10 @@ void Character::Init(void)
 	//Load Blessings
 	if (faction == Game::PLAYER)
 	{
+		int partyLevel = RunManager::Instance().GetPartyLevel();
+		baseMaxHP *= 1 + 0.25f * (partyLevel - 1);
+		baseATK *= 1 + 0.05f * (partyLevel - 1);
+		baseDEF *= 1 + 0.06f * (partyLevel - 1);
 		for (auto& blessing : RunManager::Instance().GetBlessings())
 		{
 			blessing.get()->Apply(this);
@@ -130,7 +134,7 @@ void Character::Init(void)
 		std::uniform_int_distribution<int> dist(0, 3);
 		enemyLevel = RunManager::Instance().GetEnemyDifficulty() + dist(Game::gen);
 		enemyLevel = std::max(0, enemyLevel);
-		baseMaxHP *= static_cast<float>(std::pow(1.2f, enemyLevel));
+		baseMaxHP *= static_cast<float>(std::pow(1.25f, enemyLevel));
 		baseATK *= 1 + 0.25f * enemyLevel;
 		baseDEF *= 1 + 0.10f * enemyLevel;
 	}
@@ -162,10 +166,6 @@ void Character::UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName)
 		if (faction == Game::PLAYER)
 		{
 			entity->getComponent<Mesh>()->pTex = meshSystem->getTexture(characterModelTexture2.c_str());
-		}
-		else
-		{
-			entity->getComponent<JumpToPoint>()->Trigger(AEVec2{ -500.f, -150.f }, 500.f, 0.5f);
 		}
 		std::cout << name << " used " << move->name << " on " << target->name << std::endl;
 		if (move->moveModifiers.size() > 0)
@@ -362,6 +362,8 @@ void Character::StartTurn(void)
 	endingTurn = false;
 	if (faction == Game::PLAYER)
 	{
+		//reset position
+		entity->transform->setPosition(AEVec2(-500.f, -150.f));
 		spriteTimer = 999;
 		spriteState = SPRITE_STATE::IDLE;
 	}
@@ -386,21 +388,42 @@ void Character::AIAttack()
 			Character* target = targets[randTarget(Game::gen)];
 			target->spriteState = SPRITE_STATE::IDLE;
 			target->spriteTimer = 2.0f;
+			if (faction == Game::FACTION::ENEMY)
+			{
+				entity->getComponent<JumpToPoint>()->Trigger(AEVec2{ -500.f, -150.f }, 500.f, 0.5f);
+			}
 			UseMove(slotSelected, target);
 		}
 	}
 	else if (move->targetGroup == Game::MOVE_TARGET_GROUP::AOE_OPPOSITE)
 	{
+		int count = 0;
 		for (auto& target : targets)
 		{
 			target->spriteState = SPRITE_STATE::IDLE;
+			if (faction == Game::FACTION::ENEMY)
+			{
+				target->entity->transform->setPosition(AEVec2(-700.f + (count * 200.f), -150.f));
+				count++;
+			}
 			target->spriteTimer = 2.0f;
+
+		}
+		if (faction == Game::FACTION::ENEMY)
+		{
+			entity->getComponent<JumpToPoint>()->Trigger(AEVec2{ -500.f, -150.f }, 500.f, 0.5f);
 		}
 		UseMove(slotSelected, targets);
+
 	}
 	else
 	{
+		if (faction == Game::FACTION::ENEMY)
+		{
+			entity->getComponent<JumpToPoint>()->Trigger(AEVec2{ entity->transform->getPosition().x, entity->transform->getPosition().y + 50.f}, 500.f, 0.5f);
+		}
 		UseMove(slotSelected, this);
+
 	}
 }
 

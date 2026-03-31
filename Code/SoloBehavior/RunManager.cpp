@@ -17,9 +17,12 @@ This file contains the implementation for a Run Manager for our game.
 RunManager::RunManager()
 {
 	party.reserve(3);
-	party.push_back("Guy");
-	party.push_back("Char2");
-	party.push_back("Char3");
+
+	for (int i = 0; i < 2; ++i)
+	{
+		auto charID = GenerateCharacter();
+		party.push_back(charID);
+	}
 
 	StartRun();
 }
@@ -50,7 +53,7 @@ void RunManager::StartRun()
 	}
 }
 
-const std::vector<std::string>& RunManager::GetParty() const
+const std::vector<Game::CHARACTER_ID>& RunManager::GetParty() const
 {
 	return party;
 }
@@ -76,8 +79,53 @@ void RunManager::ResetSave()
 
 	runBlessings.clear();
 	currency = 200;
+	partyLevel = 1;
 	enemyDifficulty = 1;
 	SetMapType(MapType::CityStreets);
+}
+
+Game::CHARACTER_ID RunManager::GenerateCharacter()
+{
+	// Build a pool of characters not already in the party
+	std::vector<Game::CHARACTER_ID> available;
+	for (int i = 0; i < static_cast<int>(Game::CHARACTER_ID::TOTAL); ++i)
+	{
+		Game::CHARACTER_ID id = static_cast<Game::CHARACTER_ID>(i);
+		if (std::find(party.begin(), party.end(), id) == party.end())
+		{
+			available.push_back(id);
+		}
+	}
+
+	if (available.empty())
+	{
+		// All characters are already in the party
+		printf("No new characters available\n");
+		return Game::CHARACTER_ID::TOTAL;
+	}
+
+	std::uniform_int_distribution<int> dist(0, available.size() - 1);
+	return available[dist(Game::gen)];
+}
+
+void RunManager::AddCharacter(Game::CHARACTER_ID charID)
+{
+	if (party.size() >= 3)
+	{
+		party.pop_back();
+	}
+
+	party.push_back(charID);
+	AEVec2 pos = { 0, 0 };
+	AEVec2 scale = { AEGfxGetWindowWidth() * 0.8f, AEGfxGetWindowHeight() * 0.8f };
+
+	auto displayBox = std::make_unique<Entity>("DisplayBox");
+	displayBox->addComponent<Transform2D>(pos, scale, 0.f);
+	displayBox->addComponent<Mesh>("Box", Color(50, 50, 50, 0.9f), 1002, MeshType::BOX_B);
+	displayBox->addComponent<DisplayBox>("New Character", "A new member has joined your squad!", "", "-- Click To Continue --");
+
+	EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
+	EntityManager::getInstance().entities.push_back(std::move(displayBox));
 }
 
 void RunManager::AddBlessing(std::unique_ptr<Blessing> bless)

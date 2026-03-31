@@ -78,7 +78,7 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(manager));
 
     //The Image for the battle background @dan
-    meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "BattleImage");
+    meshSystem->CreateTexture("../../Assets/Images/BattleScene.png", "BattleImage");
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
@@ -109,12 +109,13 @@ void BattleScene::Load()
     int count = 0;
     for (const auto& str : RunManager::Instance().GetParty())
     {
-        character = std::make_unique<Entity>(str.c_str());
+        std::string characterString = Game::charIDToString[str];
+        character = std::make_unique<Entity>(characterString.c_str());
         pos = { -500.f, -150.f };
         scale = { static_cast<float>(AEGfxGetWindowWidth() / 2.f), static_cast<float>(AEGfxGetWindowHeight()) };
         character->addComponent<Transform2D>(pos, scale, 0.f);
         auto ch = character->addComponent<Character>();
-        std::string charDataPath = "Assets/Characters/" + str + ".json";
+        std::string charDataPath = "Assets/Characters/" + characterString + ".json";
         character->getComponent<Character>()->LoadCharacter(jsonSerializer, charDataPath.c_str());
         std::string texturePath = "Assets/Images/" + ch->characterModelTexture;
         std::string texturePath2 = "Assets/Images/" + ch->characterModelTexture2;
@@ -200,18 +201,20 @@ void BattleScene::Load()
     pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
     scale = { 300, 12 };
     mainUnitHealthBar->addComponent<Transform2D>(pos, scale, 0.f);
-    mainUnitHealthBar->addComponent<Mesh>("Box", Color(255, 255, 255, 1.f), 102, MeshType::BOX_BL);
+    mainUnitHealthBar->addComponent<Mesh>("Box", Color(255, 255, 255, 0.f), 102, MeshType::BOX_BL);
     mainUnitHealthBar->addComponent<MainHealthbar>();
     enSystem->rootEntity->transform->AddChild(mainUnitHealthBar->transform);
     enSystem->entities.push_back(std::move(mainUnitHealthBar));
 
-    auto mainUnitHealthBarBG = std::make_unique<Entity>("HealthBarBG");
-    pos = { -0.8f * AEGfxGetWindowWidth() / 2, 0.9f * AEGfxGetWindowHeight() / 2 };
-    scale = { 300, 12 };
-    mainUnitHealthBarBG->addComponent<Transform2D>(pos, scale, 0.f);
-    mainUnitHealthBarBG->addComponent<Mesh>("Box", Color(122, 0, 0, 1.f), 101, MeshType::BOX_BL);
-    enSystem->rootEntity->transform->AddChild(mainUnitHealthBarBG->transform);
-    enSystem->entities.push_back(std::move(mainUnitHealthBarBG));
+    meshSystem->CreateTexture("Assets/UI/crosshair.png", "crosshair");
+    auto targetingUI = std::make_unique<Entity>("Crosshair");
+    pos = {0, 0};
+    scale = { 100, 100 };
+    targetingUI->addComponent<Transform2D>(pos, scale, 0.f);
+    targetingUI->addComponent<Mesh>("Box", "crosshair", Color(255, 255, 255, 0.75f), 102, MeshType::BOX_T);
+    battleManager->SetTargetingReticle(targetingUI.get());
+    enSystem->rootEntity->transform->AddChild(targetingUI->transform);
+    enSystem->entities.push_back(std::move(targetingUI));
 
     meshSystem->CreateTexture("Assets/UI/Bottom1.png", "Bottom1");
     auto UI_Bottom1 = std::make_unique<Entity>("Bottom1");
@@ -500,7 +503,7 @@ void BattleScene::GenerateEnemies(BATTLE_TYPE type)
             meshSystem->CreateTexture(texturePath.c_str(), ch->characterModelTexture.c_str());
             meshSystem->CreateTexture(texturePath2.c_str(), ch->characterModelTexture2.c_str());
             character->addComponent<Transform2D>(pos, scale, 0.f);
-            character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+            character->addComponent<Mesh>("Box", ch->characterModelTexture.c_str(), Color(std::uniform_int_distribution<int>(30, 255)(Game::gen), std::uniform_int_distribution<int>(30, 255)(Game::gen), std::uniform_int_distribution<int>(30, 255)(Game::gen), 1.f), 100, MeshType::BOX_T);
             auto hpBar = character->addComponent<Healthbar1>();
             character->addComponent<Bounce>(0.f, 2.f, 0.1f, 0.07f);
             character->addComponent<Tinter>(1.f);

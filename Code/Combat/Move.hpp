@@ -49,6 +49,9 @@ public:
 	//A full description of the move. (Shown in character page)
 	std::string description;
 
+	//The resource required to use the mmove, if negative, the party gains said resource instead.
+	int moveCost;
+
 	/*
 	Store MODIFIER_IDs (declared in Modifier.hpp) to
 	have this move apply the effect to the target
@@ -68,8 +71,8 @@ public:
 		coefficient = dot_coefficient = 0;
 		name = description = brief = "";
 	}
-	Move(std::string name, float coefficient, float dot_coeff, std::string brief, std::string desc, Game::MOVE_TARGET_GROUP target) :
-		name(name), coefficient(coefficient), dot_coefficient(dot_coeff), brief(brief), description(desc), targetGroup(target) {};
+	Move(std::string name, float coefficient, float dot_coeff, std::string brief, std::string desc, Game::MOVE_TARGET_GROUP target, int cost) :
+		name(name), coefficient(coefficient), dot_coefficient(dot_coeff), brief(brief), description(desc), targetGroup(target), moveCost(cost) {};
 	~Move() = default;
 
 	static std::unordered_map<MOVE_ID, Move> moveDatabase;

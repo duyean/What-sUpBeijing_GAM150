@@ -26,26 +26,7 @@ class BaseCamp : public GameState
 private:
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
-/*!***********************************************************************
-\brief Displays the selected blessing
-\param[in] nameStr 
-The name of the blessing selected
-\param[in] typeDesc
-Description of the blessing
-\param[in] longDescStr
-Long description of the blessing
-\param[in] shopId
-Id of the selected blessing item
-*************************************************************************/
-	void DisplayBlessing(std::string const& nameStr, std::string const& typeDesc, std::string const& longDescStr, int shopId);
-/*!***********************************************************************
-\brief Purchases the current shop item
-*************************************************************************/
-	void Purchase();
-/*!***********************************************************************
-\brief Closes the shop screen
-*************************************************************************/
-	void CloseShop();
+	//Map* map = nullptr;
 public:
 	BaseCamp();
 	~BaseCamp();

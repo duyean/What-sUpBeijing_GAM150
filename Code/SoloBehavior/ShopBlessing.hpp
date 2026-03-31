@@ -72,9 +72,9 @@ public:
 
 	/*!***********************************************************************
 	* \brief
-	*  Default constructor
+	*  Overloaded constructor with rarity
 	*************************************************************************/
-	ShopBlessing();
+	ShopBlessing(bool isRare = false);
 	/*!***********************************************************************
 	* \brief
 	*  Default destructor

@@ -61,46 +61,37 @@ void Shop::SetBuyButton(Entity* ent)
 
 void Shop::PurchaseSelection()
 {
-	//if (RunManager::Instance().GetCurrency() <= itemPrice)
-	//{
-	//	Show the player cannot buy this item (Flash button, show text, play audio etc)
-	//	return;
-	//}
 	// Purchase logic
 	selection.find(currSelection)->second = true;
 
 	bool couldPurchase = false;
-	// Selection is Blessing
-	if (currSelection <= 3)
+	auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
+	int itemcost{ 0 };
+	switch (b.get()->blessingRarity)
 	{
-		auto b = shopBlessings[currSelection]->GetBlessing().get()->Clone();
-		int itemcost{ 0 };
-		switch (b.get()->blessingRarity)
-		{
-		case BLESSING_RARITY::COMMON:
-			itemcost = 25;
-			break;
-		case BLESSING_RARITY::RARE:
-			itemcost = 50;
-			break;
-		case BLESSING_RARITY::LEGENDARY:
-			itemcost = 100;
-			break;
-		case BLESSING_RARITY::MYTHICAL:
-			itemcost = 250;
-			break;
-		}
+	case BLESSING_RARITY::COMMON:
+		itemcost = 25;
+		break;
+	case BLESSING_RARITY::RARE:
+		itemcost = 50;
+		break;
+	case BLESSING_RARITY::LEGENDARY:
+		itemcost = 100;
+		break;
+	case BLESSING_RARITY::MYTHICAL:
+		itemcost = 250;
+		break;
+	}
 
-		if (RunManager::Instance().RemoveCurrency(itemcost))
-		{
-			RunManager::Instance().AddBlessing(std::move(b));
-			couldPurchase = true;
-		}
-		else
-		{
-			currencyFlashTimer = currencyFlashTimerMax;
-			currency->getComponent<TextBox>()->text_color = Color{ 255, 55, 55, 1.f };
-		}
+	if (RunManager::Instance().RemoveCurrency(itemcost))
+	{
+		RunManager::Instance().AddBlessing(std::move(b));
+		couldPurchase = true;
+	}
+	else
+	{
+		currencyFlashTimer = currencyFlashTimerMax;
+		currency->getComponent<TextBox>()->text_color = Color{ 255, 55, 55, 1.f };
 	}
 
 	// UI elements
@@ -168,7 +159,7 @@ void Shop::awake()
 	}
 
 	std::string blessingDesc("(Blessings are buffs that only last for 1 level)");
-	std::string artifactDesc("(Artifacts are powerful buffs that last forever)");
+	std::string artifactDesc("(Artifacts are more powerful than blessings but cost more)");
 
 	meshSystem->CreateTexture("Assets/UI/shop-back.png", "ShopBGTexture");
 	auto shopBackground = std::make_unique<Entity>("ShopBG");
@@ -271,6 +262,62 @@ void Shop::awake()
 	blessing4->isActive = false;
 	enSystem->rootEntity->transform->AddChild(blessing4->transform);
 
+	auto blessing5 = std::make_unique<Entity>("Blessing5");
+	pos = { -AEGfxGetWindowWidth() * 0.275f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing5->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB5 = blessing5->addComponent<ShopBlessing>(true);
+	blessing5->addComponent<Mesh>("Box", shopB5->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 202, MeshType::BOX_T);
+	Button* blessing5Button = blessing5->addComponent<Button>();
+	blessing5Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing5Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing5Button->SetOnClick([this, shopB5, artifactDesc]() {DisplayBlessing(shopB5->GetBlessing().get()->blessingName,
+		artifactDesc, shopB5->GetBlessing().get()->blessingDesc, 4); });
+	blessing5->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing5->transform);
+
+	auto blessing6 = std::make_unique<Entity>("blessing6");
+	pos = { -AEGfxGetWindowWidth() * 0.175f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing6->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB6 = blessing6->addComponent<ShopBlessing>(true);
+	blessing6->addComponent<Mesh>("Box", shopB6->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 202, MeshType::BOX_T);
+	Button* blessing6Button = blessing6->addComponent<Button>();
+	blessing6Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing6Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing6Button->SetOnClick([this, shopB6, artifactDesc]() {DisplayBlessing(shopB6->GetBlessing().get()->blessingName,
+		artifactDesc, shopB6->GetBlessing().get()->blessingDesc, 5); });
+	blessing6->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing6->transform);
+
+	auto blessing7 = std::make_unique<Entity>("blessing7");
+	pos = { -AEGfxGetWindowWidth() * 0.075f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing7->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB7 = blessing7->addComponent<ShopBlessing>(true);
+	blessing7->addComponent<Mesh>("Box", shopB7->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 202, MeshType::BOX_T);
+	Button* blessing7Button = blessing7->addComponent<Button>();
+	blessing7Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing7Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing7Button->SetOnClick([this, shopB7, artifactDesc]() {DisplayBlessing(shopB7->GetBlessing().get()->blessingName,
+		artifactDesc, shopB7->GetBlessing().get()->blessingDesc, 6); });
+	blessing7->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing7->transform);
+
+	auto blessing8 = std::make_unique<Entity>("blessing8");
+	pos = { AEGfxGetWindowWidth() * 0.025f, -AEGfxGetWindowHeight() * 0.2f };
+	scale = { AEGfxGetWindowHeight() * 0.1f, AEGfxGetWindowHeight() * 0.1f };
+	blessing8->addComponent<Transform2D>(pos, scale, 0.f);
+	ShopBlessing* shopB8 = blessing8->addComponent<ShopBlessing>(true);
+	blessing8->addComponent<Mesh>("Box", shopB8->GetTextureName().c_str(), Color(255, 255, 255, 1.f), 202, MeshType::BOX_T);
+	Button* blessing8Button = blessing8->addComponent<Button>();
+	blessing8Button->SetNormalColor(Color{ 255, 255, 255, 1.f });
+	blessing8Button->SetHighlightedColor(Color{ 155, 155, 155, 1.f });
+	blessing8Button->SetOnClick([this, shopB8, artifactDesc]() {DisplayBlessing(shopB8->GetBlessing().get()->blessingName,
+		artifactDesc, shopB8->GetBlessing().get()->blessingDesc, 7); });
+	blessing8->isActive = false;
+	enSystem->rootEntity->transform->AddChild(blessing8->transform);
+
 	auto blessingsText = std::make_unique<Entity>("BlessingsText");
 	pos = { -AEGfxGetWindowWidth() * 0.225f, AEGfxGetWindowHeight() * 0.175f };
 	scale = { AEGfxGetWindowWidth() * 0.2f, AEGfxGetWindowHeight() * 0.05f };
@@ -324,6 +371,10 @@ void Shop::awake()
 	display.push_back(blessing2.get());
 	display.push_back(blessing3.get());
 	display.push_back(blessing4.get());
+	display.push_back(blessing5.get());
+	display.push_back(blessing6.get());
+	display.push_back(blessing7.get());
+	display.push_back(blessing8.get());
 	display.push_back(blessingsText.get());
 	display.push_back(artifactsText.get());
 	display.push_back(nameText.get());
@@ -332,12 +383,15 @@ void Shop::awake()
 	display.push_back(shopCloseButton.get());
 	display.push_back(currencyText.get());
 	display.push_back(costText.get());
-	display.push_back(buyButton.get());
 	SetBuyButton(buyButton.get());
 	AddShopBlessings(shopB1, 0);
 	AddShopBlessings(shopB2, 1);
 	AddShopBlessings(shopB3, 2);
 	AddShopBlessings(shopB4, 3);
+	AddShopBlessings(shopB5, 4);
+	AddShopBlessings(shopB6, 5);
+	AddShopBlessings(shopB7, 6);
+	AddShopBlessings(shopB8, 7);
 	SetCurrency(currencyText.get());
 	SetCost(costText.get());
 
@@ -346,6 +400,10 @@ void Shop::awake()
 	enSystem->entities.push_back(std::move(blessing2));
 	enSystem->entities.push_back(std::move(blessing3));
 	enSystem->entities.push_back(std::move(blessing4));
+	enSystem->entities.push_back(std::move(blessing5));
+	enSystem->entities.push_back(std::move(blessing6));
+	enSystem->entities.push_back(std::move(blessing7));
+	enSystem->entities.push_back(std::move(blessing8));
 	enSystem->entities.push_back(std::move(blessingsText));
 	enSystem->entities.push_back(std::move(artifactsText));
 	enSystem->entities.push_back(std::move(nameText));

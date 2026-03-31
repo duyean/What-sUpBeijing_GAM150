@@ -182,7 +182,7 @@ private:
 	// The player entity
 	Entity* player = nullptr;
 	// The ShopBlessings in the shop
-	ShopBlessing* shopBlessings[4]{};
+	ShopBlessing* shopBlessings[8]{};
 	// The currency entity
 	Entity* currency = nullptr;
 	// How much currency you have as a string

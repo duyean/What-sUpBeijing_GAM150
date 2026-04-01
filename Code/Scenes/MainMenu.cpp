@@ -241,17 +241,6 @@ void MainMenu::Load()
 	tutorial->ShowTutorial(false);
 	HTPButton->SetOnClick([this, tutorial]() {tutorial->ShowTutorial(true); });
 
-	////////////////////////////////////////////////
-	// 
-	// SETTINGS SCREEN
-	//
-	////////////////////////////////////////////////
-	auto ss = std::make_unique<Entity>("SettingsScreen");
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	ss->addComponent<Transform2D>(pos, scale, 0.f);
-	SettingsScreen* settings = ss->addComponent<SettingsScreen>();
-
 	settings->AddPrevDisplayEntity(ms);
 	settings->AddPrevDisplayEntity(te);
 	settings->AddPrevDisplayEntity(ngb);

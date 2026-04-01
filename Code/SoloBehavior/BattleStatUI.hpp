@@ -50,8 +50,7 @@ class BattleStatUI : public SoloBehavior
 	private:
 	//Boolean to indicate whether the UI is rendering
 	bool render;
-
 	//Pointer to the battle manager
-	BattleManager* battleManager;
+	BattleManager* battleManager = nullptr;
 	
 };

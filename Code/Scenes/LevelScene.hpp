@@ -1,13 +1,14 @@
+/******************************************************************************/
 /*!
-@file SplashScreen.hpp
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 13/1/26
-@brief
-This file contains the declarations of functions for splash screen
-*//*______________________________________________________________________*/
+\file   LevelScene.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Level Scene
+*/
+/******************************************************************************/
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
@@ -26,19 +27,13 @@ public:
 	LevelScene();
 	~LevelScene();
 
-	/*!
-	@brief Initialize Splash Screen variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief This function loads all the Level Scene objects
+*************************************************************************/
 	void Load() override;
-	/*!
-	* 
-	/*!
-	@brief Clears splash screen variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief This function unloads all Level Scene objects.
+*************************************************************************/
 	void Unload() override;
 };
 

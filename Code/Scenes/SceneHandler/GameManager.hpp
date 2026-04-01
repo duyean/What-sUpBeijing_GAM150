@@ -1,13 +1,14 @@
+/******************************************************************************/
 /*!
-@file GameManager.hpp
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 12/1/26
-@brief
-This file contains the declarations of functions to manage the game
-*//*______________________________________________________________________*/
+\file   GameManager.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions to manage the game
+*/
+/******************************************************************************/
 #pragma once
 #include "AEEngine.h"
 #include "GameStateManager.hpp"
@@ -36,41 +37,37 @@ public:
 	GameManager();
 	~GameManager();
 
+	//public bool for quitting game
 	bool quitGame =  false;
 
-	/*!
-	@brief Initialize game variables and settings
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+
+/*!***********************************************************************
+\brief Initialize game variables and settings
+*************************************************************************/
 	void Init();
 
-	/*!
-	@brief Updates game frame
-	@param float
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Updates game frame
+\param _dt
+game delta time
+*************************************************************************/
 	void Update(float _dt);
 
-	/*!
-	@brief Updates game at fixed intervals
-	@param float
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Updates game at fixed intervals
+\param _dt
+\param accumulator
+*************************************************************************/
 	void FixedUpdate(double _fixedDt, double accumulator);
 
-	/*!
-	@brief Render game frame
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Renders game frame
+*************************************************************************/
 	void Render();
 
-	/*!
-	@brief Clears game manager variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Clears Game Manager variables
+*************************************************************************/
 	void Exit();
 };
 

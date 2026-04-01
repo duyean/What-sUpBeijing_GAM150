@@ -31,14 +31,21 @@ void TutorialScreen::PrevSlide()
 		prevButton->entity->isActive = false;
 		nextButton->entity->isActive = true;
 	}
-	else prevButton->entity->isActive = true;
-
+	else
+	{
+		prevButton->entity->isActive = true;
+		nextButton->entity->isActive = true;
+	}
 	tutorial_tb->text = tutorialPages[currentPage].desc;
 	tutorial_img->setTexture(tutorialPages[currentPage].textureName);
 }
 
 void TutorialScreen::ShowTutorial(bool canShow)
 {
+	currentPage = 0;
+	tutorial_tb->text = tutorialPages[0].desc;
+	tutorial_img->setTexture(tutorialPages[0].textureName);
+
 	for (Entity* en : prevDisplay)
 	{
 		en->isActive = !canShow;
@@ -47,6 +54,8 @@ void TutorialScreen::ShowTutorial(bool canShow)
 	for (Transform2D* child : entity->transform->children)
 	{
 		child->entity->isActive = canShow;
+		if (child->entity == prevButton->entity)
+			child->entity->isActive = false;
 	}
 
 	RunManager::Instance().playerCanMove = !canShow;
@@ -80,6 +89,9 @@ void TutorialScreen::awake()
 		break;
 	case TutorialScreen::TUTORIAL_TYPE::TUTORIAL_COMBAT:
 		tutorialTitle = "COMBAT TUTORIAL";
+		break;
+	case TutorialScreen::TUTORIAL_TYPE::HOW_TO_PLAY:
+		tutorialTitle = "HOW TO PLAY";
 		break;
 	default:
 		break;
@@ -120,6 +132,24 @@ void TutorialScreen::awake()
 		}
 		tutorial_img = tutorial_image->addComponent<Mesh>("Box", cmbt_tut_pages[0].textureName, Color(255, 255, 255, 1.0f), 901, MeshType::BOX_T);
 		break;
+	case TutorialScreen::TUTORIAL_TYPE::HOW_TO_PLAY:
+		for (int i = 0; i < BCT_PAGES; i++)
+		{
+			meSystem->CreateTexture(bc_tut_pages[i].textureDir, bc_tut_pages[i].textureName);
+			tutorialPages.push_back(bc_tut_pages[i]);
+		}
+		for (int i = 0; i < ET_PAGES; i++)
+		{
+			meSystem->CreateTexture(explr_tut_pages[i].textureDir, explr_tut_pages[i].textureName);
+			tutorialPages.push_back(explr_tut_pages[i]);
+		}
+		for (int i = 0; i < CT_PAGES; i++)
+		{
+			meSystem->CreateTexture(cmbt_tut_pages[i].textureDir, cmbt_tut_pages[i].textureName);
+			tutorialPages.push_back(cmbt_tut_pages[i]);
+		}
+		tutorial_img = tutorial_image->addComponent<Mesh>("Box", bc_tut_pages[0].textureName, Color(255, 255, 255, 1.0f), 901, MeshType::BOX_T);
+		break;
 	}
 	entity->transform->AddChild(tutorial_image->transform);
 
@@ -131,7 +161,7 @@ void TutorialScreen::awake()
 	tutorial_tb = tutorial_desc->addComponent<TextBox>(
 		tutorialPages[0].desc,
 		0.6f, TextBoxVAllign::BOTTOM, TextBoxHAllign::CENTER);
-	tutorial_tb->padding_v = -250.f;
+	tutorial_tb->padding_v = -230.f;
 	tutorial_tb->text_layer = 902;
 	entity->transform->AddChild(tutorial_desc->transform);
 

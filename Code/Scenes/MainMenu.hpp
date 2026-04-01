@@ -1,13 +1,15 @@
+/******************************************************************************/
 /*!
-@file SplashScreen.hpp
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 13/1/26
-@brief
-This file contains the declarations of functions for splash screen
-*//*______________________________________________________________________*/
+\file   MainMenu.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Main Menu
+*/
+/******************************************************************************/
+
 #pragma once
 #include "../BaseSystems_WZBJ_Pak.hpp"
 #include "../SceneHandler_WZBJ_Pak.hpp"
@@ -20,31 +22,33 @@ This file contains the declarations of functions for splash screen
 class MainMenu : public GameState
 {
 private:
-	//CP_Image logo;
 	EntityManager* enSystem = nullptr;
 	MeshGen* meshSystem = nullptr;
 	TransitionScreen* ts_comp = nullptr;
 
+/*!***********************************************************************
+\brief Function to switch to the game scene.
+*************************************************************************/
 	void SwitchToGame();
+/*!***********************************************************************
+\brief This function resets the game to a new state. Clearing all saves.
+*************************************************************************/
 	void PlayNewSave();
+/*!***********************************************************************
+\brief Function to quit the game.
+*************************************************************************/
 	void QuitGame();
 public:
 	MainMenu();
 	~MainMenu();
 
-	/*!
-	@brief Initialize Splash Screen variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief This function loads all Main Menu objects.
+*************************************************************************/
 	void Load() override;
-	/*!
-	* 
-	/*!
-	@brief Clears splash screen variables
-	@param void
-	@return void
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief This function unloads all Main Menu objects.
+*************************************************************************/
 	void Unload() override;
 };
 

@@ -1,13 +1,14 @@
+/******************************************************************************/
 /*!
-@file SingletonPattern.h
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 12/1/26
-@brief
-This file contains the template to store single instance of a class
-*//*______________________________________________________________________*/
+\file   SingletonPattern.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the template to store single instance of a class
+*/
+/******************************************************************************/
 #pragma once
 #include <iostream>
 
@@ -19,14 +20,11 @@ private:
 	static T* instance;		//Empty address of template
 
 public:
-	/*!
-	@brief Gets instance of template class
-
-	Gets and return instance. If instance is null, create new template.
-
-	@param void
-	@return template<T>
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Gets instance of template class. Gets and return instance. 
+	   If instance is null, create new template.
+\return template<T>
+*************************************************************************/
 	static T* GetInstance(void)
 	{
 		if (instance == nullptr)
@@ -36,14 +34,11 @@ public:
 		return instance;
 	}
 
-	/*!
-	@brief Delete instance of template class
-
-	If instance is not null, deletes instance of template class and set instance back to null
-
-	@param void
-	@return template<T>
-	*//*______________________________________________________________*/
+/*!***********************************************************************
+\brief Delete instance of template class. If instance is not null, 
+		deletes instance of template class and set instance back to null
+\return template<T>
+*************************************************************************/
 	static void DestroyInstance(void)
 	{
 		if (instance != nullptr)

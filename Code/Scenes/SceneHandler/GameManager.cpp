@@ -63,7 +63,8 @@ void GameManager::Update(float _dt)
 	stateManager->Update(_dt);
 	eventSystem->Update(_dt);
 
-	if (AEInputCheckTriggered(AEVK_ESCAPE))
+	if (AEInputCheckTriggered(AEVK_ESCAPE)
+		&& GameStateManager::GetInstance()->GetCurrentLevel() != GameStateManager::MAIN_MENU)
 		RunManager::Instance().game_paused = !RunManager::Instance().game_paused;
 
 	for (int i = 0; i < enSystem->entities.size(); i++)

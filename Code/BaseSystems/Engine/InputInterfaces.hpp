@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   InputInterfaces.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of Pointer Event Datas
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef _InputInterfaces_
 #include <iostream>

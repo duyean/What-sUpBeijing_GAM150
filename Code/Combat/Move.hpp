@@ -85,6 +85,7 @@ public:
 	{
 		coefficient = dot_coefficient = 0;
 		name = description = brief = "";
+		moveCost = 0;
 	}
 
 	//Customised constructor

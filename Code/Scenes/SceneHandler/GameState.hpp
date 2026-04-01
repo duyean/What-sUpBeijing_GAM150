@@ -1,13 +1,14 @@
+/******************************************************************************/
 /*!
-@file GameState.h
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 12/1/26
-@brief
-This file contains the declarations of virtual functions for Game states
-*//*______________________________________________________________________*/
+\file   GameState.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of virtual functions for Game states
+*/
+/******************************************************************************/
 #pragma once
 
 class GameState {
@@ -19,5 +20,5 @@ public:
 	~GameState();
 
 	virtual void Load() { return; }					//Virtual Initialize function
-	virtual void Unload() { return; }					//Virtual Exit function
+	virtual void Unload() { return; }					  //Virtual Exit function
 };

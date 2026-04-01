@@ -1,13 +1,15 @@
+/******************************************************************************/
 /*!
-@file SplashScreen.cpp
-@author Tai Qian Yi (t.qianyi)
-@course CSD11451
-@section B
-@Final Project
-@date 13/1/26
-@brief
-This file contains the definitions for the collection of functions in SplashScreen.h
-*//*______________________________________________________________________*/
+\file   MainMenu.cpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the definitions of functions for Main Menu
+*/
+/******************************************************************************/
+
 #include "MainMenu.hpp"
 #include "../Code/SoloBehavior/RunManager.hpp"
 #include "../Code/SoloBehavior/Player.hpp"
@@ -16,6 +18,7 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../Code/SoloBehavior/CreditsScreen.hpp"
 #include "../SoloBehavior/Occurence.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
+#include "../SoloBehavior/TutorialScreen.hpp"
 
 #include <fstream>
 
@@ -27,16 +30,6 @@ MainMenu::~MainMenu()
 {
 }
 
-
-/*!
-@brief Initialize splash screen variables
-
-Overwrites virtual GameState::Init().
-This function loads splash screen image
-
-@param void
-@return void
-*//*______________________________________________________________*/
 void MainMenu::Load()
 {
 	InitBlessingDatabase();
@@ -107,7 +100,7 @@ void MainMenu::Load()
 	if (ifs.good()) {
 		auto b = std::make_unique<Entity>("START BUTTON");
 		Entity* sb = b.get();
-		pos = { 0.f,100.f };
+		pos = { 0.f,150.f };
 		scale = { 300.f, 80.f };
 		sb->addComponent<Transform2D>(pos, scale, 0.f);
 		sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -126,7 +119,6 @@ void MainMenu::Load()
 	}
 
 
-
 	////////////////////////////////////////////////
 	// 
 	// NEW GAME BUTTON
@@ -134,7 +126,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto ng = std::make_unique<Entity>("NEW GAME BUTTON");
 	Entity* ngb = ng.get();
-	pos = { 0.f,0.f };
+	pos = { 0.f, 50.f };
 	scale = { 300.f, 80.f };
 	ng->addComponent<Transform2D>(pos, scale, 0.f);
 	ng->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -149,6 +141,28 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(ngb->transform);
 	enSystem->entities.push_back(std::move(ng));
 
+
+	////////////////////////////////////////////////
+	// 
+	// HOW TO PLAY BUTTON
+	//
+	////////////////////////////////////////////////
+	auto htp = std::make_unique<Entity>("HOW TO PLAY BUTTON");
+	Entity* htpb = htp.get();
+	pos = { 0.f, -50.f };
+	scale = { 300.f, 80.f };
+	htp->addComponent<Transform2D>(pos, scale, 0.f);
+	htp->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+
+	Button* HTPButton = htpb->addComponent<Button>();
+	HTPButton->SetNormalColor(Color{ 200,200,200,1 });
+	HTPButton->SetHighlightedColor(Color{ 255,255,255,1 });
+	htp->addComponent<TextBox>("HOW TO PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+
+	enSystem->rootEntity->transform->AddChild(htpb->transform);
+	enSystem->entities.push_back(std::move(htp));
+
+
 	////////////////////////////////////////////////
 	// 
 	// CREDITS BUTTON
@@ -156,7 +170,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto creditsB = std::make_unique<Entity>("CREDITS BUTTON");
 	Entity* creditsB_en = creditsB.get();
-	pos = { 0.f,-100.f };
+	pos = { 0.f,-150.f };
 	scale = { 300.f, 80.f };
 	creditsB_en->addComponent<Transform2D>(pos, scale, 0.f);
 	creditsB_en->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -175,7 +189,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto settingsB = std::make_unique<Entity>("SETTINGS BUTTON");
 	Entity* settingsB_en = settingsB.get();
-	pos = { 0.f,-200.f };
+	pos = { 0.f,-250.f };
 	scale = { 300.f, 80.f };
 	settingsB_en->addComponent<Transform2D>(pos, scale, 0.f);
 	settingsB_en->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -197,7 +211,7 @@ void MainMenu::Load()
 	////////////////////////////////////////////////
 	auto e = std::make_unique<Entity>("QUIT BUTTON");
 	Entity* qb = e.get();
-	pos = { 0.f,-300.f };
+	pos = { 0.f,-350.f };
 	scale = { 300.f, 80.f };
 	qb->addComponent<Transform2D>(pos, scale, 0.f);
 	qb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
@@ -211,6 +225,32 @@ void MainMenu::Load()
 
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
+
+	////////////////////////////////////////////////
+	// 
+	// TUTORIAL SCREEN
+	//
+	////////////////////////////////////////////////
+	auto tut_s = std::make_unique<Entity>("TutorialScreen");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	tut_s->addComponent<Transform2D>(pos, scale, 0.f);
+	TutorialScreen* tutorial = tut_s->addComponent<TutorialScreen>(TutorialScreen::TUTORIAL_TYPE::HOW_TO_PLAY);
+	enSystem->rootEntity->transform->AddChild(tut_s->transform);
+	enSystem->entities.push_back(std::move(tut_s));
+	tutorial->ShowTutorial(false);
+	HTPButton->SetOnClick([this, tutorial]() {tutorial->ShowTutorial(true); });
+
+	////////////////////////////////////////////////
+	// 
+	// SETTINGS SCREEN
+	//
+	////////////////////////////////////////////////
+	auto ss = std::make_unique<Entity>("SettingsScreen");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	ss->addComponent<Transform2D>(pos, scale, 0.f);
+	SettingsScreen* settings = ss->addComponent<SettingsScreen>();
 
 	settings->AddPrevDisplayEntity(ms);
 	settings->AddPrevDisplayEntity(te);
@@ -266,6 +306,8 @@ void MainMenu::Load()
 
 	AudioManager::GetInstance()->StopAllTracks(true, AudioManager::AUDIO_MAINMENU_BGM);
 	AudioManager::GetInstance()->PlayTrack(AudioManager::AUDIO_MAINMENU_BGM, true);
+
+	RunManager::Instance().game_paused = false;
 }
 
 void MainMenu::SwitchToGame()
@@ -296,15 +338,6 @@ void MainMenu::QuitGame()
 }
 
 
-/*!
-@brief Clears splash screen variables
-
-Overwrites virtual GameState::Exit().
-This function frees splash screen image used.
-
-@param void
-@return void
-*//*______________________________________________________________*/
 void MainMenu::Unload()
 {
 	EntityManager::getInstance().needsCleanup = true;

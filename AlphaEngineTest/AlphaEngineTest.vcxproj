@@ -110,7 +110,6 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Mesh.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\OOP.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\PhysicSystem.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />

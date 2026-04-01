@@ -1,3 +1,14 @@
+/*!
+@file Bounce.hpp
+@author Tan Yifeng, Edmund (t.yifengedmund)
+@course CSD11451
+@section B
+@Final Project GAM 150
+@date 01/04/26
+@brief
+This file contains the generation of shapes and textures
+*//*______________________________________________________________________*/
+
 #pragma once
 #ifndef _Bounce_
 #include <iostream>

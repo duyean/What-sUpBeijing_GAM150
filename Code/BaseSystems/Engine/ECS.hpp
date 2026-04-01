@@ -15,7 +15,7 @@ using namespace std;
 namespace SystemPattern
 {
 
-    //Work in progress
+    //Work in progress (Not going to be completed)
     class ECS
     {
     private:

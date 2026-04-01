@@ -386,9 +386,6 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\Mesh.hpp">
       <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\Engine\SpriteSheet.hpp">
-      <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

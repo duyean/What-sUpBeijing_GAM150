@@ -104,7 +104,7 @@ Game::CHARACTER_ID RunManager::GenerateCharacter()
 		return Game::CHARACTER_ID::TOTAL;
 	}
 
-	std::uniform_int_distribution<int> dist(0, available.size() - 1);
+	std::uniform_int_distribution<size_t> dist(0, available.size() - 1);
 	return available[dist(Game::gen)];
 }
 

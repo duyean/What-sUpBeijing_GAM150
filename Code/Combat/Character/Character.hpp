@@ -1,3 +1,14 @@
+/*!
+@file Character.hpp
+@author Wayne Lion (lion.w)
+@course CSD11451
+@section B
+@Final Project
+@date 25/2/26
+@brief
+This file contains the interface for the Characters in the game
+*//*______________________________________________________________________*/
+
 #include "AEEngine.h"
 #include "../Globals/Globals.hpp"
 #include "../Modifier/Modifier.hpp"
@@ -8,20 +19,31 @@
 #include <string>
 #include "../../Engine_WZBJ_Pak.hpp"
 
+//Forward declaration
 class MeshGen;
 
+/*!***********************************************************************
+* \class Character
+* \brief
+* The class to store Character data and implementations
+*************************************************************************/
 class Character : public SoloBehavior
 {
 private:
+	//Enum to store the current SPRITE STATE for character sprites
 	enum struct SPRITE_STATE
 	{
 		IDLE,
 		ATTACKING,
 	};
 
+	//The timer to handle SPRITE STATE
 	float spriteTimer = 0.f;
+
+	//The current sprite state
 	SPRITE_STATE spriteState = SPRITE_STATE::IDLE;
 
+	//Pointer to the meshSystem
 	MeshGen* meshSystem;
 
 	//Whether the unit has chosen an action and is doing an animation
@@ -76,61 +98,143 @@ protected:
 	//A map to store the move set for this character
 	std::unordered_map<MOVE_SLOT, MOVE_ID> moveList;
 
+	//Store the viable targets
 	std::vector<Character*> targets;
 
 public:
 	Character();
 
 	using DeathCallback = std::function<void(Character*)>;
+	//The string for the character's base sprite
 	std::string characterModelTexture;
+
+	//The string for the character's attacking sprite
 	std::string characterModelTexture2;
+
+	//The string for the character's icon sprite
 	std::string characterIconTexture;
 
-	//Load character data from JSON
+	/*!***********************************************************************
+	* \brief
+	* Load the character data from the JSON database
+	* \param[in] serializer
+	* A reference to the JSON serialiser
+	* \param[in] fileName
+	* The name of the JSON file to use
+	* \return
+	* True if the operation was successful
+	*************************************************************************/
 	 bool LoadCharacter(JSONSerializer& serializer, std::string fileName); 
 
-	//Use the character's move, specified by the enum MOVE_SLOT
+	 /*!***********************************************************************
+	 * \brief
+	 * Use a character move, specified by the move_slot
+	 * \param[in] slot
+	 * The move slot to use
+	 * \param[in] target
+	 * A pointer to the target of the move
+	 * \param[in] renderMoveName
+	 * Whether to show the move that was used. This is handled internally
+	 *************************************************************************/
 	 void UseMove(MOVE_SLOT slot, Character* target, bool renderMoveName = true);
 
-	//Use the character's move, specified by the enum MOVE_SLOT
+	 /*!***********************************************************************
+	 * \brief
+	 * Use a character move, specified by the move_slot, overload for a vector of targets
+	 * \param[in] slot
+	 * The move slot to use
+	 * \param[in] targets
+	 * A vector of all the targets to use the move on
+	 *************************************************************************/
 	 void UseMove(MOVE_SLOT slot, std::vector<Character*> targets);
 
-	//Handles incoming damage, reduced by DEF and other factors
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles incoming damage taken
+	 * \param[in] damageInfo
+	 * A DamageInfo struct to store the Damage Info
+	 *************************************************************************/
 	 void TakeDamage(Game::DamageInfo& damageInfo);
 
-	//Deals damage to the target, followed by the coefficient of the move
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles dealing damage to a target
+	 * \param[in] target
+	 * The target to use the move on
+	 * \param coefficient
+	 * The coefficient of the damage, derived from the MOVE used
+	 *************************************************************************/
 	 void DealDamage(Character* target, float coefficient);
 
-	//Update any attribute modifiers
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles any attribute changes in battle
+	 *************************************************************************/
 	 void UpdateAttributes(void);
 
-	//Start this unit's turn
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles this unit's turn starting
+	 *************************************************************************/
 	 void StartTurn(void);
 
-	//Add a Modifier to this unit. Automatically calls UpdateAttribute() 
+	 /*!***********************************************************************
+	 * \brief
+	 * Adds a modifier to this unit, this function also calls UpdateAttributes
+	 * \param[in] modifier
+	 * A unique_ptr to the modifier to be added
+	 *************************************************************************/
 	 void AddModifier(std::unique_ptr<Modifier> modifier);
 
-	//Process any modifiers, usually used for damage over time effects
+	 /*!***********************************************************************
+	 * \brief
+	 * Process the unit's current modifiers
+	 *************************************************************************/
 	 void ProcessModifiers(void);
 
-	//Get the modifiers of this unit
+	 /*!***********************************************************************
+	 * \brief
+	 * Gets the current modifiers of this unit
+	 * \return
+	 * A vector of all modifiers on the current unit
+	 *************************************************************************/
 	 std::vector<std::unique_ptr<Modifier>> const& GetModifierList() const;
 
-	//End this unit's turn. If extra turns are implemented, edit here
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles this unit's turn ending
+	 *************************************************************************/
 	 void EndTurn(void);
 
-	//Process this unit's death
+	 /*!***********************************************************************
+	 * \brief
+	 * Handles this unit's death
+	 *************************************************************************/
 	 void Death(void);
 	
-	//Initialise the character, typically used at the start of battle
+	 /*!***********************************************************************
+	 * \brief
+	 * Initialises the character at the start of battle. Distinct from init()
+	 *************************************************************************/
 	 void Init(void);
 
-	//Modify the attribute bonus by a value
+	 /*!***********************************************************************
+	 * \brief
+	 * Modifies this unit's attribute
+	 * \param[in] type
+	 * The attribute to modify
+	 * \param value
+	 * The amount to modify 
+	 *************************************************************************/
 	 void ModifyAttribute(Game::ATTRIBUTE_TYPE type, float value);
 
-	//TThe character uses a random attack
+	 /*!***********************************************************************
+	 * \brief
+	 * Called by non-player controlled units to use a random attack
+	 *************************************************************************/
 	void AIAttack();
 
+	//Start of Accessors and Mutators
 	inline void SetOnDeath(DeathCallback cb) {onDeath = std::move(cb); }
 	inline Game::FACTION GetFaction() const { return faction; }
 	inline int GetInitiative(void) const { return initiative; }
@@ -146,6 +250,7 @@ public:
 	inline bool IsDead() const { return isDead; }
 	inline int GetLevel() const { return enemyLevel; }
 	float GetStat(Game::ATTRIBUTE_TYPE type) const;
+	//End of Accessors and Mutators
 
 	void init() override;
 	void awake() override;
@@ -154,5 +259,6 @@ public:
 	void destroy() override;
 
 private:
+	//A callback for other classes to use
 	DeathCallback onDeath;
 };

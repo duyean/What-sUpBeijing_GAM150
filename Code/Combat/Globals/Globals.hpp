@@ -1,3 +1,14 @@
+/*!
+@file Globals.hpp
+@author Wayne Lion (lion.w)
+@course CSD11451
+@section B
+@Final Project
+@date 25/2/26
+@brief
+This file contains global combat enums used for the game
+*//*______________________________________________________________________*/
+
 #pragma once
 #include <random>
 #include <unordered_map>
@@ -7,6 +18,7 @@ class Character;
 
 namespace Game
 {
+	//Enum to store character IDs
 	enum struct CHARACTER_ID
 	{
 		DEBUFFER_CHICK,
@@ -16,13 +28,20 @@ namespace Game
 		TOTAL,
 	};
 
-	static constexpr int DEF_CONSTANT = 5000; //The Damage Reduction from DEF will be 0.5 at this DEF value
+	//The Damage Reduction from DEF will be 0.5 at this DEF value
+	static constexpr int DEF_CONSTANT = 5000; 
+
+	//The seed for RNG functions
 	static std::random_device seedling;
+
+	//The generator for RNG functions
 	static std::mt19937 gen(seedling());
+
+	//Data to store CHARACTER IDs to the strings for their corresponding JSON file
 	static std::unordered_map<CHARACTER_ID, std::string> charIDToString = { {CHARACTER_ID::DEBUFFER_CHICK, "Char3"}, 
 		{CHARACTER_ID::DPS_DUDE, "Char2"}, {CHARACTER_ID::BUFFER_ASSASSIN, "Guy"}, {CHARACTER_ID::OP_VOID_ASSASSIN, "Char4"}};
 
-
+	//Enum to store ATTRIBUTE TYPES
 	enum ATTRIBUTE_TYPE
 	{
 		ATK,
@@ -34,6 +53,7 @@ namespace Game
 		DMG_REDUCTION
 	};
 
+	//Enum to store the element of the character for combat
 	enum WUXING_ELEMENT
 	{
 		FIRE,
@@ -44,6 +64,7 @@ namespace Game
 		NORMAL
 	};
 
+	//Enum to store the FACTION of a Character
 	enum FACTION
 	{
 		NONE,
@@ -51,6 +72,7 @@ namespace Game
 		ENEMY
 	};
 
+	//Enum to store the MOVE's TARGETING
 	enum MOVE_TARGET_GROUP
 	{
 		//The move can target the caster only
@@ -65,6 +87,7 @@ namespace Game
 		AOE_ALLY
 	};
 
+	//A struct to store Damage information
 	struct DamageInfo
 	{
 		float damage = 0;

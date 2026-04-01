@@ -1,3 +1,12 @@
+/*!************************************************************************
+* \file BattleManager.hpp
+* \author Wayne Lion Wei Jynn
+* \par DP email: lion.w\@digipen.edu
+* \par Course: CSD1451-b
+* \brief
+*   This file implements the Battle Manager for our game
+**************************************************************************/
+
 #pragma once
 #include <vector>
 #include "../../Engine_WZBJ_Pak.hpp"
@@ -8,6 +17,11 @@
 #include "../../BaseSystems/Engine/EntityManager.hpp"
 #include "../Code/SoloBehavior/TransitionScreen.hpp"
 
+/*!***********************************************************************
+* \class BattleManager
+* \brief
+*  The SoloBehavior object for BattleManager
+*************************************************************************/
 class BattleManager : public SoloBehavior
 {
 	//A vector of all the current units in battle
@@ -60,49 +74,112 @@ class BattleManager : public SoloBehavior
 	TransitionScreen* ts = nullptr;
 public:
 
+	//Action point system to prevent powerful move spamming
 	int actionPoint, maxActionPoints;
 
 	//Constructor
 	BattleManager();
 
-	/// <summary>
-	/// Loads a Character into the battleUnits vector
-	/// </summary>
-	/// <param name="unit">Pointer to the character joining the battle</param>
+	/*!***********************************************************************
+	* \brief
+	*  Add a Character to battle
+	* \param[in] unit
+	*  A pointer to the character to load
+	*************************************************************************/
 	void LoadBattleUnit(Character* unit);
 
-	/// <summary>
-	/// Start the battle
-	/// </summary>
+	/*!***********************************************************************
+	* \brief
+	*  Start the battle, loading important data
+	*************************************************************************/
 	void StartBattle();
 
-	/// <summary>
-	/// Function to process a Character dying in battle
-	/// </summary>
-	/// <param name="deadUnit">A pointer to the Character that died</param>
+	/*!***********************************************************************
+	* \brief
+	*  Handles when a Character has died in battle
+	* \param[in] deadUnit
+	*  The pointer to character that perished
+	*************************************************************************/
 	void ProcessDeadUnit(Character* deadUnit);
 
-	/// <summary>
-	/// Function handle target selection during battle
-	/// </summary>
+	/*!***********************************************************************
+	* \brief
+	*  Process player targeting during player's turn
+	*************************************************************************/
 	void ProcessTargeting();
 
-	/// <summary>
-	/// Clean up after a battle has ended
-	/// </summary>
+	/*!***********************************************************************
+	* \brief
+	*  Handles clean up after a battle has ended
+	*************************************************************************/
 	void ResetBattle();
 
-	/// <summary>
-	/// Helper function for target selection
-	/// </summary>
+	/*!***********************************************************************
+	* \brief
+	*  Helper function for targeting by clicking on an enemy
+	* \param[in] mouseX
+	*  The X coordinate of the mouse
+	* \param[in] mouseY
+	*  The Y coordinate of the mouse
+	* \param[in] transform
+	*  The transform to check for clicks
+	*************************************************************************/
 	bool PointInMesh(const s32& mouseX, const s32& mouseY, const Transform2D* transform);
 
+	/*!***********************************************************************
+	* \brief
+	*  Checks if a battle is ongoing.
+	* \return
+	*  True if a battle is ongoing
+	*************************************************************************/
 	bool InBattle() const;
+
+	/*!***********************************************************************
+	* \brief
+	*  Gets the current turn of battle
+	* \return
+	*  The number of turns that have passed
+	*************************************************************************/
 	int GetCurrentTurn() const;
+
+	/*!***********************************************************************
+	* \brief
+	*  Gets the current acting unit
+	* \return
+	*  A pointer to the Character that is acting
+	*************************************************************************/
 	Character* GetActiveUnit();
+
+	/*!***********************************************************************
+	* \brief
+	*  Gets the unit the player last targeted
+	* \return
+	*  A pointer to the Character that the player last targeted
+	*************************************************************************/
 	Character* GetlastTargetedUnit();
+
+	/*!***********************************************************************
+	* \brief
+	*  Gets all enemies in battle
+	* \return
+	*  A vector to all enemies in battle
+	*************************************************************************/
 	std::vector<Character*> GetAllEnemies();
+
+	/*!***********************************************************************
+	* \brief
+	*  Gets all player characters in battle
+	* \return
+	*  A vector to all player characters
+	*************************************************************************/
 	std::vector<Character*> GetPlayerParty() const;
+
+	/*!***********************************************************************
+	* \brief
+	*  Assigns the targeting reticle entity
+	* \param[in] en
+	*  The targeting reticle entity 
+	*************************************************************************/
 	void SetTargetingReticle(Entity* en);
 
 	void awake() override;

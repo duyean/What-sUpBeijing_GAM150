@@ -1,11 +1,13 @@
-/*!************************************************************************
-* \file PartyUI.hpp
-* \author TWayne Lion Wei Jynn
-* \par DP email: lion.w\@digipen.edu
-* \par Course: CSD1451-b
-* \brief
-*   This file implements the PartyUI system as a SoloBehavior object
-**************************************************************************/
+/*!
+@file PartyUI.hpp
+@author Wayne Lion (lion.w)
+@course CSD11451
+@section B
+@Final Project
+@date 11/3/26
+@brief
+This file contains the interface for a party UI display
+*//*______________________________________________________________________*/
 
 #pragma once
 #include "../Engine_WZBJ_Pak.hpp"
@@ -14,6 +16,11 @@
 //Forward declaration of BattleManager
 class BattleManager;
 
+/*!***********************************************************************
+* \class PartyUI
+* \brief
+* The class that defines the components of the party UI display
+*************************************************************************/
 class PartyUI : public SoloBehavior
 {
 	//Store the positions of the icon in the UI

@@ -6,7 +6,7 @@
 @Final Project
 @date 25/2/26
 @brief
-This file contains the inteface of a Combat Event Handler
+This file contains the interface of a Combat Event Handler
 *//*______________________________________________________________________*/
 
 #pragma once
@@ -39,38 +39,59 @@ struct EventData
 	float eventValue = 0;
 };
 
+/*!***********************************************************************
+* \class CombatEventHandler
+* \brief
+* A class to handle combat-related events
+*************************************************************************/
 class CombatEventHandler
 {
 public:
 	//An alias
 	using Callback = std::function<void(const EventData&)>;
 
-	/// <summary>
-	/// Registers an event specified by its type and callback function
-	/// </summary>
-	/// <param name="type">The type of trigger to call this event</param>
-	/// <param name="cb">The event that runs when triggered</param>
+	/*!***********************************************************************
+	* \brief
+	* Register a listener
+	* \param type
+	* The type of Event to listen for
+	* \param cb
+	* The function to run when the specified type is triggered
+	* \return
+	* A copied modifier from the database
+	*************************************************************************/
 	void Register(EventType type, Callback cb);
 
-	/// <summary>
-	/// Calls all events determined by a certain type
-	/// </summary>
-	/// <param name="type">The trigger</param>
-	/// <param name="data">The event data</param>
+	/*!***********************************************************************
+	* \brief
+	* Calls all listeners specified by the event type
+	* \param type
+	* The event type to call all listeners for
+	* \param data
+	* A reference to the EventData to write to
+	*************************************************************************/
 	void Dispatch(EventType type, const EventData& data);
 
-	//Clears the listeners
+	/*!***********************************************************************
+	* \brief
+	* Clears all listeners
+	*************************************************************************/
 	void ClearAll();
 
-	//Clears all events of a certain type
+	/*!***********************************************************************
+	* \brief
+	* Clears all listeners of a certain type
+	* \param type
+	* The specified event type
+	*************************************************************************/
 	void Clear(EventType type);
-	/*
-	* Work in progress to allow removal of specific callback??? Pending
-	*/
 
 	//Singleton accessor
 	static CombatEventHandler& Instance();
+
+	//Default constructor
 	CombatEventHandler();
 private:
+	//A map to store pairs of event type and callbacks
 	std::unordered_map<EventType, std::vector<Callback>> listeners;
 };

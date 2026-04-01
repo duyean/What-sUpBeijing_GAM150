@@ -1,3 +1,14 @@
+/*!
+@file ECS.hpp
+@author Tan Yifeng, Edmund (t.yifengedmund)
+@course CSD11451
+@section B
+@Final Project GAM 150
+@date 01/04/26
+@brief
+This file contains the ECS (Entity Component System) namespace with the ECS
+class (work in progress) and the FTACSystem design pattern class
+*//*______________________________________________________________________*/
 #pragma once
 #ifndef _ECS_
 #include <iostream>
@@ -70,3 +81,4 @@ namespace SystemPattern
 
 
 #endif
+

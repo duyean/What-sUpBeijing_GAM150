@@ -1,3 +1,15 @@
+/*!
+@file Entity.hpp
+@author Tan Yifeng, Edmund (t.yifengedmund)
+@course CSD11451
+@section B
+@Final Project GAM 150
+@date 01/04/26
+@brief
+This file contains the Entity class which acts as a game object container,
+managing a collection of SoloBehavior components and providing search,
+lifecycle, and hierarchy traversal utilities
+*//*______________________________________________________________________*/
 #pragma once
 #ifndef _BaseSys_
 #include <iostream>
@@ -37,6 +49,15 @@ public:
 	bool isActive = true;
 	bool allComponentsInit = false;
 
+	/*!***********************************************************************
+	* \brief
+	* Adds a new component of type T to this entity, enforcing that
+	* Transform2D and Mesh are singletons per entity
+	* \param[in] args
+	* Constructor arguments forwarded to the component
+	* \return
+	* A raw pointer to the newly created component
+	*************************************************************************/
 	template<typename T, typename... Args>
 	T* addComponent(Args&&... args) {
 		static_assert(std::is_base_of_v<SoloBehavior, T>,
@@ -75,6 +96,12 @@ public:
 		return ptr;
 	}
 
+	/*!***********************************************************************
+	* \brief
+	* Retrieves the first component of type T attached to this entity
+	* \return
+	* A raw pointer to the component, or nullptr if not found
+	*************************************************************************/
 	template<typename T>
 	T* getComponent() {
 		for (auto& c : components) {
@@ -86,6 +113,15 @@ public:
 	}
 
 	//Search by NAME
+	/*!***********************************************************************
+	* \brief
+	* Recursively searches this entity and its children for an entity
+	* matching the given name
+	* \param[in] searchName
+	* The name to search for
+	* \return
+	* A pointer to the matching entity, or nullptr if not found
+	*************************************************************************/
 	Entity* FindByName(const std::string& searchName) {
 		if (name == searchName) return this;
 
@@ -102,6 +138,15 @@ public:
 		
 	}
 
+	/*!***********************************************************************
+	* \brief
+	* Recursively collects all entities with the given name into the
+	* provided results vector
+	* \param[in] searchName
+	* The name to search for
+	* \param[out] outResults
+	* A vector that will be populated with all matching entities
+	*************************************************************************/
 	void FindAllByName(const std::string& searchName, std::vector<Entity*>& outResults) {
 		if (name == searchName) outResults.push_back(this);
 		if (transform != nullptr)
@@ -115,6 +160,13 @@ public:
 
 
 	//Search by Component
+	/*!***********************************************************************
+	* \brief
+	* Recursively searches this entity and its children for the first entity
+	* that has a component of type T attached
+	* \return
+	* A pointer to the matching entity, or nullptr if not found
+	*************************************************************************/
 	template<typename T>
 	Entity* findByComponent() {
 		if (getComponent<T>() != nullptr) return this;
@@ -133,6 +185,13 @@ public:
 
 	}
 
+	/*!***********************************************************************
+	* \brief
+	* Recursively collects all entities that have a component of type T
+	* into the provided results vector
+	* \param[out] outResults
+	* A vector that will be populated with all matching entities
+	*************************************************************************/
 	template<typename T>
 	void FindAllWithComponent(std::vector<Entity*>& outResults) {
 		if (getComponent<T>() != nullptr)
@@ -147,7 +206,10 @@ public:
 		}
 	}
 
-
+	/*!***********************************************************************
+	* \brief
+	* Calls init() on all components that have not yet been initialised
+	*************************************************************************/
 	void init() {
 			for (auto& c : components) {
 				if (c->isInit == false)
@@ -161,6 +223,10 @@ public:
 		
 	}
 
+	/*!***********************************************************************
+	* \brief
+	* Calls update() on all active components each frame
+	*************************************************************************/
 	void update() {
 		for (auto& c : components) {
 			if (c->isActive == true)
@@ -171,6 +237,10 @@ public:
 		}
 	}
 
+	/*!***********************************************************************
+	* \brief
+	* Calls fixedUpdate() on all active components at a fixed timestep
+	*************************************************************************/
 	void fixedUpdate() {
 		for (auto& c : components) {
 			if (c->isActive == true)
@@ -182,6 +252,11 @@ public:
 
 	private:
 	//only call the entity manager's delete
+	/*!***********************************************************************
+	* \brief
+	* Destroys all components on this entity and clears the component list.
+	* Should only be called through the EntityManager
+	*************************************************************************/
 	void destroy() {
 		for (auto& c : components) {
 			c->entity = nullptr;
@@ -191,6 +266,12 @@ public:
 	}
 
 	public:
+	/*!***********************************************************************
+	* \brief
+	* Constructs an entity with the given name
+	* \param[in] Name
+	* The name to assign to this entity
+	*************************************************************************/
 	Entity(string Name) { name = Name; }
 
 	Entity() {
@@ -205,3 +286,4 @@ public:
 #pragma warning( pop )
 
 #endif
+

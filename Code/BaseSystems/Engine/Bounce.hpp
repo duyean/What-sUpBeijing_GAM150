@@ -6,9 +6,9 @@
 @Final Project GAM 150
 @date 01/04/26
 @brief
-This file contains the generation of shapes and textures
+This file contains the Bounce component which applies a procedural bounce
+animation to the owning entity's scale and position over time
 *//*______________________________________________________________________*/
-
 #pragma once
 #ifndef _Bounce_
 #include <iostream>
@@ -39,11 +39,51 @@ class Bounce : public SoloBehavior
 
 
 public:
+	/*!***********************************************************************
+	* \brief
+	* Called once when the component is first created, before init.
+	* Records the entity's clean scale and position for reset purposes
+	*************************************************************************/
     void awake() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called once before the first update, used for initialisation
+	*************************************************************************/
     void init() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called every frame, advances the bounce timer and applies squash and
+	* stretch offsets to the entity's transform
+	*************************************************************************/
     void update() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called at a fixed timestep, used for physics-based updates
+	*************************************************************************/
     void fixedUpdate() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called when the component is destroyed, restores the entity's original
+	* scale and position before cleanup
+	*************************************************************************/
     void destroy() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Constructs a Bounce component with the given animation parameters
+	* \param[in] _timer
+	* The initial elapsed time of the bounce animation
+	* \param[in] _maxTime
+	* The total duration of one bounce cycle in seconds
+	* \param[in] _spd
+	* The speed multiplier of the bounce oscillation
+	* \param[in] _sqs
+	* The squash and stretch intensity factor
+	*************************************************************************/
     Bounce(float _timer, float _maxTime, float _spd, float _sqs)
         : time(_timer), maxTime(_maxTime), spd(_spd), sqs(_sqs) {
     }
@@ -53,3 +93,4 @@ public:
 
 
 #endif
+

@@ -1,3 +1,14 @@
+/*!
+@file Player.hpp
+@author Tan Yifeng, Edmund (t.yifengedmund)
+@course CSD11451
+@section B
+@Final Project GAM 150
+@date 01/04/26
+@brief
+This file contains the movement code for player
+*//*______________________________________________________________________*/
+
 #pragma once
 #ifndef _Player_
 #include <iostream>
@@ -17,6 +28,7 @@ public:
 
 	float health = 100.f;
 
+	//SoloBehavior inherited functions
 	void awake() override;
 	void init() override;
 	void update() override;
@@ -34,6 +46,10 @@ public:
 
 private:
 	float moveSpeed = 500.f;
+/*!***********************************************************************
+* \brief
+* Events for collision
+*************************************************************************/
 	void onHit(BoxCollider2D* other);
 	void onStay(BoxCollider2D* other);
 	void onExit(BoxCollider2D* other);

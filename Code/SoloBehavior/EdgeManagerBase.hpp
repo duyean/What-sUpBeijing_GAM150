@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   EdgeManager.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Edge Manager Base
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef EdgeManager
 #include <iostream>
@@ -23,13 +35,18 @@ class EntityManager;
 class EdgeManagerBase : public SoloBehavior
 {
 private:
-
+	//pointer to the SceneEdge base exit
 	SceneEdge* base_exit = nullptr;
+	//pointer to the Transition Screen
 	TransitionScreen* ts = nullptr;
+	//pointer to the Entity Player Object
 	Entity* player = nullptr;
 
+	//boolean for the switch to the base camp
 	bool switch_BC = false;
-
+/*!***********************************************************************
+\brief This function checks each edge from the map and updates the edges
+*************************************************************************/
 	void UpdateEdges();
 public:
 
@@ -40,8 +57,9 @@ public:
 	void update() override;
 	void fixedUpdate() override;
 	void destroy() override;
-
+	//default ctr
 	EdgeManagerBase() : base_exit{ nullptr } {}
+	//dstr
 	~EdgeManagerBase() {}
 
 };

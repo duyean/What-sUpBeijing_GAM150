@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   SceneEdge.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for Scene Edge 
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef SceneEdge
 #include <iostream>
@@ -22,8 +34,11 @@ class EntityManager;
 class SceneEdge: public SoloBehavior
 {
 private:
+	//pointer to the box collider 
 	BoxCollider2D* col;
+	//pointer to the transtion screen
 	TransitionScreen* t_screen;
+	//boolean to change once only
 	bool changeBuffer;
 
 	void onHit(BoxCollider2D* other);
@@ -31,7 +46,7 @@ private:
 	void onExit(BoxCollider2D* other);
 
 public:
-
+	//pointer to Entity Manager
 	EntityManager* enSystem = nullptr;
 
 	void awake() override;
@@ -40,9 +55,11 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
+	//boolean for if can trigger
 	bool triggerBuffer = false;
-
+	//default ctr
 	SceneEdge() : col{nullptr}, t_screen{nullptr}, changeBuffer{false} {}
+	//dstr
 	~SceneEdge(){}
 
 };

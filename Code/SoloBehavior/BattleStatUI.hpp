@@ -17,6 +17,6 @@ class BattleStatUI : public SoloBehavior
 
 	private:
 	bool render;
-	BattleManager* battleManager;
+	BattleManager* battleManager = nullptr;
 	
 };

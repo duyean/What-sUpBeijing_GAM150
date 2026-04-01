@@ -118,6 +118,7 @@ void GameStateManager::NextScene(SCENES _scene)
 		printf("No Scene available for given State\n");
 		break;
 	}
+	currentLevel = _scene;
 }
 
 GameStateManager::SCENES GameStateManager::GetCurrentLevel(void) const

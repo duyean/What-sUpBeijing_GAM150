@@ -20,7 +20,8 @@ public:
 	{
 		TUTORIAL_BASE_CAMP,
 		TUTORIAL_EXPLORATION,
-		TUTORIAL_COMBAT
+		TUTORIAL_COMBAT,
+		HOW_TO_PLAY
 	};
 private:	
 	EntityManager* enSystem = nullptr;

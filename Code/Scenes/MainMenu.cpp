@@ -17,6 +17,8 @@ This file contains the definitions for the collection of functions in SplashScre
 #include "../SoloBehavior/Occurence.hpp"
 #include "../Audio_WZBJ_Pak.hpp"
 
+#include <fstream>
+
 MainMenu::MainMenu()
 {	
 }
@@ -74,27 +76,54 @@ void MainMenu::Load()
 	enSystem->entities.push_back(std::move(title_en));
 
 
+	////////////////////////////////////////////////
+	// 
+	// SETTINGS SCREEN
+	//
+	////////////////////////////////////////////////
+	auto ss = std::make_unique<Entity>("SettingsScreen");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	ss->addComponent<Transform2D>(pos, scale, 0.f);
+	SettingsScreen* settings = ss->addComponent<SettingsScreen>();
+
+	////////////////////////////////////////////////
+	// 
+	// CREDITS SCREEN
+	//
+	////////////////////////////////////////////////
+	auto cs = std::make_unique<Entity>("CreditsScreen");
+	pos = { 0.f, 0.f };
+	scale = { 1.f, 1.f };
+	cs->addComponent<Transform2D>(pos, scale, 0.f);
+	CreditsScreen* credits = cs->addComponent<CreditsScreen>();
 
 	////////////////////////////////////////////////
 	// 
 	// START BUTTON
 	//
 	////////////////////////////////////////////////
-	auto b = std::make_unique<Entity>("START BUTTON");
-	Entity* sb = b.get();
-	pos = { 0.f,100.f };
-	scale = { 300.f, 80.f };
-	sb->addComponent<Transform2D>(pos, scale, 0.f);
-	sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
+	std::ifstream ifs("Assets/SaveFile.json");
+	if (ifs.good()) {
+		auto b = std::make_unique<Entity>("START BUTTON");
+		Entity* sb = b.get();
+		pos = { 0.f,100.f };
+		scale = { 300.f, 80.f };
+		sb->addComponent<Transform2D>(pos, scale, 0.f);
+		sb->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 100, MeshType::BOX_T);
 
 
-	Button* startButton = sb->addComponent<Button>();
-	startButton->SetOnClick([this]() {SwitchToGame(); });
-	startButton->SetNormalColor(Color{ 200,200,200,1 });
-	startButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	sb->addComponent<TextBox>("PLAY", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	enSystem->rootEntity->transform->AddChild(sb->transform);
-	enSystem->entities.push_back(std::move(b));
+		Button* startButton = sb->addComponent<Button>();
+		startButton->SetOnClick([this]() {SwitchToGame(); });
+		startButton->SetNormalColor(Color{ 200,200,200,1 });
+		startButton->SetHighlightedColor(Color{ 255,255,255,1 });
+		sb->addComponent<TextBox>("CONTINUE", 0.6f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+		enSystem->rootEntity->transform->AddChild(sb->transform);
+		enSystem->entities.push_back(std::move(b));
+
+		settings->AddPrevDisplayEntity(sb);
+		credits->AddPrevDisplayEntity(sb);
+	}
 
 
 
@@ -183,22 +212,8 @@ void MainMenu::Load()
 	enSystem->rootEntity->transform->AddChild(qb->transform);
 	enSystem->entities.push_back(std::move(e));
 
-
-
-	////////////////////////////////////////////////
-	// 
-	// SETTINGS SCREEN
-	//
-	////////////////////////////////////////////////
-	auto ss = std::make_unique<Entity>("SettingsScreen");
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	ss->addComponent<Transform2D>(pos, scale, 0.f);
-	SettingsScreen* settings = ss->addComponent<SettingsScreen>();
-
 	settings->AddPrevDisplayEntity(ms);
 	settings->AddPrevDisplayEntity(te);
-	settings->AddPrevDisplayEntity(sb);
 	settings->AddPrevDisplayEntity(ngb);
 	settings->AddPrevDisplayEntity(creditsB_en);
 	settings->AddPrevDisplayEntity(settingsB_en);
@@ -210,21 +225,8 @@ void MainMenu::Load()
 	//add the settings button on click function after to avoid potential problems
 	settingsButton->SetOnClick([this, settings]() {settings->ShowSettings(true); });
 
-	
-	////////////////////////////////////////////////
-	// 
-	// CREDITS SCREEN
-	//
-	////////////////////////////////////////////////
-	auto cs = std::make_unique<Entity>("CreditsScreen");
-	pos = { 0.f, 0.f };
-	scale = { 1.f, 1.f };
-	cs->addComponent<Transform2D>(pos, scale, 0.f);
-	CreditsScreen* credits = cs->addComponent<CreditsScreen>();
-
 	credits->AddPrevDisplayEntity(ms);
 	credits->AddPrevDisplayEntity(te);
-	credits->AddPrevDisplayEntity(sb);
 	credits->AddPrevDisplayEntity(ngb);
 	credits->AddPrevDisplayEntity(creditsB_en);
 	credits->AddPrevDisplayEntity(settingsB_en);
@@ -276,6 +278,7 @@ void MainMenu::PlayNewSave()
 {
 	RunManager::Instance().ResetSave();
 	RunManager::Instance().ResetTutorials();
+	RunManager::Instance().SaveRun();
 	SwitchToGame();
 }
 

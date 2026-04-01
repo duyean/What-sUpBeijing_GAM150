@@ -17,8 +17,6 @@
 //base inherit files
 #include "../../BaseSystems_WZBJ_Pak.hpp"
 
-#include "../Engine/Editor/Editor.hpp"
-
 #ifdef _DEBUG
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif
@@ -67,6 +65,41 @@ constexpr double FIXED_DT = 1.0 / CAPSPEED;
 // ---------------------------------------------------------------------------
 // main
 
+
+bool ConfirmQuit(HWND hwnd)
+{
+	int result = MessageBox(
+		hwnd,
+		"Are you sure you want to quit? Unsaved progress will be lost",
+		"Confirm Exit",
+		MB_YESNO | MB_ICONQUESTION
+	);
+	return result == IDYES;
+}
+
+LRESULT CALLBACK MyWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+	{
+		
+
+		if (ConfirmQuit(hwnd))
+		{
+			gameManager->quitGame = true;  // exits the game loop
+			DestroyWindow(hwnd);           // closes the window
+		}
+
+		return 0;
+	}
+	}
+
+	// Pass everything else to AEEngine's default handler
+	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
@@ -83,9 +116,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		) = nullptr;
 
 
-    #ifdef ALPHA_EDITOR
-	wndProc = EditorWndProc;
-    #endif
+	wndProc = MyWndProc;
 
 	//_CrtSetBreakAlloc(111815);
 	//_CrtSetBreakAlloc(111814);
@@ -121,7 +152,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// Close the window if press esacpe key
 		if (AEInputCheckTriggered(AEVK_0) || 0 == AESysDoesWindowExist())
-			gameManager->quitGame = true;
+		{
+			if (ConfirmQuit(AESysGetWindowHandle()))
+				gameManager->quitGame = true;
+		}
 
 	
 
@@ -151,13 +185,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		enSystem->clearAllDestroyed();
 		//change to optimized move and pop once drawing layers are implemented
 
-
-#ifdef ALPHA_EDITOR
-		//Editor code
-		ImGuiLayer::Begin();
-		EditorApp::Draw();
-		ImGuiLayer::End();
-#endif
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();

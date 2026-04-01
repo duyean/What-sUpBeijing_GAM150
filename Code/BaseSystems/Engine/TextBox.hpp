@@ -45,10 +45,34 @@ class TextBox : public SoloBehavior
 private:
 	TextMesh* textMesh = nullptr;
 public:
+	/*!***********************************************************************
+	* \brief
+	* Called once when the component is first created, before init
+	*************************************************************************/
 	void awake() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called once before the first update, used for initialisation
+	*************************************************************************/
 	void init() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called every frame, updates and positions the text mesh
+	*************************************************************************/
 	void update() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called at a fixed timestep, used for physics-based updates
+	*************************************************************************/
 	void fixedUpdate() override;
+
+	/*!***********************************************************************
+	* \brief
+	* Called when the component is destroyed, used for cleanup
+	*************************************************************************/
 	void destroy() override;
 
 	TextBoxVAllign v_allign;
@@ -64,6 +88,10 @@ public:
 
 	Color text_color;
 
+	/*!***********************************************************************
+	* \brief
+	* Default constructor, initialises a TextBox with default settings
+	*************************************************************************/
 	TextBox();
 /*!***********************************************************************
 \brief Constructor for TextBox Class

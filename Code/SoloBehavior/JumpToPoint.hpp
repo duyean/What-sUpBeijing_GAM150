@@ -1,5 +1,16 @@
+/*!
+@file JumpToPoint.hpp
+@author Tan Yifeng, Edmund (t.yifengedmund)
+@course CSD11451
+@section B
+@Final Project GAM 150
+@date 01/04/26
+@brief
+This file contains the animation jumping code
+*//*______________________________________________________________________*/
+
 #pragma once
-#ifndef _HealthBar1_
+#ifndef _JumpToPoint_
 #include <iostream>
 #include <cstdint>
 #include <vector>
@@ -24,6 +35,11 @@ public:
     void update() override;
     void fixedUpdate() override;
     void destroy() override;
+
+/*!***********************************************************************
+* \brief
+* Trigger animation
+*************************************************************************/
     void Trigger(AEVec2 _targetPos, float _arcHeight, float _duration);
     JumpToPoint() {}
     ~JumpToPoint() {}

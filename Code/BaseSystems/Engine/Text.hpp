@@ -10,6 +10,9 @@
 */
 /******************************************************************************/
 #pragma once
+#pragma once
+#ifndef _Text_
+
 #include "AEEngine.h"
 #include "ECS.hpp"
 #include "Colors.hpp"
@@ -59,3 +62,5 @@ Draw order for the text
 	~Text(){}
 
 };
+
+#endif

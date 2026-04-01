@@ -93,6 +93,8 @@ public:
 
 	void SetPrevMapType(MapType type);
 
+	void RemovePlayerFromParty(size_t index);
+
 	MapType GetMapType() const;
 
 	MapType GetPrevMapType() const;

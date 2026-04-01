@@ -18,11 +18,6 @@ RunManager::RunManager()
 {
 	party.reserve(3);
 
-	for (int i = 0; i < 2; ++i)
-	{
-		auto charID = GenerateCharacter();
-		party.push_back(charID);
-	}
 
 	StartRun();
 }
@@ -81,6 +76,13 @@ void RunManager::ResetSave()
 	currency = 200;
 	partyLevel = 1;
 	enemyDifficulty = 1;
+	party.clear();
+	//Init Party
+	for (int i = 0; i < 2; ++i)
+	{
+		auto charID = GenerateCharacter();
+		party.push_back(charID);
+	}
 	SetMapType(MapType::CityStreets);
 }
 
@@ -181,6 +183,11 @@ void RunManager::IncrementMapType()
 void RunManager::SetPrevMapType(MapType type)
 {
 	prevMapType = type;
+}
+
+void RunManager::RemovePlayerFromParty(size_t index)
+{
+	party.erase(party.begin() + index);
 }
 
 MapType RunManager::GetMapType() const

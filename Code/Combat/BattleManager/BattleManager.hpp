@@ -30,6 +30,9 @@ class BattleManager : public SoloBehavior
 	//The original unsorted player units for the Party UI
 	std::vector<Character*> playerUnits;
 
+	//The vector to store indices to handle permadeath
+	std::vector<size_t> toRemoveIndices;
+
 	//Pointer to a targeting reticle Entity
 	Entity* targetingReticle;
 

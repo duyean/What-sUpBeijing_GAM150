@@ -18,7 +18,7 @@ void BattleManager::init()
 
 BattleManager::BattleManager() : delay(0), wait(false),
 currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false), 
-outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(1), activeUnit(nullptr), targetingReticle(nullptr)
+outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(1), activeUnit(nullptr), targetingReticle(nullptr), toRemoveIndices()
 {
 	maxActionPoints = 5;
 	actionPoint = std::ceil(static_cast<float>(maxActionPoints) / 2.f);
@@ -190,6 +190,12 @@ void BattleManager::update()
 			ts = enSystem->findByComponentGLOBAL<TransitionScreen>()->getComponent<TransitionScreen>();
 			BATTLE_TYPE bt = RunManager::Instance().GetBattleType();
 			AEVec2 pos = { 0.f, 225 };
+
+			std::sort(toRemoveIndices.rbegin(), toRemoveIndices.rend());
+			for (auto e : toRemoveIndices)
+			{
+				RunManager::Instance().RemovePlayerFromParty(e);
+			}
 
 			if (outcome == BATTLE_OUTCOME::DEFEAT)
 			{
@@ -405,6 +411,8 @@ void BattleManager::ProcessDeadUnit(Character* dead)
 		//	battleUnits.erase(it);
 		//}
 		//Cannot destroy player entity as Party UI is still referencing it
+		auto it = std::find(playerUnits.begin(), playerUnits.end(), dead);
+		toRemoveIndices.push_back(std::distance(playerUnits.begin(), it));
 
 		--playerCount;
 		if (playerCount <= 0)

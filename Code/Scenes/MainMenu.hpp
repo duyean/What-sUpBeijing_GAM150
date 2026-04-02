@@ -22,8 +22,11 @@
 class MainMenu : public GameState
 {
 private:
+	//pointer to entity system
 	EntityManager* enSystem = nullptr;
+	//pointer to Mesh Gen system
 	MeshGen* meshSystem = nullptr;
+	//pointer to Transition Screen Entity object
 	TransitionScreen* ts_comp = nullptr;
 
 /*!***********************************************************************

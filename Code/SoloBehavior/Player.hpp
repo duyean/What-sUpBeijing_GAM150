@@ -25,7 +25,7 @@ using namespace std;
 class Player : public SoloBehavior
 {
 public:
-
+	//player health
 	float health = 100.f;
 
 	//SoloBehavior inherited functions
@@ -35,16 +35,13 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
-	Player() {
-
-	}
-
-	~Player()
-	{
-
-	}
+	//default cstr
+	Player() {}
+	//dstr
+	~Player(){}
 
 private:
+	//player move speed
 	float moveSpeed = 500.f;
 /*!***********************************************************************
 * \brief

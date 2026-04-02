@@ -247,6 +247,7 @@ void MainMenu::Load()
 	settings->AddPrevDisplayEntity(creditsB_en);
 	settings->AddPrevDisplayEntity(settingsB_en);
 	settings->AddPrevDisplayEntity(qb);
+	settings->AddPrevDisplayEntity(htpb);
 
 	enSystem->rootEntity->transform->AddChild(ss->transform);
 	enSystem->entities.push_back(std::move(ss));
@@ -260,6 +261,7 @@ void MainMenu::Load()
 	credits->AddPrevDisplayEntity(creditsB_en);
 	credits->AddPrevDisplayEntity(settingsB_en);
 	credits->AddPrevDisplayEntity(qb);
+	credits->AddPrevDisplayEntity(htpb);
 
 	enSystem->rootEntity->transform->AddChild(cs->transform);
 	enSystem->entities.push_back(std::move(cs));

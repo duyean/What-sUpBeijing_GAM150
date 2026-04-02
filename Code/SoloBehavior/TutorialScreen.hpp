@@ -38,8 +38,8 @@ private:
 	Button* closeButton = nullptr;
 
 	#define BCT_PAGES 2
-	#define ET_PAGES 2
-	#define CT_PAGES 6
+	#define ET_PAGES 3
+	#define CT_PAGES 7
 
 	const char* tutorialTitle = nullptr;
 	struct TutorialPage
@@ -51,7 +51,7 @@ private:
 
 	TutorialPage bc_tut_pages[BCT_PAGES] =
 	{
-		{"../../Assets/Images/BaseCampTutorial/bct_1.png", "bct1", "Welcome to your base! Use the WASD keys to move around!"},
+		{"../../Assets/Images/BaseCampTutorial/bct_1.png", "bct1", "Welcome to your Odium! The capital is under attack and you need to drive the enemies back! Use the WASD keys to move around!"},
 		{"../../Assets/Images/BaseCampTutorial/bct_2.png", "bct2", "Visit the shop to buy Blessings and Artifacts to help in your run!"},
 	};
 
@@ -59,6 +59,7 @@ private:
 	{
 		{"../../Assets/Images/ExplorationTutorial/et_1.png", "et1", "In the exploration phase, you can traverse through area nodes. Traversible areas are marked by the black arrows."},
 		{"../../Assets/Images/ExplorationTutorial/et_2.png", "et2", "Make use of the minimap to guide you! Each node is inidcated by a unique icon!"},
+		{"../../Assets/Images/ExplorationTutorial/et_3.png", "et3", "The boss node is marked by the red exit icon! Find the boss and defeat it to advance! Defeat all 3 bosses to acheive victory!"}
 	};
 
 	TutorialPage cmbt_tut_pages[CT_PAGES] =
@@ -68,7 +69,8 @@ private:
 		{"../../Assets/Images/CombatTutorial/ct_2.png", "ct2", "Your current character's action points and the turn number are displayed here."},
 		{"../../Assets/Images/CombatTutorial/ct_3.png", "ct3", "Your current Party's health bar is displayed here. Use it to track each Party Member's health!"},
 		{"../../Assets/Images/CombatTutorial/ct_4.png", "ct4", "Click on enemies to change your current target. The current target is marked by the red crosshair."},
-		{"../../Assets/Images/CombatTutorial/ct_5.png", "ct5", "Some moves will either do buffs to your allies or debuffs to enemies. Choose wisely!"}
+		{"../../Assets/Images/CombatTutorial/ct_5.png", "ct5", "Some moves will either do buffs to your allies or debuffs to enemies. Choose wisely!"},
+		{"../../Assets/Images/CombatTutorial/ct_6.png", "ct6", "Watch out! If any of your allies fall, you will lose them permenantly!"}
 	};
 
 	TUTORIAL_TYPE tut_type;

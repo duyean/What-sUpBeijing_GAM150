@@ -20,8 +20,11 @@
 class LevelScene : public GameState
 {
 private:
+	//Pointer to the Entity System
 	EntityManager* enSystem = nullptr;
+	//Pointer to the Mesh Gen System
 	MeshGen* meshSystem = nullptr;
+	//Navigation Data
 	NavigationData map { };
 public:
 	LevelScene();

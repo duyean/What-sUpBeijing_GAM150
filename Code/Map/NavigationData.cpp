@@ -73,7 +73,7 @@ void TravelNode(NavigationData& data, int newX, int newY)
 	//used for easier parsing
 	NodeType currentNodeType = data.playMap.mapNodes[newY][newX].type;
 
-	//trigger node if something is present (content moved to EdgeManager.cpp for some reason)
+	//trigger node if something is present (content moved to EdgeManager.cpp for some reason, kept for legacy -day)
 	switch (currentNodeType)
 	{
 		case NodeType::Empty:

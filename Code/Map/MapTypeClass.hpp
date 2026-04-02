@@ -10,6 +10,7 @@ enum MapType
 	OuterPalace,
 	InnerPalace,
 	NUM_MAPTYPES,
+	SilentStreets, //easter egg map (Empty Map with only boss at end)
 
 	//fog overlay map 
 	OverlayFog = -1

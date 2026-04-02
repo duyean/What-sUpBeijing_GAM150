@@ -129,9 +129,6 @@
     <ClCompile Include="..\Code\BaseSystems\EaseFunctions\Math.cpp">
       <Filter>Source Files\Base Systems\Scene Handler</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\Transform2D.cpp">
       <Filter>Source Files\ENGINE</Filter>
     </ClCompile>
@@ -161,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Engine\MeshGen.cpp">
       <Filter>Source Files\ENGINE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\Player.cpp">
       <Filter>Source Files\Entities\GameObjects</Filter>
@@ -239,9 +233,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\SettingsScreen.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseSystems\Audio\AudioManager.cpp">
       <Filter>Source Files\Base Systems\Audio</Filter>
@@ -321,8 +312,17 @@
     <ClCompile Include="..\Code\SoloBehavior\CreditsScreen.cpp">
       <Filter>Source Files\Entities\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.cpp">
+      <Filter>Source Files\Base Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseSystems\Main(First-Run-File)\Main.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoloBehavior\Occurence.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\TutorialScreen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,9 +385,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\Mesh.hpp">
       <Filter>Header Files\ENGINE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\Player.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
@@ -485,20 +482,11 @@
     <ClInclude Include="..\Code\SoloBehavior\EdgeManager.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Map\MapDisplay.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\EdgeManagerBase.hpp">
       <Filter>Header Files\Entities\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Engine\Renderable.hpp">
       <Filter>Header Files\ENGINE</Filter>
@@ -511,9 +499,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\SettingsScreen.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Audio\AudioManager.hpp">
       <Filter>Header Files\Base Systems\Audio</Filter>
@@ -587,8 +572,23 @@
     <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BaseSystems\JSONSerializer\JSONSerializer.hpp">
+      <Filter>Header Files\Base Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\Occurence.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\TutorialScreen.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoloBehavior\PartyManagerObject.hpp">
+      <Filter>Header Files\Combat Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -89,7 +89,6 @@
     <ClInclude Include="..\Code\BaseSystems\Audio\SFXTrack.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\AEVEC2OVERLOAD.hpp" />
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Bounce.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\CameraVFX.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\EventSystem.hpp" />
@@ -111,7 +110,6 @@
     <ClInclude Include="..\Code\BaseSystems\Engine\OOP.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\PhysicSystem.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Engine\Transform2D.hpp" />
-    <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp" />
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp" />
     <ClInclude Include="..\Code\BaseSystems_WZBJ_Pak.hpp" />
     <ClInclude Include="..\Code\CharacterData_WZBJ_Pak.hpp" />

@@ -114,18 +114,18 @@ void CreditsScreen::awake()
 
 	//Close Button
 	auto close_b = std::make_unique<Entity>("CLOSE BUTTON");
-	pos = { 0.f, -300.f };
-	scale = { 200.f, 80.f };
+	pos = { 550.f, 350.f };
+	scale = { 50.f, 50.f };
 	close_b->addComponent<Transform2D>(pos, scale, 0.f);
-	close_b->addComponent<Mesh>("Box", "Button", Color(255, 255, 255, 1.f), 919, MeshType::BOX_T);
+	close_b->addComponent<Mesh>("Box", Color(200, 1, 1, 1.f), 901, MeshType::BOX_B);
 	entity->transform->AddChild(close_b->transform);
 
 	Button* closeButton = close_b->addComponent<Button>();
 	closeButton->SetOnClick([this]() {ShowCredits(false); });
-	closeButton->SetNormalColor(Color{ 200,200,200,1 });
-	closeButton->SetHighlightedColor(Color{ 255,255,255,1 });
-	TextBox* cb_txt = close_b->addComponent<TextBox>("CLOSE", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
-	cb_txt->text_layer = 920;
+	closeButton->SetNormalColor(Color{ 200,1,1,1 });
+	closeButton->SetHighlightedColor(Color{ 255,1,1,1 });
+	TextBox* cb_tb = close_b->addComponent<TextBox>("X", 0.5f, TextBoxVAllign::CENTER, TextBoxHAllign::CENTER);
+	cb_tb->text_layer = 920;
 
 	enSystem->entities.push_back(std::move(credits_bg));
 	enSystem->entities.push_back(std::move(top_mask));

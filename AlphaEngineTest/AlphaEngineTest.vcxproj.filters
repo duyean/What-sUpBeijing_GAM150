@@ -326,13 +326,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\BaseSystems\Mesh\ColorClass.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Math.hpp">
-      <Filter>Header Files\Base Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\BaseSystems\EaseFunctions\Sprite.hpp">
       <Filter>Header Files\Base Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\BaseSystems\Prefabs\SingletonPattern.hpp">

@@ -31,7 +31,7 @@ This function loads splash screen image
 void SplashScreen::Load()
 {
 	meshSystem = &MeshGen::getInstance();
-	meshSystem->CreateTexture("../../Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
+	meshSystem->CreateTexture("Assets/Images/DigiPen_Singapore_WEB_RED.png", "SplashLogo");
 
 	enSystem = &EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");

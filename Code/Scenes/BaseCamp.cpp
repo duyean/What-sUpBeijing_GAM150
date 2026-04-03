@@ -67,7 +67,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	meshSystem->CreateTexture("../../Assets/Images/SPRITE.png", "player_sprite");
+	meshSystem->CreateTexture("Assets/Images/SPRITE.png", "player_sprite");
 	auto e = std::make_unique<Entity>("Player");
 	pos = { 0.f, -200.f };
 	scale = { 100.f, 100.f };
@@ -86,7 +86,7 @@ void BaseCamp::Load()
 	enSystem->rootEntity->transform->AddChild(curr_disp->transform);
 	enSystem->entities.push_back(std::move(curr_disp));*/
 
-	meshSystem->CreateTexture("../../Assets/Images/base_camp.png", "BC_BG");
+	meshSystem->CreateTexture("Assets/Images/base_camp.png", "BC_BG");
 	auto bg = std::make_unique<Entity>("Background");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };

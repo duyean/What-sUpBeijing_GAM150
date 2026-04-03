@@ -73,6 +73,8 @@ public:
 	/*!***********************************************************************
 	* \brief
 	*  Overloaded constructor with rarity
+	* \param[in] isRare
+	*  Condition if the blessing is supposed to be rare or not
 	*************************************************************************/
 	ShopBlessing(bool isRare = false);
 	/*!***********************************************************************

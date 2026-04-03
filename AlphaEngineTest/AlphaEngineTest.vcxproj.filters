@@ -252,9 +252,6 @@
     <ClCompile Include="..\Code\Scenes\LevelScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SoloBehavior\CollectiblesManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SoloBehavior\DecisionBoxManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
@@ -565,9 +562,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\CreditsScreen.hpp">
       <Filter>Header Files\Entities\UIObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SoloBehavior\CollectiblesManager.hpp">
-      <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoloBehavior\DecisionBoxManager.hpp">
       <Filter>Header Files\Manager</Filter>

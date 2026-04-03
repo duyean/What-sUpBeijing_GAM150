@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   SplashLogo.hpp
+\author Tai Qian Yi
+\par    Email: t.qianyi\@digipen.edu
+\par    DigiPen login: t.qianyi
+\par    Course: CSD1451
+\par    Section B
+\brief  This file contains the declarations of functions for SplashLogo class
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef _HealthBar1_
 #include <iostream>
@@ -18,6 +30,7 @@ class EntityManager;
 class SplashLogo: public SoloBehavior
 {
 private:
+	//private splash logo variables
 	float curSplashTimer;
 	float maxSplashTimer;
 	float splashOpacity;
@@ -32,13 +45,14 @@ public:
 	void fixedUpdate() override;
 	void destroy() override;
 
+	//default constr
 	SplashLogo() {
 		curSplashTimer = 0.f;
 		maxSplashTimer = 6.f;
 		splashOpacity = 0.f;
 		transition = true;
 	}
-
+	//destr
 	~SplashLogo(){}
 
 };

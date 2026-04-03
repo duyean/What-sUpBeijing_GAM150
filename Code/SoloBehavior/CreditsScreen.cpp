@@ -66,7 +66,7 @@ void CreditsScreen::awake()
 	scale = { 1.f, 1.f };
 	credits_text_l->addComponent<Transform2D>(pos, scale, 0.f);
 	TextBox* cdt_l = credits_text_l->addComponent<TextBox>(
-		"Engine Program:\nCombat Program:\nMap Program:\nAudio and Shop Program:\nUi Program:"
+		"Engine Program:\nCombat Program:\nMap Program:\nAudio and Data Program:\nUi Program:"
 		"\n\nFaculty and Advisors\n"
 		"\n\n\n"
 		"\nCreated at Digipen Institute of Technology Singapore\n\n"

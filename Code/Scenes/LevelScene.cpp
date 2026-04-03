@@ -165,7 +165,7 @@ void LevelScene::Load()
 	auto MD_Manager = std::make_unique<Entity>("MapDisplayManager");
 	MD_Manager->addComponent<MapDisplay>(map);
 	enSystem->entities.push_back(std::move(MD_Manager));
-	meshSystem->CreateTexture("../../Assets/Images/Outer_Palace.png", "OP_BG");
+	meshSystem->CreateTexture("Assets/Images/Outer_Palace.png", "OP_BG");
 	auto bg = std::make_unique<Entity>("Background");
 	pos = { 0.f, 0.f };
 	scale = { (float)AEGfxGetWindowWidth(), (float)AEGfxGetWindowHeight() };
@@ -207,7 +207,7 @@ void LevelScene::Load()
 	enSystem->rootEntity->transform->AddChild(ts->transform);
 	enSystem->entities.push_back(std::move(ts));
 
-	meshSystem->CreateTexture("../../Assets/Images/GuanShiYinBack.png", "player_sprite");
+	meshSystem->CreateTexture("Assets/Images/GuanShiYinBack.png", "player_sprite");
 	auto e = std::make_unique<Entity>("Player");
 	pos = { 0.f, 0.f };
 	scale = { 100.f, 100.f };

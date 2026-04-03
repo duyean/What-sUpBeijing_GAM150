@@ -138,7 +138,7 @@ using namespace std;
 		{
 			baseBox();
 			baseCircle();
-			SetFont("../../Assets/Fonts/liberation-mono.ttf", "liberi", 50);
+			SetFont("Assets/Fonts/liberation-mono.ttf", "liberi", 50);
 		}
 
 		/*!***********************************************************************

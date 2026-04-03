@@ -38,15 +38,15 @@ public:
 
 	string textureDir[TEXTURE_COUNT] =
 	{
-	"../../Assets/Images/MapIcons/FogTile.png",			//fog no vision
-	"../../Assets/Images/MapIcons/Tile.png",			//standard tile
-	"../../Assets/Images/MapIcons/Exclamation.png",		//enemy encounter
-	"../../Assets/Images/MapIcons/Question.png",		//random encounter
-	"../../Assets/Images/MapIcons/Entrance.png",		//map start
-	"../../Assets/Images/MapIcons/Exit.png",			//boss fight
-	"../../Assets/Images/MapIcons/Shop.png",			//shop node
-	"../../Assets/Images/MapIcons/Sprite.png",			//player sprite 
-	"../../Assets/Images/MapIcons/FixedEvent.png"		//fixed encounter
+	"Assets/Images/MapIcons/FogTile.png",			//fog no vision
+	"Assets/Images/MapIcons/Tile.png",			//standard tile
+	"Assets/Images/MapIcons/Exclamation.png",		//enemy encounter
+	"Assets/Images/MapIcons/Question.png",		//random encounter
+	"Assets/Images/MapIcons/Entrance.png",		//map start
+	"Assets/Images/MapIcons/Exit.png",			//boss fight
+	"Assets/Images/MapIcons/Shop.png",			//shop node
+	"Assets/Images/MapIcons/Sprite.png",			//player sprite 
+	"Assets/Images/MapIcons/FixedEvent.png"		//fixed encounter
 	};
 
 	string textureName[TEXTURE_COUNT] =

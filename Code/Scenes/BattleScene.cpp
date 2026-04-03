@@ -78,7 +78,7 @@ void BattleScene::Load()
     enSystem->entities.push_back(std::move(manager));
 
     //The Image for the battle background @dan
-    meshSystem->CreateTexture("../../Assets/Images/BattleScene.png", "BattleImage");
+    meshSystem->CreateTexture("Assets/Images/BattleScene.png", "BattleImage");
     auto background = std::make_unique<Entity>("BattleBackgroundIMG");
     pos = { 0.f,0.f };
     scale = { 1600, 900.f };
@@ -260,7 +260,7 @@ void BattleScene::Load()
     PauseMenu* pauseMenu = ps->addComponent<PauseMenu>();
 
     //load the button textures
-    meshSystem->CreateTexture("../../Assets/UI/button_border_2.png", "moveButton");
+    meshSystem->CreateTexture("Assets/UI/button_border_2.png", "moveButton");
     ////////////////////////////////////////////////
     // 
     // MOVE BUTTON 1

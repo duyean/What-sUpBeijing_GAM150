@@ -36,7 +36,7 @@ void MainMenu::Load()
 	InitEventsDatabase();
 
 	meshSystem = &MeshGen::getInstance();
-	meshSystem->CreateTexture("../../Assets/UI/button_border.png", "Button");
+	meshSystem->CreateTexture("Assets/UI/button_border.png", "Button");
 
 	enSystem = &EntityManager::getInstance();
 	auto r = std::make_unique<Entity>("ROOT");
@@ -46,7 +46,7 @@ void MainMenu::Load()
 	enSystem->rootEntity->addComponent<Transform2D>(pos, scale, 0.f);
 	enSystem->entities.push_back(std::move(r));
 
-	meshSystem->CreateTexture("../../Assets/Images/MenuScene.png", "MenuImage");
+	meshSystem->CreateTexture("Assets/Images/MenuScene.png", "MenuImage");
 	auto menuScreen = std::make_unique<Entity>("MENU_IMAGE");
 	Entity* ms = menuScreen.get();
 	pos = { 0.f ,0.f };

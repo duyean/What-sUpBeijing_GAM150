@@ -168,7 +168,15 @@ void PauseMenu::ResumeGame()
 
 void PauseMenu::QuitGame()
 {
-	GameManager::GetInstance()->quitGame = true;
+	int result = MessageBox(
+		AESysGetWindowHandle(),
+		"Are you sure you want to quit? Unsaved progress will be lost",
+		"Confirm Exit",
+		MB_YESNO | MB_ICONQUESTION
+	);
+
+	if (result == IDYES)
+		GameManager::GetInstance()->quitGame = true;
 }
 
 void PauseMenu::QuitToMainMenu()

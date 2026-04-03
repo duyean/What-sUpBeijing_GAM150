@@ -129,6 +129,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// Window Title
 	AESysSetWindowTitle("Gam150");
 
+	HWND consoleWindow = GetConsoleWindow();
+	bool debugMode = false;
+	if (consoleWindow != NULL)
+	{
+		ShowWindow(consoleWindow, SW_HIDE);
+	}
+
 	// reset the system modules
 	AESysReset();
 
@@ -155,6 +162,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (ConfirmQuit(AESysGetWindowHandle()))
 				gameManager->quitGame = true;
+		}
+
+		if (consoleWindow != NULL && debugMode == false && AEInputCheckTriggered(AEVK_BACK))
+		{
+			ShowWindow(consoleWindow, SW_SHOW);
+			debugMode = true;
+		}
+		else if (consoleWindow != NULL && debugMode == true && AEInputCheckTriggered(AEVK_BACK))
+		{
+			ShowWindow(consoleWindow, SW_HIDE);
+			debugMode = false;
 		}
 
 	

@@ -21,7 +21,7 @@ currentActiveUnit(0), enemyCount(0), playerCount(0), inBattle(false),
 outcome(BATTLE_OUTCOME::NONE), lastTargetedUnit(nullptr), currentTurn(1), activeUnit(nullptr), targetingReticle(nullptr), toRemoveIndices()
 {
 	maxActionPoints = 5;
-	actionPoint = (int)std::ceil(static_cast<float>(maxActionPoints) / 2.f);
+	actionPoint = maxActionPoints / 2 + 1;
 }
 
 void BattleManager::SetTargetingReticle(Entity* en)
@@ -207,22 +207,19 @@ void BattleManager::update()
 			{
 				CombatUIManager::Instance().CreateMessageText(pos, "Battle Over!");
 				AudioManager::GetInstance()->PlaySFX(AudioManager::SFX_BATTLE_WIN);
+				std::uniform_int_distribution<int> dist(15, 30);
+				int currencyGain = dist(Game::gen);
 
 				if (bt == BATTLE_TYPE::MINI_BOSS)
 				{
 					//unlock character goes here
 					auto charID = RunManager::Instance().GenerateCharacter();
 					RunManager::Instance().AddCharacter(charID);
+					RunManager::Instance().ModifyCurrency(currencyGain * 2);
 				}
 				if (bt != BATTLE_TYPE::BOSS)
 				{
-					//add blessing
-					std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
-					auto it2 = blessingDatabase.begin();
-					std::advance(it2, dist(Game::gen));
-					auto randomBlessing = it2->second->Clone();
-					RunManager::Instance().AddBlessing(std::move(randomBlessing));
-					RunManager::Instance().ModifyCurrency(20);
+					RunManager::Instance().ModifyCurrency(currencyGain * 3);
 					//Change scene back to exploration
 					ts->TransitionToScene(GameStateManager::LEVEL_SCENE);
 				}

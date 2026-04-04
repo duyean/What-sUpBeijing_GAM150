@@ -40,7 +40,7 @@ void InitEventsDatabase()
 		}, [](RunManager* rm) {rm->ModifyCurrency(10); }));
 
 	eventsDatabase.emplace(OCCURENCE_ID::GAMBLING_EVENT_1, Occurence("Lottery Ticket?", "You stumbled upon a scratch ticket. What do you do?", "Try your hand to win BIG!", "Throw the ticket away, you never win these things anyway.",
-		[](RunManager*)
+		[](RunManager* rm)
 		{
 			std::uniform_real_distribution<float> outcome(0.f, 1.f);
 			float rng = outcome(Game::gen);
@@ -53,6 +53,7 @@ void InitEventsDatabase()
 				displayBox->addComponent<Transform2D>(pos, scale, 0.f);
 				displayBox->addComponent<Mesh>("Box", Color(50, 50, 50, 0.9f), 1002, MeshType::BOX_B);
 				displayBox->addComponent<DisplayBox>("Event Outcome", "Amazing Luck! You won it big indeed!", "+10,000 Credits, +1 Mystery Gift", "-- Click To Continue --");
+				rm->ModifyCurrency(10000);
 				EntityManager::getInstance().rootEntity->transform->AddChild(displayBox->transform);
 				EntityManager::getInstance().entities.push_back(std::move(displayBox));
 			}

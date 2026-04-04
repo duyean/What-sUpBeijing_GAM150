@@ -237,9 +237,9 @@ void BattleManager::update()
 					else
 					{
 						//add blessing
-						std::uniform_int_distribution<size_t> dist(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
+						std::uniform_int_distribution<size_t> dist2(0, !blessingDatabase.size() ? 0 : blessingDatabase.size() - 1);
 						auto it2 = blessingDatabase.begin();
-						std::advance(it2, dist(Game::gen));
+						std::advance(it2, dist2(Game::gen));
 						auto randomBlessing = it2->second->Clone();
 						RunManager::Instance().AddBlessing(std::move(randomBlessing));
 

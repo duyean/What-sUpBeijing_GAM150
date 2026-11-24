@@ -1,20 +1,14 @@
 # What's Up 北京
 
 # GAM150 Project
-This is the main __Development__ to __Live__ build for the module csd1451s26. :sob::sob::sob:
+This is the main __Development__ to __Live__ build for the module csd1451s26.
 
 ## About this Game
-### Game Name Goes Here!
-<sub>Short game description goes here!</sub>
+### The Heavens Move
+<sub>A turn-based RPG set in Steampunk Medieval China!</sub>
 
 ### Gameplay
-<sub>Short gameplay description goes here!</sub>
-
-### Artstyle/Setting
-<sub>Descriptions of artstyle and Game Setting(Eg. European Middle Ages/Dystopian Cyberpunk/Chinese Tang Dynastic/Japanese Meiji Era/Modern Fantasy/Modern Contemporary) goes here!</sub>
-
-### Design Document
-View the design document [here!](temporarily empty!)
+<sub>Empyrea, the Capital City of the Empire and residence of the Emperor, a few rebels from all walks of life rise up to fight against the Emperor, mostly for their own selfish reasons</sub>
 
 ## Project Members
 <sub>Disclaimer: Each project member contributed to the codebase and worked on coding in conjunction to the "Main Role" they fufilled written here. The "Main Role" serves to highlight other work done besides coding the game program!</sub>
